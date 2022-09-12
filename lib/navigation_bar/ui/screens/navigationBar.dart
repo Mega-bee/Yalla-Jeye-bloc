@@ -1,106 +1,106 @@
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:injectable/injectable.dart';
+import 'package:untitled1/di/di_config.dart';
+import 'package:untitled1/utils/images/images.dart';
 
-import '../../../di/di_config.dart';
+import '../../../custom/ui/screens/custom_list.dart';
 import '../../../home_page/ui/screens/home_page_list.dart';
 import '../../../notification/ui/screens/Notification_list.dart';
-import '../../../restaurants/ui/screens/restaurant_list.dart';
 
 @injectable
 class Navigationbar extends StatefulWidget {
   @override
-  _NavigationbarState createState() => _NavigationbarState();
+  State<Navigationbar> createState() => _NavigationbarrState();
 }
 
-class _NavigationbarState extends State<Navigationbar> {
-  DateTime currentBackPressTime = DateTime.now();
-  var _selectedPageIndex;
-  late List<Widget> _pages;
-  late PageController _pageController;
+class _NavigationbarrState extends State<Navigationbar> {
+  late int currentIndex;
 
-  void _selectPage(int selectedPageIndex) {
-    setState(() {
-      _selectedPageIndex = selectedPageIndex;
-      _pageController.jumpToPage(selectedPageIndex);
-    });
-  }
+  late List<Widget> _pages;
 
   @override
   void initState() {
     super.initState();
-    _selectedPageIndex = 0;
+    currentIndex = 0;
     _pages = [
       getIt<HomePage>(),
-      getIt<RestaurantPage>(),
-      getIt<NotificationPage>(),
+      getIt<CustomPage>(),
       getIt<HomePage>(),
+      getIt<NotificationPage>(),
     ];
-    _pageController = PageController(initialPage: 0);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _pageController.dispose();
-  }
-
-  Future<bool> _onWillPop() {
-    if (_selectedPageIndex == 0) {
-      DateTime now = DateTime.now();
-      if (now.difference(currentBackPressTime) > Duration(seconds: 2)) {
-        currentBackPressTime = now;
-        Fluttertoast.showToast(msg: 'tap again to exit');
-        return Future.value(false);
-      } else {
-        return Future.value(true);
-      }
-    } else {
-      _selectPage(0);
-      return Future.value(false);
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // List<SingleNotification> items = not;
-    return WillPopScope(
-      onWillPop: _onWillPop,
-      child: Scaffold(
-        body: PageView(
-          controller: _pageController,
-          physics: NeverScrollableScrollPhysics(),
-          children: _pages,
+    return Scaffold(
+      body: IndexedStack(
+        index: currentIndex,
+        children: _pages,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        ///remove animation
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white,
+        showUnselectedLabels: true,
+        selectedItemColor: Color(0xffFFD400),
+        selectedLabelStyle: TextStyle(
+          color: Color(0xffFFD400),
+
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: const Color.fromRGBO(18, 108, 242, 1),
-          selectedItemColor: Colors.black45,
-          unselectedItemColor: Colors.white,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          currentIndex: _selectedPageIndex,
-          items: const[
-             BottomNavigationBarItem(
-              icon:Icon(Icons.home),
-              label: "",
-            ),
-             BottomNavigationBarItem(
-              icon:Icon(Icons.home),
-              label: "",
-            ),
-             BottomNavigationBarItem(
-              icon:Icon(Icons.home),
-              label: "",
-            ),
-             BottomNavigationBarItem(
-              icon:Icon(Icons.home),
-              label: "",
-            ),
-          ],
-          onTap: (selectedItem) => _selectPage(selectedItem),
+        unselectedLabelStyle: TextStyle(
+          color: Colors.black,
         ),
+        // selectedFontSize: 20,
+        // iconSize: 20,
+        currentIndex: currentIndex,
+        onTap: (index) => setState(() {
+          currentIndex = index;
+        }),
+        items: [
+          BottomNavigationBarItem(
+            icon: Container(
+              height: 35,
+              child: SvgPicture.asset(
+                ImageAsset.scooterr,height: 45,
+                color: currentIndex == 0 ? Color(0xffFFD400) : Colors.black,
+
+              ),
+            ),
+            label: 'Delivery',
+          ),
+          BottomNavigationBarItem(
+            icon: Container(
+              height: 35,
+              child: SvgPicture.asset(
+                ImageAsset.custom,height: 35,
+                color: currentIndex == 1 ? Color(0xffFFD400) : Colors.black,
+              ),
+            ),
+            label: 'Custom',
+          ),
+          BottomNavigationBarItem(
+            icon: Container(
+              height:35,
+              child: SvgPicture.asset(
+                ImageAsset.orders,height: 20,
+                color: currentIndex == 2 ? Color(0xffFFD400) : Colors.black,
+              ),
+            ),
+            label: 'Orders',
+          ),
+          BottomNavigationBarItem(
+            icon: Container(
+              height: 35,
+              child: SvgPicture.asset(
+                ImageAsset.profile,height: 20,
+                color: currentIndex == 3 ? Color(0xffFFD400) : Colors.black,
+              ),
+            ),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }

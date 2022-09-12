@@ -9,18 +9,19 @@ import '../../abstracts/states/error_state.dart';
 import '../../abstracts/states/loading_state.dart';
 import '../../abstracts/states/state.dart';
 import '../../home_page/response/homepage_response.dart';
-import '../repository/Restaurants_repository.dart';
-import '../request/Restaurants_request.dart';
-import '../ui/screens/restaurant_list.dart';
-import '../ui/state/restaurant_sucess.dart';
+import '../repository/custom_repository.dart';
+import '../request/custom_request.dart';
+import '../response/custom_Response.dart';
+import '../ui/screens/custom_list.dart';
+import '../ui/state/custom_sucess.dart';
 
 @injectable
-class RestaurantseCubit extends Cubit<States> {
-  final RestaurantsRepository _restaurantseRepository;
+class CustomCubit extends Cubit<States> {
+  final CustomRepository _customRepository;
 
-  RestaurantseCubit(this._restaurantseRepository) : super(LoadingState());
+  CustomCubit(this._customRepository) : super(LoadingState());
 
-  getRestaurants(RestaurantPageState state) {
+  getAddress(CustomPageState state) {
     // final HomePageRepository _homePageRepositoryy = getIt<HomePageRepository>();
     // final HomePageRepository _homePageRepositoryyy = HomePageRepository(getIt<ApiClient>(), getIt<AuthService>());
     //
@@ -31,23 +32,23 @@ class RestaurantseCubit extends Cubit<States> {
     // final HomePageRepository homePageRepository = HomePageRepository(apiClient, authService);
 
     emit(LoadingState());
-    _restaurantseRepository.getRestaurants().then((value) {
+    _customRepository.getAdresses().then((value) {
       if (value == null) {
         emit(ErrorState(
             errorMessage: 'Connection error',
             retry: () {
-              getRestaurants(state);
+              getAddress(state);
             }));
       } else if (value.code == 200) {
-        HomePageModel restaurants =
-        HomePageModel.fromJson(value.data.insideData);
-        // List<HomePageModel> fol = [];
-        // for (var item in value.data.insideData) {
-        //   fol.add(HomePageModel.fromJson(item));
-        // }
+        // HomePageModel restaurants =
+        // HomePageModel.fromJson(value.data.insideData);
+        List<CustomModel> fol = [];
+        for (var item in value.data.insideData) {
+          fol.add(CustomModel.fromJson(item));
+        }
 
         emit(
-          RestaurantSuccess(restaurantsModel: restaurants, restaurantPageState: state,),
+          CustomSuccess(customPageState: state),
         );
       }
     });

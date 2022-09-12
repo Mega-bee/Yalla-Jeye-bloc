@@ -5,11 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/utils/logger/logger.dart';
 import 'abstracts/module/rout_module.dart';
+import 'custom/custom_module.dart';
 import 'di/di_config.dart';
 import 'hive/hive.dart';
 import 'navigation_bar/navigator_module.dart';
 import 'navigation_bar/navigator_routes.dart';
 import 'notification/Notification_module.dart';
+import 'order/order_module.dart';
 
 // final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 // FlutterLocalNotificationsPlugin();
@@ -44,10 +46,14 @@ void main() async {
 class MyApp extends StatefulWidget {
   final NavigatorModule _navigatorModule;
   final NotificationModule _notificationModule;
+  final OrderModule _orderModule;
+  final CustomModule _customModule;
 
   MyApp(
     this._navigatorModule,
     this._notificationModule,
+    this._orderModule,
+    this._customModule,
   );
 
   @override
@@ -67,6 +73,10 @@ class _MyAppState extends State<MyApp> {
     Map<String, WidgetBuilder> fullRoutesList,
   ) {
     return MaterialApp(
+      theme: ThemeData(
+        primaryColor: Color(0xffFFD400),
+        fontFamily: 'Roboto',
+      ),
 //      navigatorKey: GlobalVariable.navState,
 //        scrollBehavior: MyCustomScrollBehavior(),
       debugShowCheckedModeBanner: false,
@@ -85,6 +95,7 @@ class _MyAppState extends State<MyApp> {
       locale: Locale.fromSubtags(
         languageCode: "en",
       ),
+
       // localizationsDelegates: [
       //   S.delegate,
       //   GlobalMaterialLocalizations.delegate,

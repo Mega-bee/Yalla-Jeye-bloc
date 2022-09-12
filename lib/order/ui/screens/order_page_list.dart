@@ -2,49 +2,55 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import '../../../abstracts/states/state.dart';
-import '../../request/Restaurants_request.dart';
-import '../../state_manager/Restaurants.dart';
+import '../../request/order_request.dart';
+import '../../state_manager/order.dart';
 
 @injectable
-class RestaurantPage extends StatefulWidget {
-  final RestaurantseCubit cubit;
+class Order extends StatefulWidget {
+  final OrderCubit cubit;
 
-  const RestaurantPage(this.cubit);
+  const Order(this.cubit);
 
   @override
-  State<RestaurantPage> createState() => RestaurantPageState();
+  State<Order> createState() => OrderState();
 }
 
-class RestaurantPageState extends State<RestaurantPage> {
+class OrderState extends State<Order> {
   @override
-
   void initState() {
-    widget.cubit.getRestaurants(this);
+    widget.cubit.getOrder(this);
   }
-
-
 
   void refresh() {
     if (mounted) {
       setState(() {});
     }
   }
+
+
+
   @override
   Widget build(BuildContext context) {
+    var args = ModalRoute.of(context)?.settings.arguments;
+
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+          'Add order',
+        ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 5,
         centerTitle: true,
-       actions: [
-         Icon(Icons.shopping_cart,color: Colors.redAccent,)
-       ],
       ),
-      body: BlocBuilder<RestaurantseCubit, States>(
+      body: BlocBuilder<OrderCubit, States>(
         bloc: widget.cubit,
         builder: (context, state) {
           return state.getUI(context);
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: (){},
       ),
     );
   }
