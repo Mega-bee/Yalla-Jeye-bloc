@@ -1,4 +1,4 @@
-class CustomModel {
+class AddressModel {
   int? id;
   String? city;
   int? cityId;
@@ -7,10 +7,10 @@ class CustomModel {
   int? floorNumber;
   String? title;
   String? description;
-  Null? longitude;
-  Null? latitude;
+  String? longitude;
+  String? latitude;
 
-  CustomModel(
+  AddressModel(
       {this.id,
         this.city,
         this.cityId,
@@ -22,7 +22,7 @@ class CustomModel {
         this.longitude,
         this.latitude});
 
-  CustomModel.fromJson(Map<String, dynamic> json) {
+  AddressModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     city = json['city'];
     cityId = json['cityId'];

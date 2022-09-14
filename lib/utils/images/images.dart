@@ -7,6 +7,9 @@ class ImageAsset {
   static const profile = ROOT +'profile.svg';
   static const scooterr = ROOT +'delivery.svg';
   static const cancel_Icon = ROOT +'cancelicon.svg';
+  static const home = ROOT +'home.svg';
+  static const parents = ROOT +'parents.svg';
+  static const work = ROOT +'work.svg';
 
 }
 

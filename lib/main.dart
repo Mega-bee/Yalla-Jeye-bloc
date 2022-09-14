@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/utils/logger/logger.dart';
 import 'abstracts/module/rout_module.dart';
+import 'addresses/address_module.dart';
 import 'custom/custom_module.dart';
 import 'di/di_config.dart';
 import 'hive/hive.dart';
@@ -48,12 +49,14 @@ class MyApp extends StatefulWidget {
   final NotificationModule _notificationModule;
   final OrderModule _orderModule;
   final CustomModule _customModule;
+  final AddressModule _addressModule;
 
   MyApp(
     this._navigatorModule,
     this._notificationModule,
     this._orderModule,
     this._customModule,
+    this._addressModule,
   );
 
   @override

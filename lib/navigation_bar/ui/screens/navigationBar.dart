@@ -63,7 +63,7 @@ class _NavigationbarrState extends State<Navigationbar> {
             icon: Container(
               height: 35,
               child: SvgPicture.asset(
-                ImageAsset.scooterr,height: 45,
+                ImageAsset.scooterr,height: 28,
                 color: currentIndex == 0 ? Color(0xffFFD400) : Colors.black,
 
               ),
@@ -74,7 +74,7 @@ class _NavigationbarrState extends State<Navigationbar> {
             icon: Container(
               height: 35,
               child: SvgPicture.asset(
-                ImageAsset.custom,height: 35,
+                ImageAsset.custom,height: 30,
                 color: currentIndex == 1 ? Color(0xffFFD400) : Colors.black,
               ),
             ),
@@ -84,7 +84,7 @@ class _NavigationbarrState extends State<Navigationbar> {
             icon: Container(
               height:35,
               child: SvgPicture.asset(
-                ImageAsset.orders,height: 20,
+                ImageAsset.orders,height: 15,
                 color: currentIndex == 2 ? Color(0xffFFD400) : Colors.black,
               ),
             ),
@@ -94,7 +94,7 @@ class _NavigationbarrState extends State<Navigationbar> {
             icon: Container(
               height: 35,
               child: SvgPicture.asset(
-                ImageAsset.profile,height: 20,
+                ImageAsset.profile,height: 15,
                 color: currentIndex == 3 ? Color(0xffFFD400) : Colors.black,
               ),
             ),
