@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/di/di_config.dart';
 import 'package:untitled1/module_auth/service/auth_service.dart';
@@ -9,6 +11,9 @@ import '../../abstracts/states/error_state.dart';
 import '../../abstracts/states/loading_state.dart';
 import '../../abstracts/states/state.dart';
 import '../../home_page/response/homepage_response.dart';
+import '../../navigation_bar/ui/screens/navigationBar.dart';
+import '../../order/order_route.dart';
+import '../../utils/Colors/colors.dart';
 import '../repository/custom_repository.dart';
 import '../request/custom_request.dart';
 import '../response/custom_Response.dart';
@@ -50,6 +55,30 @@ class CustomCubit extends Cubit<States> {
         emit(
           CustomSuccess(customPageState: state),
         );
+      }
+    });
+  }
+
+  CustomOrder({
+    required CustomOrderRequest request, required CustomPageState customPageState}) {
+    emit(
+      LoadingState(),
+    );
+    _customRepository.CustomOrder(request).then((value) {
+      if (value == null) {
+        Fluttertoast.showToast(
+            msg: 'something went wrong', backgroundColor: Colors.red);
+      } else if (value.code == 200) {
+        emit(
+          CustomSuccess(customPageState: customPageState),
+        );
+        NavigationbarrState? stateObject = customPageState.context.findAncestorStateOfType<NavigationbarrState>();
+
+        stateObject?.currentIndex = 2;
+        stateObject?.setState(() {
+
+        });
+
       }
     });
   }

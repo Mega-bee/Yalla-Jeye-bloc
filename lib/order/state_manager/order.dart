@@ -19,44 +19,33 @@ import '../ui/state/order_sucess.dart';
 
 @injectable
 class OrderCubit extends Cubit<States> {
-  final HomePageRepository _orderRepository;
+  final OrderRepository _orderRepository;
 
   OrderCubit(this._orderRepository) : super(LoadingState());
 
-  getOrder(OrderState state) {
-    // final HomePageRepository _homePageRepositoryy = getIt<HomePageRepository>();
-    // final HomePageRepository _homePageRepositoryyy = HomePageRepository(getIt<ApiClient>(), getIt<AuthService>());
-    //
-    //
-    // final Logger _logger = Logger();
-    // final ApiClient apiClient = ApiClient(_logger);
-    // final AuthService authService = AuthService(_prefsHelper);
-    // final HomePageRepository homePageRepository = HomePageRepository(apiClient, authService);
-
+  getOrder(OrderState Orderstatee) {
     emit(LoadingState());
-    _orderRepository.getHomePage().then((value) {
+    _orderRepository.getOrder().then((value) {
       if (value == null) {
         emit(ErrorState(
             errorMessage: 'Connection error',
             retry: () {
-              getOrder(state);
+              getOrder(Orderstatee);
             }));
       } else if (value.code == 200) {
-        HomePageModel orders = HomePageModel.fromJson(value.data.insideData);
-        // List<DestenationModel> order = [];
-        // for (var item in value.data.insideData) {
-        //   order.add(DestenationModel.fromJson(item));
-        // }
+        // HomePageModel orders = HomePageModel.fromJson(value.data.insideData);
+        List<OrderResponse> order = [];
+        for (var item in value.data.insideData) {
+          order.add(OrderResponse.fromJson(item));
+        }
 
         emit(
-          OrderSuccess(
-            orderItem: orders.itemTypes ?? [],
-            orderState: state,
+          OrderPageSuccess(
+            order: order,
+            state: Orderstatee,
           ),
         );
       }
     });
   }
-
-
 }

@@ -1,13 +1,13 @@
 
 class EditAddressRequest {
   int? id;
+  String? Title;
+  String? Description;
   int? Cityid;
   String? Street;
   String? BuildingName;
-  String? Description;
   int? FloorNumber;
   String? Longitude;
-  String? Title;
   String? Latitude;
 
 

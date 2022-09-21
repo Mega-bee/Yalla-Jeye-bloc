@@ -7,6 +7,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../abstracts/states/state.dart';
 
+import '../../../utils/Colors/colors.dart';
 import '../../../utils/images/images.dart';
 import '../../address_module_route.dart';
 import '../../request/edit_address_request.dart';
@@ -21,17 +22,20 @@ class EditAddressPageSuccess extends States {
   EditAddressPageSuccess(
       {required this.editAddressPageState, required this.addressmodel})
       : super(false) {
-    street.text = addressmodel.street ?? "";
-    building.text = addressmodel.buildingName ?? "";
-    apartment.text = addressmodel.description ?? "";
+   street.text = addressmodel.street??"";
+   description.text = addressmodel.description??"";
+   building.text = addressmodel.buildingName??"";
+   street.text = addressmodel.street??"";
+   title.text = addressmodel.title??"";
   }
 
    var street = TextEditingController();
+   var description = TextEditingController();
    var building = TextEditingController();
-   var apartment = TextEditingController();
-   var phoneNumber = TextEditingController();
    var instruction = TextEditingController();
+   var title = TextEditingController();
    var nickname = TextEditingController();
+
 
   @override
   Widget getUI(BuildContext context) {
@@ -197,6 +201,67 @@ class EditAddressPageSuccess extends States {
                     //Do something with the user input.
                   },
                   autofillHints: [AutofillHints.name],
+                  controller: title,
+                  decoration: InputDecoration(
+                    hintText: 'Title',
+                    hintStyle: TextStyle(
+                      color: Color.fromRGBO(204, 204, 204, 0.5),
+                    ),
+                    contentPadding:
+                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: Color.fromRGBO(204, 204, 204, 0.5),
+                          width: 2.0),
+                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey, width: 2.0),
+                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextField(
+                  onChanged: (value) {
+                    //Do something with the user input.
+                  },
+                  controller: description,
+                  decoration: InputDecoration(
+                    hintText: 'Decription',
+                    hintStyle: TextStyle(
+                      color: Color.fromRGBO(204, 204, 204, 0.5),
+                    ),
+                    contentPadding:
+                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: Color.fromRGBO(204, 204, 204, 0.5),
+                          width: 2.0),
+                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey, width: 2.0),
+                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 17,
+                ),
+                TextField(
+                  onChanged: (value) {
+                    //Do something with the user input.
+                  },
+                  autofillHints: [AutofillHints.name],
                   controller: street,
                   decoration: InputDecoration(
                     hintText: 'Street',
@@ -204,7 +269,7 @@ class EditAddressPageSuccess extends States {
                       color: Color.fromRGBO(204, 204, 204, 0.5),
                     ),
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
+                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     ),
@@ -223,18 +288,22 @@ class EditAddressPageSuccess extends States {
                 SizedBox(
                   height: 17,
                 ),
+
+
+
+
                 TextField(
                   onChanged: (value) {
                     //Do something with the user input.
                   },
                   controller: building,
                   decoration: InputDecoration(
-                    hintText: 'Building',
+                    hintText: 'Building name',
                     hintStyle: TextStyle(
                       color: Color.fromRGBO(204, 204, 204, 0.5),
                     ),
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
+                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     ),
@@ -253,66 +322,7 @@ class EditAddressPageSuccess extends States {
                 SizedBox(
                   height: 17,
                 ),
-                TextField(
-                  onChanged: (value) {
-                    //Do something with the user input.
-                  },
-                  controller: apartment,
-                  decoration: InputDecoration(
-                    hintText: 'Apartment',
-                    hintStyle: TextStyle(
-                      color: Color.fromRGBO(204, 204, 204, 0.5),
-                    ),
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          color: Color.fromRGBO(204, 204, 204, 0.5),
-                          width: 2.0),
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey, width: 2.0),
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 17,
-                ),
-                TextField(
-                    onChanged: (value) {
-                      //Do something with the user input.
-                    },
-                    controller: phoneNumber,
-                    decoration: InputDecoration(
-                      hintText: 'Phone number',
-                      hintStyle: TextStyle(
-                        color: Color.fromRGBO(204, 204, 204, 0.5),
-                      ),
-                      contentPadding: EdgeInsets.symmetric(
-                          vertical: 20.0, horizontal: 13.0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: Color.fromRGBO(204, 204, 204, 0.5),
-                            width: 2.0),
-                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey, width: 2.0),
-                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      ),
-                    ),
-                    keyboardType: TextInputType.number),
-                SizedBox(
-                  height: 17,
-                ),
+
                 TextField(
                   onChanged: (value) {
                     //Do something with the user input.
@@ -323,7 +333,7 @@ class EditAddressPageSuccess extends States {
                       color: Color.fromRGBO(204, 204, 204, 0.5),
                     ),
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
+                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     ),
@@ -342,33 +352,7 @@ class EditAddressPageSuccess extends States {
                 SizedBox(
                   height: 17,
                 ),
-                TextField(
-                  onChanged: (value) {
-                    //Do something with the user input.
-                  },
-                  controller: instruction,
-                  decoration: InputDecoration(
-                    hintText: 'Instruction',
-                    hintStyle: TextStyle(
-                      color: Color.fromRGBO(204, 204, 204, 0.5),
-                    ),
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          color: Color.fromRGBO(204, 204, 204, 0.5),
-                          width: 2.0),
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey, width: 2.0),
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    ),
-                  ),
-                ),
+
               ],
             ),
             SizedBox(
@@ -378,7 +362,7 @@ class EditAddressPageSuccess extends States {
               style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.only(
                       left: 150, right: 150, top: 16, bottom: 16),
-                  backgroundColor: Color(0xffFFD400),
+                  backgroundColor: redColor,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(13),
@@ -391,8 +375,8 @@ class EditAddressPageSuccess extends States {
                   id: addressmodel.id,
                   Cityid: addressmodel.cityId,
                   BuildingName: building.text,
-                  Description: apartment.text,
-                  Title: "",
+                  Description: description.text,
+                  Title: title.text,
                   Street: street.text,
                 ));
                 Navigator.pop(context,true);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
 import '../../../abstracts/states/state.dart';
 import '../../request/order_request.dart';
@@ -21,6 +22,11 @@ class OrderState extends State<Order> {
     widget.cubit.getOrder(this);
   }
 
+  getOrder(){
+    widget.cubit.getOrder(this);
+  }
+
+
   void refresh() {
     if (mounted) {
       setState(() {});
@@ -36,11 +42,14 @@ class OrderState extends State<Order> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Add order',
+          'Add order',style: GoogleFonts.poppins(
+          fontStyle: FontStyle.normal,
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
         ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 5,
-        centerTitle: true,
       ),
       body: BlocBuilder<OrderCubit, States>(
         bloc: widget.cubit,
@@ -48,10 +57,7 @@ class OrderState extends State<Order> {
           return state.getUI(context);
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: (){},
-      ),
+
     );
   }
 }

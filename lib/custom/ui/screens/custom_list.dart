@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
 import '../../../abstracts/states/state.dart';
 import '../../request/custom_request.dart';
@@ -25,6 +26,10 @@ class CustomPageState extends State<CustomPage> {
     );
   }
 
+  CustomOrder(CustomOrderRequest request){
+    widget.cubit.CustomOrder(customPageState: this,request: request);
+  }
+
   void refresh() {
     if (mounted) {
       setState(() {});
@@ -38,7 +43,11 @@ class CustomPageState extends State<CustomPage> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
           "Custom order",
-          style: TextStyle(color: Colors.black),
+          style: GoogleFonts.poppins(
+            fontStyle: FontStyle.normal,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         elevation: 1,
         // centerTitle: true,

@@ -8,15 +8,18 @@ import 'package:untitled1/utils/images/images.dart';
 import '../../../custom/ui/screens/custom_list.dart';
 import '../../../home_page/ui/screens/home_page_list.dart';
 import '../../../notification/ui/screens/Notification_list.dart';
+import '../../../order/ui/screens/order_page_list.dart';
+import '../../../profile/ui/state/profile_success.dart';
+import '../../../utils/Colors/colors.dart';
 
 @injectable
 class Navigationbar extends StatefulWidget {
   @override
-  State<Navigationbar> createState() => _NavigationbarrState();
+  State<Navigationbar> createState() => NavigationbarrState();
 }
 
-class _NavigationbarrState extends State<Navigationbar> {
-  late int currentIndex;
+class NavigationbarrState extends State<Navigationbar> {
+    int currentIndex = 0;
 
   late List<Widget> _pages;
 
@@ -27,10 +30,12 @@ class _NavigationbarrState extends State<Navigationbar> {
     _pages = [
       getIt<HomePage>(),
       getIt<CustomPage>(),
-      getIt<HomePage>(),
-      getIt<NotificationPage>(),
+      getIt<Order>(),
+      ProfileSuccess(),
     ];
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +49,9 @@ class _NavigationbarrState extends State<Navigationbar> {
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.white,
         showUnselectedLabels: true,
-        selectedItemColor: Color(0xffFFD400),
+        selectedItemColor: redColor,
         selectedLabelStyle: TextStyle(
-          color: Color(0xffFFD400),
+          color: redColor,
 
         ),
         unselectedLabelStyle: TextStyle(
@@ -64,7 +69,7 @@ class _NavigationbarrState extends State<Navigationbar> {
               height: 35,
               child: SvgPicture.asset(
                 ImageAsset.scooterr,height: 28,
-                color: currentIndex == 0 ? Color(0xffFFD400) : Colors.black,
+                color: currentIndex == 0 ? redColor: Colors.black,
 
               ),
             ),
@@ -75,7 +80,7 @@ class _NavigationbarrState extends State<Navigationbar> {
               height: 35,
               child: SvgPicture.asset(
                 ImageAsset.custom,height: 30,
-                color: currentIndex == 1 ? Color(0xffFFD400) : Colors.black,
+                color: currentIndex == 1 ? redColor : Colors.black,
               ),
             ),
             label: 'Custom',
@@ -85,7 +90,7 @@ class _NavigationbarrState extends State<Navigationbar> {
               height:35,
               child: SvgPicture.asset(
                 ImageAsset.orders,height: 15,
-                color: currentIndex == 2 ? Color(0xffFFD400) : Colors.black,
+                color: currentIndex == 2 ? redColor : Colors.black,
               ),
             ),
             label: 'Orders',
@@ -95,7 +100,7 @@ class _NavigationbarrState extends State<Navigationbar> {
               height: 35,
               child: SvgPicture.asset(
                 ImageAsset.profile,height: 15,
-                color: currentIndex == 3 ? Color(0xffFFD400) : Colors.black,
+                color: currentIndex == 3 ? redColor : Colors.black,
               ),
             ),
             label: 'Profile',

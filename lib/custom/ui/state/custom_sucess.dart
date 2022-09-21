@@ -3,11 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:untitled1/addresses/address_module_route.dart';
+import 'package:untitled1/custom/request/custom_request.dart';
 import 'package:untitled1/custom/response/custom_Response.dart';
 
 import '../../../abstracts/states/state.dart';
+import '../../../addresses/response/address_Response.dart';
 import '../../../home_page/response/homepage_response.dart';
 import '../../../home_page/ui/widget/menu_details.dart';
+import '../../../order/order_route.dart';
+import '../../../utils/Colors/colors.dart';
 import '../../../utils/cupertino/cupertino_show_sheet.dart';
 import '../screens/custom_list.dart';
 import '../widget/custom_address_page.dart';
@@ -20,11 +24,10 @@ class CustomSuccess extends States {
   CustomSuccess({required this.customPageState}) : super(false);
 
   Widget buildDatePicker() => SizedBox(
-    height: 180,
-    child: CupertinoDatePicker(
+        height: 180,
+        child: CupertinoDatePicker(
           maximumYear: DateTime.now().year,
           minimumYear: DateTime.now().year,
-
           initialDateTime: datetime,
           mode: CupertinoDatePickerMode.date,
           onDateTimeChanged: (dateTime) {
@@ -32,7 +35,13 @@ class CustomSuccess extends States {
             customPageState.refresh();
           },
         ),
-  );
+      );
+
+  String yourAddress = 'l';
+  AddressModel model = AddressModel();
+  AddressModel model2 = AddressModel();
+
+  TextEditingController custom = TextEditingController();
 
   @override
   Widget getUI(BuildContext context) {
@@ -52,8 +61,8 @@ class CustomSuccess extends States {
                   children: [
                     Text(
                       "Your order",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                     SizedBox(
                       height: 15,
@@ -63,6 +72,7 @@ class CustomSuccess extends States {
                       onChanged: (value) {
                         //Do something with the user input.
                       },
+                      controller: custom,
                       decoration: InputDecoration(
                         hintText: 'What do you want to order?',
                         hintStyle: TextStyle(
@@ -79,82 +89,82 @@ class CustomSuccess extends States {
                           borderSide: const BorderSide(
                               color: Color.fromRGBO(204, 204, 204, 0.5),
                               width: 1.5),
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(10.0)),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                          BorderSide(color: Colors.grey, width: 2.0),
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(10.0)),
+                              BorderSide(color: Colors.grey, width: 2.0),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 10, bottom: 10, left: 15, right: 15),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Delivery time",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                showSheet(context, child: Container(
-                                  color: Colors.white,
-                                    height:300,
-                                    child: buildDatePicker()),
-                                    onClicked: () {
-                                  final value = DateFormat('MM/dd/yyy').format(datetime);
-                                  Navigator.pop(context);
-                                });
-                              },
-                              style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.only(
-                                  left: 23,
-                                  right: 23,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                side: BorderSide(
-                                  width: 1.0,
-                                  color: Color(0xffFFD400),
-                                ),
-                              ),
-                              child: Text(
-                                'Change',
-                                style: TextStyle(
-                                  color: Color(0xffFFD400),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Text("In 30-45 mins"),
-                        SizedBox(
-                          height: 9,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(10.0),
+              //   child: Card(
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(14),
+              //     ),
+              //     child: Padding(
+              //       padding: const EdgeInsets.only(
+              //           top: 10, bottom: 10, left: 15, right: 15),
+              //       child: Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           Row(
+              //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //             children: [
+              //               Text(
+              //                 "Delivery time",
+              //                 style: TextStyle(
+              //                     fontWeight: FontWeight.bold, fontSize: 16),
+              //               ),
+              //               TextButton(
+              //                 onPressed: () {
+              //                   showSheet(context,
+              //                       child: Container(
+              //                           color: Colors.white,
+              //                           height: 300,
+              //                           child: buildDatePicker()),
+              //                       onClicked: () {
+              //                     final value =
+              //                         DateFormat('MM/dd/yyy').format(datetime);
+              //                     Navigator.pop(context);
+              //                   });
+              //                 },
+              //                 style: ElevatedButton.styleFrom(
+              //                   padding: EdgeInsets.only(
+              //                     left: 23,
+              //                     right: 23,
+              //                   ),
+              //                   shape: RoundedRectangleBorder(
+              //                     borderRadius: BorderRadius.circular(5),
+              //                   ),
+              //                   side: BorderSide(
+              //                     width: 1.0,
+              //                     color: redColor
+              //                   ),
+              //                 ),
+              //                 child: Text(
+              //                   'Change',
+              //                   style: TextStyle(
+              //                     color: redColor
+              //                   ),
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //           Text("In 30-45 mins"),
+              //           SizedBox(
+              //             height: 9,
+              //           )
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Card(
@@ -180,7 +190,11 @@ class CustomSuccess extends States {
                                   context,
                                   AddressRoutes.address,
                                   // arguments: widget.businessInfoModel
-                                );
+                                ).then((value) {
+                                  value as AddressModel;
+                                  model2 = value;
+                                  customPageState.refresh();
+                                });
                               },
                               style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.only(
@@ -190,16 +204,11 @@ class CustomSuccess extends States {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5),
                                 ),
-                                side: BorderSide(
-                                  width: 1.0,
-                                  color: Color(0xffFFD400),
-                                ),
+                                side: BorderSide(width: 1.0, color: redColor),
                               ),
                               child: Text(
                                 'Select',
-                                style: TextStyle(
-                                  color: Color(0xffFFD400),
-                                ),
+                                style: TextStyle(color: redColor),
                               ),
                             ),
                           ],
@@ -208,14 +217,13 @@ class CustomSuccess extends States {
                           height: 3,
                         ),
                         Text(
-                          "Zahle",
-                          style: TextStyle(fontWeight: FontWeight.w400),
+                          "${model2.title ?? "Please select your addreses\nyou want to deliver from"}",
                         ),
                         SizedBox(
-                          height: 5,
+                          height: 10,
                         ),
                         Text(
-                          "street, building, floor",
+                          "${model2.street ?? ""}${model2.buildingName ?? ""}${model2.floorNumber ?? ""}",
                           style: TextStyle(fontWeight: FontWeight.w300),
                         ),
                       ],
@@ -248,7 +256,12 @@ class CustomSuccess extends States {
                                   context,
                                   AddressRoutes.address,
                                   // arguments: widget.businessInfoModel
-                                );
+                                ).then((returnedAddresses) {
+                                  returnedAddresses as AddressModel;
+
+                                  model = returnedAddresses;
+                                  customPageState.refresh();
+                                });
                               },
                               style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.only(
@@ -260,29 +273,21 @@ class CustomSuccess extends States {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5),
                                 ),
-                                side: BorderSide(
-                                  width: 1.0,
-                                  color: Color(0xffFFD400),
-                                ),
+                                side: BorderSide(width: 1.0, color: redColor),
                               ),
                               child: Text(
                                 'Select',
-                                style: TextStyle(
-                                  color: Color(0xffFFD400),
-                                ),
+                                style: TextStyle(color: redColor),
                               ),
                             ),
                           ],
                         ),
-                        Text(
-                          "Zahle",
-                          style: TextStyle(fontWeight: FontWeight.w400),
-                        ),
+                        Text("${model.title ?? "Please select your addreses\nyou want to deliver from"}"),
                         SizedBox(
                           height: 10,
                         ),
                         Text(
-                          "street, building, floor",
+                          "${model.street ?? ""}${model.buildingName ?? ""}${model.floorNumber ?? ""}",
                           style: TextStyle(fontWeight: FontWeight.w300),
                         ),
                       ],
@@ -384,21 +389,21 @@ class CustomSuccess extends States {
           ),
           Container(
             color: Colors.white,
-            child:        ElevatedButton(
+            child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  padding:
-                  EdgeInsets.only(left: 120, right: 120, top: 16, bottom: 16),
-                  backgroundColor: Color(0xffFFD400),
+                  padding: EdgeInsets.only(
+                      left: 120, right: 120, top: 16, bottom: 16),
+                  backgroundColor: redColor,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(13),
                   )),
               onPressed: () {
-                // Navigator.pushNamed(
-                //   context,
-                //   AddressRoutes.Createaddress,
-                //   // arguments: widget.businessInfoModel
-                // );
+                customPageState.CustomOrder(CustomOrderRequest(
+                  Description: custom.text,
+                  DestinationAddressId: model.id,
+                  FromAddressId: model2.id,
+                ));
               },
               child: Text(
                 "Checkout",

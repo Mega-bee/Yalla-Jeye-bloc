@@ -1,19 +1,42 @@
-class DestenationModel {
-  int? id=0;
-  String? name="";
-  String? location="";
-  String? description="";
-  bool? isDeliveryOnly=false;
-  num? price=0;
+class OrderResponse {
+  int? id;
+  String? serialNumber;
+  int? statusId;
+  String? statusName;
+  num? deliveryPrice;
+  num? totalPrice;
+  num? finalDeliveryPrice;
+  List<String>? places;
+  String? destinationAddressTitle;
 
+  // OrderResponse.i? Card():COntainer()
+  // i(){
+  //  if(this.places.where((element) => element.id = 5)){
+  //    this.places.add(value)
+  //  }
+  // }
 
-  DestenationModel.fromJson(Map<String, dynamic> json) {
+  OrderResponse(
+      {this.id,
+        this.serialNumber,
+        this.statusId,
+        this.statusName,
+        this.deliveryPrice,
+        this.totalPrice,
+        this.finalDeliveryPrice,
+        this.places,
+        this.destinationAddressTitle});
+
+  OrderResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
-    location = json['location'];
-    description = json['description'];
-    isDeliveryOnly = json['isDeliveryOnly'] ;
-    price = json['price'] ;
+    serialNumber = json['serialNumber'];
+    statusId = json['statusId'];
+    statusName = json['statusName'];
+    deliveryPrice = json['deliveryPrice'];
+    totalPrice = json['totalPrice'];
+    finalDeliveryPrice = json['finalDeliveryPrice'];
+    places = json['places'].cast<String>();
+    destinationAddressTitle = json['destinationAddressTitle'];
   }
 
 }

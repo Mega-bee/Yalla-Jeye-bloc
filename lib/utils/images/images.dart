@@ -10,8 +10,18 @@ class ImageAsset {
   static const home = ROOT +'home.svg';
   static const parents = ROOT +'parents.svg';
   static const work = ROOT +'work.svg';
+  static const profileSetting = ROOT +'profileSetting.svg';
+  static const addressesSetting = ROOT +'addressesSetting.svg';
+  static const redeem = ROOT +'redeem.svg';
+  static const customerSupport = ROOT +'Customersupport.svg';
+  static const emergencyNumber = ROOT +'Emergencynumber.svg';
+  static const signOut = ROOT +'signout.svg';
+
 
 }
+
+
+
 
 
 

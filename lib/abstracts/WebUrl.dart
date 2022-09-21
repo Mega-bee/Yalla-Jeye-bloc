@@ -1,7 +1,7 @@
 
 class Urls {
   /*--------BASES-------------------*/
-  static const String DOMAIN = 'https://yallajeyiapi.azurewebsites.net/api/';
+  static const String DOMAIN = 'https://yalla-jeye.azurewebsites.net/api/v1/';
 
   static const String BASE_HOME_PAGE = DOMAIN + 'HomePage/';
   static const String BASE_NOTIFICATION = DOMAIN + 'Notifications/';
@@ -16,6 +16,11 @@ class Urls {
   static const CREATE_ADDRESSES = BASE_ADDRESSES + 'CreateAddress';
   static const DELETE_ADDRESSES = BASE_ADDRESSES + 'DeleteAddress/';
   static const EDIT_ADDRESSES = BASE_ADDRESSES + 'UpdateAddress';
+
+  /*-----------------------ORDERS--------------------------------------*/
+  static const CUSTOM_ORDER = BASE_ORDER + 'CustomPlaceOrder';
+  static const GET_ORDER = BASE_ORDER + 'GetOrders';
+  static const GET_ORDERS_DETAILS = BASE_ORDER + 'GetOrder/';
 
 
   /*-----------------------NOTIFICATION----------------------------------*/

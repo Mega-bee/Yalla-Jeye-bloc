@@ -12,6 +12,7 @@ import '../../abstracts/states/loading_state.dart';
 import '../../abstracts/states/state.dart';
 import '../../custom/ui/screens/custom_list.dart';
 import '../../home_page/response/homepage_response.dart';
+import '../../utils/Colors/colors.dart';
 import '../repository/address_repository.dart';
 import '../request/create_address_request.dart';
 import '../request/edit_address_request.dart';
@@ -105,7 +106,7 @@ class AddressCubit extends Cubit<States> {
       } else if (value.code == 200) {
         Fluttertoast.showToast(
           msg: 'Address updated Successfully',
-          backgroundColor: Color(0xffFFD400),
+          backgroundColor: redColor
         );
       }
     });

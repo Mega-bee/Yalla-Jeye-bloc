@@ -15,15 +15,27 @@ class OrderRepository {
   OrderRepository(this._apiClient, this._authService);
 
   Future<WebServiceResponse?> getOrder() async {
-    var token = _authService.getToken();
+    var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiMTIzNDU2OTk5IiwiUElEIjoiNDMyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiYmVhNWQyZjYtMGUzZC00OWE1LWEzNTYtMzRkMzA1ZWE3YzYzIiwibmJmIjoxNjYzNTA3MjQ0LCJleHAiOjE2OTUwNDMyNDQsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzEwIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NDQzMTAifQ.ELZTMuSACJzeHXG-VLj_uHVB80faG1L2CpBPWxhy9-M';
 
     WebServiceResponse? response = await _apiClient.get(
-      Urls.BASE_HOME_PAGE,
+      Urls.GET_ORDER,
       headers: {'Authorization': 'Bearer ' '$token'},
 
     );
     if (response == null) return null;
     return response;
   }
+
+  // Future<WebServiceResponse?> getOrderDetails(String id) async {
+  //   var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiMTIzNDU2OTk5IiwiUElEIjoiNDMyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiYmVhNWQyZjYtMGUzZC00OWE1LWEzNTYtMzRkMzA1ZWE3YzYzIiwibmJmIjoxNjYzNTA3MjQ0LCJleHAiOjE2OTUwNDMyNDQsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzEwIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NDQzMTAifQ.ELZTMuSACJzeHXG-VLj_uHVB80faG1L2CpBPWxhy9-M';
+  //
+  //   WebServiceResponse? response = await _apiClient.get(
+  //     Urls.GET_ORDERS_DETAILS + id,
+  //     headers: {'Authorization': 'Bearer ' '$token'},
+  //
+  //   );
+  //   if (response == null) return null;
+  //   return response;
+  // }
 
 }

@@ -1,6 +1,7 @@
-
 import 'package:hive_flutter/adapters.dart';
 import 'package:injectable/injectable.dart';
+
+import '../custom/model/OrderModel.dart';
 
 class HiveSetUp {
   static Future<void> init() async {
@@ -14,7 +15,7 @@ class HiveSetUp {
 
   static Future<void> publicBoxes() async {
     await Hive.openBox('Authorization');
-    // await Hive.openBox('language');
+    await Hive.openBox('modelList');
     // await Hive.openBox('themeColor');
     // await Hive.openBox('GeneralData');
   }
@@ -43,6 +44,77 @@ class AuthPrefsHelper {
     } catch (e) {
       return false;
     }
+  }
+
+  void setLocation(String cityName) {
+    box.put('cityname', cityName);
+  }
+
+  String? getLocation() {
+    return box.get('cityname') ?? "Zahlee";
+  }
+}
+
+@injectable
+class ListCart {
+  List<CartOrderModel> currentPlaceCart = [];
+  List<CartOrderModel> PlaceCart = [];
+
+  var box = Hive.box('modelList');
+
+  void setModel(List<CartOrderModel> cart) {
+    box.put('modelList', cart);
+  }
+
+  List<CartOrderModel>? getModel() {
+    return box.get('modelList');
+  }
+
+
+  insertNewCardOrder(List<CartOrderModel> listOfOrder){
+    box.clear();
+
+    for (var element in listOfOrder) {
+      box.put('modelList', element);
+    }
+
+  }
+
+  List<CartOrderModel>? updatedCart(String? placeCategory, String? placeName) {
+    // currentPlaceCartObject =  CartOrderModel();
+    CartOrderModel? currentPlaceCartObject = CartOrderModel();
+    if (box.isOpen) {
+      if (box.get('modelList') != null) {
+        currentPlaceCart = getModel()!
+            .where((element) =>
+                element.CategoryName == placeCategory &&
+                element.PlaceName == placeName)
+            .toList();
+
+        PlaceCart == getModel();
+      }
+
+      if (currentPlaceCart.isEmpty) {
+        currentPlaceCartObject.CategoryName = placeCategory ?? "";
+        currentPlaceCartObject.PlaceName = placeName ?? "";
+        currentPlaceCartObject.Description = "";
+        currentPlaceCartObject.isPay = true;
+        currentPlaceCartObject.isCall = true;
+        PlaceCart.add(currentPlaceCartObject);
+      } else {
+        PlaceCart.remove(currentPlaceCartObject);
+        PlaceCart.add(currentPlaceCartObject);
+      }
+    } else {
+      currentPlaceCartObject.CategoryName = placeCategory;
+      currentPlaceCartObject.PlaceName = placeName;
+      currentPlaceCartObject.Description = "";
+      currentPlaceCartObject.isPay = true;
+      currentPlaceCartObject.isCall = true;
+      PlaceCart.add(currentPlaceCartObject);
+    }
+
+    return PlaceCart;
   }
 }
 
@@ -73,23 +145,5 @@ class ThemeHelper {
   }
 }
 
-// @injectable
-// class GeneralDataHelper {
-//   var box = Hive.box('GeneralData');
-//
-//   void setCities(List<HiveCity>? lo) {
-//     box.put('cities', lo);
-//   }
-//
-//   List<HiveCity>? getCities() {
-//     return box.get('cities');
-//   }
-//
-//   void setCategories(List<HiveMainCategory>? lo) {
-//     box.put('categories', lo);
-//   }
-//
-//   List<HiveMainCategory>? getCategories() {
-//     return box.get('categories');
 //   }
 // }

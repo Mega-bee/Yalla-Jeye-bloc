@@ -1,9 +1,29 @@
-class OrderModel{
+import '../../hive/hive.dart';
 
-  String? RestaurantName;
+class CartOrderModel {
+  // int? id;
+  String? CategoryName;
+  String? PlaceName;
   String? Description;
+  bool? isCall;
+  bool? isPay;
+  // bool? Done=false;
 
-  OrderModel({required this.Description,required this.RestaurantName});
+  CartOrderModel({
+     this.Description,
+    // required this.id,
+     this.CategoryName,
+     this.isCall,
+     this.isPay,
+     this.PlaceName,
+    // required this.Done,
+  });
 }
 
- List<OrderModel> orderModelList = [];
+
+
+
+
+
+
+List<CartOrderModel> orderModelList = [];

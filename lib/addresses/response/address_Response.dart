@@ -9,18 +9,22 @@ class AddressModel {
   String? description;
   String? longitude;
   String? latitude;
+  bool? value = false;
+
 
   AddressModel(
       {this.id,
-        this.city,
-        this.cityId,
-        this.street,
-        this.buildingName,
-        this.floorNumber,
-        this.title,
-        this.description,
-        this.longitude,
-        this.latitude});
+      this.city,
+      this.cityId,
+      this.street,
+      this.buildingName,
+      this.floorNumber,
+      this.title,
+      this.description,
+      this.longitude,
+      this.latitude,
+      this.value,
+      });
 
   AddressModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

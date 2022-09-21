@@ -25,6 +25,7 @@ class CreateAddressPage extends StatefulWidget {
 class CreateAddressPageState extends State<CreateAddressPage> {
   @override
   void initState() {
+
     widget.cubit.emit(CreateAddressPageSuccess(state: this));
   }
 
@@ -39,6 +40,7 @@ class CreateAddressPageState extends State<CreateAddressPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(

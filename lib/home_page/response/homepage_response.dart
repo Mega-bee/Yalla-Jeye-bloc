@@ -1,92 +1,143 @@
 class HomePageModel {
   Events? events;
-  ///remove
   List<ItemTypes>? itemTypes;
-  List<DestinationWithPlaces>? destinationsPlaces;
+  List<Destinations>? destinations;
+  List<DestinationWithPlaces>? destinationWithPlaces;
+  int? notificationCount;
 
+  HomePageModel({
+    this.events,
+    this.itemTypes,
+    this.destinations,
+    this.destinationWithPlaces,
+    this.notificationCount,
 
-
+  });
 
   HomePageModel.fromJson(Map<String, dynamic> json) {
     events =
-    json['events'] != null ? Events.fromJson(json['events']) : null;
+        json['events'] != null ? new Events.fromJson(json['events']) : null;
     if (json['itemTypes'] != null) {
       itemTypes = <ItemTypes>[];
       json['itemTypes'].forEach((v) {
-        itemTypes?.add(ItemTypes.fromJson(v));
+        itemTypes!.add(new ItemTypes.fromJson(v));
       });
     }
-
-
+    if (json['destinations'] != null) {
+      destinations = <Destinations>[];
+      json['destinations'].forEach((v) {
+        destinations!.add(new Destinations.fromJson(v));
+      });
+    }
     if (json['destinationWithPlaces'] != null) {
-      destinationsPlaces = <DestinationWithPlaces>[];
+      destinationWithPlaces = <DestinationWithPlaces>[];
       json['destinationWithPlaces'].forEach((v) {
-        destinationsPlaces!.add(DestinationWithPlaces.fromJson(v));
+        destinationWithPlaces!.add(new DestinationWithPlaces.fromJson(v));
       });
     }
-
-
-
+    notificationCount = json['notificationCount'];
   }
 
-
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.events != null) {
+      data['events'] = this.events!.toJson();
+    }
+    if (this.itemTypes != null) {
+      data['itemTypes'] = this.itemTypes!.map((v) => v.toJson()).toList();
+    }
+    if (this.destinations != null) {
+      data['destinations'] = this.destinations!.map((v) => v.toJson()).toList();
+    }
+    if (this.destinationWithPlaces != null) {
+      data['destinationWithPlaces'] =
+          this.destinationWithPlaces!.map((v) => v.toJson()).toList();
+    }
+    data['notificationCount'] = this.notificationCount;
+    return data;
+  }
 }
 
 class Events {
-  List<Ads>? services;
-  List<Ads>? other;
+  List<Services>? services;
 
+  Events({this.services});
 
   Events.fromJson(Map<String, dynamic> json) {
     if (json['services'] != null) {
-      services = <Ads>[];
+      services = <Services>[];
       json['services'].forEach((v) {
-        services?.add(Ads.fromJson(v));
-      });
-    }
-    if (json['other'] != null) {
-      other = <Ads>[];
-      json['other'].forEach((v) {
-        other?.add(Ads.fromJson(v));
+        services!.add(new Services.fromJson(v));
       });
     }
   }
 
-
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.services != null) {
+      data['services'] = this.services!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
-class Ads {
-  int id=0;
-  String title="";
-  String description="";
-  String imageUrl="";
+class Services {
+  int? id;
+  String? title;
+  String? description;
+  String? imageUrl;
+  int? typeId;
+  Null? type;
 
-  Ads();
+  Services(
+      {this.id,
+      this.title,
+      this.description,
+      this.imageUrl,
+      this.typeId,
+      this.type});
 
-  Ads.fromJson(Map<String, dynamic> json) {
-    id = json['id']??0;
-    title = json['title']??"";
-    description = json['description']??"";
-    imageUrl = json['imageUrl']??"";
+  Services.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    title = json['title'];
+    description = json['description'];
+    imageUrl = json['imageUrl'];
+    typeId = json['typeId'];
+    type = json['type'];
   }
 
-
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['title'] = this.title;
+    data['description'] = this.description;
+    data['imageUrl'] = this.imageUrl;
+    data['typeId'] = this.typeId;
+    data['type'] = this.type;
+    return data;
+  }
 }
 
 class ItemTypes {
-  int id=0;
-  String title="";
-  bool checked=false;
+  int? id;
+  String? title;
+  bool? checked;
 
-  ItemTypes(this.title ,this.id ,this.checked , );
+  ItemTypes({this.id, this.title, this.checked});
 
   ItemTypes.fromJson(Map<String, dynamic> json) {
-    id = json['id']??0;
-    title = json['name']??"";
-    checked= false;
+    id = json['id'];
+    title = json['title'];
+    checked = json['checked'];
   }
 
-
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['title'] = this.title;
+    data['checked'] = this.checked;
+    return data;
+  }
 }
 
 class Destinations {
@@ -148,14 +199,16 @@ class Places {
   String? image;
   String? title;
   String? description;
+  String? menu;
 
-  Places({this.id, this.image, this.title, this.description});
+  Places({this.id, this.image, this.title, this.description, this.menu});
 
   Places.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     image = json['image'];
     title = json['title'];
     description = json['description'];
+    menu = json['menu'];
   }
 
   Map<String, dynamic> toJson() {
@@ -164,61 +217,7 @@ class Places {
     data['image'] = this.image;
     data['title'] = this.title;
     data['description'] = this.description;
+    data['menu'] = this.menu;
     return data;
   }
 }
-class DestinationPrice {
-  int? id;
-  int? price;
-  String? name;
-  List<DestinationPlace>? destinationPlace;
-
-  DestinationPrice({this.id, this.price, this.name, this.destinationPlace});
-
-  DestinationPrice.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    price = json['price'];
-    name = json['name'];
-    if (json['destinationPlace'] != null) {
-      destinationPlace = <DestinationPlace>[];
-      json['destinationPlace'].forEach((v) {
-        destinationPlace!.add(new DestinationPlace.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['price'] = this.price;
-    data['name'] = this.name;
-    if (this.destinationPlace != null) {
-      data['destinationPlace'] =
-          this.destinationPlace!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class DestinationPlace {
-  int? id;
-  String? name;
-
-  DestinationPlace({this.id, this.name});
-
-  DestinationPlace.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    return data;
-  }
-}
-
-
-
-
