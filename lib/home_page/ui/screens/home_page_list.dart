@@ -19,8 +19,8 @@ import '../../homepage_route.dart';
 import '../../state_manager/homepage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../widget/google_maps.dart';
-import '../widget/images_details.dart';
+import '../widget/Google_Map/google_maps.dart';
+import '../widget/images_details/images_details.dart';
 import '../widget/order_card_widget.dart';
 
 @injectable

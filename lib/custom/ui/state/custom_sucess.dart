@@ -14,7 +14,6 @@ import '../../../order/order_route.dart';
 import '../../../utils/Colors/colors.dart';
 import '../../../utils/cupertino/cupertino_show_sheet.dart';
 import '../screens/custom_list.dart';
-import '../widget/custom_address_page.dart';
 
 class CustomSuccess extends States {
   CustomPageState customPageState;

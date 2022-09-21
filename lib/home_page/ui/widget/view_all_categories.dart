@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../response/homepage_response.dart';
-import 'images_details.dart';
+import 'images_details/images_details.dart';
 
 class ViewAllCategories extends StatefulWidget {
   String? image;

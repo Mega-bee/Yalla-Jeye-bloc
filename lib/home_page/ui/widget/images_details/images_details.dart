@@ -5,12 +5,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:untitled1/home_page/homepage_route.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../../../addresses/address_module_route.dart';
-import '../../../addresses/response/address_Response.dart';
-import '../../../custom/model/OrderModel.dart';
-import '../../../hive/hive.dart';
-import '../../../utils/Colors/colors.dart';
-import '../../../utils/images/images.dart';
+import '../../../../addresses/address_module_route.dart';
+import '../../../../addresses/response/address_Response.dart';
+import '../../../../custom/model/OrderModel.dart';
+import '../../../../hive/hive.dart';
+import '../../../../utils/Colors/colors.dart';
+import '../../../../utils/images/images.dart';
 
 class ImageDetails extends StatefulWidget {
   String? title;

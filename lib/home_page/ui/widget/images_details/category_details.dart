@@ -5,13 +5,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../../../addresses/address_module_route.dart';
-import '../../../addresses/response/address_Response.dart';
-import '../../../custom/model/OrderModel.dart';
-import '../../../utils/Colors/colors.dart';
-import '../../../utils/images/images.dart';
-import '../../homepage_route.dart';
-import '../../response/homepage_response.dart';
+import '../../../../addresses/address_module_route.dart';
+import '../../../../addresses/response/address_Response.dart';
+import '../../../../custom/model/OrderModel.dart';
+import '../../../../utils/Colors/colors.dart';
+import '../../../../utils/images/images.dart';
+import '../../../homepage_route.dart';
+import '../../../response/homepage_response.dart';
 import 'images_details.dart';
 
 class CategoryDetails extends StatefulWidget {

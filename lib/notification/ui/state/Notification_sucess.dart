@@ -1,12 +1,9 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import '../../../abstracts/states/state.dart';
-import '../../../home_page/response/homepage_response.dart';
 import '../../../utils/images/images.dart';
 import '../../response/Notification_response.dart';
-import '../screens/Notification_list.dart';
+import '../widget/Notification_card.dart';
 
 class NotificationSuccess extends States {
   final List<NotificationModel> notificationModel;
@@ -20,42 +17,10 @@ class NotificationSuccess extends States {
     return ListView.builder(
       itemCount: notificationModel.length,
       itemBuilder: (context, index) {
-        return Card(
-          child: ListTile(
-            trailing: Text(
-              "${DateFormat.yMd().add_jm().format(
-                    DateTime.parse(
-                      notificationModel[index].createdDate.toString(),
-                    ),
-                  )}",
-              style: TextStyle(fontSize: 11, color: Colors.black54),
-            ),
-            leading: CircleAvatar(
-              foregroundImage: AssetImage(
-                ImageAsset.NOTI_IMAGE,
-              ),
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.red,
-              radius: 20,
-            ),
-            title: Text(
-              "${notificationModel[index].title}",
-              style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.redAccent,
-                  fontWeight: FontWeight.bold),
-            ),
-            subtitle: Text(
-              '${notificationModel[index].description}',
-              style: TextStyle(fontSize: 12, color: Colors.black87),
-            ),
-          ),
+        return NotificationCard(
+          notification: notificationModel[index],
         );
-        //   ListTile(
-        //   title: Text(notificationModel[index].title.toString()),
-        //   subtitle: Text(notificationModel[index].description.toString()),
-        //   // trailing: Text(),
-        // );
+
       },
     );
   }

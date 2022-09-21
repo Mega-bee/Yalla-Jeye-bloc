@@ -12,7 +12,7 @@ import 'custom/custom_module.dart';
 import 'di/di_config.dart';
 import 'hive/hive.dart';
 import 'home_page/homepage_module.dart';
-import 'home_page/ui/widget/google_maps.dart';
+import 'home_page/ui/widget/Google_Map/google_maps.dart';
 import 'navigation_bar/navigator_module.dart';
 import 'navigation_bar/navigator_routes.dart';
 import 'notification/Notification_module.dart';

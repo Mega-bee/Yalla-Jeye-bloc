@@ -13,9 +13,12 @@ import '../../../utils/Colors/colors.dart';
 import '../../response/homepage_response.dart';
 import '../../response/homepage_test_model.dart';
 import '../screens/home_page_list.dart';
-import '../widget/category_details.dart';
-import '../widget/homepage_ads_details.dart';
-import '../widget/images_details.dart';
+import '../widget/Carousel_slider_widget/carousel_image_slider.dart';
+import '../widget/images_details/category_details.dart';
+import '../widget/Listview_gridview/destination_with_places_list.dart';
+import '../widget/Listview_gridview/gridView_images_details_homepage.dart';
+import '../widget/images_details/homepage_ads_details.dart';
+import '../widget/images_details/images_details.dart';
 import '../widget/view_all_categories.dart';
 
 class HomePageSuccess extends States {
@@ -35,6 +38,7 @@ class HomePageSuccess extends States {
 
   @override
   Widget getUI(BuildContext context) {
+    ///cutsom cache image manager
     //  final customCacheManager = CacheManager(
     //   Config(
     //     'customCacheKey',
@@ -42,6 +46,7 @@ class HomePageSuccess extends States {
     //     maxNrOfCacheObjects: 100,
     //   ),
     // );
+
     return SafeArea(
       child: RefreshIndicator(
         color: redColor,
@@ -68,54 +73,10 @@ class HomePageSuccess extends States {
                   itemCount: homepage.events!.services!.length,
                   itemBuilder: (BuildContext context, int itemIndex,
                           int pageViewIndex) =>
-                      InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => HomePageAdsDetails(
-                            image:
-                                homepage.events!.services![itemIndex].imageUrl,
-                          ),
-                        ),
-                      );
-                    },
-                    child: Center(
-                      child: Container(
-                        width: double.infinity,
-                        child: Stack(
-                          children: [
-                            CachedNetworkImage(
-                              // cacheManager: customCacheManager,
-                              // maxHeightDiskCache: 100,
-                              key: UniqueKey(),
-                              imageUrl: homepage
-                                  .events!.services![itemIndex].imageUrl
-                                  .toString(),
-                              imageBuilder: (context, imageProvider) =>
-                                  Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.fitWidth,
-                                  ),
-                                ),
-                              ),
-                              placeholder: (context, url) => Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: LoadingAnimationWidget.inkDrop(
-                                    color: Theme.of(context).primaryColor,
-                                    size: 20),
-                              ),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  CarouselImageSlider(
+                    homepage: homepage,
+                    itemIndex: itemIndex,
+                  )
                 ),
                 SizedBox(
                   height: 55,
@@ -163,59 +124,9 @@ class HomePageSuccess extends States {
                     scrollDirection: Axis.horizontal,
                     itemCount: homepage.destinations!.length,
                     itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    CategoryDetails(
-                                      image:
-                                          homepage.destinations![index].image,
-                                      title:
-                                          homepage.destinations![index].title,
-                                      homePageModel: homepage,
-                                      CategoryName: homepage
-                                          .destinationWithPlaces![index].title,
-                                    )),
-                          );
-                        },
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Stack(
-                            children: [
-                              Card(
-                                elevation: 1,
-                                child: CachedNetworkImage(
-                                  // cacheManager: customCacheManager,
-                                  // maxHeightDiskCache: 100,
-                                  key: UniqueKey(),
-                                  imageUrl: homepage.destinations![index].image
-                                      .toString(),
-                                  fit: BoxFit.cover,
-                                  imageBuilder: (context, imageProvider) =>
-                                      Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(30),
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.fitWidth,
-                                      ),
-                                    ),
-                                  ),
-                                  placeholder: (context, url) => Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: LoadingAnimationWidget.inkDrop(
-                                        color: Theme.of(context).primaryColor,
-                                        size: 20),
-                                  ),
-                                  errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
+                      return GridViewDetails(
+                        homepage: homepage,
+                        index: index,
                       );
                     },
                   ),
@@ -231,175 +142,12 @@ class HomePageSuccess extends States {
                         itemCount: homepage.destinationWithPlaces!.length,
                         itemBuilder: (context, index) {
                           final model = homepage.destinationWithPlaces![index];
-                          return Padding(
-                            padding: const EdgeInsets.only(top: 35.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Text(
-                                        "${model.title}",
-                                        style: GoogleFonts.poppins(
-                                          fontStyle: FontStyle.normal,
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                ViewAllCategories(
-                                                    image: model
-                                                        .places![index].image,
-                                                    title: model.title,
-                                                    name: model
-                                                        .places![index].title,
-                                                    homePageModel: model.places!
-                                                    // homepage: homepage,
-                                                    ),
-                                          ),
-                                        );
-                                      },
-                                      child: Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        color: redColor,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: Text(
-                                    "${model.description}",
-                                    style: GoogleFonts.poppins(
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 12,
-                                        color: Colors.grey),
-                                  ),
-                                ),
-                                SizedBox(height: 34),
-                                Container(
-                                  height: 240,
-                                  child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      physics: BouncingScrollPhysics(),
-                                      itemCount: model.places!.take(6).length,
-                                      itemBuilder: (context, index) {
-                                        final F = model.places![index];
-                                        return Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 18.0),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 4.0, left: 8.0),
-                                                child: Container(
-                                                  width: 280,
-                                                  child: InkWell(
-                                                    onTap: () {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (BuildContext
-                                                                  context) =>
-                                                              ImageDetails(
-                                                            // currentPlace:[],
+                          return DestinationWithPlacesList(
+                            homepage: homepage,
+                            model: model,
+                            index: index,
 
 
-                                                            image: F.image,
-                                                            title: F.title,
-                                                            menu: F.menu,
-                                                            categoryName:
-                                                                model.title,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              14),
-                                                      child: CachedNetworkImage(
-                                                        // cacheManager: customCacheManager,
-                                                        // maxHeightDiskCache: 100,
-                                                        key: UniqueKey(),
-                                                        imageUrl:
-                                                            F.image.toString(),
-                                                        fit: BoxFit.cover,
-                                                        height: 170,
-                                                        imageBuilder: (context,
-                                                                imageProvider) =>
-                                                            Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        30),
-                                                            image:
-                                                                DecorationImage(
-                                                              image:
-                                                                  imageProvider,
-                                                              fit: BoxFit
-                                                                  .fitWidth,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        placeholder:
-                                                            (context, url) =>
-                                                                Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(15.0),
-                                                          child: LoadingAnimationWidget
-                                                              .inkDrop(
-                                                                  color: Theme.of(
-                                                                          context)
-                                                                      .primaryColor,
-                                                                  size: 20),
-                                                        ),
-                                                        errorWidget: (context,
-                                                                url, error) =>
-                                                            Icon(Icons.error),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 15,
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 9.0),
-                                                child: Text(
-                                                  "${F.title}",
-                                                  style: GoogleFonts.poppins(
-                                                    fontStyle: FontStyle.normal,
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        );
-                                      }),
-                                ),
-                              ],
-                            ),
                           );
                         }),
                   ],
@@ -418,14 +166,5 @@ class HomePageSuccess extends States {
     throw UnimplementedError();
   }
 
-  BuildIndicator() {
-    return AnimatedSmoothIndicator(
-        effect: const SlideEffect(
-            dotHeight: 7,
-            dotWidth: 7,
-            dotColor: Colors.red,
-            activeDotColor: Colors.yellow),
-        activeIndex: _currentIndex,
-        count: homepage.events!.services!.length);
-  }
+
 }

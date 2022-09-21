@@ -12,6 +12,7 @@ import '../../../profile/ui/state/profile_success.dart';
 import '../../../utils/Colors/colors.dart';
 import '../../response/order_response.dart';
 import '../screens/order_page_list.dart';
+import '../widget/order_card.dart';
 
 class OrderPageSuccess extends States {
   final List<OrderResponse> order;
@@ -30,52 +31,8 @@ class OrderPageSuccess extends States {
           ? ListView.builder(
               itemCount: order.length,
               itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Card(
-                    elevation: 5,
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: InkWell(
-                        onTap: (){
-                          Navigator.pushNamed(
-                            context,
-                            OrderRoutes.orders,
-                            arguments: order[index].id,
-                          );
-                        },
-                        child: ListTile(
-                          title: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                            children: [
-
-                              Row(
-                                children: [
-                                  Text(
-                                    "Order number: ${order[index].serialNumber}",
-                                  ),
-                                  // Text(
-                                  //   "Status: ${order[index].statusName}",
-                                  // ),
-                                ],
-                              ),
-                              SizedBox(height: 7,),
-                              Text(
-                                "Details: ${order[index].serialNumber}",
-                              ),
-                              SizedBox(height: 7,),
-                              Text(
-                                "Delivery Fees: ${order[index].deliveryPrice}",
-                              ),
-                            ],
-                          ),
-
-                        ),
-                      ),
-                    ),
-                  ),
+                return OrderCard(
+                  order: order[index],
                 );
               })
           : Center(
