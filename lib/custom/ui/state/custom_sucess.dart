@@ -9,7 +9,6 @@ import 'package:untitled1/custom/response/custom_Response.dart';
 import '../../../abstracts/states/state.dart';
 import '../../../addresses/response/address_Response.dart';
 import '../../../home_page/response/homepage_response.dart';
-import '../../../home_page/ui/widget/menu_details.dart';
 import '../../../order/order_route.dart';
 import '../../../utils/Colors/colors.dart';
 import '../../../utils/cupertino/cupertino_show_sheet.dart';

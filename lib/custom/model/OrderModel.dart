@@ -7,7 +7,7 @@ class CartOrderModel {
   String? Description;
   bool? isCall;
   bool? isPay;
-  // bool? Done=false;
+  bool? Done=false;
 
   CartOrderModel({
      this.Description,
@@ -16,7 +16,7 @@ class CartOrderModel {
      this.isCall,
      this.isPay,
      this.PlaceName,
-    // required this.Done,
+     this.Done,
   });
 }
 

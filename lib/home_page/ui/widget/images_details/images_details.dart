@@ -13,6 +13,7 @@ import '../../../../utils/Colors/colors.dart';
 import '../../../../utils/images/images.dart';
 
 class ImageDetails extends StatefulWidget {
+  String? id;
   String? title;
   String? image;
   String? categoryName;
@@ -23,6 +24,7 @@ class ImageDetails extends StatefulWidget {
     this.title,
     this.menu,
     this.categoryName,
+    this.id,
     // required this.currentPlace,
   });
 
@@ -39,8 +41,13 @@ class _ImageDetailsState extends State<ImageDetails>
     with TickerProviderStateMixin {
   bool isChecked = true;
   bool isCheck = true;
+  bool? cox =false ;
   late AnimationController controller;
   AddressModel model = AddressModel();
+  List<String> cartIndex = [];
+  List? fff ;
+  bool? cartBool;
+
 
   @override
   void initState() {
@@ -60,9 +67,7 @@ class _ImageDetailsState extends State<ImageDetails>
   final desc = TextEditingController();
   List<CartOrderModel> creatingCartList = [];
 
-  ListCart cart = ListCart();
-
-
+  // ListCart cart = ListCart();
 
   @override
   Widget build(BuildContext context) {
@@ -282,201 +287,17 @@ class _ImageDetailsState extends State<ImageDetails>
                                             height: 25,
                                           ),
 
-                                          // Card(
-                                          //   shape: RoundedRectangleBorder(
-                                          //     borderRadius:
-                                          //         BorderRadius.circular(25),
-                                          //   ),
-                                          //   child: Padding(
-                                          //     padding:
-                                          //         const EdgeInsets.all(18.0),
-                                          //     child: Column(
-                                          //       crossAxisAlignment:
-                                          //           CrossAxisAlignment.start,
-                                          //       children: [
-                                          //         Padding(
-                                          //           padding:
-                                          //               const EdgeInsets
-                                          //                       .only(
-                                          //                   left: 4.0),
-                                          //           child: Text(
-                                          //             "${widget.title}",
-                                          //             style: TextStyle(
-                                          //               fontSize: 18,
-                                          //               fontWeight:
-                                          //                   FontWeight.bold,
-                                          //             ),
-                                          //           ),
-                                          //         ),
-                                          //         Padding(
-                                          //           padding:
-                                          //               const EdgeInsets
-                                          //                       .only(
-                                          //                   left: 4.0),
-                                          //           child: Text(
-                                          //             "Cart category name",
-                                          //             style: TextStyle(
-                                          //               fontSize: 18,
-                                          //               fontWeight:
-                                          //                   FontWeight.bold,
-                                          //             ),
-                                          //           ),
-                                          //         ),
-                                          //         Padding(
-                                          //           padding:
-                                          //               const EdgeInsets
-                                          //                       .only(
-                                          //                   left: 4.0),
-                                          //           child: Text(
-                                          //             "Cart place name",
-                                          //             style: TextStyle(
-                                          //               fontSize: 18,
-                                          //               fontWeight:
-                                          //                   FontWeight.bold,
-                                          //             ),
-                                          //           ),
-                                          //         ),
-                                          //         SizedBox(
-                                          //           height: 10,
-                                          //         ),
-                                          //         TextField(
-                                          //           // key: _inputKey,
-                                          //           controller: desc,
-                                          //           maxLines: 10,
-                                          //           onChanged: (value) {
-                                          //             //Do something with the user input.
-                                          //           },
-                                          //           decoration: InputDecoration(
-                                          //             hintText:
-                                          //                 'What do you want to order',
-                                          //             hintStyle: TextStyle(
-                                          //               color: Color.fromRGBO(
-                                          //                   204, 204, 204, 0.5),
-                                          //             ),
-                                          //             contentPadding:
-                                          //                 EdgeInsets.symmetric(
-                                          //                     vertical: 10.0,
-                                          //                     horizontal: 20.0),
-                                          //             border:
-                                          //                 OutlineInputBorder(
-                                          //               borderRadius:
-                                          //                   BorderRadius.all(
-                                          //                       Radius.circular(
-                                          //                           5.0)),
-                                          //             ),
-                                          //             enabledBorder:
-                                          //                 OutlineInputBorder(
-                                          //               borderSide:
-                                          //                   const BorderSide(
-                                          //                       color: Color
-                                          //                           .fromRGBO(
-                                          //                               204,
-                                          //                               204,
-                                          //                               204,
-                                          //                               0.5),
-                                          //                       width: 2.0),
-                                          //               borderRadius:
-                                          //                   BorderRadius.all(
-                                          //                 Radius.circular(5.0),
-                                          //               ),
-                                          //             ),
-                                          //             focusedBorder:
-                                          //                 OutlineInputBorder(
-                                          //               borderRadius:
-                                          //                   BorderRadius.all(
-                                          //                 Radius.circular(5.0),
-                                          //               ),
-                                          //             ),
-                                          //           ),
-                                          //         ),
-                                          //         SizedBox(
-                                          //           height: 20,
-                                          //         ),
-                                          //         Column(
-                                          //           crossAxisAlignment:
-                                          //               CrossAxisAlignment
-                                          //                   .start,
-                                          //           mainAxisAlignment:
-                                          //               MainAxisAlignment
-                                          //                   .spaceBetween,
-                                          //           children: [
-                                          //             Text(
-                                          //                 "Before picking your order, driver will :"),
-                                          //             Column(
-                                          //               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          //               children: [
-                                          //                 Row(
-                                          //                   children: [
-                                          //                     Switch(
-                                          //                         dragStartBehavior:
-                                          //                             DragStartBehavior
-                                          //                                 .down,
-                                          //                         activeColor:
-                                          //                             redColor,
-                                          //                         value:
-                                          //                             isChecked,
-                                          //                         onChanged:
-                                          //                             (value) =>
-                                          //                                 setState(
-                                          //                                     () {
-                                          //                                   isChecked =
-                                          //                                       value;
-                                          //                                 })),
-                                          //                     Text(
-                                          //                         "Call ${widget.title} and make order"),
-                                          //                   ],
-                                          //                 ),
-                                          //                 Row(
-                                          //                   children: [
-                                          //                     Switch(
-                                          //                         dragStartBehavior:
-                                          //                             DragStartBehavior
-                                          //                                 .down,
-                                          //                         activeColor:
-                                          //                             redColor,
-                                          //                         value:
-                                          //                             isCheck,
-                                          //                         onChanged:
-                                          //                             (value) =>
-                                          //                                 setState(
-                                          //                                     () {
-                                          //                                   isCheck =
-                                          //                                       value;
-                                          //                                 })),
-                                          //                     Text(
-                                          //                         "Pay ${widget.title} bill"),
-                                          //                   ],
-                                          //                 ),
-                                          //                 // Row(
-                                          //                 //   children: [
-                                          //                 //     Text("Pick"),
-                                          //                 //     Switch(
-                                          //                 //         dragStartBehavior:
-                                          //                 //         DragStartBehavior
-                                          //                 //             .down,
-                                          //                 //         activeColor: redColor,
-                                          //                 //         value: true,
-                                          //                 //         onChanged: (value) =>
-                                          //                 //             setState(() {
-                                          //                 //               isChecked = value;
-                                          //                 //             })),
-                                          //                 //   ],
-                                          //                 // ),
-                                          //               ],
-                                          //             )
-                                          //           ],
-                                          //         )
-                                          //       ],
-                                          //     ),
-                                          //   ),
-                                          // ),
-
                                           ListView.builder(
                                               physics:
                                                   NeverScrollableScrollPhysics(),
                                               shrinkWrap: true,
-                                              itemCount: cart.updatedCart(widget.categoryName, widget.title)!.length +1,
+                                              itemCount:
+                                                  orderModelList.length,
+
+
                                               itemBuilder: (context, index) {
+                                                final mod=orderModelList[index];
+                                               fff=CurrentPlace[index];
 
                                                 return Padding(
                                                   padding:
@@ -486,12 +307,14 @@ class _ImageDetailsState extends State<ImageDetails>
                                                         RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              25),
+                                                        25,
+                                                      ),
                                                     ),
                                                     child: Padding(
                                                       padding:
                                                           const EdgeInsets.all(
-                                                              18.0),
+                                                        18.0,
+                                                      ),
                                                       child: Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
@@ -509,14 +332,14 @@ class _ImageDetailsState extends State<ImageDetails>
                                                                         left:
                                                                             4.0),
                                                                 child: Text(
-                                                                  widget.title.toString(),
-                                                                  style:
-                                                                  TextStyle(
-                                                                    fontSize: 18,
-                                                                    fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                  ),
+                                                                  widget.title
+                                                                      .toString(),
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
                                                                 ),
                                                               ),
                                                               IconButton(
@@ -647,21 +470,7 @@ class _ImageDetailsState extends State<ImageDetails>
                                                                       "Pay ${widget.title} bill"),
                                                                 ],
                                                               ),
-                                                              // Row(
-                                                              //   children: [
-                                                              //     Text("Pick"),
-                                                              //     Switch(
-                                                              //         dragStartBehavior:
-                                                              //         DragStartBehavior
-                                                              //             .down,
-                                                              //         activeColor: redColor,
-                                                              //         value: true,
-                                                              //         onChanged: (value) =>
-                                                              //             setState(() {
-                                                              //               isChecked = value;
-                                                              //             })),
-                                                              //   ],
-                                                              // ),
+
                                                             ],
                                                           )
                                                         ],
@@ -685,22 +494,51 @@ class _ImageDetailsState extends State<ImageDetails>
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        // Padding(
-                                        //   padding:
-                                        //   const EdgeInsets.only(left: 18.0),
-                                        //   child: Text("Total: 99 L.L"),
-                                        // ),
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(left: 18.0),
                                           child: Row(
-                                            // mainAxisAlignment:
-                                            // MainAxisAlignment.spaceBetween,
                                             children: [
                                               TextButton(
                                                 onPressed: () {
+                                                  print("djdjdjdjdjd");
 
-                                                  // cart.insertNewCardOrder(listOfOrder)
+                                                  print(cox);
+
+
+
+
+
+// if(fff. ==false){
+//   cox=!cox!;
+//   print(cox);
+
+
+
+                                                    orderModelList.add(
+                                                        CartOrderModel(
+                                                          PlaceName: widget.title,
+                                                          CategoryName: widget.categoryName,
+                                                          isPay: true,
+                                                          isCall: true,
+                                                          Description: desc.text,
+                                                          Done: true,
+                                                        )
+                                                    );
+                                                    setState((){});
+
+// }else   orderModelList.insert(0,
+//     CartOrderModel(
+//       PlaceName: widget.title,
+//       CategoryName: widget.categoryName,
+//       isPay: true,
+//       isCall: true,
+//       Description: desc.text,
+//       Done: true,
+//     )
+// );
+
+
 
                                                   Navigator.pop(context);
                                                   Navigator.pop(context);
