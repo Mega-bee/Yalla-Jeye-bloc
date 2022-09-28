@@ -56,10 +56,10 @@ class FromAddress {
   String? city;
   int? cityId;
   String? street;
-  Null? buildingName;
+  String? buildingName;
   int? floorNumber;
   String? title;
-  Null? description;
+  String? description;
   String? longitude;
   String? latitude;
 

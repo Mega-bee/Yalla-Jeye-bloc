@@ -13,11 +13,13 @@ import '../../../../utils/Colors/colors.dart';
 import '../../../../utils/images/images.dart';
 
 class ImageDetails extends StatefulWidget {
-  String? id;
+  int? id;
   String? title;
   String? image;
   String? categoryName;
   String? menu;
+  bool? cox;
+  List<CartOrderModel>? creatingCartList = [];
 
   ImageDetails({
     this.image,
@@ -25,7 +27,8 @@ class ImageDetails extends StatefulWidget {
     this.menu,
     this.categoryName,
     this.id,
-    // required this.currentPlace,
+    this.cox,
+    this.creatingCartList,
   });
 
   @override
@@ -39,18 +42,19 @@ ListCart cart = ListCart();
 
 class _ImageDetailsState extends State<ImageDetails>
     with TickerProviderStateMixin {
-  bool isChecked = true;
-  bool isCheck = true;
-  bool? cox =false ;
+  // bool isChecked = true;
+  // bool isCheck = true;
   late AnimationController controller;
   AddressModel model = AddressModel();
   List<String> cartIndex = [];
-  List? fff ;
-  bool? cartBool;
+  List? fff;
 
+  bool? cartBool;
 
   @override
   void initState() {
+    print('-------------------------------');
+    print(widget.creatingCartList);
     controller = BottomSheet.createAnimationController(this);
     controller.duration = Duration(milliseconds: 500);
     super.initState();
@@ -65,7 +69,132 @@ class _ImageDetailsState extends State<ImageDetails>
   Key _inputKey = new GlobalKey(debugLabel: 'inputText');
 
   final desc = TextEditingController();
-  List<CartOrderModel> creatingCartList = [];
+
+  List<TextEditingController>? _controllers = [];
+
+  Widget? listview() {
+    ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: widget.creatingCartList!.length,
+        itemBuilder: (context, index) {
+          _controllers!.add(new TextEditingController(
+              text: widget.creatingCartList![index].Description));
+
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                  25,
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4.0),
+                          child: Text(
+                            widget.creatingCartList![index].PlaceName
+                                .toString(),
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              widget.creatingCartList!.removeAt(index);
+                            });
+                          },
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextField(
+                      controller: _controllers![index],
+                      maxLines: 10,
+                      onChanged: (value) {
+                        //Do something with the user input.
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'What do you want to order',
+                        hintStyle: TextStyle(
+                          color: Color.fromRGBO(204, 204, 204, 0.5),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 20.0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: Color.fromRGBO(204, 204, 204, 0.5),
+                              width: 2.0),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5.0),
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text("Before picking your order, driver will :"),
+                    Column(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Switch(
+                                dragStartBehavior: DragStartBehavior.down,
+                                activeColor: redColor,
+                                value: widget.creatingCartList![index].isCall!,
+                                onChanged: (value) => setState(() {
+                                      widget.creatingCartList![index].isCall =
+                                          value;
+                                    })),
+                            Text("Call ${widget.title} and make order"),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Switch(
+                                dragStartBehavior: DragStartBehavior.down,
+                                activeColor: redColor,
+                                value: widget.creatingCartList![index].isPay!,
+                                onChanged: (value) => setState(() {
+                                      widget.creatingCartList![index].isPay =
+                                          value;
+                                    })),
+                            Text("Pay ${widget.title} bill"),
+                          ],
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
 
   // ListCart cart = ListCart();
 
@@ -286,18 +415,19 @@ class _ImageDetailsState extends State<ImageDetails>
                                           SizedBox(
                                             height: 25,
                                           ),
-
                                           ListView.builder(
                                               physics:
                                                   NeverScrollableScrollPhysics(),
                                               shrinkWrap: true,
-                                              itemCount:
-                                                  orderModelList.length,
-
-
+                                              itemCount: widget
+                                                  .creatingCartList!.length,
                                               itemBuilder: (context, index) {
-                                                final mod=orderModelList[index];
-                                               fff=CurrentPlace[index];
+                                                _controllers!.add(
+                                                    new TextEditingController(
+                                                        text: widget
+                                                            .creatingCartList![
+                                                                index]
+                                                            .Description));
 
                                                 return Padding(
                                                   padding:
@@ -313,8 +443,7 @@ class _ImageDetailsState extends State<ImageDetails>
                                                     child: Padding(
                                                       padding:
                                                           const EdgeInsets.all(
-                                                        18.0,
-                                                      ),
+                                                              18.0),
                                                       child: Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
@@ -332,7 +461,10 @@ class _ImageDetailsState extends State<ImageDetails>
                                                                         left:
                                                                             4.0),
                                                                 child: Text(
-                                                                  widget.title
+                                                                  widget
+                                                                      .creatingCartList![
+                                                                          index]
+                                                                      .PlaceName
                                                                       .toString(),
                                                                   style: TextStyle(
                                                                       fontSize:
@@ -345,7 +477,8 @@ class _ImageDetailsState extends State<ImageDetails>
                                                               IconButton(
                                                                 onPressed: () {
                                                                   setState(() {
-                                                                    orderModelList
+                                                                    widget
+                                                                        .creatingCartList!
                                                                         .removeAt(
                                                                             index);
                                                                   });
@@ -362,9 +495,20 @@ class _ImageDetailsState extends State<ImageDetails>
                                                             height: 10,
                                                           ),
                                                           TextField(
+                                                            controller:
+                                                                _controllers![
+                                                                    index],
                                                             maxLines: 10,
                                                             onChanged: (value) {
-                                                              //Do something with the user input.
+                                                              print(
+                                                                  "contoller.text = ${_controllers![index].text}");
+                                                              widget
+                                                                      .creatingCartList![
+                                                                          index]
+                                                                      .Description =
+                                                                  _controllers![
+                                                                          index]
+                                                                      .text;
                                                             },
                                                             decoration:
                                                                 InputDecoration(
@@ -438,12 +582,14 @@ class _ImageDetailsState extends State<ImageDetails>
                                                                               .down,
                                                                       activeColor:
                                                                           redColor,
-                                                                      value:
-                                                                          isChecked,
+                                                                      value: widget
+                                                                          .creatingCartList![
+                                                                              index]
+                                                                          .isCall!,
                                                                       onChanged: (value) =>
                                                                           setState(
                                                                               () {
-                                                                            isChecked =
+                                                                            widget.creatingCartList![index].isCall =
                                                                                 value;
                                                                           })),
                                                                   Text(
@@ -458,19 +604,20 @@ class _ImageDetailsState extends State<ImageDetails>
                                                                               .down,
                                                                       activeColor:
                                                                           redColor,
-                                                                      value:
-                                                                          isCheck,
+                                                                      value: widget
+                                                                          .creatingCartList![
+                                                                              index]
+                                                                          .isPay!,
                                                                       onChanged: (value) =>
                                                                           setState(
                                                                               () {
-                                                                            isCheck =
+                                                                            widget.creatingCartList![index].isPay =
                                                                                 value;
                                                                           })),
                                                                   Text(
                                                                       "Pay ${widget.title} bill"),
                                                                 ],
                                                               ),
-
                                                             ],
                                                           )
                                                         ],
@@ -502,32 +649,46 @@ class _ImageDetailsState extends State<ImageDetails>
                                               TextButton(
                                                 onPressed: () {
                                                   print("djdjdjdjdjd");
+                                                  print(
+                                                      "Controller: ${_controllers!.length}");
 
-                                                  print(cox);
+                                                  //
+                                                  // _controllers!.forEach((element) {
+                                                  //   PreparedList.add(CartOrderModel(
+                                                  //     Description: element.text,
+                                                  //      isCall: false,
+                                                  //      isPay: false,
+                                                  //       CategoryName: "test", PlaceName: "tessssttt"
+                                                  //   ));
+                                                  // });
 
+                                                  cart.insertNewCardOrder(
+                                                      widget.creatingCartList!);
 
+                                                  print(widget.cox);
 
+                                                  // CartOrderModel cartt =
+                                                  //     CartOrderModel();
+                                                  //
+                                                  // if (orderModelList.where((item) => item.id == widget.id).isEmpty) {
+                                                  //   orderModelList
+                                                  //       .add(CartOrderModel(
+                                                  //     id: cartt.id,
+                                                  //     PlaceName: widget.title,
+                                                  //     CategoryName:
+                                                  //         widget.categoryName,
+                                                  //     isPay: true,
+                                                  //     isCall: true,
+                                                  //     Description: desc.text,
+                                                  //     Done: true,
+                                                  //   ));
+                                                  // } else {}
 
+// if(widget.cox==true){
+//
+//   print(widget.cox);
 
-// if(fff. ==false){
-//   cox=!cox!;
-//   print(cox);
-
-
-
-                                                    orderModelList.add(
-                                                        CartOrderModel(
-                                                          PlaceName: widget.title,
-                                                          CategoryName: widget.categoryName,
-                                                          isPay: true,
-                                                          isCall: true,
-                                                          Description: desc.text,
-                                                          Done: true,
-                                                        )
-                                                    );
-                                                    setState((){});
-
-// }else   orderModelList.insert(0,
+// }else  { orderModelList.remove(
 //     CartOrderModel(
 //       PlaceName: widget.title,
 //       CategoryName: widget.categoryName,
@@ -537,8 +698,6 @@ class _ImageDetailsState extends State<ImageDetails>
 //       Done: true,
 //     )
 // );
-
-
 
                                                   Navigator.pop(context);
                                                   Navigator.pop(context);

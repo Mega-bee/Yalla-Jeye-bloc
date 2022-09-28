@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../order_details/order_route.dart';
+import '../../../order_details/ui/screens/order_page_list.dart';
 import '../../response/order_response.dart';
 
 class OrderCard extends StatefulWidget {
@@ -14,6 +15,7 @@ class OrderCard extends StatefulWidget {
 }
 
 class _OrderCardState extends State<OrderCard> {
+   OrderDetailsState state = OrderDetailsState();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,8 +28,8 @@ class _OrderCardState extends State<OrderCard> {
             onTap: () {
               Navigator.pushNamed(
                 context,
-                OrderRoutes.orders,
-                arguments: widget.order.id,
+                OrderDetailsRoutes.orders,
+                arguments:widget.order.id.toString(),
               );
             },
             child: ListTile(

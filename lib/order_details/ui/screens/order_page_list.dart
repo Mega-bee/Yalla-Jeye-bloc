@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import '../../../abstracts/states/state.dart';
 import '../../request/order_request.dart';
 import '../../state_manager/order.dart';
-import '../state/order_details.dart';
+import '../state/order_tab.dart';
 
 @injectable
 class OrderDetails extends StatefulWidget {
@@ -27,7 +27,7 @@ class OrderDetailsState extends State<OrderDetails> {
     }
   }
 
-  ordersDetails(String id) {
+  ordersDetails({required String id}) {
     widget.cubit.orderDetails(state: this,id: id);
   }
 
@@ -37,21 +37,13 @@ class OrderDetailsState extends State<OrderDetails> {
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
     if(args is String ){
-      widget.cubit.orderDetails(state: this,id:args );
+      ordersDetails(id: args);
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Add order',style: GoogleFonts.poppins(
-          fontStyle: FontStyle.normal,
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
+        appBar: AppBar(
+          title: Text("Order details"),
         ),
-        ),
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 5,
-      ),
       body: BlocBuilder<OrderDetailCubit, States>(
         bloc: widget.cubit,
         builder: (context, state) {

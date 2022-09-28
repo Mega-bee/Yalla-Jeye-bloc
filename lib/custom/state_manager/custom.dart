@@ -83,26 +83,4 @@ class CustomCubit extends Cubit<States> {
     });
   }
 
-// void  following(FollowRequest request,String?id,FollowersState state) {
-//   // emit(LoadingState());
-//   _getAccountFollowers.follow(id,request).then((value) {
-//     if (value == null) {
-//       emit(ErrorState(
-//           errorMessage: 'Connection error', retry:(){
-//         getFoll(state);
-//
-//       }));
-//     }
-//     else if (value.code == 200) {
-//       if(request.isFollow!){
-//         Fluttertoast.showToast(msg: "Following",backgroundColor: Colors.black);
-//       }else{
-//         Fluttertoast.showToast(msg: "Unfollowing",backgroundColor: Colors.black);
-//       }
-//       print('Business followed successfully');
-//
-//
-//     }
-//   });
-// }
 }

@@ -54,6 +54,7 @@ class EditAddressPageState extends State<EditAddressPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+
         title: Text(
           "Addresses",
           style: TextStyle(color: Colors.black),

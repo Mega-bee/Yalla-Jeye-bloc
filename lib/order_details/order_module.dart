@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:untitled1/order/ui/screens/order_page_list.dart';
+import 'package:untitled1/order_details/ui/screens/order_page_list.dart';
 
 import '../abstracts/module/rout_module.dart';
-import '../order/ui/widget/order_details.dart';
 import 'order_route.dart';
 
 
@@ -16,7 +15,7 @@ class  OrderDetailsModule extends RoutModule {
   }
   Map<String, WidgetBuilder> getRoutes() {
     return {
-      OrderRoutes.orders: (context) => _order,
+      OrderDetailsRoutes.orders: (context) => _order,
 
     };
   }

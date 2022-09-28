@@ -9,6 +9,7 @@ import '../../../custom/ui/screens/custom_list.dart';
 import '../../../home_page/ui/screens/home_page_list.dart';
 import '../../../notification/ui/screens/Notification_list.dart';
 import '../../../order/ui/screens/order_page_list.dart';
+import '../../../profile/ui/screen/profile.dart';
 import '../../../profile/ui/state/profile_success.dart';
 import '../../../utils/Colors/colors.dart';
 
@@ -31,7 +32,7 @@ class NavigationbarrState extends State<Navigationbar> {
       getIt<HomePage>(),
       getIt<CustomPage>(),
       getIt<Order>(),
-      ProfileSuccess(),
+      getIt<ProfilePage>(),
     ];
   }
 

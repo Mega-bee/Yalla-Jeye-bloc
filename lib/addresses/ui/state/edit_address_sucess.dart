@@ -22,20 +22,19 @@ class EditAddressPageSuccess extends States {
   EditAddressPageSuccess(
       {required this.editAddressPageState, required this.addressmodel})
       : super(false) {
-   street.text = addressmodel.street??"";
-   description.text = addressmodel.description??"";
-   building.text = addressmodel.buildingName??"";
-   street.text = addressmodel.street??"";
-   title.text = addressmodel.title??"";
+    street.text = addressmodel.street ?? "";
+    description.text = addressmodel.description ?? "";
+    building.text = addressmodel.buildingName ?? "";
+    street.text = addressmodel.street ?? "";
+    title.text = addressmodel.title ?? "";
   }
 
-   var street = TextEditingController();
-   var description = TextEditingController();
-   var building = TextEditingController();
-   var instruction = TextEditingController();
-   var title = TextEditingController();
-   var nickname = TextEditingController();
-
+  var street = TextEditingController();
+  var description = TextEditingController();
+  var building = TextEditingController();
+  var instruction = TextEditingController();
+  var title = TextEditingController();
+  var nickname = TextEditingController();
 
   @override
   Widget getUI(BuildContext context) {
@@ -208,7 +207,7 @@ class EditAddressPageSuccess extends States {
                       color: Color.fromRGBO(204, 204, 204, 0.5),
                     ),
                     contentPadding:
-                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
+                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     ),
@@ -238,7 +237,7 @@ class EditAddressPageSuccess extends States {
                       color: Color.fromRGBO(204, 204, 204, 0.5),
                     ),
                     contentPadding:
-                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
+                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     ),
@@ -269,7 +268,7 @@ class EditAddressPageSuccess extends States {
                       color: Color.fromRGBO(204, 204, 204, 0.5),
                     ),
                     contentPadding:
-                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
+                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     ),
@@ -288,10 +287,6 @@ class EditAddressPageSuccess extends States {
                 SizedBox(
                   height: 17,
                 ),
-
-
-
-
                 TextField(
                   onChanged: (value) {
                     //Do something with the user input.
@@ -303,7 +298,7 @@ class EditAddressPageSuccess extends States {
                       color: Color.fromRGBO(204, 204, 204, 0.5),
                     ),
                     contentPadding:
-                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
+                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     ),
@@ -322,7 +317,6 @@ class EditAddressPageSuccess extends States {
                 SizedBox(
                   height: 17,
                 ),
-
                 TextField(
                   onChanged: (value) {
                     //Do something with the user input.
@@ -333,7 +327,7 @@ class EditAddressPageSuccess extends States {
                       color: Color.fromRGBO(204, 204, 204, 0.5),
                     ),
                     contentPadding:
-                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
+                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     ),
@@ -352,7 +346,6 @@ class EditAddressPageSuccess extends States {
                 SizedBox(
                   height: 17,
                 ),
-
               ],
             ),
             SizedBox(
@@ -368,18 +361,20 @@ class EditAddressPageSuccess extends States {
                     borderRadius: BorderRadius.circular(13),
                   )),
               onPressed: () {
-                editAddressPageState.editAddress(EditAddressRequest(
-                  FloorNumber: 4,
-                  Latitude: "",
-                  Longitude: "",
-                  id: addressmodel.id,
-                  Cityid: addressmodel.cityId,
-                  BuildingName: building.text,
-                  Description: description.text,
-                  Title: title.text,
-                  Street: street.text,
-                ));
-                Navigator.pop(context,true);
+                editAddressPageState.editAddress(
+                  EditAddressRequest(
+                    FloorNumber: 4,
+                    Latitude: "",
+                    Longitude: "",
+                    id: addressmodel.id,
+                    Cityid: addressmodel.cityId,
+                    BuildingName: building.text,
+                    Description: description.text,
+                    Title: title.text,
+                    Street: street.text,
+                  ),
+                );
+                Navigator.pop(context, true);
               },
               child: Text(
                 "Confirm",

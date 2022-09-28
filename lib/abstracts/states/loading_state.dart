@@ -8,8 +8,9 @@ class LoadingState extends States {
   @override
   Widget getUI(BuildContext context) {
     return Center(
-        child: LoadingAnimationWidget.staggeredDotsWave(
-            color: Theme.of(context).primaryColor, size: 30));
+      child: LoadingAnimationWidget.staggeredDotsWave(
+          color: Theme.of(context).primaryColor, size: 30),
+    );
   }
 
   @override
@@ -22,8 +23,9 @@ class LoadingState extends States {
 class LoadingWaitingState extends States {
   final String msg;
 
-
-  LoadingWaitingState(this.msg, ) : super(true);
+  LoadingWaitingState(
+    this.msg,
+  ) : super(true);
 
   @override
   Widget getUI(BuildContext context) {
@@ -46,7 +48,6 @@ class LoadingWaitingState extends States {
             ),
             LoadingAnimationWidget.beat(
                 color: Theme.of(context).primaryColor, size: 30),
-
           ],
         ),
       ),

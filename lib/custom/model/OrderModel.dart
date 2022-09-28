@@ -1,24 +1,43 @@
 import '../../hive/hive.dart';
 
 class CartOrderModel {
-  // int? id;
   String? CategoryName;
   String? PlaceName;
   String? Description;
   bool? isCall;
   bool? isPay;
-  bool? Done=false;
 
   CartOrderModel({
      this.Description,
-    // required this.id,
      this.CategoryName,
      this.isCall,
      this.isPay,
      this.PlaceName,
-     this.Done,
   });
+
+  Map<dynamic, dynamic> toJson() {
+    return {
+    'CategoryName':this.CategoryName,
+    'PlaceName':this.PlaceName,
+    'Description':this.Description,
+    'isCall':this.isCall,
+    'isPay':this.isPay,
+
+  };
+  }
+
+  CartOrderModel.fromJson(Map<dynamic, dynamic> json) {
+    CategoryName = json['CategoryName'];
+    PlaceName = json['PlaceName'];
+    Description = json['Description'];
+    isCall = json['isCall'];
+    isPay = json['isPay'];
+
+  }
 }
+
+
+
 
 
 

@@ -215,7 +215,7 @@ class CustomSuccess extends States {
                           height: 3,
                         ),
                         Text(
-                          "${model2.title ?? "Please select your addreses\nyou want to deliver from"}",
+                          "${model2.title ?? "Please select your addres\nyou want to deliver from"}",
                         ),
                         SizedBox(
                           height: 10,
@@ -280,7 +280,7 @@ class CustomSuccess extends States {
                             ),
                           ],
                         ),
-                        Text("${model.title ?? "Please select your addreses\nyou want to deliver from"}"),
+                        Text("${model.title ?? "Please select your address\nyou want to deliver to"}"),
                         SizedBox(
                           height: 10,
                         ),

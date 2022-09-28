@@ -16,7 +16,7 @@ import '../repository/order_repository.dart';
 import '../request/order_request.dart';
 import '../response/order_response.dart';
 import '../ui/screens/order_page_list.dart';
-import '../ui/state/order_details.dart';
+import '../ui/state/order_tab.dart';
 
 @injectable
 class OrderDetailCubit extends Cubit<States> {

@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:injectable/injectable.dart';
+import 'package:untitled1/profile/profile_module.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
 import 'package:untitled1/utils/logger/logger.dart';
 import 'abstracts/module/rout_module.dart';
 import 'addresses/address_module.dart';
+import 'auth/auth_module.dart';
 import 'custom/custom_module.dart';
 import 'di/di_config.dart';
 import 'hive/hive.dart';
@@ -58,6 +60,8 @@ class MyApp extends StatefulWidget {
   final AddressModule _addressModule;
   final HomePageModule _homePageModule;
   final OrderDetailsModule _detailsModule;
+  final LogInModule _logInModule;
+  final ProfilePageModule _profilePageModule;
 
   MyApp(
     this._navigatorModule,
@@ -67,6 +71,8 @@ class MyApp extends StatefulWidget {
     this._addressModule,
     this._homePageModule,
     this._detailsModule,
+    this._logInModule,
+    this._profilePageModule,
   );
 
   @override
@@ -120,6 +126,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Yalla jeye',
       routes: fullRoutesList,
       initialRoute: NavRoutes.nav_rout,
+      // home:MyStepper(),
     );
   }
 

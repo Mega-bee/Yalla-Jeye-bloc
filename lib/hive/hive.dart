@@ -1,11 +1,12 @@
 import 'package:hive_flutter/adapters.dart';
 import 'package:injectable/injectable.dart';
-
+import 'dart:convert';
 import '../custom/model/OrderModel.dart';
 
 class HiveSetUp {
   static Future<void> init() async {
     await Hive.initFlutter();
+    // await Hive.registerAdapter();
     // Hive.registerAdapter(HiveCityAdapter());
     // Hive.registerAdapter(HiveMainCategoryAdapter());
     // Hive.registerAdapter(HiveSubCategoryAdapter());
@@ -20,6 +21,9 @@ class HiveSetUp {
     // await Hive.openBox('GeneralData');
   }
 }
+
+
+
 
 @injectable
 class AuthPrefsHelper {
@@ -56,7 +60,7 @@ class AuthPrefsHelper {
 }
 
 @injectable
-class ListCart {
+class ListCart{
   List<CartOrderModel> currentPlaceCart = [];
   List<CartOrderModel> PlaceCart = [];
 
@@ -67,54 +71,76 @@ class ListCart {
   }
 
   List<CartOrderModel>? getModel() {
-    return box.get('modelList');
+    List<CartOrderModel>? items = [];
+    dynamic hiveItems = box.get('modelList');
+    List<CartOrderModel> fol = [];
+    if (hiveItems == null) {
+      return fol;
+    }
+    for (var item in hiveItems) {
+      fol.add(CartOrderModel.fromJson(item));
+    }
+
+    return fol;
   }
 
 
   insertNewCardOrder(List<CartOrderModel> listOfOrder){
-    box.clear();
 
-    for (var element in listOfOrder) {
-      box.put('modelList', element);
-    }
+    List jsonList = [];
+    listOfOrder.map((e) => jsonList.add(e.toJson())).toList();
 
+
+// var ss = (listOfOrder);
+    box.put('modelList', jsonList);
   }
 
-  List<CartOrderModel>? updatedCart(String? placeCategory, String? placeName) {
-    // currentPlaceCartObject =  CartOrderModel();
+  List<CartOrderModel>?  updatedCart({String? placeCategory, String? placeName}) {
+    PlaceCart.clear();
+
+    currentPlaceCart = getModel()!
+        .where((element) =>
+    element.CategoryName == placeCategory &&
+        element.PlaceName == placeName)
+        .toList();
+
+
     CartOrderModel? currentPlaceCartObject = CartOrderModel();
-    if (box.isOpen) {
-      if (box.get('modelList') != null) {
-        currentPlaceCart = getModel()!
-            .where((element) =>
-                element.CategoryName == placeCategory &&
-                element.PlaceName == placeName)
-            .toList();
-
-        PlaceCart == getModel();
-      }
-
-      if (currentPlaceCart.isEmpty) {
-        currentPlaceCartObject.CategoryName = placeCategory ?? "";
-        currentPlaceCartObject.PlaceName = placeName ?? "";
-        currentPlaceCartObject.Description = "";
-        currentPlaceCartObject.isPay = true;
-        currentPlaceCartObject.isCall = true;
-        PlaceCart.add(currentPlaceCartObject);
-      } else {
-        PlaceCart.remove(currentPlaceCartObject);
-        PlaceCart.add(currentPlaceCartObject);
-      }
-    } else {
-      currentPlaceCartObject.CategoryName = placeCategory;
-      currentPlaceCartObject.PlaceName = placeName;
+    List<CartOrderModel> _TempPlaceCart = getModel()!;
+    if (currentPlaceCart.isEmpty) {
+      currentPlaceCartObject.CategoryName = placeCategory ?? "";
+      currentPlaceCartObject.PlaceName = placeName ?? "";
       currentPlaceCartObject.Description = "";
       currentPlaceCartObject.isPay = true;
       currentPlaceCartObject.isCall = true;
       PlaceCart.add(currentPlaceCartObject);
+    }else{
+   
+      PlaceCart.add(currentPlaceCart.first);
     }
 
+
+    _TempPlaceCart.where((element) => !( element.CategoryName == placeCategory &&
+        element.PlaceName == placeName)).forEach((element) {
+      PlaceCart.add(element);
+    });
+
     return PlaceCart;
+  }
+
+  @override
+  CartOrderModel read(BinaryReader reader) {
+    // TODO: implement read
+    throw UnimplementedError();
+  }
+
+  @override
+  // TODO: implement typeId
+  int get typeId => throw UnimplementedError();
+
+  @override
+  void write(BinaryWriter writer, CartOrderModel obj) {
+    // TODO: implement write
   }
 }
 
@@ -145,5 +171,4 @@ class ThemeHelper {
   }
 }
 
-//   }
-// }
+
