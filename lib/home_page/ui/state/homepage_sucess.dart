@@ -33,9 +33,6 @@ class HomePageSuccess extends States {
   ScrollController? _controller = ScrollController();
   List<Places> place = [];
 
-
-
-
   @override
   Widget getUI(BuildContext context) {
     ///cutsom cache image manager
@@ -60,24 +57,23 @@ class HomePageSuccess extends States {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 CarouselSlider.builder(
-                  options: CarouselOptions(
-                      viewportFraction: 1,
-                      height: 250,
-                      autoPlay: true,
-                      enlargeCenterPage: true,
-                      enableInfiniteScroll: true,
-                      onPageChanged: (index, reason) {
-                        _currentIndex = index;
-                        homepageState.refresh();
-                      }),
-                  itemCount: homepage.events!.services!.length,
-                  itemBuilder: (BuildContext context, int itemIndex,
-                          int pageViewIndex) =>
-                  CarouselImageSlider(
-                    homepage: homepage,
-                    itemIndex: itemIndex,
-                  )
-                ),
+                    options: CarouselOptions(
+                        viewportFraction: 1,
+                        height: 250,
+                        autoPlay: true,
+                        enlargeCenterPage: true,
+                        enableInfiniteScroll: true,
+                        onPageChanged: (index, reason) {
+                          _currentIndex = index;
+                          homepageState.refresh();
+                        }),
+                    itemCount: homepage.events!.services!.length,
+                    itemBuilder: (BuildContext context, int itemIndex,
+                            int pageViewIndex) =>
+                        CarouselImageSlider(
+                          homepage: homepage,
+                          itemIndex: itemIndex,
+                        )),
                 SizedBox(
                   height: 55,
                 ),
@@ -116,10 +112,11 @@ class HomePageSuccess extends States {
                     physics: BouncingScrollPhysics(),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: (2 / 4),
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 0),
+                      crossAxisCount: 2,
+                      childAspectRatio: (2 / 4),
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 0,
+                    ),
                     controller: _controller,
                     scrollDirection: Axis.horizontal,
                     itemCount: homepage.destinations!.length,
@@ -146,8 +143,6 @@ class HomePageSuccess extends States {
                             homepage: homepage,
                             model: model,
                             index: index,
-
-
                           );
                         }),
                   ],
@@ -165,6 +160,4 @@ class HomePageSuccess extends States {
     // TODO: implement getAlert
     throw UnimplementedError();
   }
-
-
 }

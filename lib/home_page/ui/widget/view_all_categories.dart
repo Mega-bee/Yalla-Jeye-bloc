@@ -85,6 +85,7 @@ class _ViewAllCategoriesState extends State<ViewAllCategories> {
                                               image: F.image.toString(),
                                               title: F.title,
                                               menu: F.menu,
+                                              creatingCartList: [],
                                             )),
                                   );
                                 },

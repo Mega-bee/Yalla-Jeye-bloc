@@ -33,6 +33,7 @@ class Urls {
   static const CONFIRM_OTP = AUTH + 'ConfirmOtp';
   static const UPDATE_PROFILE = AUTH + 'UpdateProfile';
   static const GET_PROFILE = AUTH + 'GetProfile';
+  static const CONFIRM_PHONE_NUMBER = AUTH + 'ConfirmPhoneNumber';
 
 
   /*-----------------------NOTIFICATION----------------------------------*/

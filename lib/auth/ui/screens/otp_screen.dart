@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import '../../../abstracts/states/state.dart';
 import '../../request/confirm_otp.dart';
+import '../../request/confirm_phone_number_request.dart';
 import '../../request/generate_otp_request.dart';
 import '../../state_manager/otp_state.dart';
 import '../state/otp_state.dart';
@@ -30,9 +31,13 @@ class PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
     widget.cubit.ResendOtp(request,this);
   }
 
+  void ConfirmPhoneRequest(ConfPhoneNumbRequest request){
+    widget.cubit.ConfirmPhoneNumber(request,this);
+  }
 
 
-  StreamController<ErrorAnimationType>? errorController;
+
+  // StreamController<ErrorAnimationType>? errorController;
 
   bool hasError = false;
   String currentText = "";
@@ -51,12 +56,11 @@ class PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
     // widget.cubit.emit(OtpInitState(this,""));
   }
 
-  @override
-  void dispose() {
-    errorController!.close();
-
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //    errorController!.close();
+  // }
 
   // snackBar Widget
   // snackBar(String? message) {

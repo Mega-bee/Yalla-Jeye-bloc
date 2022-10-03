@@ -23,8 +23,6 @@ class HiveSetUp {
 }
 
 
-
-
 @injectable
 class AuthPrefsHelper {
   var box = Hive.box('Authorization');
@@ -60,7 +58,7 @@ class AuthPrefsHelper {
 }
 
 @injectable
-class ListCart{
+class ListCart {
   List<CartOrderModel> currentPlaceCart = [];
   List<CartOrderModel> PlaceCart = [];
 
@@ -71,21 +69,31 @@ class ListCart{
   }
 
   List<CartOrderModel>? getModel() {
-    List<CartOrderModel>? items = [];
+    // List<CartOrderModel>? items = [];
     dynamic hiveItems = box.get('modelList');
     List<CartOrderModel> fol = [];
     if (hiveItems == null) {
       return fol;
     }
     for (var item in hiveItems) {
-      fol.add(CartOrderModel.fromJson(item));
+      fol.add(CartOrderModel.fromJson(item),
+      );
     }
 
     return fol;
   }
 
 
-  insertNewCardOrder(List<CartOrderModel> listOfOrder){
+  Future<void> clearOrderModel() async {
+    await box.clear();
+  }
+
+  insertNewCardOrder(List<CartOrderModel> listOfOrder) {
+    for (var element in listOfOrder) {
+      if (element.Description!.isEmpty) {
+        listOfOrder.remove(element);
+      }
+    }
 
     List jsonList = [];
     listOfOrder.map((e) => jsonList.add(e.toJson())).toList();
@@ -95,9 +103,12 @@ class ListCart{
     box.put('modelList', jsonList);
   }
 
-  List<CartOrderModel>?  updatedCart({String? placeCategory, String? placeName}) {
+  List<CartOrderModel>? updatedCart(
+      {String? placeCategory, String? placeName}) {
     PlaceCart.clear();
-
+    if (placeCategory == placeName) {
+      placeName = '';
+    }
     currentPlaceCart = getModel()!
         .where((element) =>
     element.CategoryName == placeCategory &&
@@ -114,34 +125,23 @@ class ListCart{
       currentPlaceCartObject.isPay = true;
       currentPlaceCartObject.isCall = true;
       PlaceCart.add(currentPlaceCartObject);
-    }else{
-   
+    } else {
       PlaceCart.add(currentPlaceCart.first);
     }
 
 
-    _TempPlaceCart.where((element) => !( element.CategoryName == placeCategory &&
-        element.PlaceName == placeName)).forEach((element) {
+    _TempPlaceCart.where((element) =>
+    !(element.CategoryName == placeCategory &&
+        element.PlaceName == placeName),).forEach((element) {
       PlaceCart.add(element);
     });
 
     return PlaceCart;
   }
 
-  @override
-  CartOrderModel read(BinaryReader reader) {
-    // TODO: implement read
-    throw UnimplementedError();
-  }
 
-  @override
-  // TODO: implement typeId
-  int get typeId => throw UnimplementedError();
 
-  @override
-  void write(BinaryWriter writer, CartOrderModel obj) {
-    // TODO: implement write
-  }
+
 }
 
 class LanguageHelper {

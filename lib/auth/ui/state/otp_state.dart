@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
 import '../../../abstracts/states/state.dart';
+import '../../request/confirm_phone_number_request.dart';
 import '../../request/generate_otp_request.dart';
 import '../screens/otp_screen.dart';
 import '../widget/custom_button.dart';
@@ -40,15 +41,15 @@ class OtpInitState extends States{
             width: MediaQuery.of(context).size.width,
             child: ListView(
               children: <Widget>[
-                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 5,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Image.asset('assets/images/hooka_logo.png',
-                        fit: BoxFit.cover),
-                  ),
-                ),
+                // SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                // SizedBox(
+                //   height: MediaQuery.of(context).size.height / 5,
+                //   child: ClipRRect(
+                //     borderRadius: BorderRadius.circular(30),
+                //     child: Image.asset('assets/images/hooka_logo.png',
+                //         fit: BoxFit.cover),
+                //   ),
+                // ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -96,8 +97,8 @@ class OtpInitState extends States{
                         length: 4,
                         obscureText: true,
                         obscuringCharacter: '*',
-                        obscuringWidget:
-                        Image.asset("assets/images/shisha.png", width: 20),
+                        // obscuringWidget:
+                        // Image.asset("assets/images/shisha.png", width: 20),
 
                         blinkWhenObscuring: true,
                         animationType: AnimationType.fade,
@@ -192,10 +193,10 @@ class OtpInitState extends States{
                   child: CustomButton(
                     buttonTab: () {
                       formKey.currentState!.validate();
-                      // conditions for validating
-
-                      // errorController!.add(ErrorAnimationType.shake); //
-                      // screenState.ConfirmOtpRequest(ConfOtpRequest(otptext.text, email,pass));
+                      screenState.ConfirmPhoneRequest(ConfPhoneNumbRequest(
+                        phoneNumber:phone,
+                        otp:otptext.text,
+                      ));
                     },
                     loading: screenState.loadingSnapshot.connectionState ==
                         ConnectionState.waiting,
@@ -204,67 +205,6 @@ class OtpInitState extends States{
                     textColor: Colors.black,
                   ),
                 ),
-                // Container(
-                //   margin:
-                //   const EdgeInsets.symmetric(vertical: 16.0, horizontal: 60),
-                //   child: ButtonTheme(
-                //     height: 20,
-                //     child: TextButton(
-                //       onPressed: () {
-                //         formKey.currentState!.validate();
-                //         // conditions for validating
-                //         if (currentText.length != 4 ||
-                //             currentText !=
-                //                 ""
-                //                 // "${verifyOtpModel.Otp}"
-                //                     "") {
-                //           errorController!.add(ErrorAnimationType.shake); //
-                //           screenState.ConfirmOtpRequest(ConfOtpRequest(otptext.text, phoneNumber));
-                //           // Trigg
-                //
-                //           // ering error shake animation
-                //         //   setState(() => hasError = true);
-                //         // } else {
-                //         //   setState(
-                //         //         () {
-                //         //       hasError = false;
-                //         //
-                //         //       snackBar(
-                //         //         "OTP Verified!!",
-                //         //       );
-                //         //       // Navigator.pushReplacement(
-                //         //       //   context,
-                //         //       //   MaterialPageRoute(
-                //         //       //       builder: (context) => const ()),
-                //         //       // );
-                //         //     },
-                //         //   );
-                //         }
-                //       },
-                //       child: Center(
-                //           child: Text(
-                //             "VERIFY".toUpperCase(),
-                //             style: const TextStyle(
-                //                 color: Colors.white,
-                //                 fontSize: 14,
-                //                 fontWeight: FontWeight.bold),
-                //           )),
-                //     ),
-                //   ),
-                //   decoration: BoxDecoration(
-                //       color: YellowColor,
-                //       borderRadius: BorderRadius.circular(5),
-                //       boxShadow: [
-                //         BoxShadow(
-                //             color: YellowColor,
-                //             offset: const Offset(1, -1),
-                //             blurRadius: 1),
-                //         BoxShadow(
-                //             color: YellowColor,
-                //             offset: const Offset(-1, 2),
-                //             blurRadius: 1)
-                //       ]),
-                // ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

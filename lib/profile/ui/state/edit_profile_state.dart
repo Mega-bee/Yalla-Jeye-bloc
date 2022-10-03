@@ -119,7 +119,7 @@ class EditProfilePageSuccess extends States {
                     // PhoneNumber: number.text,
                   ),
                 );
-                Navigator.pop(context, true);
+
               },
               child: Text(
                 "Confirm",

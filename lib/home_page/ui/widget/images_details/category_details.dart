@@ -19,8 +19,15 @@ class CategoryDetails extends StatefulWidget {
   String? image;
   String? CategoryName;
   final HomePageModel homePageModel;
+  List<CartOrderModel>? creatingCartList = [];
 
-  CategoryDetails({this.image, this.title, required this.homePageModel,this.CategoryName});
+  CategoryDetails({
+    this.image,
+    this.title,
+    required this.homePageModel,
+    this.CategoryName,
+    this.creatingCartList,
+  });
 
   @override
   State<CategoryDetails> createState() => _CategoryDetailsState();
@@ -34,7 +41,7 @@ class _CategoryDetailsState extends State<CategoryDetails>
   late AnimationController controller;
   final descr = TextEditingController();
   AddressModel model = AddressModel();
-
+  List<TextEditingController>? _controllers = [];
   @override
   void initState() {
     controller = BottomSheet.createAnimationController(this);
@@ -135,6 +142,7 @@ class _CategoryDetailsState extends State<CategoryDetails>
                   isScrollControlled: true,
                   context: context,
                   builder: (BuildContext context) {
+                    // print("currentplace = ${currentPlace}");
                     return StatefulBuilder(builder: (context, setState) {
                       return AnimatedContainer(
                         duration: Duration(seconds: 5),
@@ -269,182 +277,20 @@ class _CategoryDetailsState extends State<CategoryDetails>
                                           SizedBox(
                                             height: 25,
                                           ),
-                                          Card(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(25),
-                                            ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(18.0),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 4.0),
-                                                        child: Text(
-                                                          "${widget.title}",
-                                                          style: TextStyle(
-                                                            fontSize: 18,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      // Icon(
-                                                      //   Icons.delete,
-                                                      //   color: Colors.grey,
-                                                      // ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  TextField(
-                                                    controller: descr,
-                                                    maxLines: 10,
-                                                    onChanged: (value) {
-                                                      //Do something with the user input.
-                                                    },
-                                                    decoration: InputDecoration(
-                                                      hintText:
-                                                          'What do you want to order',
-                                                      hintStyle: TextStyle(
-                                                        color: Color.fromRGBO(
-                                                            204, 204, 204, 0.5),
-                                                      ),
-                                                      contentPadding:
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 10.0,
-                                                              horizontal: 20.0),
-                                                      border:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    5.0)),
-                                                      ),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide:
-                                                            const BorderSide(
-                                                                color: Color
-                                                                    .fromRGBO(
-                                                                        204,
-                                                                        204,
-                                                                        204,
-                                                                        0.5),
-                                                                width: 2.0),
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                          Radius.circular(5.0),
-                                                        ),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                          Radius.circular(5.0),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 20,
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                          "Before picking your order, driver will :"),
-                                                      Column(
-                                                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        children: [
-                                                          Row(
-                                                            children: [
-                                                              Switch(
-                                                                  dragStartBehavior:
-                                                                      DragStartBehavior
-                                                                          .down,
-                                                                  activeColor:
-                                                                      redColor,
-                                                                  value:
-                                                                      isChecked,
-                                                                  onChanged:
-                                                                      (value) =>
-                                                                          setState(
-                                                                              () {
-                                                                            isChecked =
-                                                                                value;
-                                                                          })),
-                                                              Text(
-                                                                  "Call ${widget.title} and make order"),
-                                                            ],
-                                                          ),
-                                                          Row(
-                                                            children: [
-                                                              Switch(
-                                                                  dragStartBehavior:
-                                                                      DragStartBehavior
-                                                                          .down,
-                                                                  activeColor:
-                                                                      redColor,
-                                                                  value:
-                                                                      isCheck,
-                                                                  onChanged:
-                                                                      (value) =>
-                                                                          setState(
-                                                                              () {
-                                                                            isCheck =
-                                                                                value;
-                                                                          })),
-                                                              Text(
-                                                                  "Pay ${widget.title} bill"),
-                                                            ],
-                                                          ),
-                                                          // Row(
-                                                          //   children: [
-                                                          //     Text("Pick"),
-                                                          //     Switch(
-                                                          //         dragStartBehavior:
-                                                          //         DragStartBehavior
-                                                          //             .down,
-                                                          //         activeColor: redColor,
-                                                          //         value: true,
-                                                          //         onChanged: (value) =>
-                                                          //             setState(() {
-                                                          //               isChecked = value;
-                                                          //             })),
-                                                          //   ],
-                                                          // ),
-                                                        ],
-                                                      )
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
                                           ListView.builder(
                                               physics:
                                                   NeverScrollableScrollPhysics(),
                                               shrinkWrap: true,
-                                              itemCount: orderModelList.length,
+                                              itemCount: widget
+                                                  .creatingCartList!.length,
                                               itemBuilder: (context, index) {
+                                                _controllers!.add(
+                                                    new TextEditingController(
+                                                        text: widget
+                                                            .creatingCartList![
+                                                                index]
+                                                            .Description));
+
                                                 return Padding(
                                                   padding:
                                                       const EdgeInsets.all(8.0),
@@ -453,7 +299,8 @@ class _CategoryDetailsState extends State<CategoryDetails>
                                                         RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              25),
+                                                        25,
+                                                      ),
                                                     ),
                                                     child: Padding(
                                                       padding:
@@ -475,25 +322,25 @@ class _CategoryDetailsState extends State<CategoryDetails>
                                                                             .only(
                                                                         left:
                                                                             4.0),
-                                                                // child: Text(
-                                                                //   orderModelList[
-                                                                //           index]
-                                                                //       .RestaurantName
-                                                                //       .toString(),
-                                                                //   style:
-                                                                //       TextStyle(
-                                                                //     fontSize:
-                                                                //         18,
-                                                                //     fontWeight:
-                                                                //         FontWeight
-                                                                //             .bold,
-                                                                //   ),
-                                                                // ),
+                                                                child: Text(
+                                                                  widget
+                                                                      .creatingCartList![
+                                                                          index]
+                                                                      .PlaceName
+                                                                      .toString(),
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                ),
                                                               ),
                                                               IconButton(
                                                                 onPressed: () {
                                                                   setState(() {
-                                                                    orderModelList
+                                                                    widget
+                                                                        .creatingCartList!
                                                                         .removeAt(
                                                                             index);
                                                                   });
@@ -510,9 +357,20 @@ class _CategoryDetailsState extends State<CategoryDetails>
                                                             height: 10,
                                                           ),
                                                           TextField(
+                                                            controller:
+                                                                _controllers![
+                                                                    index],
                                                             maxLines: 10,
                                                             onChanged: (value) {
-                                                              //Do something with the user input.
+                                                              print(
+                                                                  "contoller.text = ${_controllers![index].text}");
+                                                              widget
+                                                                      .creatingCartList![
+                                                                          index]
+                                                                      .Description =
+                                                                  _controllers![
+                                                                          index]
+                                                                      .text;
                                                             },
                                                             decoration:
                                                                 InputDecoration(
@@ -586,12 +444,14 @@ class _CategoryDetailsState extends State<CategoryDetails>
                                                                               .down,
                                                                       activeColor:
                                                                           redColor,
-                                                                      value:
-                                                                          isChecked,
+                                                                      value: widget
+                                                                          .creatingCartList![
+                                                                              index]
+                                                                          .isCall!,
                                                                       onChanged: (value) =>
                                                                           setState(
                                                                               () {
-                                                                            isChecked =
+                                                                            widget.creatingCartList![index].isCall =
                                                                                 value;
                                                                           })),
                                                                   Text(
@@ -606,33 +466,20 @@ class _CategoryDetailsState extends State<CategoryDetails>
                                                                               .down,
                                                                       activeColor:
                                                                           redColor,
-                                                                      value:
-                                                                          isCheck,
+                                                                      value: widget
+                                                                          .creatingCartList![
+                                                                              index]
+                                                                          .isPay!,
                                                                       onChanged: (value) =>
                                                                           setState(
                                                                               () {
-                                                                            isCheck =
+                                                                            widget.creatingCartList![index].isPay =
                                                                                 value;
                                                                           })),
                                                                   Text(
                                                                       "Pay ${widget.title} bill"),
                                                                 ],
                                                               ),
-                                                              // Row(
-                                                              //   children: [
-                                                              //     Text("Pick"),
-                                                              //     Switch(
-                                                              //         dragStartBehavior:
-                                                              //         DragStartBehavior
-                                                              //             .down,
-                                                              //         activeColor: redColor,
-                                                              //         value: true,
-                                                              //         onChanged: (value) =>
-                                                              //             setState(() {
-                                                              //               isChecked = value;
-                                                              //             })),
-                                                              //   ],
-                                                              // ),
                                                             ],
                                                           )
                                                         ],
@@ -656,34 +503,64 @@ class _CategoryDetailsState extends State<CategoryDetails>
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        // Padding(
-                                        //   padding:
-                                        //   const EdgeInsets.only(left: 18.0),
-                                        //   child: Text("Total: 99 L.L"),
-                                        // ),
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(left: 18.0),
                                           child: Row(
-                                            // mainAxisAlignment:
-                                            // MainAxisAlignment.spaceBetween,
                                             children: [
                                               TextButton(
                                                 onPressed: () {
-                                                  orderModelList.where((element) =>
-                                                  element.CategoryName ==
-                                                      widget.CategoryName &&
-                                                      element.PlaceName ==
-                                                          "");
-                                                  // orderModelList.add(
-                                                  //     CartOrderModel(
-                                                  //       Description: Description.text,
-                                                  //       CategoryName: widget.categoryName,
-                                                  //       isCall: true,
-                                                  //       isPay: true,
-                                                  //       PlaceName: "",
-                                                  //     )
-                                                  // );
+                                                  print("djdjdjdjdjd");
+                                                  print(
+                                                      "Controller: ${_controllers!.length}");
+
+                                                  //
+                                                  // _controllers!.forEach((element) {
+                                                  //   PreparedList.add(CartOrderModel(
+                                                  //     Description: element.text,
+                                                  //      isCall: false,
+                                                  //      isPay: false,
+                                                  //       CategoryName: "test", PlaceName: "tessssttt"
+                                                  //   ));
+                                                  // });
+
+                                                  cart.insertNewCardOrder(
+                                                      widget.creatingCartList!);
+
+                                                  // print(widget.cox);
+
+                                                  // CartOrderModel cartt =
+                                                  //     CartOrderModel();
+                                                  //
+                                                  // if (orderModelList.where((item) => item.id == widget.id).isEmpty) {
+                                                  //   orderModelList
+                                                  //       .add(CartOrderModel(
+                                                  //     id: cartt.id,
+                                                  //     PlaceName: widget.title,
+                                                  //     CategoryName:
+                                                  //         widget.categoryName,
+                                                  //     isPay: true,
+                                                  //     isCall: true,
+                                                  //     Description: desc.text,
+                                                  //     Done: true,
+                                                  //   ));
+                                                  // } else {}
+
+// if(widget.cox==true){
+//
+//   print(widget.cox);
+
+// }else  { orderModelList.remove(
+//     CartOrderModel(
+//       PlaceName: widget.title,
+//       CategoryName: widget.categoryName,
+//       isPay: true,
+//       isCall: true,
+//       Description: desc.text,
+//       Done: true,
+//     )
+// );
+
                                                   Navigator.pop(context);
                                                   Navigator.pop(context);
                                                 },

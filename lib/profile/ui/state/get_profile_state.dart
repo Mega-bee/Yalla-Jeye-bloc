@@ -58,7 +58,7 @@ class GetProfilePageSuccess extends States {
                       borderSide: const BorderSide(
                           color: Color.fromRGBO(204, 204, 204, 0.5),
                           width: 2.0),
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      borderRadius: BorderRadius.all(Radius.circular(5.0),),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey, width: 2.0),

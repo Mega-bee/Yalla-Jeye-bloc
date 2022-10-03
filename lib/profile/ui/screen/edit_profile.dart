@@ -28,7 +28,7 @@ class EditProfilePageState extends State<EditProfilePage> {
   bool flag = true;
 
   editProfile(UpdateProfileRequest request) {
-    widget.cubit.updateProf(request: request);
+    widget.cubit.updateProf(request: request,state: this);
   }
 
   void refresh() {

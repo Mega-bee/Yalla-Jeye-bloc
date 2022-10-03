@@ -9,6 +9,7 @@ import '../../utils/Colors/colors.dart';
 import '../repository/profile_repository.dart';
 import '../request/edit_profile_request.dart';
 import '../response/get_profile_response.dart';
+import '../ui/screen/edit_profile.dart';
 import '../ui/screen/get_profile.dart';
 import '../ui/state/get_profile_state.dart';
 
@@ -18,7 +19,7 @@ class ProfileCubit extends Cubit<States> {
 
   ProfileCubit(this._profileRepository) : super(LoadingState());
 
-  updateProf({required UpdateProfileRequest request}) {
+  updateProf({required UpdateProfileRequest request,required EditProfilePageState state}) {
     print("Loadinggg");
 
     emit(
@@ -31,7 +32,9 @@ class ProfileCubit extends Cubit<States> {
         Fluttertoast.showToast(
             msg: 'something went wrong', backgroundColor: Colors.red);
       } else if (value.code == 200) {
+        Navigator.pop(state.context, true);
         Fluttertoast.showToast(
+
             msg: 'Profile updated Successfully', backgroundColor: redColor);
       }
     });

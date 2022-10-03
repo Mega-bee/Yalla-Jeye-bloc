@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:untitled1/addresses/address_module_route.dart';
+import 'package:untitled1/di/di_config.dart';
 import '../../../abstracts/states/state.dart';
 import '../../../addresses/response/address_Response.dart';
 import '../../../hive/hive.dart';
@@ -19,25 +20,26 @@ class ProfileSuccess extends States {
   ProfileSuccess({required this.state}) : super(false);
 
   Widget buildDatePicker() => SizedBox(
-    height: 180,
-    child: CupertinoDatePicker(
-      maximumYear: DateTime.now().year,
-      minimumYear: DateTime.now().year,
-      initialDateTime: datetime,
-      mode: CupertinoDatePickerMode.date,
-      onDateTimeChanged: (dateTime) {
-        dateTime = dateTime;
-        // customPageState.refresh();
-      },
-    ),
-  );
+        height: 180,
+        child: CupertinoDatePicker(
+          maximumYear: DateTime.now().year,
+          minimumYear: DateTime.now().year,
+          initialDateTime: datetime,
+          mode: CupertinoDatePickerMode.date,
+          onDateTimeChanged: (dateTime) {
+            dateTime = dateTime;
+            // customPageState.refresh();
+          },
+        ),
+      );
 
   String yourAddress = 'l';
   AddressModel model = AddressModel();
   AddressModel model2 = AddressModel();
 
   TextEditingController custom = TextEditingController();
- final double height = 20;
+  final double height = 20;
+
   @override
   Widget getUI(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -72,12 +74,11 @@ class ProfileSuccess extends States {
                       height: 10,
                     ),
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         Navigator.pushNamed(
-                            context,
-                            ProfileRoutes.Getprofile,
+                          context,
+                          ProfileRoutes.Getprofile,
                         );
-
                       },
                       child: Row(
                         children: [
@@ -211,12 +212,11 @@ class ProfileSuccess extends States {
                 borderRadius: BorderRadius.circular(13),
               ),
               child: InkWell(
-                onTap: (){
-                  AuthPrefsHelper().clearToken().then((value) {
+                onTap: () {
+                  getIt<AuthPrefsHelper>().clearToken().then((value) {
                     Navigator.pushNamedAndRemoveUntil(
                         context, NavRoutes.nav_rout, (route) => false);
                   });
-
                 },
                 child: Padding(
                     padding: const EdgeInsets.all(10.0),

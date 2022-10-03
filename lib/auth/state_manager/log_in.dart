@@ -47,6 +47,10 @@ class LogInCubit extends Cubit<States> {
         Navigator.pushNamedAndRemoveUntil(
             _screenState.context, NavRoutes.nav_rout, (route) => false);
       }
+      else{
+        _loadingStateSubject.add(AsyncSnapshot.nothing());
+        Fluttertoast.showToast(msg: value.errorMessage,backgroundColor: redColor);
+      }
     });
   }
 }
