@@ -9,8 +9,6 @@ import '../../../abstracts/states/state.dart';
 
 import '../../request/edit_profile_request.dart';
 import '../../state_manager/profile.dart';
-import '../state/get_profile_state.dart';
-import '../state/profile_success.dart';
 
 @injectable
 class GetProfilePage extends StatefulWidget {
@@ -23,14 +21,20 @@ class GetProfilePage extends StatefulWidget {
 }
 
 class GetProfilePageState extends State<GetProfilePage> {
-  bool flag = true;
-
-
+  late AsyncSnapshot loadingSnapshotLogin;
 
   @override
   void initState() {
-    widget.cubit.getProfile(this);
     super.initState();
+    widget.cubit.getProfile(this);
+    loadingSnapshotLogin = AsyncSnapshot.nothing();
+    widget.cubit.loadingStream.listen((event) {
+      if (mounted) {
+        setState(() {
+          loadingSnapshotLogin = event;
+        });
+      }
+    });
   }
 
   void refresh() {
@@ -42,38 +46,23 @@ class GetProfilePageState extends State<GetProfilePage> {
   void getProfile(){
     widget.cubit.getProfile(this);
   }
+
+  void updateProfile(UpdateProfileRequest updateRequest){
+    widget.cubit.updateProf(request: updateRequest , screenState: this);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments;
-    // if (flag && args != null) {
-    //   args as AddressModel;
-    //   widget.cubit.emit(
-    //     EditAddressPageSuccess(
-    //       editAddressPageState: this,
-    //       addressmodel: args,
-    //     ),
-    //   );
-    // }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           "Profile",
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
           ),
         ),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0,
+
       ),
       body: BlocBuilder<ProfileCubit, States>(
         bloc: widget.cubit,

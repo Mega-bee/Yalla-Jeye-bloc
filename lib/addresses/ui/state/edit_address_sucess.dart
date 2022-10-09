@@ -1,18 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
 import '../../../abstracts/states/state.dart';
 
 import '../../../utils/Colors/colors.dart';
 import '../../../utils/images/images.dart';
-import '../../address_module_route.dart';
 import '../../request/edit_address_request.dart';
 import '../../response/address_Response.dart';
-import '../screens/addresses_list.dart';
 import '../screens/edit_screen_list.dart';
 
 class EditAddressPageSuccess extends States {
@@ -20,8 +13,7 @@ class EditAddressPageSuccess extends States {
   final AddressModel addressmodel;
 
   EditAddressPageSuccess(
-      {required this.editAddressPageState, required this.addressmodel})
-      : super(false) {
+      {required this.editAddressPageState, required this.addressmodel}) {
     street.text = addressmodel.street ?? "";
     description.text = addressmodel.description ?? "";
     building.text = addressmodel.buildingName ?? "";

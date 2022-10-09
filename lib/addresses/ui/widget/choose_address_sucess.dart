@@ -16,8 +16,7 @@ class ChooseAddressPageSuccess extends States {
   AddressPageState addressPageState;
 
   ChooseAddressPageSuccess(
-      {required this.addressmodel, required this.addressPageState})
-      : super(false);
+      {required this.addressmodel, required this.addressPageState});
   bool? checkBoxValue = false;
 
   @override

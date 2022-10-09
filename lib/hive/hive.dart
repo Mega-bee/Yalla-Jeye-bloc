@@ -1,24 +1,16 @@
 import 'package:hive_flutter/adapters.dart';
 import 'package:injectable/injectable.dart';
-import 'dart:convert';
 import '../custom/model/OrderModel.dart';
 
 class HiveSetUp {
   static Future<void> init() async {
     await Hive.initFlutter();
-    // await Hive.registerAdapter();
-    // Hive.registerAdapter(HiveCityAdapter());
-    // Hive.registerAdapter(HiveMainCategoryAdapter());
-    // Hive.registerAdapter(HiveSubCategoryAdapter());
-    // Hive.registerAdapter(HiveServiceAdapter());
     await publicBoxes();
   }
 
   static Future<void> publicBoxes() async {
     await Hive.openBox('Authorization');
     await Hive.openBox('modelList');
-    // await Hive.openBox('themeColor');
-    // await Hive.openBox('GeneralData');
   }
 }
 
@@ -57,92 +49,6 @@ class AuthPrefsHelper {
   }
 }
 
-@injectable
-class ListCart {
-  List<CartOrderModel> currentPlaceCart = [];
-  List<CartOrderModel> PlaceCart = [];
-
-  var box = Hive.box('modelList');
-
-  void setModel(List<CartOrderModel> cart) {
-    box.put('modelList', cart);
-  }
-
-  List<CartOrderModel>? getModel() {
-    // List<CartOrderModel>? items = [];
-    dynamic hiveItems = box.get('modelList');
-    List<CartOrderModel> fol = [];
-    if (hiveItems == null) {
-      return fol;
-    }
-    for (var item in hiveItems) {
-      fol.add(CartOrderModel.fromJson(item),
-      );
-    }
-
-    return fol;
-  }
-
-
-  Future<void> clearOrderModel() async {
-    await box.clear();
-  }
-
-  insertNewCardOrder(List<CartOrderModel> listOfOrder) {
-    for (var element in listOfOrder) {
-      if (element.Description!.isEmpty) {
-        listOfOrder.remove(element);
-      }
-    }
-
-    List jsonList = [];
-    listOfOrder.map((e) => jsonList.add(e.toJson())).toList();
-
-
-// var ss = (listOfOrder);
-    box.put('modelList', jsonList);
-  }
-
-  List<CartOrderModel>? updatedCart(
-      {String? placeCategory, String? placeName}) {
-    PlaceCart.clear();
-    if (placeCategory == placeName) {
-      placeName = '';
-    }
-    currentPlaceCart = getModel()!
-        .where((element) =>
-    element.CategoryName == placeCategory &&
-        element.PlaceName == placeName)
-        .toList();
-
-
-    CartOrderModel? currentPlaceCartObject = CartOrderModel();
-    List<CartOrderModel> _TempPlaceCart = getModel()!;
-    if (currentPlaceCart.isEmpty) {
-      currentPlaceCartObject.CategoryName = placeCategory ?? "";
-      currentPlaceCartObject.PlaceName = placeName ?? "";
-      currentPlaceCartObject.Description = "";
-      currentPlaceCartObject.isPay = true;
-      currentPlaceCartObject.isCall = true;
-      PlaceCart.add(currentPlaceCartObject);
-    } else {
-      PlaceCart.add(currentPlaceCart.first);
-    }
-
-
-    _TempPlaceCart.where((element) =>
-    !(element.CategoryName == placeCategory &&
-        element.PlaceName == placeName),).forEach((element) {
-      PlaceCart.add(element);
-    });
-
-    return PlaceCart;
-  }
-
-
-
-
-}
 
 class LanguageHelper {
   var box = Hive.box('language');

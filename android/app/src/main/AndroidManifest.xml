@@ -8,10 +8,8 @@
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:label="untitled1"
-        android:usesCleartextTraffic="true"
-
-        >
+        android:label="Yalla-jehe"
+        android:usesCleartextTraffic="true">
 
         <activity
             android:name=".MainActivity"

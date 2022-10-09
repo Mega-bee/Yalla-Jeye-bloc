@@ -1,48 +1,34 @@
-import '../../hive/hive.dart';
+import 'package:untitled1/addresses/response/address_Response.dart';
 
 class CartOrderModel {
-  String? CategoryName;
-  String? PlaceName;
-  String? Description;
-  bool? isCall;
-  bool? isPay;
+  String? categoryName;
+  String? placeName;
+  String? description;
+  bool? makeOrder;
+  bool? payOrder;
+  int? placeTypeId;
+  int? placeId;
 
-  CartOrderModel({
-     this.Description,
-     this.CategoryName,
-     this.isCall,
-     this.isPay,
-     this.PlaceName,
-  });
+
+  CartOrderModel(
+      {this.description,
+      this.categoryName,
+      this.makeOrder,
+      this.payOrder,
+      this.placeTypeId,
+      this.placeId,
+      this.placeName });
 
   Map<dynamic, dynamic> toJson() {
     return {
-    'CategoryName':this.CategoryName,
-    'PlaceName':this.PlaceName,
-    'Description':this.Description,
-    'isCall':this.isCall,
-    'isPay':this.isPay,
-
-  };
-  }
-
-  CartOrderModel.fromJson(Map<dynamic, dynamic> json) {
-    CategoryName = json['CategoryName'];
-    PlaceName = json['PlaceName'];
-    Description = json['Description'];
-    isCall = json['isCall'];
-    isPay = json['isPay'];
-
+      'description': description,
+      'payOrder': payOrder,
+      'makeOrder': makeOrder,
+      'placeTypeId': placeTypeId,
+      'placeId': placeId,
+    };
   }
 }
 
-
-
-
-
-
-
-
-
-
 List<CartOrderModel> orderModelList = [];
+AddressModel? selectedAddressModel  ;

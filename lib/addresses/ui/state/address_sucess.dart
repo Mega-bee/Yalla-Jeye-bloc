@@ -3,6 +3,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:untitled1/utils/components/custom_red_button.dart';
+import 'package:untitled1/utils/images/images.dart';
 
 import '../../../abstracts/states/state.dart';
 
@@ -17,164 +19,102 @@ class AddressPageSuccess extends States {
   AddressPageState addressPageState;
 
   AddressPageSuccess(
-      {required this.addressmodel, required this.addressPageState})
-      : super(false);
-
+      {required this.addressmodel, required this.addressPageState});
 
   @override
   Widget getUI(BuildContext context) {
-    return SingleChildScrollView(
-      child: RefreshIndicator(
-        color: redColor,
-        onRefresh: () async {
-          addressPageState.getAddresses();
-        },
-        child: Column(
-          children: [
-            Column(
-              children: [
-                Container(
-                  height: 630,
-                  child: addressmodel.isNotEmpty
-                      ? ListView.builder(
-                          itemCount: addressmodel.length,
-                          itemBuilder: (context, index) {
-                            return RefreshIndicator(
-                              color: redColor,
-                              onRefresh: () async {
-                                addressPageState.getAddresses();
-                              },
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.pop(
-                                    context,
-                                     addressmodel[index]
-                                  );
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Card(
-                                    elevation: 5,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: ListTile(
-                                        title: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                                "${addressmodel[index].title}"),
-                                            Row(
-                                              children: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.pushNamed(
-                                                            context,
-                                                            AddressRoutes
-                                                                .Editaddress,
-                                                            arguments:
-                                                                addressmodel[
-                                                                    index])
-                                                        .then((value) {
-                                                      if (value != null &&
-                                                          value == true) {
-                                                        addressPageState
-                                                            .getAddresses();
-                                                      }
-                                                    });
-                                                  },
-                                                  child: Text(
-                                                    "Edit",
-                                                    style: TextStyle(
-                                                        color: redColor),
-                                                  ),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () {
-                                                    addressPageState
-                                                        .deleteAddress(
-                                                            addressmodel[index]
-                                                                .id
-                                                                .toString());
-                                                    addressPageState.refresh();
-                                                    addressmodel
-                                                        .removeAt(index);
-                                                  },
-                                                  child: Text(
-                                                    "Delete",
-                                                    style: TextStyle(
-                                                        color: Color(
-                                                      0xffe4e4e4,
-                                                    )),
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        subtitle: Text(
-                                            "${addressmodel[index].description},"
-                                            "${addressmodel[index].buildingName}, "
-                                            "${addressmodel[index].floorNumber}, "
-                                            "${addressmodel[index].street}"),
-                                        leading: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 13),
-                                          child: Icon(Icons.home),
-                                        ),
-                                      ),
+    return RefreshIndicator(
+      color: redColor,
+      onRefresh: () async {
+        addressPageState.getAddresses();
+      },
+      child: addressmodel.isNotEmpty
+          ? ListView.builder(
+              itemCount: addressmodel.length,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {
+                    Navigator.pop(context, addressmodel[index]);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Card(
+                      elevation: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: ListTile(
+                          title: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("${addressmodel[index].title}"),
+                              Row(
+                                children: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pushNamed(context,
+                                          AddressRoutes.Editaddress,
+                                          arguments:
+                                          addressmodel[index])
+                                          .then((value) {
+                                        if (value != null &&
+                                            value == true) {
+                                          addressPageState
+                                              .getAddresses();
+                                        }
+                                      });
+                                    },
+                                    child: Text(
+                                      "Edit",
+                                      style: TextStyle(color: Colors.green),
                                     ),
                                   ),
-                                ),
-                              ),
-                            );
-                          })
-                      : Center(
-                          child: Text(
-                            'No addresses',
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
+                                  TextButton(
+                                    onPressed: () {
+                                      addressPageState.deleteAddress(
+                                          addressmodel[index]
+                                              .id
+                                              .toString());
+                                      addressPageState.refresh();
+                                      addressmodel.removeAt(index);
+                                    },
+                                    child: Icon(Icons.delete , color: Colors.red.shade900,),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                          subtitle: Text(
+                              "${addressmodel[index].description},"
+                                  "${addressmodel[index].buildingName}, "
+                                  "${addressmodel[index].floorNumber}, "
+                                  "${addressmodel[index].street}"),
+                          leading: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 13),
+                            child: Icon(Icons.home),
                           ),
                         ),
-                ),
-              ],
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.only(
-                      left: 120, right: 120, top: 16, bottom: 16),
-                  backgroundColor: redColor,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(13),
-                  )),
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  AddressRoutes.Createaddress,
-                ).then(
-                  (value) {
-                    if (value != null && value == true) {
-                      addressPageState.getAddresses();
-                    }
-                  },
+                      ),
+                    ),
+                  ),
                 );
-              },
-              child: Text(
-                "Add new address",
-                style: TextStyle(fontSize: 17),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+              })
+          : Center(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(ImageAsset.NO_ADDREESS),
+                  SizedBox(height: 15,),
+                   Text(
+                     'You dont add any address yet',
+                     style: TextStyle(color: Colors.black, fontSize: 18 , fontWeight: FontWeight.bold),
+                   ),
 
-  @override
-  Widget getAlert(BuildContext context) {
-    // TODO: implement getAlert
-    throw UnimplementedError();
+                ],
+              ),
+          ),
+    );
   }
 }

@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
+import 'package:untitled1/auth/service/auth_service.dart';
 import '../../../abstracts/states/not_logged_in.dart';
 import '../../../abstracts/states/state.dart';
-import '../../../auth/ui/screens/log_in_list.dart';
-import '../../../module_auth/service/auth_service.dart';
-import '../../request/order_request.dart';
 import '../../state_manager/order.dart';
 
 @injectable
@@ -27,6 +25,7 @@ class OrderState extends State<Order> {
 
   @override
   void initState() {
+    super.initState();
     checkIsGuest()
         ? widget.cubit.getOrder(this)
         : widget.cubit.emit(NotLoggedIn());
@@ -44,20 +43,18 @@ class OrderState extends State<Order> {
 
   @override
   Widget build(BuildContext context) {
-    var args = ModalRoute.of(context)?.settings.arguments;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Add order',
+          'View orders',
           style: GoogleFonts.poppins(
             fontStyle: FontStyle.normal,
-            color: Colors.black,
+            color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 5,
+        // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        elevation: 2,
       ),
       body: BlocBuilder<OrderCubit, States>(
         bloc: widget.cubit,

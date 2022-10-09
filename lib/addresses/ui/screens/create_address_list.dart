@@ -1,13 +1,7 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:injectable/injectable.dart';
-import 'package:untitled1/custom/model/OrderModel.dart';
 import '../../../abstracts/states/state.dart';
-import '../../../utils/components/custom_alert_dialog/CustomDeleteDialog/CustomDeleteDialog.dart';
-import '../../../utils/images/images.dart';
 import '../../request/create_address_request.dart';
 import '../../state_manager/address.dart';
 import '../state/create_address_success.dart';
@@ -23,10 +17,20 @@ class CreateAddressPage extends StatefulWidget {
 }
 
 class CreateAddressPageState extends State<CreateAddressPage> {
+  late AsyncSnapshot loadingSnapshotLogin;
+
   @override
   void initState() {
-
-    widget.cubit.emit(CreateAddressPageSuccess(state: this));
+    super.initState();
+    widget.cubit.emit(CreateAddressPageSuccess(screenState: this));
+    loadingSnapshotLogin = AsyncSnapshot.nothing();
+    widget.cubit.loadingStream.listen((event) {
+      if (mounted) {
+        setState(() {
+          loadingSnapshotLogin = event;
+        });
+      }
+    });
   }
 
   void refresh() {
@@ -40,21 +44,12 @@ class CreateAddressPageState extends State<CreateAddressPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         title: Text(
-          "Addresses",
-          style: TextStyle(color: Colors.black),
+          "Add address",
+          style: TextStyle(color: Colors.white),
         ),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back,color: Colors.black,),
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0,
       ),
       body: BlocBuilder<AddressCubit, States>(
         bloc: widget.cubit,

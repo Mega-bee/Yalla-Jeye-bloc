@@ -13,7 +13,7 @@ class SignupInitState extends States {
 
   String? errorMessage;
 
-  SignupInitState(this.screenState, this.errorMessage) : super(false);
+  SignupInitState(this.screenState, this.errorMessage);
 
   final _formKey = GlobalKey<FormState>();
   final newpass = TextEditingController();

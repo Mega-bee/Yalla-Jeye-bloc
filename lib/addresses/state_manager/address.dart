@@ -2,16 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
-import 'package:untitled1/di/di_config.dart';
-import 'package:untitled1/module_auth/service/auth_service.dart';
-import 'package:untitled1/module_network/http_client/http_client.dart';
-import 'package:untitled1/utils/logger/logger.dart';
 
 import '../../abstracts/states/error_state.dart';
 import '../../abstracts/states/loading_state.dart';
 import '../../abstracts/states/state.dart';
-import '../../custom/ui/screens/custom_list.dart';
-import '../../home_page/response/homepage_response.dart';
 import '../../utils/Colors/colors.dart';
 import '../repository/address_repository.dart';
 import '../request/create_address_request.dart';
@@ -21,6 +15,7 @@ import '../ui/screens/addresses_list.dart';
 import '../ui/screens/create_address_list.dart';
 import '../ui/screens/edit_screen_list.dart';
 import '../ui/state/address_sucess.dart';
+import 'package:rxdart/rxdart.dart';
 
 @injectable
 class AddressCubit extends Cubit<States> {
@@ -28,16 +23,10 @@ class AddressCubit extends Cubit<States> {
 
   AddressCubit(this._addressRepository) : super(LoadingState());
 
-  getAddress(AddressPageState state) {
-    // final HomePageRepository _homePageRepositoryy = getIt<HomePageRepository>();
-    // final HomePageRepository _homePageRepositoryyy = HomePageRepository(getIt<ApiClient>(), getIt<AuthService>());
-    //
-    //
-    // final Logger _logger = Logger();
-    // final ApiClient apiClient = ApiClient(_logger);
-    // final AuthService authService = AuthService(_prefsHelper);
-    // final HomePageRepository homePageRepository = HomePageRepository(apiClient, authService);
+  final _loadingStateSubject = PublishSubject<AsyncSnapshot>();
+  Stream<AsyncSnapshot> get loadingStream => _loadingStateSubject.stream;
 
+  getAddress(AddressPageState state) {
     emit(LoadingState());
     _addressRepository.getAdresses().then((value) {
       if (value == null) {
@@ -47,8 +36,6 @@ class AddressCubit extends Cubit<States> {
               getAddress(state);
             }));
       } else if (value.code == 200) {
-        // HomePageModel restaurants =
-        // HomePageModel.fromJson(value.data.insideData);
         List<AddressModel> fol = [];
         for (var item in value.data.insideData) {
           fol.add(AddressModel.fromJson(item));
@@ -66,20 +53,17 @@ class AddressCubit extends Cubit<States> {
 
   CreateAddress(
       CreateAddressRequest request, CreateAddressPageState addressPageState) {
-    emit(
-      LoadingWaitingState('Waiting to create address'),
-    );
+    _loadingStateSubject.add(const AsyncSnapshot.waiting());
     _addressRepository.CreateAddress(request).then((value) {
       if (value == null) {
+        _loadingStateSubject.add(const AsyncSnapshot.nothing());
         Fluttertoast.showToast(
-            msg: 'somthing wrong', backgroundColor: Colors.red);
+            msg: 'Somthing wrong', backgroundColor: Colors.red.shade900);
       } else if (value.code == 200) {
-
+        Navigator.pop(addressPageState.context,true);
         Fluttertoast.showToast(
-            msg: 'Address created Successfully',
-            backgroundColor: Color(
-              0xffFFD400,
-            ));
+          msg: 'Address created Successfully',
+        );
       }
     });
   }
@@ -94,20 +78,19 @@ class AddressCubit extends Cubit<States> {
     });
   }
 
-  EditAddress({
-      required EditAddressRequest request, required EditAddressPageState addressPageState}) {
-    emit(
-      LoadingWaitingState('Waiting to edit address'),
-    );
+  EditAddress(
+      {required EditAddressRequest request,
+      required EditAddressPageState addressPageState}) {
+    // emit(
+    //   LoadingWaitingState('Waiting to edit address'),
+    // );
     _addressRepository.EditAddress(request).then((value) {
       if (value == null) {
         Fluttertoast.showToast(
             msg: 'something went wrong', backgroundColor: Colors.red);
       } else if (value.code == 200) {
         Fluttertoast.showToast(
-          msg: 'Address updated Successfully',
-          backgroundColor: redColor
-        );
+            msg: 'Address updated Successfully', backgroundColor: redColor);
       }
     });
   }

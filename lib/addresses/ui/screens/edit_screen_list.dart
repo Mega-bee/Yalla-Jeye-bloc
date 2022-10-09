@@ -1,13 +1,7 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:injectable/injectable.dart';
-import 'package:untitled1/custom/model/OrderModel.dart';
 import '../../../abstracts/states/state.dart';
-import '../../../utils/components/custom_alert_dialog/CustomDeleteDialog/CustomDeleteDialog.dart';
-import '../../../utils/images/images.dart';
 import '../../request/edit_address_request.dart';
 import '../../response/address_Response.dart';
 import '../../state_manager/address.dart';
@@ -52,24 +46,13 @@ class EditAddressPageState extends State<EditAddressPage> {
       );
     }
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
-
         title: Text(
-          "Addresses",
-          style: TextStyle(color: Colors.black),
+          "Edit addrees",
+          style: TextStyle(color: Colors.white),
         ),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0,
+
       ),
       body: BlocBuilder<AddressCubit, States>(
         bloc: widget.cubit,

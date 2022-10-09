@@ -21,39 +21,34 @@ class CustomButton extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
-          child:
-          Material(
+          child: Material(
             color: bgColor,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(12),
             child: InkWell(
-              borderRadius: BorderRadius.circular(15),
-              onTap: (){
+              borderRadius: BorderRadius.circular(12),
+              onTap: () {
                 buttonTab();
               },
               child: Padding(
                   padding: const EdgeInsets.all(14.0),
                   child: SizedBox(
-                    height: 20,
-
+                    height: 30,
                     child: loading
                         ? Center(
-                        child: LoadingIndicator(
-
-                          indicatorType:
-                          Indicator.ballBeat,
-
-                          colors: [Colors.black],
-                        ))
+                            child: LoadingIndicator(
+                            indicatorType: Indicator.ballBeat,
+                            colors: [Colors.white],
+                          ))
                         : Center(
-                      child: Text(
-                        '$text',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: WhiteColor,
-                            fontSize: 18),
-                      ),
-                    ),
+                            child: Text(
+                              '$text',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: WhiteColor,
+                                  fontSize: 18),
+                            ),
+                          ),
                   )),
             ),
           ),

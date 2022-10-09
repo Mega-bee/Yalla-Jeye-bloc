@@ -1,8 +1,8 @@
 import 'package:injectable/injectable.dart';
+import 'package:untitled1/auth/service/auth_service.dart';
 
 import '../../abstracts/WebUrl.dart';
 import '../../abstracts/model/WebServiceResponse.dart';
-import '../../module_auth/service/auth_service.dart';
 import '../../module_network/http_client/http_client.dart';
 import '../request/confirm_otp.dart';
 import '../request/confirm_phone_number_request.dart';

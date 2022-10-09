@@ -5,13 +5,12 @@ import 'package:injectable/injectable.dart';
 import '../../abstracts/states/error_state.dart';
 import '../../abstracts/states/loading_state.dart';
 import '../../abstracts/states/state.dart';
-import '../../utils/Colors/colors.dart';
 import '../repository/profile_repository.dart';
 import '../request/edit_profile_request.dart';
 import '../response/get_profile_response.dart';
-import '../ui/screen/edit_profile.dart';
 import '../ui/screen/get_profile.dart';
 import '../ui/state/get_profile_state.dart';
+import 'package:rxdart/rxdart.dart';
 
 @injectable
 class ProfileCubit extends Cubit<States> {
@@ -19,23 +18,22 @@ class ProfileCubit extends Cubit<States> {
 
   ProfileCubit(this._profileRepository) : super(LoadingState());
 
-  updateProf({required UpdateProfileRequest request,required EditProfilePageState state}) {
-    print("Loadinggg");
-
-    emit(
-      LoadingWaitingState('Waiting to edit address'),
-    );
-    print("Loadinggg 1111");
-
+  final _loadingStateSubject = PublishSubject<AsyncSnapshot>();
+  Stream<AsyncSnapshot> get loadingStream => _loadingStateSubject.stream;
+  updateProf({
+    required UpdateProfileRequest request,
+    required GetProfilePageState screenState
+  }) {
+    _loadingStateSubject.add(AsyncSnapshot.waiting());
     _profileRepository.editProfile(request).then((value) {
       if (value == null) {
+        _loadingStateSubject.add(AsyncSnapshot.nothing());
         Fluttertoast.showToast(
             msg: 'something went wrong', backgroundColor: Colors.red);
       } else if (value.code == 200) {
-        Navigator.pop(state.context, true);
+        Navigator.pop(screenState.context);
         Fluttertoast.showToast(
-
-            msg: 'Profile updated Successfully', backgroundColor: redColor);
+            msg: 'updated successfully', backgroundColor: Colors.red);
       }
     });
   }
@@ -55,7 +53,7 @@ class ProfileCubit extends Cubit<States> {
 
         emit(
           GetProfilePageSuccess(
-              getProfileModel: getProfileModel, getProfilePageState: state),
+              model: getProfileModel, screenState: state),
         );
       }
     });

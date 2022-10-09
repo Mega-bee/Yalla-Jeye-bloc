@@ -14,7 +14,7 @@ class LoginInitState extends States{
   String? errorMessage;
 
 
-  LoginInitState(this.errorMessage,this._screenState) : super(false);
+  LoginInitState(this.errorMessage,this._screenState) ;
 
   final _formKey = GlobalKey<FormState>();
   final phone = TextEditingController();
