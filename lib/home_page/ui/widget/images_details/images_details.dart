@@ -279,7 +279,7 @@ class _ImageDetailsState extends State<ImageDetails>
                   ),
                 ),
                 enableDrag: false,
-                useSafeArea: true,
+                // useSafeArea: true,
                 isScrollControlled: true,
                 context: context,
                 builder: (BuildContext context) {

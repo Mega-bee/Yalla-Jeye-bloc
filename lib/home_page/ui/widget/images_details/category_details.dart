@@ -138,7 +138,7 @@ class _CategoryDetailsState extends State<CategoryDetails>
                     ),
                   ),
                   enableDrag: false,
-                  useSafeArea: true,
+                  // useSafeArea: true,
                   isScrollControlled: true,
                   context: context,
                   builder: (BuildContext context) {
