@@ -8,10 +8,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/auth/service/auth_service.dart';
 import 'package:untitled1/custom/model/OrderModel.dart';
+import 'package:untitled1/module_addresses/address_route.dart';
 import 'package:untitled1/module_menu_details/ui/widget/custom_action_botton.dart';
 import 'package:untitled1/utils/components/custom_alert_dialog.dart';
 import '../../../abstracts/states/state.dart';
-import '../../../addresses/address_module_route.dart';
 import '../../../hive/hive.dart';
 import '../../../utils/Colors/colors.dart';
 import '../../../utils/images/images.dart';
@@ -231,7 +231,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       onPressed: () {
                         Navigator.pushNamed(
                           context,
-                          AddressRoutes.Createaddress,
+                          AddressRoutes.VIEW_ADDRESS,
                         );
                       },
                       child: Text(

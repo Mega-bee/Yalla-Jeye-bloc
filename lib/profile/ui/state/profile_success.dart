@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:untitled1/addresses/address_module_route.dart';
 import 'package:untitled1/auth/auth_module_route.dart';
 import 'package:untitled1/di/di_config.dart';
+import 'package:untitled1/module_addresses/address_route.dart';
 import 'package:untitled1/utils/components/custom_alert_dialog.dart';
 import '../../../abstracts/states/state.dart';
 import '../../../hive/hive.dart';
@@ -90,7 +90,7 @@ class ProfileSuccess extends States {
                               onTap: () {
                                 Navigator.pushNamed(
                                   context,
-                                  AddressRoutes.address,
+                                  AddressRoutes.VIEW_ADDRESS,
                                 );
                               },
                               child: Text(

@@ -14,10 +14,11 @@ class OrderCardWidget extends StatefulWidget {
 }
 
 class _OrderCardWidgetState extends State<OrderCardWidget> {
-  final _descriptionController = TextEditingController();
+  var _descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    _descriptionController.text = widget.orderModel.description ?? '';
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25),
@@ -83,6 +84,10 @@ class _OrderCardWidgetState extends State<OrderCardWidget> {
                 ),
                 IconButton(
                   onPressed: () {
+                    _descriptionController.clear();
+                    orderModelList.remove(widget.orderModel);
+                    setState(() {});
+                    // _descriptionController.clear();
                   widget.onDelete();
                   },
                   icon: Icon(
@@ -174,6 +179,6 @@ class _OrderCardWidgetState extends State<OrderCardWidget> {
   @override
   void initState() {
     super.initState();
-    _descriptionController.text = widget.orderModel.description ?? '';
+    // _descriptionController.text = widget.orderModel.description ?? '';
   }
 }

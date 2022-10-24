@@ -31,7 +31,6 @@ class PlaceCard extends StatelessWidget {
                       restaurantName: model.title ?? '',
                       menuImages: model.menu ,
                       placeId: model.id,
-                      placeTypeId: placeTypeId
                 ));
               },
               child: Hero(

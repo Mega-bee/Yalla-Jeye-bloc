@@ -19,7 +19,8 @@ class DestinationCard extends StatelessWidget {
                 image: model.image ?? '',
                 restaurantName: model.title ?? '',
                 menuImages: [] ,
-                placeTypeId: model.id
+                placeTypeId: model.id,
+                placeId: 0
             ));
       },
       child: Card(

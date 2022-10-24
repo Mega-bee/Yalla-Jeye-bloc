@@ -8,13 +8,7 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import '../addresses/address_module.dart' as _i55;
-import '../addresses/repository/address_repository.dart' as _i24;
-import '../addresses/state_manager/address.dart' as _i41;
-import '../addresses/ui/screens/addresses_list.dart' as _i42;
-import '../addresses/ui/screens/create_address_list.dart' as _i43;
-import '../addresses/ui/screens/edit_screen_list.dart' as _i45;
-import '../auth/auth_module.dart' as _i49;
+import '../auth/auth_module.dart' as _i47;
 import '../auth/repository/log_in_repository.dart' as _i14;
 import '../auth/service/auth_service.dart' as _i4;
 import '../auth/state_manager/log_in.dart' as _i30;
@@ -23,17 +17,21 @@ import '../auth/state_manager/sign_up.dart' as _i21;
 import '../auth/ui/screens/log_in_list.dart' as _i40;
 import '../auth/ui/screens/otp_screen.dart' as _i19;
 import '../auth/ui/screens/sign_up_list.dart' as _i22;
-import '../custom/custom_module.dart' as _i44;
+import '../custom/custom_module.dart' as _i43;
 import '../custom/repository/custom_repository.dart' as _i12;
 import '../custom/state_manager/custom.dart' as _i27;
 import '../custom/ui/screens/custom_list.dart' as _i28;
 import '../hive/hive.dart' as _i3;
-import '../home_page/homepage_module.dart' as _i48;
+import '../home_page/homepage_module.dart' as _i46;
 import '../home_page/repository/homepage_repository.dart' as _i13;
 import '../home_page/state_manager/homepage.dart' as _i29;
-import '../home_page/ui/screens/home_page.dart' as _i47;
-import '../main.dart' as _i56;
-import '../module_menu_details/menu_module.dart' as _i50;
+import '../home_page/ui/screens/home_page.dart' as _i45;
+import '../main.dart' as _i54;
+import '../module_addresses/address_module.dart' as _i53;
+import '../module_addresses/repository/address_repository.dart' as _i24;
+import '../module_addresses/state_manager/address_state_manager.dart' as _i41;
+import '../module_addresses/ui/screens/address_screen.dart' as _i42;
+import '../module_menu_details/menu_module.dart' as _i48;
 import '../module_menu_details/repository/menu_details_repository.dart' as _i11;
 import '../module_menu_details/state_manager/menu_state_manager.dart' as _i25;
 import '../module_menu_details/ui/screens/checkout_screen.dart' as _i26;
@@ -43,22 +41,22 @@ import '../module_splash/splash_module.dart' as _i23;
 import '../module_splash/ui/screen/splash_screen.dart' as _i9;
 import '../navigation_bar/navigator_module.dart' as _i8;
 import '../navigation_bar/ui/screens/navigationBar.dart' as _i7;
-import '../notification/Notification_module.dart' as _i51;
+import '../notification/Notification_module.dart' as _i49;
 import '../notification/repository/Notification_repository.dart' as _i15;
 import '../notification/state_manager/Notification.dart' as _i32;
 import '../notification/ui/screens/Notification_list.dart' as _i33;
-import '../order/order_module.dart' as _i53;
+import '../order/order_module.dart' as _i51;
 import '../order/repository/order_repository.dart' as _i17;
 import '../order/state_manager/order.dart' as _i34;
-import '../order/ui/screens/order_page_list.dart' as _i52;
+import '../order/ui/screens/order_page_list.dart' as _i50;
 import '../order_details/order_module.dart' as _i37;
 import '../order_details/repository/order_repository.dart' as _i16;
 import '../order_details/state_manager/order.dart' as _i35;
 import '../order_details/ui/screens/order_page_list.dart' as _i36;
-import '../profile/profile_module.dart' as _i54;
+import '../profile/profile_module.dart' as _i52;
 import '../profile/repository/profile_repository.dart' as _i20;
 import '../profile/state_manager/profile.dart' as _i38;
-import '../profile/ui/screen/get_profile.dart' as _i46;
+import '../profile/ui/screen/get_profile.dart' as _i44;
 import '../profile/ui/screen/profile.dart' as _i39;
 import '../utils/global/global_state_manager.dart' as _i5;
 import '../utils/logger/logger.dart'
@@ -141,46 +139,40 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i40.loginScreen(cubit: get<_i30.LogInCubit>()));
   gh.factory<_i41.AddressCubit>(
       () => _i41.AddressCubit(get<_i24.AddressRepository>()));
-  gh.factory<_i42.AddressPage>(
-      () => _i42.AddressPage(get<_i41.AddressCubit>()));
-  gh.factory<_i43.CreateAddressPage>(
-      () => _i43.CreateAddressPage(get<_i41.AddressCubit>()));
-  gh.factory<_i44.CustomModule>(
-      () => _i44.CustomModule(get<_i28.CustomPage>()));
-  gh.factory<_i45.EditAddressPage>(
-      () => _i45.EditAddressPage(get<_i41.AddressCubit>()));
-  gh.factory<_i46.GetProfilePage>(
-      () => _i46.GetProfilePage(get<_i38.ProfileCubit>()));
-  gh.factory<_i47.HomePage>(() => _i47.HomePage(get<_i29.HomePageCubit>(),
+  gh.factory<_i42.AddressScreen>(
+      () => _i42.AddressScreen(get<_i41.AddressCubit>()));
+  gh.factory<_i43.CustomModule>(
+      () => _i43.CustomModule(get<_i28.CustomPage>()));
+  gh.factory<_i44.GetProfilePage>(
+      () => _i44.GetProfilePage(get<_i38.ProfileCubit>()));
+  gh.factory<_i45.HomePage>(() => _i45.HomePage(get<_i29.HomePageCubit>(),
       get<_i3.AuthPrefsHelper>(), get<_i4.AuthService>()));
-  gh.factory<_i48.HomePageModule>(
-      () => _i48.HomePageModule(get<_i47.HomePage>()));
-  gh.factory<_i49.LogInModule>(() => _i49.LogInModule(get<_i40.loginScreen>(),
+  gh.factory<_i46.HomePageModule>(
+      () => _i46.HomePageModule(get<_i45.HomePage>()));
+  gh.factory<_i47.LogInModule>(() => _i47.LogInModule(get<_i40.loginScreen>(),
       get<_i22.SignupScreen>(), get<_i19.PinCodeVerificationScreen>()));
-  gh.factory<_i50.MenuDetailsModule>(() => _i50.MenuDetailsModule(
+  gh.factory<_i48.MenuDetailsModule>(() => _i48.MenuDetailsModule(
       get<_i31.MenuDetailsScreen>(), get<_i26.CheckOutScreen>()));
-  gh.factory<_i51.NotificationModule>(
-      () => _i51.NotificationModule(get<_i33.NotificationPage>()));
-  gh.factory<_i52.Order>(
-      () => _i52.Order(get<_i34.OrderCubit>(), get<_i4.AuthService>()));
-  gh.factory<_i53.OrderModule>(() => _i53.OrderModule(get<_i52.Order>()));
-  gh.factory<_i54.ProfilePageModule>(() => _i54.ProfilePageModule(
-      get<_i39.ProfilePage>(), get<_i46.GetProfilePage>()));
-  gh.factory<_i55.AddressModule>(() => _i55.AddressModule(
-      get<_i42.AddressPage>(),
-      get<_i43.CreateAddressPage>(),
-      get<_i45.EditAddressPage>()));
-  gh.factory<_i56.MyApp>(() => _i56.MyApp(
+  gh.factory<_i49.NotificationModule>(
+      () => _i49.NotificationModule(get<_i33.NotificationPage>()));
+  gh.factory<_i50.Order>(
+      () => _i50.Order(get<_i34.OrderCubit>(), get<_i4.AuthService>()));
+  gh.factory<_i51.OrderModule>(() => _i51.OrderModule(get<_i50.Order>()));
+  gh.factory<_i52.ProfilePageModule>(() => _i52.ProfilePageModule(
+      get<_i39.ProfilePage>(), get<_i44.GetProfilePage>()));
+  gh.factory<_i53.AddressModule>(
+      () => _i53.AddressModule(get<_i42.AddressScreen>()));
+  gh.factory<_i54.MyApp>(() => _i54.MyApp(
       get<_i8.NavigatorModule>(),
-      get<_i51.NotificationModule>(),
-      get<_i53.OrderModule>(),
-      get<_i44.CustomModule>(),
-      get<_i55.AddressModule>(),
-      get<_i48.HomePageModule>(),
+      get<_i49.NotificationModule>(),
+      get<_i51.OrderModule>(),
+      get<_i43.CustomModule>(),
+      get<_i53.AddressModule>(),
+      get<_i46.HomePageModule>(),
       get<_i37.OrderDetailsModule>(),
-      get<_i49.LogInModule>(),
-      get<_i54.ProfilePageModule>(),
-      get<_i50.MenuDetailsModule>(),
+      get<_i47.LogInModule>(),
+      get<_i52.ProfilePageModule>(),
+      get<_i48.MenuDetailsModule>(),
       get<_i23.SplashModule>()));
   return get;
 }

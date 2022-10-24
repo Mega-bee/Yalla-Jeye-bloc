@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/addresses/address_module_route.dart';
 import 'package:untitled1/custom/request/custom_request.dart';
+import 'package:untitled1/module_addresses/address_route.dart';
+import 'package:untitled1/module_addresses/response/address_response.dart';
 import 'package:untitled1/utils/components/custom_alert_dialog.dart';
 import 'package:untitled1/utils/components/custom_red_button.dart';
 import '../../../abstracts/states/state.dart';
-import '../../../addresses/response/address_Response.dart';
 import '../../../utils/Colors/colors.dart';
 import '../screens/custom_list.dart';
 
@@ -12,8 +12,8 @@ class CustomSuccess extends States {
   CustomPageState customPageState;
   CustomSuccess({required this.customPageState});
 
-  AddressModel model = AddressModel();
-  AddressModel model2 = AddressModel();
+  AddressResponse model = AddressResponse();
+  AddressResponse model2 = AddressResponse();
   TextEditingController custom = TextEditingController();
 
   @override
@@ -102,10 +102,10 @@ class CustomSuccess extends States {
                                   if (customPageState.checkIsUserLogged()) {
                                     Navigator.pushNamed(
                                       context,
-                                      AddressRoutes.address,
+                                      AddressRoutes.VIEW_ADDRESS,arguments: true
                                       // arguments: widget.businessInfoModel
                                     ).then((value) {
-                                      value as AddressModel;
+                                      value as AddressResponse;
                                       model2 = value;
                                       customPageState.refresh();
                                     });
@@ -176,10 +176,10 @@ class CustomSuccess extends States {
                                   if (customPageState.checkIsUserLogged()) {
                                     Navigator.pushNamed(
                                       context,
-                                      AddressRoutes.address,
+                                      AddressRoutes.VIEW_ADDRESS,arguments: true
                                       // arguments: widget.businessInfoModel
                                     ).then((returnedAddresses) {
-                                      returnedAddresses as AddressModel;
+                                      returnedAddresses as AddressResponse;
                                       model = returnedAddresses;
                                       customPageState.refresh();
                                     });

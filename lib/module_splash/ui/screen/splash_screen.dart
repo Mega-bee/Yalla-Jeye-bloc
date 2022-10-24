@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
               children: [
                 Lottie.asset(ImageAsset.SPLASH_SCREEN,),
                 SizedBox(height: 20,),
-                Text('YALA JEHE' , style: TextStyle(fontWeight: FontWeight.bold , fontSize: 35),)
+                Text('YALLA JEYE' , style: TextStyle(fontWeight: FontWeight.bold , fontSize: 35),)
               ],
             ),
           )) )

@@ -7,7 +7,7 @@ class OrderPlaceRequest {
   List<CartOrderModel>? orderPlaces;
 
   OrderPlaceRequest(
-      this.addressId, this.totalPrice, this.promoCode, this.orderPlaces);
+  { this.addressId, this.totalPrice, this.promoCode, this.orderPlaces});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();

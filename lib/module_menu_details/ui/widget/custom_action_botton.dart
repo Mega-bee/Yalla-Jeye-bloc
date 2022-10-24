@@ -47,7 +47,7 @@ class _CustomActionButtonState extends State<CustomActionButton>
               showDialog(context: context, builder: (context) => CustomDialogBox(title: 'You should login to make new order'),);
             }else {
               if (widget.model != null) {
-                if (widget.model?.placeId != null) {
+                if (widget.model?.placeId != 0) {
                   var containP = orderModelList.where(
                           (element) =>
                       element.placeId == widget.model?.placeId);

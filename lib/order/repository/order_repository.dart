@@ -26,15 +26,5 @@ class OrderRepository {
     return response;
   }
 
-  Future<WebServiceResponse?> PlaceOrder(PlaceOrderRequest request) async {
-    var token = _authService.getToken();
-    WebServiceResponse? response = await _apiClient.post(
-      Urls.PLACE_ORDER,
-      request.toJson(),
-      headers: {'Authorization': 'Bearer ' '$token'},
-    );
-    if (response == null) return null;
-    return response;
-  }
 
 }

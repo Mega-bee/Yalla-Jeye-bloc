@@ -2,9 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
-import '../../addresses/address_module_route.dart';
-import '../../addresses/response/address_Response.dart';
+import 'package:untitled1/module_addresses/response/address_response.dart';
 import '../../custom/model/OrderModel.dart';
 import '../../hive/hive.dart';
 import '../Colors/colors.dart';
@@ -41,7 +39,7 @@ class _BottomSheetCustomState extends State<BottomSheetCustom>
   CartOrderModel? currentPlaceCartObject;
   // ListCart cart = ListCart();
   late AnimationController controller;
-  AddressModel model = AddressModel();
+  AddressResponse model = AddressResponse();
 
   void initState() {
     print('-------------------------------');

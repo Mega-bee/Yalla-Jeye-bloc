@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:untitled1/addresses/address_module_route.dart';
-import 'package:untitled1/addresses/response/address_Response.dart';
 import 'package:untitled1/custom/model/OrderModel.dart';
+import 'package:untitled1/module_addresses/address_route.dart';
+import 'package:untitled1/module_addresses/response/address_response.dart';
 import 'package:untitled1/module_menu_details/request/calculate_price_request.dart';
 import 'package:untitled1/module_menu_details/ui/widget/order_card_widget.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
@@ -34,7 +34,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
     return  Container(
       height: MediaQuery.of(context).size.height * 0.950,
       color: Colors.grey.shade100,
-      child: StatefulBuilder(builder: (context, setState) {
+      child: StatefulBuilder(builder: (context, setStatet) {
         return AnimatedContainer(
           duration: Duration(seconds: 5),
           child: Stack(
@@ -117,8 +117,8 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                               ],),
                               OutlinedButton(
                                 onPressed: () {
-                                  Navigator.pushNamed(context, AddressRoutes.address).then((value) {
-                                    if(value != null && value is AddressModel){
+                                  Navigator.pushNamed(context, AddressRoutes.VIEW_ADDRESS, arguments: true).then((value) {
+                                    if(value != null && value is AddressResponse){
                                       selectedAddressModel = value;
                                      setState((){} );
                                     }
@@ -147,7 +147,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                               const EdgeInsets.all(
                                   8.0),
                               child: OrderCardWidget(orderModel: orderModelList[index],onDelete: (){
-                                orderModelList.removeAt(index);
+                                setStatet((){});
                                setState((){});
                               },)
                           );
