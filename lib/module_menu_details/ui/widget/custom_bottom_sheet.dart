@@ -178,11 +178,17 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                   Fluttertoast.showToast(msg: 'Select Address Please');
                                 }else {
                                   List<int> allPlacesIds = [];
+                                  List<int> allPlacesTypes = [];
                                   for (var element in widget.placesOrders) {
-                                    allPlacesIds.add(element.placeId ?? -1);
+                                    if(element.placeId == 0){
+                                      allPlacesTypes.add(element.placeTypeId ?? -1);
+                                    }
+                                   else {
+                                      allPlacesIds.add(element.placeId ?? -1);
+                                    }
                                   }
                                   widget.calculatePrice(CalculatePriceRequest(
-                                      selectedAddressModel?.id, allPlacesIds));
+                                      selectedAddressModel?.id, allPlacesIds,allPlacesTypes));
                                 }
                               },
                               color: redColor,

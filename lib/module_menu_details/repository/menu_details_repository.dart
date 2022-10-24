@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/auth/service/auth_service.dart';
+import 'package:untitled1/custom/request/custom_request.dart';
 import 'package:untitled1/module_menu_details/request/calculate_price_request.dart';
 import 'package:untitled1/module_menu_details/request/order_place_request.dart';
 
@@ -32,6 +33,18 @@ class CheckOutRepository {
     var token = _authService.getToken();
     WebServiceResponse? response = await _apiClient.post(
       Urls.PLACE_ORDER,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ' '$token'},
+    );
+    if (response == null) return null;
+    return response;
+  }
+
+
+  Future<WebServiceResponse?> placeCustomOrder(CustomOrderRequest request) async {
+    var token = _authService.getToken();
+    WebServiceResponse? response = await _apiClient.post(
+      Urls.CUSTOM_ORDER,
       request.toJson(),
       headers: {'Authorization': 'Bearer ' '$token'},
     );

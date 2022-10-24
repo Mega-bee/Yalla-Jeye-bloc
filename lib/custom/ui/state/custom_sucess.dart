@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled1/auth/ui/widget/custom_button.dart';
 import 'package:untitled1/custom/request/custom_request.dart';
 import 'package:untitled1/module_addresses/address_route.dart';
 import 'package:untitled1/module_addresses/response/address_response.dart';
@@ -229,15 +230,21 @@ class CustomSuccess extends States {
             SizedBox(
               height: 18,
             ),
-            CustomRedButton(
-                oPres: () {
-                  customPageState.CustomOrder(CustomOrderRequest(
-                    Description: custom.text,
-                    DestinationAddressId: model.id,
-                    FromAddressId: model2.id,
-                  ));
-                },
-                title: 'Checkout'),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: CustomButton(
+                  buttonTab: () {
+                    customPageState.CustomOrder(CustomOrderRequest(
+                      Description: custom.text,
+                      DestinationAddressId: model.id,
+                      FromAddressId: model2.id,
+                    ));
+                  },
+                  bgColor: redColor,
+                  loading: customPageState.loadingSnapshotLogin.connectionState
+                      == ConnectionState.waiting ? true : false,
+                  text: 'Checkout',textColor: Colors.white),
+            ),
             const SizedBox(
               height: 100,
             ),

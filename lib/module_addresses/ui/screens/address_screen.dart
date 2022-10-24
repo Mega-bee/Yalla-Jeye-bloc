@@ -23,6 +23,7 @@ class AddressScreenState extends State<AddressScreen> {
   bool flags = true;
   @override
   void initState() {
+    goToSelectedState = false;
     super.initState();
 
   }

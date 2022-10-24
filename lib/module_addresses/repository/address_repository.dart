@@ -38,7 +38,7 @@ class AddressRepository {
   Future<WebServiceResponse?> updateAddress(
       CreateAddressRequest request) async {
     var token = await _authService.getToken();
-    WebServiceResponse? response = await _apiClient.put(
+    WebServiceResponse? response = await _apiClient.post(
       Urls.EDIT_ADDRESSES,
       request.toJson(),
       headers: {'Authorization': 'Bearer ' '$token'},
@@ -49,7 +49,7 @@ class AddressRepository {
 
   Future<WebServiceResponse?> deleteAddress(String id) async {
     var token = await _authService.getToken();
-    WebServiceResponse? response = await _apiClient.put(
+    WebServiceResponse? response = await _apiClient.post(
       Urls.DELETE_ADDRESSES + '${id}',
       {},
       headers: {'Authorization': 'Bearer ' '$token'},

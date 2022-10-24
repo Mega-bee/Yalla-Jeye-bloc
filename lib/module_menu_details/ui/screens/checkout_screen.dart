@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/auth/ui/widget/custom_button.dart';
 import 'package:untitled1/custom/model/OrderModel.dart';
+import 'package:untitled1/custom/request/custom_request.dart';
 import 'package:untitled1/module_menu_details/request/order_place_request.dart';
 import 'package:untitled1/module_menu_details/response/calculate_response.dart';
 import 'package:untitled1/module_menu_details/state_manager/menu_state_manager.dart';
@@ -20,6 +21,8 @@ class CheckOutScreen extends StatefulWidget {
 
 class  CheckOutScreenState extends State<CheckOutScreen> {
   CalculatePriceResponse? response;
+  CustomOrderRequest? request;
+  bool isCustom = false;
 
   late AsyncSnapshot loadingSnapshotLogin;
   @override
@@ -38,8 +41,10 @@ class  CheckOutScreenState extends State<CheckOutScreen> {
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
-    if (args != null && args is CalculatePriceResponse) {
-      response = args;
+    if (args != null && args is Map) {
+      response = args['model'];
+      isCustom= args['custom'];
+      request= args['request'];
     }
     return Scaffold(
         appBar: AppBar(
@@ -89,6 +94,26 @@ class  CheckOutScreenState extends State<CheckOutScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            Text('Price Per Kilometer'),
+                            Text(
+                              response!.pricePerKilometer.toString() + ' L.L',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Divider(
+                          height: 1,
+                          thickness: 1,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
                             Text('Total price'),
                             Text(response!.totalPrice.toString() + ' L.L',
                                 style: TextStyle(fontWeight: FontWeight.bold)),
@@ -102,7 +127,8 @@ class  CheckOutScreenState extends State<CheckOutScreen> {
                   padding: const EdgeInsets.all(20.0),
                   child: CustomButton(
                     buttonTab: () {
-                      widget._checkOutCubit.placeOrder(OrderPlaceRequest(
+                   isCustom ? widget._checkOutCubit.placeCustomOrder(request!,this) :
+                   widget._checkOutCubit.placeOrder(OrderPlaceRequest(
                           addressId: selectedAddressModel?.id,
                           totalPrice:
                               int.parse(response!.totalPrice.toString()),

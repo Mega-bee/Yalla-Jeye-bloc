@@ -311,7 +311,9 @@ class _CreateOccasionCardState extends State<CreateAddressSheet> {
                                 description: desController.text,
                                 floorNumber:int.parse(floorController.text) ,
                                 street: streetController.text,
-                                title: titleController.text
+                                title: titleController.text,
+                              latitude: addressLoca?.latitude.toString(),
+                              longitude: addressLoca?.longitude.toString(),
                             ));
                           }else{
                             Fluttertoast.showToast(msg: 'Select location please');

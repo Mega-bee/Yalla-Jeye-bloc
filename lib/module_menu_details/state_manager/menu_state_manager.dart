@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tip_dialog/tip_dialog.dart';
+import 'package:untitled1/abstracts/model/OrderModel.dart';
+import 'package:untitled1/custom/request/custom_request.dart';
 import 'package:untitled1/module_menu_details/menu_route.dart';
 import 'package:untitled1/module_menu_details/request/calculate_price_request.dart';
 import 'package:untitled1/module_menu_details/request/order_place_request.dart';
@@ -33,7 +35,7 @@ class CheckOutCubit extends Cubit<States> {
         CalculatePriceResponse response =
             CalculatePriceResponse.fromJson(value.data.insideData);
         Navigator.pushNamed(screenState.context, MenuRoutes.checkOutPage,
-            arguments: response);
+            arguments: {'model':response ,"custom":false});
       } else {
         TipDialogHelper.fail("Something Wrong");
         await Future.delayed(const Duration(seconds: 5));
@@ -45,6 +47,17 @@ class CheckOutCubit extends Cubit<States> {
   placeOrder(OrderPlaceRequest request,CheckOutScreenState screenState) {
     _loadingStateSubject.add(AsyncSnapshot.waiting());
     _checkOutRepository.placeOrder(request).then((value) {
+      if(value == null){
+        print('doooooooooooooone');
+      }else if(value.code == 200 ){
+        orderModelList.clear();
+        showDialog(context: screenState.context, builder: (context) => SuccessRateAlter(),);
+      }
+    });
+  }
+  placeCustomOrder(CustomOrderRequest request,CheckOutScreenState screenState) {
+    _loadingStateSubject.add(AsyncSnapshot.waiting());
+    _checkOutRepository.placeCustomOrder(request).then((value) {
       if(value == null){
         print('doooooooooooooone');
       }else if(value.code == 200 ){

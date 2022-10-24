@@ -10,10 +10,10 @@ class DistanceCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-        Flexible(
-          flex: 1,
+        SizedBox(
+          width: 130,
           child: Card(child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
@@ -29,8 +29,8 @@ class DistanceCard extends StatelessWidget {
           Icon(Icons.arrow_right_alt , color: Colors.black,),
           Text (model.distance.toString() + ' KM'),
         ],),
-        Flexible(
-          flex: 1,
+        SizedBox(
+          width: 130,
           child: Card(child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(

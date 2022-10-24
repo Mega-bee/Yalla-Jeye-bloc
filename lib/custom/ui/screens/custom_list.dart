@@ -21,18 +21,24 @@ class CustomPage extends StatefulWidget {
 }
 
 class CustomPageState extends State<CustomPage> {
-
+  late AsyncSnapshot loadingSnapshotLogin;
   @override
   void initState() {
     super.initState();
-    widget.cubit.emit(
-      CustomSuccess(customPageState: this),
-    );
+    loadingSnapshotLogin = AsyncSnapshot.nothing();
+    widget.cubit.loadingStream.listen((event) {
+      if (mounted) {
+        setState(() {
+          loadingSnapshotLogin = event;
+        });
+      }
+    });
+    widget.cubit.emit(CustomSuccess(customPageState: this));
   }
 
   CustomOrder(CustomOrderRequest request){
    widget._authService.isLoggedIn ?
-   widget.cubit.CustomOrder(customPageState: this,request: request) :
+   widget.cubit.calculateCustomPrice(  request ,this) :
    showDialog(context: context, builder: (context) => CustomDialogBox(title:"You should login first to make order"),);
   }
 

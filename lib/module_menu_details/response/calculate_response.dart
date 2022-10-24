@@ -1,9 +1,10 @@
 class CalculatePriceResponse{
   num? totalPrice;
   num? totalDistance;
+  num? pricePerKilometer;
   List<Pricing>? pricingList;
 
-  CalculatePriceResponse({this.totalPrice, this.totalDistance, this.pricingList});
+  CalculatePriceResponse({this.totalPrice, this.totalDistance, this.pricingList ,this.pricePerKilometer});
   CalculatePriceResponse.fromJson(Map<String, dynamic> json) {
 
     if (json['pricingList'] != null) {
@@ -14,6 +15,7 @@ class CalculatePriceResponse{
     }
     totalDistance = json['totalDistance'];
     totalPrice = json['totalPrice'];
+    pricePerKilometer = json['pricePerKilometer'];
   }
 
 }

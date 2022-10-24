@@ -22,8 +22,11 @@ class Urls {
   static const String CUSTOM_ORDER = BASE_ORDER + 'CustomPlaceOrder';
   static const String GET_ORDER = BASE_ORDER + 'GetOrders';
   static const String GET_ORDERS_DETAILS = BASE_ORDER + 'GetOrder/';
+
   static const String PLACE_ORDER = '${BASE_ORDER}PlaceOrder';
+
   static const String CALCULATE_PRICE = BASE_ORDER + 'CalculatePlaceOrderPricing';
+  static const String CALCULATE_CUTOM_PRICE = BASE_ORDER + 'CalculateCustomOrderPricing';
 
 
 
