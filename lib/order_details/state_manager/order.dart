@@ -8,7 +8,8 @@ import '../../abstracts/states/state.dart';
 import '../repository/order_repository.dart';
 import '../response/order_response.dart';
 import '../ui/screens/order_page_list.dart';
-import '../ui/state/order_tab.dart';
+import '../ui/state/OrderDetailsSuccess.dart';
+import '../ui/widget/order_details.dart';
 
 @injectable
 class OrderDetailCubit extends Cubit<States> {
@@ -27,13 +28,15 @@ class OrderDetailCubit extends Cubit<States> {
               orderDetails(id: id,state: state);
             }));
       } else if (value.code == 200) {
-        OrderDetailsModell orderDetailsModel =
-        OrderDetailsModell.fromJson(value.data.insideData);
+        OrderDetailsResponse orderDetailsModel =
+        OrderDetailsResponse.fromJson(value.data.insideData);
 
 
         emit(
           OrderDetailsSuccess(
-           ordersuccess:orderDetailsModel ,
+              ordersuccess: orderDetailsModel,
+            state: state,
+
           ),
         );
       }
