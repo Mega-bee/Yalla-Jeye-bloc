@@ -11,21 +11,22 @@ class OrderTracking extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ordersuccess.statusId == 1
-            ? Text("Order Received")
+            ? Text("Order Received",style: TextStyle(fontSize: 22),)
             : ordersuccess.statusId  == 2
-            ? Text("Preparing")
+            ? Text("Preparing",style: TextStyle(fontSize: 22),)
             : ordersuccess.statusId  == 3
-            ? Text("On the way")
+            ? Text("On the way",style: TextStyle(fontSize: 22),)
             : ordersuccess.statusId == 4
-            ? Text("Five minutes away")
+            ? Text("Five minutes away",style: TextStyle(fontSize: 22),)
             :ordersuccess.statusId == 5
-            ?Text("Delivered")
+            ?Text("Delivered",style: TextStyle(fontSize: 22),)
             :ordersuccess.statusId == 6
-            ?Text("Canceled")
+            ?Text("Canceled",style: TextStyle(fontSize: 22),)
             :ordersuccess.statusId == 7
-            ?Text("Two minutes away")
+            ?Text("Two minutes away",style: TextStyle(fontSize: 22),)
             : Container(),
       ],
     );
