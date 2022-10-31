@@ -71,11 +71,12 @@ class ApiClient {
   }
 
   Future<WebServiceResponse?> post(
-    String url,
-    Map<String, dynamic> payLoad, {
-    Map<String, String>? queryParams,
-    Map<String, String>? headers,
-  }) async {
+      String url,
+      Map<String, dynamic> payLoad, {
+        Map<String, String>? queryParams,
+        Map<String, String>? headers,
+        bool? jsonDataType,
+      }) async {
     Dio client = Dio(BaseOptions(
       sendTimeout: 60000,
       receiveTimeout: 60000,
@@ -96,12 +97,23 @@ class ApiClient {
       if (!kIsWeb) {
 //        client.interceptors.add(performanceInterceptor);
       }
-      var response = await client.post(
-        url,
-        queryParameters: queryParams,
-        data: FormData.fromMap(payLoad),
-      );
-      return _processResponse(response);
+      if(jsonDataType != null ){
+        var response = await client.post(
+          url,
+          queryParameters: queryParams,
+          data: json.encode(payLoad) ,
+        );
+        return _processResponse(response);
+      }else{
+        var response = await client.post(
+          url,
+          queryParameters: queryParams,
+          data: FormData.fromMap(payLoad),
+        );
+        return _processResponse(response);
+      }
+
+      // return _processResponse(response);
     } catch (e) {
       print(e.toString());
       if (e is DioError) {

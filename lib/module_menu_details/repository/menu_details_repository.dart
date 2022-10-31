@@ -35,6 +35,7 @@ class CheckOutRepository {
       Urls.PLACE_ORDER,
       request.toJson(),
       headers: {'Authorization': 'Bearer ' '$token'},
+      jsonDataType: true
     );
     if (response == null) return null;
     return response;

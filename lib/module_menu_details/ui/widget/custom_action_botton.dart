@@ -44,7 +44,8 @@ class _CustomActionButtonState extends State<CustomActionButton>
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
           onPressed: () {
             if(!widget.isLoginUser){
-              showDialog(context: context, builder: (context) => CustomDialogBox(title: 'You should login to make new order'),);
+              showDialog(context: context, builder: (context) =>
+                  CustomDialogBox(title: 'You should login to make new order'),);
             }else {
               if (widget.model != null) {
                 if (widget.model?.placeId != 0) {
@@ -63,7 +64,8 @@ class _CustomActionButtonState extends State<CustomActionButton>
                           categoryName: widget.model?.categoryName ?? '',
                         ));
                   }
-                } else {
+                }
+                else {
                   var contain = orderModelList.where((element) =>
                   element.placeTypeId == widget.model?.placeTypeId &&
                       element.placeId == widget.model?.placeId);
