@@ -4,17 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:injectable/injectable.dart';
+import 'package:untitled1/module_addresses/address_module.dart';
+import 'package:untitled1/module_menu_details/menu_module.dart';
+import 'package:untitled1/module_splash/splash_module.dart';
+import 'package:untitled1/module_splash/splash_routes.dart';
 import 'package:untitled1/profile/profile_module.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
 import 'package:untitled1/utils/logger/logger.dart';
 import 'abstracts/module/rout_module.dart';
-import 'addresses/address_module.dart';
 import 'auth/auth_module.dart';
 import 'custom/custom_module.dart';
 import 'di/di_config.dart';
 import 'hive/hive.dart';
 import 'home_page/homepage_module.dart';
-import 'home_page/ui/widget/Google_Map/google_maps.dart';
 import 'navigation_bar/navigator_module.dart';
 import 'navigation_bar/navigator_routes.dart';
 import 'notification/Notification_module.dart';
@@ -62,6 +64,8 @@ class MyApp extends StatefulWidget {
   final OrderDetailsModule _detailsModule;
   final LogInModule _logInModule;
   final ProfilePageModule _profilePageModule;
+  final MenuDetailsModule _menuDetailsModule;
+  final SplashModule _splashModule;
 
   MyApp(
     this._navigatorModule,
@@ -73,6 +77,8 @@ class MyApp extends StatefulWidget {
     this._detailsModule,
     this._logInModule,
     this._profilePageModule,
+      this._menuDetailsModule,
+      this._splashModule
   );
 
   @override
@@ -125,13 +131,15 @@ class _MyAppState extends State<MyApp> {
       // supportedLocales: S.delegate.supportedLocales,
       title: 'Yalla jeye',
       routes: fullRoutesList,
-      initialRoute: NavRoutes.nav_rout,
+      initialRoute: SplashRoutes.SPLASH_SCREEN,
       // home:MyStepper(),
     );
   }
 
   @override
   void initState() {
+    super.initState();
+
     // activeThem = widget._themeDataService.getActiveTheme();
     // widget._themeDataService.darkModeStream.listen((event) {
     //   activeThem = event;

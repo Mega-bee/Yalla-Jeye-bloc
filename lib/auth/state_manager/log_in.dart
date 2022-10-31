@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
+import 'package:untitled1/auth/service/auth_service.dart';
 import '../../abstracts/states/loading_state.dart';
 import '../../abstracts/states/state.dart';
-import '../../home_page/homepage_route.dart';
-import '../../module_auth/service/auth_service.dart';
 import '../../navigation_bar/navigator_routes.dart';
 import '../../utils/Colors/colors.dart';
 import '../repository/log_in_repository.dart';
@@ -26,10 +25,9 @@ class LogInCubit extends Cubit<States> {
   ) : super(LoadingState());
 
   final _loadingStateSubject = PublishSubject<AsyncSnapshot>();
-
   Stream<AsyncSnapshot> get loadingStream => _loadingStateSubject.stream;
-  final _loadingStateSubjectForget = PublishSubject<AsyncSnapshot>();
 
+  final _loadingStateSubjectForget = PublishSubject<AsyncSnapshot>();
   Stream<AsyncSnapshot> get loadingStreamForeget =>
       _loadingStateSubjectForget.stream;
 

@@ -3,10 +3,12 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled1/abstracts/states/state.dart';
 class ErrorState extends States {
+
+
   final String errorMessage;
   final Function retry;
+  ErrorState({required this.errorMessage ,required this.retry});
 
- ErrorState({required this.errorMessage,required this.retry}) : super(false);
   @override
   Widget getUI(BuildContext context) {
     final text=["$errorMessage !!",''];
@@ -52,9 +54,5 @@ class ErrorState extends States {
     );
   }
 
-  @override
-  Widget getAlert(BuildContext context) {
-    // TODO: implement getAlert
-    throw UnimplementedError();
-  }
+
 }

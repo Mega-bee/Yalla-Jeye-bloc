@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:untitled1/addresses/ui/screens/create_address_list.dart';
-import 'package:untitled1/addresses/ui/screens/edit_screen_list.dart';
 import 'package:untitled1/auth/ui/screens/log_in_list.dart';
 import 'package:untitled1/auth/ui/screens/otp_screen.dart';
 import 'package:untitled1/auth/ui/screens/sign_up_list.dart';

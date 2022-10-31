@@ -10,7 +10,7 @@ class NotificationSuccess extends States {
 
   NotificationSuccess({
     required this.notificationModel,
-  }) : super(false);
+  });
 
   @override
   Widget getUI(BuildContext context) {
@@ -25,9 +25,4 @@ class NotificationSuccess extends States {
     );
   }
 
-  @override
-  Widget getAlert(BuildContext context) {
-    // TODO: implement getAlert
-    throw UnimplementedError();
-  }
 }

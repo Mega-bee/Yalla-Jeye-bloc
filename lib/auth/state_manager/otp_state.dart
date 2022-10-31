@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:untitled1/auth/service/auth_service.dart';
 
 import '../../abstracts/states/loading_state.dart';
 import '../../abstracts/states/state.dart';
-import '../../module_auth/service/auth_service.dart';
 import '../../navigation_bar/navigator_routes.dart';
 import '../repository/log_in_repository.dart';
 import '../request/confirm_otp.dart';

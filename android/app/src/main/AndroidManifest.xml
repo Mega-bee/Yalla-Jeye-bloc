@@ -8,10 +8,8 @@
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:label="untitled1"
-        android:usesCleartextTraffic="true"
-
-        >
+        android:label="Yalla-jeye"
+        android:usesCleartextTraffic="true">
 
         <activity
             android:name=".MainActivity"
@@ -44,6 +42,6 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCHyGBOIlz3fgP1Eay5Q2lVsA6m88Veumg" />
+            android:value="AIzaSyAUb3BCjipGx9ZhrmI15migHs6RVan7XPE" />
     </application>
 </manifest>

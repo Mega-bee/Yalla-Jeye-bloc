@@ -11,22 +11,20 @@ class HomePageModel {
     this.destinations,
     this.destinationWithPlaces,
     this.notificationCount,
-
   });
 
   HomePageModel.fromJson(Map<String, dynamic> json) {
-    events =
-        json['events'] != null ? new Events.fromJson(json['events']) : null;
+    events = json['events'] != null ? Events.fromJson(json['events']) : null;
     if (json['itemTypes'] != null) {
       itemTypes = <ItemTypes>[];
       json['itemTypes'].forEach((v) {
-        itemTypes!.add(new ItemTypes.fromJson(v));
+        itemTypes!.add(ItemTypes.fromJson(v));
       });
     }
     if (json['destinations'] != null) {
       destinations = <Destinations>[];
       json['destinations'].forEach((v) {
-        destinations!.add(new Destinations.fromJson(v));
+        destinations!.add(Destinations.fromJson(v));
       });
     }
     if (json['destinationWithPlaces'] != null) {
@@ -39,7 +37,7 @@ class HomePageModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (this.events != null) {
       data['events'] = this.events!.toJson();
     }
@@ -199,7 +197,7 @@ class Places {
   String? image;
   String? title;
   String? description;
-  String? menu;
+  List<PlaceMenu>? menu;
 
   Places({this.id, this.image, this.title, this.description, this.menu});
 
@@ -208,16 +206,32 @@ class Places {
     image = json['image'];
     title = json['title'];
     description = json['description'];
-    menu = json['menu'];
+
+    if (json['menu'] != null) {
+      menu = <PlaceMenu>[];
+      json['menu'].forEach((v) {
+        menu!.add( PlaceMenu.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] = this.id;
     data['image'] = this.image;
     data['title'] = this.title;
     data['description'] = this.description;
-    data['menu'] = this.menu;
     return data;
+  }
+}
+
+class PlaceMenu {
+  int? id;
+  String? menuImage;
+
+  PlaceMenu({this.id, this.menuImage});
+  PlaceMenu.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    menuImage = json['menu'];
   }
 }

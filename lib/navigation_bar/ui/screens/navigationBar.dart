@@ -6,7 +6,7 @@ import 'package:untitled1/di/di_config.dart';
 import 'package:untitled1/utils/images/images.dart';
 
 import '../../../custom/ui/screens/custom_list.dart';
-import '../../../home_page/ui/screens/home_page_list.dart';
+import '../../../home_page/ui/screens/home_page.dart';
 import '../../../notification/ui/screens/Notification_list.dart';
 import '../../../order/ui/screens/order_page_list.dart';
 import '../../../profile/ui/screen/profile.dart';
@@ -107,6 +107,7 @@ class NavigationbarrState extends State<Navigationbar> {
             label: 'Profile',
           ),
         ],
+        elevation: 2,
       ),
     );
   }

@@ -14,7 +14,7 @@ class OtpInitState extends States{
   final String? phone;
   final PinCodeVerificationScreenState screenState;
   String? errorMessage;
-  OtpInitState({this.phone,required this.screenState,this.errorMessage,}) : super(false);
+  OtpInitState({this.phone,required this.screenState,this.errorMessage,}) ;
   TextEditingController otptext = TextEditingController();
   StreamController<ErrorAnimationType>? errorController;
 

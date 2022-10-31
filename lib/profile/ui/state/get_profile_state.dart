@@ -1,31 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:untitled1/auth/ui/widget/custom_button.dart';
+import 'package:untitled1/profile/request/edit_profile_request.dart';
+import 'package:untitled1/utils/Colors/colors.dart';
 import '../../../abstracts/states/state.dart';
-import '../../../utils/Colors/colors.dart';
-import '../../../utils/images/images.dart';
-import '../../profile_module_route.dart';
-import '../../request/edit_profile_request.dart';
 import '../../response/get_profile_response.dart';
-import '../screen/edit_profile.dart';
 import '../screen/get_profile.dart';
-import '../screen/profile.dart';
 
 class GetProfilePageSuccess extends States {
-  GetProfilePageState getProfilePageState;
-  GetProfileModel getProfileModel;
+  GetProfilePageState screenState;
+  GetProfileModel model;
 
   GetProfilePageSuccess({
-    required this.getProfilePageState,
-    required this.getProfileModel,
-  }) : super(false);
-
-  // {
-  //   street.text = addressmodel.street??"";
-  //   description.text = addressmodel.description??"";
-  //   building.text = addressmodel.buildingName??"";
-  //   street.text = addressmodel.street??"";
-  //   title.text = addressmodel.title??"";
-  // }
+    required this.screenState,
+    required this.model,
+  }) :super(){
+    name.text = model.name ?? '' ;
+    number.text = model.phoneNumber ?? '' ;
+  }
 
   var name = TextEditingController();
   var number = TextEditingController();
@@ -41,14 +32,12 @@ class GetProfilePageSuccess extends States {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextField(
-                  readOnly: true,
+
                   onChanged: (value) {
                     //Do something with the user input.
                   },
                   controller: name,
                   decoration: InputDecoration(
-                    hintText: '${getProfileModel.name}',
-                    hintStyle: TextStyle(color: Colors.black),
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
                     border: OutlineInputBorder(
@@ -58,7 +47,9 @@ class GetProfilePageSuccess extends States {
                       borderSide: const BorderSide(
                           color: Color.fromRGBO(204, 204, 204, 0.5),
                           width: 2.0),
-                      borderRadius: BorderRadius.all(Radius.circular(5.0),),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5.0),
+                      ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey, width: 2.0),
@@ -71,15 +62,10 @@ class GetProfilePageSuccess extends States {
                 ),
                 TextField(
                   readOnly: true,
-                  onChanged: (value) {
-                    //Do something with the user input.
-                  },
-                  autofillHints: [AutofillHints.name],
+                  // autofillHints: [AutofillHints.name],
                   controller: number,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    hintText: '${getProfileModel.phoneNumber}',
-                    hintStyle: TextStyle(color: Colors.black),
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
                     border: OutlineInputBorder(
@@ -95,6 +81,9 @@ class GetProfilePageSuccess extends States {
                       borderSide: BorderSide(color: Colors.grey, width: 2.0),
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     ),
+                    hoverColor: Colors.grey.shade400,
+                    filled: true,
+                    fillColor: Colors.grey.shade400
                   ),
                 ),
               ],
@@ -102,38 +91,19 @@ class GetProfilePageSuccess extends States {
             SizedBox(
               height: 60,
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.only(
-                      left: 150, right: 150, top: 16, bottom: 16),
-                  backgroundColor: redColor,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(13),
-                  )),
-              onPressed: () {
-                Navigator.pushNamed(context, ProfileRoutes.Editprofile,arguments: getProfileModel).then((value) {
-                  if (value != null &&
-                      value == true){
-
-                    getProfilePageState.getProfile();
-                  }
-                });
+            CustomButton(
+              buttonTab: () {
+                screenState.updateProfile(UpdateProfileRequest(Name: name.text));
               },
-              child: Text(
-                "Edit",
-                style: TextStyle(fontSize: 17),
-              ),
+              loading: screenState.loadingSnapshotLogin.connectionState ==
+                  ConnectionState.waiting,
+              text: 'Edit name',
+              bgColor: redColor,
+              textColor: Colors.white,
             ),
           ],
         ),
       ),
     );
-  }
-
-  @override
-  Widget getAlert(BuildContext context) {
-    // TODO: implement getAlert
-    throw UnimplementedError();
   }
 }

@@ -1,6 +1,8 @@
 ///Main Images
 class ImageAsset {
   static const ROOT = 'assets/images/';
+  static const LOGO = '${ROOT}yallaJeyeLogo.png';
+  static const LOGIN_FIRST = '${ROOT}login-first.png';
   static const NOTI_IMAGE = ROOT +'motornew.png';
   static const custom = ROOT +'custom.svg';
   static const orders = ROOT +'orders.svg';
@@ -16,6 +18,13 @@ class ImageAsset {
   static const customerSupport = ROOT +'Customersupport.svg';
   static const emergencyNumber = ROOT +'Emergencynumber.svg';
   static const signOut = ROOT +'signout.svg';
+
+  static const PASSWORD = ROOT +'pass.png';
+  static const NO_ORDER = ROOT +'no-order.png';
+  static const NO_ADDREESS = ROOT +'no-address.png';
+
+
+  static const SPLASH_SCREEN = '${ROOT}yala.json';
 
 
 }

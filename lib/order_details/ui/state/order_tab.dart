@@ -13,8 +13,7 @@ class OrderDetailsSuccess extends States {
   final OrderDetailsModell ordersuccess;
 
   OrderDetailsSuccess(
-      {required this.ordersuccess})
-      : super(false);
+      {required this.ordersuccess});
 
 
   @override
