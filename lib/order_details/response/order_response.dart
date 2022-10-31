@@ -1,20 +1,22 @@
-class OrderDetailsModell {
+class OrderDetailsResponse {
   int? id;
   int? statusId;
   String? statusName;
   bool? isCustom;
   // List<Null>? orderPlaces;
   CustomOrder? customOrder;
+  FromAddress? fromAddress;
 
-  OrderDetailsModell(
+  OrderDetailsResponse(
       {this.id,
         this.statusId,
         this.statusName,
         this.isCustom,
         // this.orderPlaces,
-        this.customOrder});
+        this.customOrder,
+      this.fromAddress});
 
-  OrderDetailsModell.fromJson(Map<String, dynamic> json) {
+  OrderDetailsResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     statusId = json['statusId'];
     statusName = json['statusName'];
@@ -28,21 +30,23 @@ class OrderDetailsModell {
     customOrder = json['customOrder'] != null
         ? new CustomOrder.fromJson(json['customOrder'])
         : null;
+
+
+    fromAddress = json['fromAddress'] != null
+        ? new FromAddress.fromJson(json['fromAddress'])
+        : null;
   }
 
 }
 
 class CustomOrder {
-  FromAddress? fromAddress;
   FromAddress? toAddress;
   String? description;
 
-  CustomOrder({this.fromAddress, this.toAddress, this.description});
+  CustomOrder({ this.toAddress, this.description});
 
   CustomOrder.fromJson(Map<String, dynamic> json) {
-    fromAddress = json['fromAddress'] != null
-        ? new FromAddress.fromJson(json['fromAddress'])
-        : null;
+
     toAddress = json['toAddress'] != null
         ? new FromAddress.fromJson(json['toAddress'])
         : null;
@@ -87,5 +91,6 @@ class FromAddress {
     longitude = json['longitude'];
     latitude = json['latitude'];
   }
+
 
 }

@@ -1,82 +1,47 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../abstracts/states/state.dart';
+
+import '../../../utils/Colors/colors.dart';
 import '../../response/order_response.dart';
+import '../screens/order_page_list.dart';
 
-class OrderDetails extends StatefulWidget {
-  final OrderDetailsModell ordersuccess;
-  OrderDetails({required this.ordersuccess});
+class OrderDetailsScreen extends StatelessWidget {
+  final OrderDetailsResponse ordersuccess;
 
-  @override
-  State<OrderDetails> createState() => _OrderDetailsState();
-}
+  OrderDetailsScreen({required this.ordersuccess});
 
-class _OrderDetailsState extends State<OrderDetails> {
   @override
   Widget build(BuildContext context) {
-    return  Container(
-      height: 380,
-      width: 400,
-      child: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
+    return SafeArea(
+      child: Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.only(left: 18.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 20,
+              mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(13.0),
+                child: Text(
+                  ordersuccess.customOrder!.toAddress!.title.toString(),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0),
-                  child: Text('Nickname'),
-                ),
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 10.0, right: 220.0, top: 15, bottom: 15),
-                    child: Text(widget.ordersuccess.customOrder!.fromAddress!.title??""),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0),
-                  child: Text('Street'),
-                ),
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 10.0, right: 320.0, top: 15, bottom: 15),
-                    child: Text("${widget.ordersuccess.customOrder!.fromAddress!.floorNumber??""}"),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0),
-                  child: Text(
-                    'Building',
-                  ),
-                ),
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 10.0, right: 240.0, top: 15, bottom: 15),
-                    child: Text("${widget.ordersuccess.customOrder!.fromAddress!.buildingName??"No building"}"),
-                  ),
-                )
-              ],
+              ),
+
             ),
-          ),
-        ),
+            SizedBox(height: 10,),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(13.0),
+                child: Text(
+                  ordersuccess.statusName.toString(),
+                ),
+              ),
+            ),
+        ],
       ),
+          )),
     );
   }
 }
