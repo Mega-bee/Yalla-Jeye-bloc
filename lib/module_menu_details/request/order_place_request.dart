@@ -11,11 +11,11 @@ class OrderPlaceRequest {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
-    data['AddressId'] = addressId;
-    data['PromoCode'] = promoCode;
-    data['TotalPrice'] = totalPrice;
+    data['addressId'] = addressId;
+    data['promoCode'] = promoCode;
+    data['totalPrice'] = totalPrice;
     if (orderPlaces != null) {
-      data['OrderPlaces'] = orderPlaces!.map((v) => v.toJson()) ;
+      data['orderPlaces'] = List<dynamic>.from(orderPlaces!.map((x) => x.toJson()));
     }
 
     return data;
