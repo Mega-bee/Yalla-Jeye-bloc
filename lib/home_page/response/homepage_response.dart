@@ -235,3 +235,14 @@ class PlaceMenu {
     menuImage = json['menu'];
   }
 }
+
+// class PlaceMenu {
+//   int? id;
+//   String? menuImage;
+//
+//   PlaceMenu({this.id, this.menuImage});
+//   PlaceMenu.fromJson(Map<String, dynamic> json) {
+//     id = json['id'];
+//     menuImage = json['menu'];
+//   }
+// }

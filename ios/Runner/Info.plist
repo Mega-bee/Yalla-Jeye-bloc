@@ -49,5 +49,24 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+		<key>NSPhotoLibraryUsageDescription</key>
+            <string>photos</string>
+             <key>NSLocationWhenInUseUsageDescription</key>
+                <string>Need location when in use</string>
+                <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+                <string>Always and when in use!</string>
+                <key>NSLocationUsageDescription</key>
+                <string>Older devices need location.</string>
+                <key>NSLocationAlwaysUsageDescription</key>
+                <string>Can I have location always?</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>sms</string>
+      <string>tel</string>
+    </array>
+    	<key>NSContactsUsageDescription</key>
+            <string>photos</string>
+    <key>NSAppleMusicUsageDescription</key>
+    <string>Play using while you are hiking</string>
 </dict>
 </plist>
