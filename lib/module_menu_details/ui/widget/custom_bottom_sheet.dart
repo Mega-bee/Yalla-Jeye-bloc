@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:untitled1/custom/model/OrderModel.dart';
 import 'package:untitled1/module_addresses/address_route.dart';
 import 'package:untitled1/module_addresses/response/address_response.dart';
+import 'package:untitled1/module_menu_details/model/menu_model.dart';
 import 'package:untitled1/module_menu_details/request/calculate_price_request.dart';
 import 'package:untitled1/module_menu_details/ui/widget/order_card_widget.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
@@ -11,21 +12,24 @@ import 'package:untitled1/utils/images/images.dart';
 
 class CustomBottomSheet extends StatefulWidget {
   final List<CartOrderModel> placesOrders;
+  final MenuDetailsModel? model;
   final Function(CalculatePriceRequest) calculatePrice;
-  const CustomBottomSheet({required this.placesOrders, required this.calculatePrice});
+  const CustomBottomSheet({required this.placesOrders, required this.calculatePrice ,required this.model});
 
   @override
   State<CustomBottomSheet> createState() => _CustomBottomSheetState();
 }
 
 class _CustomBottomSheetState extends State<CustomBottomSheet> {
-
+ late CartOrderModel  currentCartModel;
 
 
   @override
   void initState() {
     super.initState();
-
+    currentCartModel = CartOrderModel(categoryName: widget.model?.categoryName,
+    makeOrder: true,payOrder: true,placeId: widget.model?.placeId,
+    placeName: widget.model?.restaurantName ,placeTypeId: widget.model?.placeTypeId);
   }
 
   @override
@@ -44,7 +48,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(0.8),
+                      padding: const EdgeInsets.all(5),
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.pop(context);
@@ -136,6 +140,11 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                         ),
                       ),
                     ),
+
+                    checkIfDesOrPlaceExist() ? Container():    OrderCardWidget(orderModel:
+                    currentCartModel,
+                      onDelete: (){},isCurrentItem: true) ,
+
                     ListView.builder(
                         shrinkWrap: true,
                         itemCount:
@@ -149,34 +158,96 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                               child: OrderCardWidget(orderModel: orderModelList[index],onDelete: (){
                                 setStatet((){});
                                setState((){});
-                              },)
+                              },isCurrentItem: false,)
                           );
                         }),
-                    SizedBox(height: 100,)
+                   const SizedBox(height: 100,)
                   ],
                 ),
               ),
               Align(
                 alignment: AlignmentDirectional.bottomEnd,
                 child: Container(
-                  color: Colors.grey.shade100,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10)
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.6),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(3, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
                   height: 80,
                   child: Column(
                     crossAxisAlignment:
                     CrossAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(
-                            right: 18.0),
+                        padding: const EdgeInsets.all(10.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Spacer(),
+                          const  Spacer(),
+                            MaterialButton(
+                              onPressed: () {
+                                if (widget.model != null) {
+                                  if (widget.model?.placeId != 0) {
+                                    var containP = orderModelList.where(
+                                            (element) =>
+                                        element.placeId == widget.model?.placeId);
+                                    if (containP.isEmpty) {
+                                      orderModelList.insert(
+                                          0,
+                                          currentCartModel);
+                                    }
+                                  }
+                                  else {
+                                    var contain = orderModelList.where((element) =>
+                                    element.placeTypeId == widget.model?.placeTypeId &&
+                                        element.placeId == widget.model?.placeId);
+                                    if (contain.isEmpty) {
+                                      orderModelList.insert(
+                                          0,
+                                          currentCartModel);
+                                    }
+                                  }
+                                }
+                                Navigator.pop(context);
+                              },
+                              color: Colors.white,
+                              elevation: 0,
+                              padding: const EdgeInsetsDirectional.only(start: 30,end: 30,top: 5 ,bottom: 5),
+                              shape:
+                              RoundedRectangleBorder(
+                                borderRadius:
+                                BorderRadius.circular(
+                                    25),
+                              ),
+                              child: const Text(
+                                'Add place',
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    color: Colors.red,
+                                    fontWeight:
+                                    FontWeight.bold),
+                              ),
+                            ),
+                            const SizedBox(width: 15,),
                             MaterialButton(
                               onPressed: () {
                                 if(selectedAddressModel == null){
                                   Fluttertoast.showToast(msg: 'Select Address Please');
                                 }else {
+
                                   List<int> allPlacesIds = [];
                                   List<int> allPlacesTypes = [];
                                   for (var element in widget.placesOrders) {
@@ -193,11 +264,8 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                               },
                               color: redColor,
                               elevation: 0,
-                              padding: EdgeInsets.only(
-                                  left: 75,
-                                  right: 75,
-                                  top: 13,
-                                  bottom: 13),
+                              padding: const EdgeInsetsDirectional.only(start: 30,end: 30,top: 5 ,bottom: 5),
+
                               shape:
                               RoundedRectangleBorder(
                                 borderRadius:
@@ -213,14 +281,11 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                     FontWeight.bold),
                               ),
                             ),
-                            SizedBox(
-                              height: 80,
-                            )
+
                           ],
                         ),
                       ),
-                    ],
-                  ),
+                  ]),
                 ),
               )
             ],
@@ -228,5 +293,28 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
         );
       }),
     );
+  }
+
+ bool checkIfDesOrPlaceExist(){
+   if (widget.model?.placeId != 0) {
+     var containP = orderModelList.where(
+             (element) =>
+         element.placeId == widget.model?.placeId);
+     if (containP.isEmpty) {
+       return false;
+     }else{
+       return true;
+     }
+   }
+   else {
+     var contain = orderModelList.where((element) =>
+     element.placeTypeId == widget.model?.placeTypeId &&
+         element.placeId == widget.model?.placeId);
+     if (contain.isEmpty) {
+       return false;
+     }else {
+       return true;
+     }
+   }
   }
 }

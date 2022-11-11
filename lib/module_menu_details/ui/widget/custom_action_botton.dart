@@ -47,42 +47,6 @@ class _CustomActionButtonState extends State<CustomActionButton>
               showDialog(context: context, builder: (context) =>
                   CustomDialogBox(title: 'You should login to make new order'),);
             }else {
-              if (widget.model != null) {
-                if (widget.model?.placeId != 0) {
-                  var containP = orderModelList.where(
-                          (element) =>
-                      element.placeId == widget.model?.placeId);
-                  if (containP.isEmpty) {
-                    orderModelList.insert(
-                        0,
-                        CartOrderModel(
-                          placeName: widget.model?.restaurantName ?? '',
-                          payOrder: true,
-                          makeOrder: true,
-                          placeTypeId: widget.model?.placeTypeId,
-                          placeId: widget.model?.placeId,
-                          categoryName: widget.model?.categoryName ?? '',
-                        ));
-                  }
-                }
-                else {
-                  var contain = orderModelList.where((element) =>
-                  element.placeTypeId == widget.model?.placeTypeId &&
-                      element.placeId == widget.model?.placeId);
-                  if (contain.isEmpty) {
-                    orderModelList.insert(
-                        0,
-                        CartOrderModel(
-                          placeName: widget.model?.restaurantName ?? '',
-                          payOrder: true,
-                          makeOrder: true,
-                          placeTypeId: widget.model?.placeTypeId,
-                          placeId: widget.model?.placeId,
-                          categoryName: widget.model?.categoryName ?? '',
-                        ));
-                  }
-                }
-              }
               showModalBottomSheet(
                 transitionAnimationController: controller,
                 shape: const RoundedRectangleBorder(
@@ -99,7 +63,7 @@ class _CustomActionButtonState extends State<CustomActionButton>
                       CustomBottomSheet(placesOrders: orderModelList,
                         calculatePrice: (req) {
                         widget.claPrice(req);
-                      },),
+                      },model: widget.model),
                       TipDialogContainer(
                           duration: const Duration(seconds: 2),
                           outsideTouchable: true,

@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/di/di_config.dart';
+import 'package:untitled1/orders/ui/screens/order_page_list.dart';
 import 'package:untitled1/utils/images/images.dart';
 
 import '../../../custom/ui/screens/custom_list.dart';
 import '../../../home_page/ui/screens/home_page.dart';
 import '../../../notification/ui/screens/Notification_list.dart';
-import '../../../order/ui/screens/order_page_list.dart';
 import '../../../profile/ui/screen/profile.dart';
 import '../../../profile/ui/state/profile_success.dart';
 import '../../../utils/Colors/colors.dart';

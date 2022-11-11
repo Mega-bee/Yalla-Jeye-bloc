@@ -75,8 +75,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       appBar: AppBar(
         title: Image.asset(ImageAsset.LOGO),
         leadingWidth: 150,
-        // backgroundColor: Colors.white,
-
+        backgroundColor: Colors.grey.shade50,elevation: 0,
         centerTitle: true,
         leading: InkWell(
           onTap: () {
@@ -107,6 +106,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           child: Text(
                             "Where should we deliver to?",
                             style: GoogleFonts.poppins(
+                              color: Colors.black,
                               fontStyle: FontStyle.normal,
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -256,7 +256,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   child: Text(
                     'Deliver to',
                     style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+                        color: Colors.black, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Row(
@@ -270,14 +270,14 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             fontStyle: FontStyle.normal,
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                         ),
                       ),
                     ),
                     Icon(
                       Icons.keyboard_arrow_down_outlined,
-                      color: Colors.white,
+                      color: Colors.black,
                       size: 15,
                     )
                   ],
@@ -291,7 +291,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
             padding: const EdgeInsets.only(right: 15.0),
             child: Icon(
               CupertinoIcons.search,
-              color: Colors.white,
+              color: Colors.red,
               size: 35,
             ),
           )

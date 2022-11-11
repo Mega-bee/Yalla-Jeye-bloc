@@ -44,6 +44,7 @@ class OrderState extends State<Order> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         title: Text(
           'View orders',

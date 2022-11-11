@@ -6,8 +6,9 @@ import '../../../utils/Colors/colors.dart';
 class OrderCardWidget extends StatefulWidget {
   final Function onDelete;
   final CartOrderModel orderModel;
+  final bool isCurrentItem;
 
-  OrderCardWidget({required this.orderModel, required this.onDelete}) ;
+  OrderCardWidget({required this.orderModel, required this.onDelete, required this.isCurrentItem}) ;
 
   @override
   State<OrderCardWidget> createState() => _OrderCardWidgetState();
@@ -82,7 +83,7 @@ class _OrderCardWidgetState extends State<OrderCardWidget> {
                     ),
                   ),
                 ),
-                IconButton(
+          widget.isCurrentItem ? Container():      IconButton(
                   onPressed: () {
                     _descriptionController.clear();
                     orderModelList.remove(widget.orderModel);

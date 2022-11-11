@@ -8,6 +8,7 @@ import 'package:untitled1/module_addresses/address_module.dart';
 import 'package:untitled1/module_menu_details/menu_module.dart';
 import 'package:untitled1/module_splash/splash_module.dart';
 import 'package:untitled1/module_splash/splash_routes.dart';
+import 'package:untitled1/orders/order_module.dart';
 import 'package:untitled1/profile/profile_module.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
 import 'package:untitled1/utils/logger/logger.dart';
@@ -20,7 +21,6 @@ import 'home_page/homepage_module.dart';
 import 'navigation_bar/navigator_module.dart';
 import 'navigation_bar/navigator_routes.dart';
 import 'notification/Notification_module.dart';
-import 'order/order_module.dart';
 import 'order_details/order_module.dart';
 
 // final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =

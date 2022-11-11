@@ -10,6 +10,7 @@ class CartOrderModel {
   int? placeId;
 
 
+
   CartOrderModel(
       {this.description,
       this.categoryName,
@@ -17,7 +18,7 @@ class CartOrderModel {
       this.payOrder,
       this.placeTypeId,
       this.placeId,
-      this.placeName });
+      this.placeName   });
 
   Map<dynamic, dynamic> toJson() {
     return {
