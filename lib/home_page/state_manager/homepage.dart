@@ -1,6 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:tip_dialog/tip_dialog.dart';
 import 'package:untitled1/home_page/ui/state/loading_home_state.dart';
+import 'package:untitled1/module_menu_details/menu_route.dart';
+import 'package:untitled1/module_menu_details/repository/menu_details_repository.dart';
+import 'package:untitled1/module_menu_details/request/calculate_price_request.dart';
+import 'package:untitled1/module_menu_details/response/calculate_response.dart';
 import '../../abstracts/states/error_state.dart';
 import '../../abstracts/states/loading_state.dart';
 import '../../abstracts/states/state.dart';
@@ -12,8 +18,9 @@ import '../ui/state/homepage_sucess.dart';
 @injectable
 class HomePageCubit extends Cubit<States> {
   final HomePageRepository _homePageRepository;
+  final CheckOutRepository _checkOutRepository;
 
-  HomePageCubit(this._homePageRepository) : super(LoadingState());
+  HomePageCubit(this._homePageRepository, this._checkOutRepository) : super(LoadingState());
 
   getHomePage(HomePageState state) {
     emit(LoadingHomePage());
@@ -31,6 +38,25 @@ class HomePageCubit extends Cubit<States> {
         emit(
           HomePageSuccess(homepage: homePageModel, homepageState: state),
         );
+      }
+    });
+  }
+
+  calculateTotalPrice(
+      CalculatePriceRequest request, HomePageState screenState) {
+    TipDialogHelper.loading("Loading");
+    _checkOutRepository.calculatePrice(request).then((value) async {
+      if (value != null) {
+        TipDialogHelper.dismiss();
+        Navigator.pop(screenState.context);
+        CalculatePriceResponse response =
+        CalculatePriceResponse.fromJson(value.data.insideData);
+        Navigator.pushNamed(screenState.context, MenuRoutes.checkOutPage,
+            arguments: {'model':response ,"custom":false});
+      } else {
+        TipDialogHelper.fail("Something Wrong");
+        await Future.delayed(const Duration(seconds: 5));
+        TipDialogHelper.dismiss();
       }
     });
   }

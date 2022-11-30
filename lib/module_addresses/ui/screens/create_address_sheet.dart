@@ -1,28 +1,31 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:untitled1/abstracts/states/state.dart';
 import 'package:untitled1/auth/ui/widget/custom_button.dart';
 import 'package:untitled1/module_addresses/request/create_address_request.dart';
 import 'package:untitled1/module_addresses/response/address_response.dart';
+import 'package:untitled1/module_addresses/response/regions_response.dart';
+import 'package:untitled1/module_addresses/state_manager/address_state_manager.dart';
+import 'package:untitled1/module_addresses/state_manager/create_address_state_manager.dart';
 import 'package:untitled1/module_addresses/ui/widget/choose_location_wedgit.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
-import 'package:untitled1/utils/images/images.dart';
 
 class CreateAddressSheet extends StatefulWidget {
   final Function(CreateAddressRequest) createAddress;
   final AddressResponse? response;
   final bool isUpdated;
+  final RegionsCubit cubit;
   const CreateAddressSheet(
-      {required this.createAddress, this.response, required this.isUpdated});
+      {required this.createAddress, this.response, required this.isUpdated, required this.cubit});
 
   @override
-  State<CreateAddressSheet> createState() => _CreateOccasionCardState();
+  State<CreateAddressSheet> createState() => CreateAddressSheetState();
 }
 
-class _CreateOccasionCardState extends State<CreateAddressSheet> {
+class CreateAddressSheetState extends State<CreateAddressSheet> {
   var titleController = TextEditingController();
 
   var buldingNameController = TextEditingController();
@@ -34,10 +37,12 @@ class _CreateOccasionCardState extends State<CreateAddressSheet> {
    CameraPosition ca = CameraPosition(target: LatLng(0, 0));
   final GlobalKey<FormState> _addAddressKey = GlobalKey<FormState>();
   GoogleMapController? mapController;
+  RegionsResponse? selectedRegion;
 
   @override
   void initState() {
     super.initState();
+    widget.cubit.getRegions(this);
     if (widget.isUpdated) {
       titleController.text = widget.response?.title ?? '';
       buldingNameController.text = widget.response?.buildingName ?? '';
@@ -54,30 +59,39 @@ class _CreateOccasionCardState extends State<CreateAddressSheet> {
     }
   }
 
+
+  void refresh(){
+    if(mounted) {
+      setState(() {
+
+    });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
-      initialChildSize: 0.5,
-      maxChildSize: 1.0,
-      builder: (context, scrollController) => Container(
+      initialChildSize: 0.75, //set this as you want
+      maxChildSize: 1, //set this as you want
+      minChildSize: 0.75, //set this as you want
+      // expand: true,
+      builder: (context, scrollController) =>
+       Container(
         decoration: BoxDecoration(
             color: Theme.of(context).scaffoldBackgroundColor,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
-        child: SingleChildScrollView(
-          controller: scrollController,
-          physics: BouncingScrollPhysics(),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            borderRadius: BorderRadius.circular(15)),
+        child: Padding(
+          padding: const EdgeInsetsDirectional.only(start: 20 ,end: 20 ,top: 30),
+          child: SingleChildScrollView(
+            controller: scrollController,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 Text(
                   "Nickname",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 TextField(
                   onChanged: (value) {
@@ -103,12 +117,21 @@ class _CreateOccasionCardState extends State<CreateAddressSheet> {
                   ),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
                 Text(
                   "Address details",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
+                SizedBox(
+                  height: 10,
+                ),
+                BlocBuilder<RegionsCubit , States>(
+                  bloc: widget.cubit,
+
+                  builder: (context, state) {
+                    return state.getUI(context);
+                  },),
                 SizedBox(
                   height: 20,
                 ),
@@ -116,7 +139,6 @@ class _CreateOccasionCardState extends State<CreateAddressSheet> {
                   key: _addAddressKey,
                   child: Column(
                     children: [
-
                       TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -237,7 +259,11 @@ class _CreateOccasionCardState extends State<CreateAddressSheet> {
                         ),
                       ),
 
-                      SizedBox(height: 15,),
+
+                      SizedBox(
+                        height: 20,
+                      ),
+                      // locationn
                       Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
@@ -297,21 +323,21 @@ class _CreateOccasionCardState extends State<CreateAddressSheet> {
                         ),
                       )
                           : Container(),
+
+
                       SizedBox(
-                        height: 50,
+                        height: 20,
                       ),
-
-
                       CustomButton(
                         buttonTab: () {
                           if (_addAddressKey.currentState!.validate() && addressLoca != null) {
                             widget.createAddress(CreateAddressRequest(
-                                buildingName: buldingNameController.text,
-                                city: 1,
-                                description: desController.text,
-                                floorNumber:int.parse(floorController.text) ,
-                                street: streetController.text,
-                                title: titleController.text,
+                              buildingName: buldingNameController.text,
+                              city: selectedRegion?.id ,
+                              description: desController.text,
+                              floorNumber:int.parse(floorController.text) ,
+                              street: streetController.text,
+                              title: titleController.text,
                               latitude: addressLoca?.latitude.toString(),
                               longitude: addressLoca?.longitude.toString(),
                             ));
@@ -332,7 +358,6 @@ class _CreateOccasionCardState extends State<CreateAddressSheet> {
           ),
         ),
       ),
-
     );
   }
 }

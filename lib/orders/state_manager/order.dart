@@ -26,14 +26,21 @@ class OrderCubit extends Cubit<States> {
             }));
       } else if (value.code == 200) {
         // HomePageModel orders = HomePageModel.fromJson(value.data.insideData);
-        List<OrderResponse> order = [];
+        List<OrderResponse> orderCurrent = [];
+        List<OrderResponse> orderHistory = [];
         for (var item in value.data.insideData) {
-          order.add(OrderResponse.fromJson(item));
+          OrderResponse s =OrderResponse.fromJson(item);
+          if(s.statusId == 5 ||s.statusId ==  6 || s.statusId ==  8 || s.statusId ==  10){
+            orderHistory.add(s);
+          }else {
+            orderCurrent.add(s);
+          }
         }
 
         emit(
           OrderPageSuccess(
-            order: order,
+            orderCurrent: orderCurrent,
+            orderHistory: orderHistory,
             state: Orderstatee,
           ),
         );

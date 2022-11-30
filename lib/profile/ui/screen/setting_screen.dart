@@ -1,0 +1,264 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:injectable/injectable.dart';
+import 'package:untitled1/auth/auth_module_route.dart';
+import 'package:untitled1/auth/service/auth_service.dart';
+import 'package:untitled1/di/di_config.dart';
+import 'package:untitled1/hive/hive.dart';
+import 'package:untitled1/module_addresses/address_route.dart';
+import 'package:untitled1/navigation_bar/navigator_routes.dart';
+import 'package:untitled1/profile/profile_module_route.dart';
+import 'package:untitled1/utils/components/custom_alert_dialog.dart';
+import 'package:untitled1/utils/images/images.dart';
+import '../../state_manager/profile.dart';
+
+
+@injectable
+class SettingProfilePage extends StatefulWidget {
+  final ProfileCubit cubit;
+  final AuthService _authService;
+
+  const SettingProfilePage(this.cubit, this._authService);
+
+  @override
+  State<SettingProfilePage> createState() => ProfilePageState();
+}
+
+class ProfilePageState extends State<SettingProfilePage> {
+  bool flag = true;
+  final double height = 20;
+  void refresh() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey.shade100,
+      appBar: AppBar(
+        title: Text(
+          "Profile",
+          style: GoogleFonts.poppins(
+            fontStyle: FontStyle.normal,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        // backgroundColor: Colors.white,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 30,
+              ),
+
+              Stack(
+                children: [
+                  Card(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(13),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text(
+                              "Account info",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                ProfileRoutes.Getprofile,
+                              );
+                            },
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  ImageAsset.profileSetting,
+                                  height: height,
+                                ),
+                                SizedBox(
+                                  height: 40,
+                                  width: 8,
+                                ),
+                                Text("Profile"),
+                              ],
+                            ),
+                          ),
+                          Divider(
+                            thickness: 1,
+                          ),
+                          InkWell(
+                            onTap: (){
+                              Navigator.pushNamed(
+                                context,
+                                AddressRoutes.VIEW_ADDRESS,
+                              );
+                            },
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  ImageAsset.addressesSetting,
+                                  height: height,
+                                ),
+                                SizedBox(
+                                  height: 40,
+                                  width: 8,
+                                ),
+                                Text(
+                                  "Addresses",
+                                ),
+                              ],
+                            ),
+                          ),
+
+                        ],
+                      ),
+                    ),
+                  ),
+                  widget._authService.isLoggedIn ? Container():   InkWell(
+                    onTap: (){
+                      showDialog(context: context, builder: (context) => const CustomDialogBox(title: 'Login in first'),);
+                    },
+                    child: Center(
+                      child: Container(
+                        width: double.infinity,
+                        color: Colors.grey.shade100.withOpacity(0.6) ,
+                        height: 205,
+                        child:
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(ImageAsset.PASSWORD),
+                          ],),),
+                    ),
+                  )
+                ],
+              ),
+
+              SizedBox(
+                height: 30,
+              ),
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(13),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Text(
+                          "Support system",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            ImageAsset.customerSupport,
+                            height: height,
+                          ),
+                          SizedBox(
+                            height: 40,
+                            width: 8,
+                          ),
+                          Text("Customer support"),
+                        ],
+                      ),
+                      Divider(
+                        thickness: 1,
+                      ),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            ImageAsset.emergencyNumber,
+                            height: 30,
+                          ),
+                          SizedBox(
+                            height: 40,
+                            width: 1,
+                          ),
+                          Text("Emergency number"),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(13),
+                ),
+                child: InkWell(
+                  onTap: () {
+                    widget._authService.isLoggedIn ?
+                    getIt<AuthPrefsHelper>().clearToken().then((value) {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, NavRoutes.nav_rout, (route) => false);
+                    }) :  Navigator.pushNamedAndRemoveUntil(
+                        context, AuthRoutes.login, (route) => false);
+                  },
+                  child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            ImageAsset.signOut,
+                            height: height,
+                          ),
+                          SizedBox(
+                            height: 40,
+                            width: 8,
+                          ),
+                          getIt<AuthPrefsHelper>().isSignedIn()  ?  Text("Sign out") : Text("Sign in"),
+                        ],
+                      )),
+                ),
+              ),
+
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

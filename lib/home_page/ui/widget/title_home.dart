@@ -27,7 +27,6 @@ class TitleHome extends StatelessWidget {
             style: GoogleFonts.poppins(
                 fontStyle: FontStyle.normal, fontSize: 14, color: Colors.grey),
           ),
-          trailing: Icon(Icons.arrow_forward, color: Theme.of(context).primaryColor),
         ),
         const SizedBox(height: 10,),
       ],

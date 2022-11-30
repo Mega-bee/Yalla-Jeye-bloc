@@ -2,57 +2,61 @@ class OrderDetailsResponse {
   int? id;
   int? statusId;
   String? statusName;
-  bool? isCustom;
-  // List<Null>? orderPlaces;
+  bool  isCustom = false;
+  List<PlacesDetails>? orderPlaces;
+  num? totalDistance;
+  num? totalPrice;
   CustomOrder? customOrder;
-  FromAddress? fromAddress;
 
-  OrderDetailsResponse(
-      {this.id,
-        this.statusId,
-        this.statusName,
-        this.isCustom,
-        // this.orderPlaces,
-        this.customOrder,
-      this.fromAddress});
+
+  OrderDetailsResponse({
+    this.id,
+    this.statusId,
+    this.statusName,
+   required this.isCustom,
+    this.orderPlaces,
+    this.totalPrice,
+    this.totalDistance,
+    this.customOrder,
+    // this.fromAddress
+  });
 
   OrderDetailsResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     statusId = json['statusId'];
     statusName = json['statusName'];
     isCustom = json['isCustom'];
-    // if (json['orderPlaces'] != null) {
-    //   orderPlaces = <Null>[];
-    //   json['orderPlaces'].forEach((v) {
-    //     orderPlaces!.add(new Null.fromJson(v));
-    //   });
-    // }
-    customOrder = json['customOrder'] != null
-        ? new CustomOrder.fromJson(json['customOrder'])
-        : null;
+    totalDistance = json['totalDistance'];
+    totalPrice = json['totalPrice'];
+    if (json['orderPlaces'] != null) {
+      orderPlaces = <PlacesDetails>[];
+      json['orderPlaces'].forEach((v) {
+        orderPlaces!.add( PlacesDetails.fromJson(v));
+      });
+    }
+    if(json['customOrder'] != null){
+      customOrder = CustomOrder.fromJson(json['customOrder']);
+    }
 
-
-    fromAddress = json['fromAddress'] != null
-        ? new FromAddress.fromJson(json['fromAddress'])
-        : null;
   }
-
 }
 
 class CustomOrder {
   FromAddress? toAddress;
+  FromAddress? fromAddress;
   String? description;
 
-  CustomOrder({ this.toAddress, this.description});
+  CustomOrder({this.toAddress, this.fromAddress});
 
   CustomOrder.fromJson(Map<String, dynamic> json) {
-
     toAddress = json['toAddress'] != null
-        ? new FromAddress.fromJson(json['toAddress'])
+        ?   FromAddress.fromJson(json['toAddress'])
+        : null;
+    fromAddress = json['fromAddress'] != null
+        ?   FromAddress.fromJson(json['fromAddress'])
         : null;
     description = json['description'];
   }
-
 }
 
 class FromAddress {
@@ -69,15 +73,15 @@ class FromAddress {
 
   FromAddress(
       {this.id,
-        this.city,
-        this.cityId,
-        this.street,
-        this.buildingName,
-        this.floorNumber,
-        this.title,
-        this.description,
-        this.longitude,
-        this.latitude});
+      this.city,
+      this.cityId,
+      this.street,
+      this.buildingName,
+      this.floorNumber,
+      this.title,
+      this.description,
+      this.longitude,
+      this.latitude});
 
   FromAddress.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -91,6 +95,23 @@ class FromAddress {
     longitude = json['longitude'];
     latitude = json['latitude'];
   }
+}
 
+class PlacesDetails {
+  int? id;
+  String? placeName;
+  String? description;
+  bool? makeOrder;
+  bool? payOrder;
 
+  PlacesDetails(
+      this.id, this.placeName, this.description, this.makeOrder, this.payOrder);
+
+  PlacesDetails.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    placeName = json['placeName'];
+    description = json['description'];
+    makeOrder = json['makeOrder'];
+    payOrder = json['payOrder'];
+  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:untitled1/home_page/response/homepage_response.dart';
 import 'package:untitled1/home_page/ui/widget/places_card.dart';
 import 'package:untitled1/home_page/ui/widget/title_home.dart';
+import 'package:untitled1/module_menu_details/model/menu_model.dart';
 
 class DestWithPlaceCard extends StatelessWidget {
   final DestinationWithPlaces? model;

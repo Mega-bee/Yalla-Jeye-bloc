@@ -20,10 +20,9 @@ class ProfileCubit extends Cubit<States> {
 
   final _loadingStateSubject = PublishSubject<AsyncSnapshot>();
   Stream<AsyncSnapshot> get loadingStream => _loadingStateSubject.stream;
-  updateProf({
-    required UpdateProfileRequest request,
-    required GetProfilePageState screenState
-  }) {
+  updateProf(
+      {required UpdateProfileRequest request,
+      required GetProfilePageState screenState}) {
     _loadingStateSubject.add(AsyncSnapshot.waiting());
     _profileRepository.editProfile(request).then((value) {
       if (value == null) {
@@ -52,8 +51,7 @@ class ProfileCubit extends Cubit<States> {
             GetProfileModel.fromJson(value.data.insideData);
 
         emit(
-          GetProfilePageSuccess(
-              model: getProfileModel, screenState: state),
+          GetProfilePageSuccess(model: getProfileModel, screenState: state),
         );
       }
     });

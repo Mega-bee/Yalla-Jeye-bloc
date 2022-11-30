@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:untitled1/custom/model/OrderModel.dart';
+import 'package:untitled1/home_page/ui/screens/home_page.dart';
 import 'package:untitled1/module_addresses/address_route.dart';
 import 'package:untitled1/module_addresses/response/address_response.dart';
 import 'package:untitled1/module_menu_details/model/menu_model.dart';
 import 'package:untitled1/module_menu_details/request/calculate_price_request.dart';
 import 'package:untitled1/module_menu_details/ui/widget/order_card_widget.dart';
+import 'package:untitled1/navigation_bar/ui/screens/navigationBar.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
 import 'package:untitled1/utils/images/images.dart';
 
@@ -208,6 +210,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                       orderModelList.insert(
                                           0,
                                           currentCartModel);
+
                                     }
                                   }
                                   else {
@@ -218,6 +221,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                       orderModelList.insert(
                                           0,
                                           currentCartModel);
+
                                     }
                                   }
                                 }
@@ -246,8 +250,32 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                               onPressed: () {
                                 if(selectedAddressModel == null){
                                   Fluttertoast.showToast(msg: 'Select Address Please');
-                                }else {
+                                }
+                                else {
+                                  if (widget.model != null) {
+                                    if (widget.model?.placeId != 0) {
+                                      var containP = orderModelList.where(
+                                              (element) =>
+                                          element.placeId == widget.model?.placeId);
+                                      if (containP.isEmpty) {
+                                        orderModelList.insert(
+                                            0,
+                                            currentCartModel);
 
+                                      }
+                                    }
+                                    else {
+                                      var contain = orderModelList.where((element) =>
+                                      element.placeTypeId == widget.model?.placeTypeId &&
+                                          element.placeId == widget.model?.placeId);
+                                      if (contain.isEmpty) {
+                                        orderModelList.insert(
+                                            0,
+                                            currentCartModel);
+
+                                      }
+                                    }
+                                  }
                                   List<int> allPlacesIds = [];
                                   List<int> allPlacesTypes = [];
                                   for (var element in widget.placesOrders) {
@@ -265,9 +293,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                               color: redColor,
                               elevation: 0,
                               padding: const EdgeInsetsDirectional.only(start: 30,end: 30,top: 5 ,bottom: 5),
-
-                              shape:
-                              RoundedRectangleBorder(
+                              shape:  RoundedRectangleBorder(
                                 borderRadius:
                                 BorderRadius.circular(
                                     25),
@@ -296,6 +322,10 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
   }
 
  bool checkIfDesOrPlaceExist(){
+    if(widget.model == null){
+      return true;
+    }
+    else {
    if (widget.model?.placeId != 0) {
      var containP = orderModelList.where(
              (element) =>
@@ -316,5 +346,5 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
        return true;
      }
    }
-  }
+  }}
 }

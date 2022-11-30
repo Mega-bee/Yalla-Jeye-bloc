@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled1/home_page/ui/screens/placess_list_screen.dart';
 import 'package:untitled1/home_page/ui/widget/destination_card.dart';
 import 'package:untitled1/home_page/ui/widget/destination_place_card.dart';
 import 'package:untitled1/home_page/ui/widget/title_home.dart';
@@ -65,7 +66,19 @@ class HomePageSuccess extends States {
                       scrollDirection: Axis.horizontal,
                       itemCount: homepage.destinations!.length,
                       itemBuilder: (context, index) {
-                        return DestinationCard(model: homepage.destinations![index],);
+                        return InkWell(
+                            onTap: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => PlacesListScreen(
+                                  categoryName: homepage.destinations![index].title ?? '',
+                                  placeTypeId: homepage.destinations![index].id ?? -1,
+                                  placesList: homepage.destinationWithPlaces![index].places ?? [],
+
+                                )),
+                              );
+                            },
+                            child: DestinationCard(model: homepage.destinations![index],));
                       },
                     ),
                   ),

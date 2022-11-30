@@ -1,0 +1,70 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
+import 'package:untitled1/order_details/request/order_request.dart';
+import '../../abstracts/states/error_state.dart';
+import '../../abstracts/states/loading_state.dart';
+import '../../abstracts/states/state.dart';
+import '../repository/order_repository.dart';
+import '../response/order_response.dart';
+import '../ui/screens/order_details_screen.dart';
+import '../ui/state/OrderDetailsSuccess.dart';
+
+@injectable
+class OrderDetailCubit extends Cubit<States> {
+  final OrderDetailRepository _orderDetailsRepository;
+
+  OrderDetailCubit(this._orderDetailsRepository) : super(LoadingState());
+
+  getOrderDetails(
+      {required OrderDetailsScreenState state, required String id}) {
+    emit(LoadingState());
+    _orderDetailsRepository.getOrderDetails(id).then((value) {
+      if (value == null) {
+        emit(ErrorState(
+            errorMessage: 'Connection error',
+            retry: () {
+              getOrderDetails(id: id, state: state);
+            }));
+      } else if (value.code == 200) {
+        OrderDetailsResponse orderDetailsModel =
+            OrderDetailsResponse.fromJson(value.data.insideData);
+        emit(
+          OrderDetailsSuccess(
+              ordersuccess: orderDetailsModel, screenState: state),
+        );
+      }
+    });
+  }
+
+  confirmOrderPrice(
+      OrderDetailsScreenState state, ChangeOrderPriceRequest request) {
+    emit(LoadingState());
+    _orderDetailsRepository.confirmOrderPrice(request).then((value) {
+      if (value == null) {
+        emit(ErrorState(
+            errorMessage: 'Connection error',
+            retry: () {
+              getOrderDetails(id: request.orderId.toString(), state: state);
+            }));
+      } else if (value.code == 200) {
+        getOrderDetails(id: request.orderId.toString(), state: state);
+      }
+    });
+  }
+
+  rejectOrderPrice(
+      OrderDetailsScreenState state, ChangeOrderPriceRequest request) {
+    emit(LoadingState());
+    _orderDetailsRepository.rejectOrderPrice(request).then((value) {
+      if (value == null) {
+        emit(ErrorState(
+            errorMessage: 'Connection error',
+            retry: () {
+              getOrderDetails(id: request.orderId.toString(), state: state);
+            }));
+      } else if (value.code == 200) {
+        getOrderDetails(id: request.orderId.toString(), state: state);
+      }
+    });
+  }
+}

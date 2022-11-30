@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/profile/ui/screen/get_profile.dart';
-import 'package:untitled1/profile/ui/screen/profile.dart';
+import 'package:untitled1/profile/ui/screen/setting_screen.dart';
 import '../abstracts/module/rout_module.dart';
 import 'profile_module_route.dart';
 
 @injectable
 class ProfilePageModule extends RoutModule {
-  final ProfilePage _profilePage;
+  final SettingProfilePage _settingProfilePage;
   final GetProfilePage _getProfilePage;
 
-  ProfilePageModule(this._profilePage, this._getProfilePage) {
+  ProfilePageModule(this._settingProfilePage, this._getProfilePage) {
     RoutModule.RoutesMap.addAll(getRoutes());
   }
 
   Map<String, WidgetBuilder> getRoutes() {
     return {
-      ProfileRoutes.profile: (context) => _profilePage,
+      ProfileRoutes.settingProfile: (context) => _settingProfilePage,
       ProfileRoutes.Getprofile: (context) => _getProfilePage,
     };
   }

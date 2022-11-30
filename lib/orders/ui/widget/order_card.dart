@@ -12,6 +12,8 @@ class OrderCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Card(
+        color: order.statusId == 9 ?
+        Colors.blueGrey.shade100 :Colors.white,
         elevation: 5,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Padding(
@@ -52,9 +54,20 @@ class OrderCard extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 10,
                   ),
-                  Row(
+                  Text(
+                    order.deliveryPrice
+                        .toString()
+                        .split('.')
+                        .first +
+                        ' L.L',
+                    style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Wrap(
                     children: [
                       Text(
                         'From: ',
@@ -78,65 +91,8 @@ class OrderCard extends StatelessWidget {
                       Text(order.destinationAddressTitle.toString()),
                     ],
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Divider(
-                    thickness: 1,
-                    height: 1,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  IntrinsicHeight(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(1.0),
-                          child: Column(
-                            children: [
-                              Text(
-                                "Delivery fees",
-                                style: TextStyle(fontWeight: FontWeight.w500),
-                              ),
-                              Text(
-                                order.deliveryPrice
-                                        .toString()
-                                        .split('.')
-                                        .first +
-                                    ' L.L',
-                                style: TextStyle(fontWeight: FontWeight.w400),
-                              )
-                            ],
-                          ),
-                        ),
-                        VerticalDivider(
-                          color: Colors.black,
-                          thickness: 2,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(1.0),
-                          child: Column(
-                            children: [
-                              Text(
-                                "Total price",
-                                style: TextStyle(fontWeight: FontWeight.w500),
-                              ),
-                              Text(
-                                order.finalDeliveryPrice
-                                        .toString()
-                                        .split('.')
-                                        .first +
-                                    ' L.L',
-                                style: TextStyle(fontWeight: FontWeight.w400),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+
+
                 ],
               ),
             ),

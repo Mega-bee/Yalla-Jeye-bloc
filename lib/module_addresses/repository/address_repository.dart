@@ -23,6 +23,15 @@ class AddressRepository {
     return response;
   }
 
+  Future<WebServiceResponse?> getRegions() async {
+    var token = await _authService.getToken();
+    WebServiceResponse? response = await _apiClient.get(
+      Urls.GET_REGIONS,
+      headers: {'Authorization': 'Bearer ' '$token'},
+    );
+    if (response == null) return null;
+    return response;
+  }
   Future<WebServiceResponse?> createAddress(
       CreateAddressRequest request) async {
     var token = await _authService.getToken();

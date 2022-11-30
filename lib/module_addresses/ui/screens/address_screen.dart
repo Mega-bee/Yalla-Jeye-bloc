@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/module_addresses/request/create_address_request.dart';
+import 'package:untitled1/module_addresses/state_manager/create_address_state_manager.dart';
 import '../../../abstracts/states/state.dart';
 import '../../state_manager/address_state_manager.dart';
-import '../widget/create_address_sheet.dart';
+import 'create_address_sheet.dart';
 
 @injectable
 class AddressScreen extends StatefulWidget {
   final AddressCubit cubit;
+  final RegionsCubit regionsCubit;
 
   const AddressScreen(
     this.cubit,
+      this.regionsCubit
   );
 
   @override
@@ -72,20 +75,20 @@ class AddressScreenState extends State<AddressScreen> {
               showModalBottomSheet(
                   backgroundColor: Colors.transparent,
                   context: context,
+                  isScrollControlled: true,
                   builder: (context) {
                     return CreateAddressSheet(createAddress: (req){
                       Navigator.pop(context);
                       createAddress(req,goToSelectedState);
-                    },isUpdated: false,);
+                    },isUpdated: false, cubit: widget.regionsCubit,);
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(15))),
-                  isScrollControlled: true,
+                          BorderRadius.circular(15)),
                   elevation: 5);
             },
-            child: Padding(
-              padding: const EdgeInsetsDirectional.only(end: 25),
+            child: const Padding(
+              padding: EdgeInsetsDirectional.only(end: 25),
               child: Icon(Icons.add_comment),
             ),
           )

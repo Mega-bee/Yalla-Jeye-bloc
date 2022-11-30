@@ -1,65 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:untitled1/auth/auth_module_route.dart';
-import 'package:untitled1/di/di_config.dart';
-import 'package:untitled1/module_addresses/address_route.dart';
-import 'package:untitled1/utils/components/custom_alert_dialog.dart';
+import 'package:untitled1/order_details/ui/state/order_details_info_tab.dart';
 import '../../../abstracts/states/state.dart';
-import '../../../hive/hive.dart';
-import '../../../navigation_bar/navigator_routes.dart';
-import '../../../utils/images/images.dart';
 import '../../response/order_response.dart';
-import '../screens/order_page_list.dart';
-import '../widget/order_details.dart';
-import '../widget/order_tracking.dart';
-
+import '../screens/order_details_screen.dart';
+import 'order_tracking_tab.dart';
 
 class OrderDetailsSuccess extends States {
-
   final OrderDetailsResponse ordersuccess;
-  OrderDetailsState state;
+ final OrderDetailsScreenState screenState;
 
-  OrderDetailsSuccess(
-      {required this.ordersuccess,required this.state});
+  OrderDetailsSuccess({required this.ordersuccess, required this.screenState});
 
   @override
   Widget getUI(BuildContext context) {
-    TabController tabController = TabController(length: 2, vsync: state);
-
-    return Column(
-      children: [
-        Container(
-
-          child: TabBar(
-            controller: tabController,
-            tabs: [
-              Tab(
-                child: Text(
-                  "Details",
-                  style: TextStyle(color: Colors.black),
+    return DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: const PreferredSize(
+            preferredSize: Size.fromHeight(kToolbarHeight),
+            child: SizedBox(
+              height: 50,
+              child: TabBar(tabs: [
+                Tab(
+                  child: Text(
+                    "Details",
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
-              ),
-              Tab(
-                child: Text(
-                  "Traking",
-                  style: TextStyle(color: Colors.black),
+                Tab(
+                  child: Text(
+                    "Tracking",
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
+                Tab(
+                  child: Text(
+                    "Chat",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ]),
+            ),
+          ),
+          body: TabBarView(
+            children: <Widget>[
+              OrderDetailsInfo(
+                orderDetailsResponse: ordersuccess,
+                screenState:  screenState,
               ),
+              OrderTracking(
+                orderDetailsResponse: ordersuccess,
+                screenState:  screenState,
+              ),
+              Center(child: Container(child: Text('SOON'),))
             ],
           ),
-        ),
-        Container(
-          height: 200,
-          child: TabBarView(
-            controller: tabController,
-            children: [
-              OrderDetailsScreen(ordersuccess: ordersuccess,),
-              OrderTracking(ordersuccess: ordersuccess,)
-            ],
-          ),
-        ),
-
-      ],
-    );
+        ));
   }
 }

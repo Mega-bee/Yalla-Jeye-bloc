@@ -3,7 +3,7 @@ import 'package:untitled1/module_addresses/ui/widget/address_card.dart';
 import '../../../abstracts/states/state.dart';
 import '../../response/address_response.dart';
 import '../screens/address_screen.dart';
-import '../widget/create_address_sheet.dart';
+import '../screens/create_address_sheet.dart';
 
 class AddressListSuccess extends States {
   final List<AddressResponse> addressList;
@@ -34,6 +34,7 @@ class AddressListSuccess extends States {
                   },
                   isUpdated: true,
                   response: addressList[index],
+                  cubit: screenState.widget.regionsCubit,
                 );
               },
               shape: RoundedRectangleBorder(

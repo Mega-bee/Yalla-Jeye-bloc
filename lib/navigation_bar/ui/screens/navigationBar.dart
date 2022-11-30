@@ -8,9 +8,7 @@ import 'package:untitled1/utils/images/images.dart';
 
 import '../../../custom/ui/screens/custom_list.dart';
 import '../../../home_page/ui/screens/home_page.dart';
-import '../../../notification/ui/screens/Notification_list.dart';
-import '../../../profile/ui/screen/profile.dart';
-import '../../../profile/ui/state/profile_success.dart';
+import '../../../profile/ui/screen/setting_screen.dart';
 import '../../../utils/Colors/colors.dart';
 
 @injectable
@@ -32,7 +30,7 @@ class NavigationbarrState extends State<Navigationbar> {
       getIt<HomePage>(),
       getIt<CustomPage>(),
       getIt<Order>(),
-      getIt<ProfilePage>(),
+      getIt<SettingProfilePage>(),
     ];
   }
 

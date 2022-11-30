@@ -1,12 +1,12 @@
-// class FollowRequest {
-//   bool? isFollow;
-//
-//   FollowRequest({this.isFollow});
-//
-//   Map<String, dynamic> toJson() {
-//     return {
-//       'IsFollow': isFollow,
-//     };
-//   }
-//
-// }
+class ChangeOrderPriceRequest {
+  int? orderId;
+
+  ChangeOrderPriceRequest({this.orderId});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'orderId': orderId,
+    };
+  }
+
+}

@@ -304,9 +304,12 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      // floatingActionButton: (orderModelList.isNotEmpty
-      //     ?   CustomActionButton( isLoginUser: widget._authService.isLoggedIn, )
-      //     : Container()),
+      floatingActionButton:orderModelList.isNotEmpty ? CustomActionButton(
+          model: null,
+          isLoginUser: widget._authService.isLoggedIn,
+          claPrice: (request) {
+            widget.cubit.calculateTotalPrice(request ,this);
+          }) :Container(),
     );
   }
 }
