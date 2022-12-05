@@ -287,7 +287,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                     }
                                   }
                                   widget.calculatePrice(CalculatePriceRequest(
-                                      selectedAddressModel?.id, allPlacesIds,allPlacesTypes));
+                                   addressId:    selectedAddressModel?.id,placesId:  allPlacesIds,placeTypes: allPlacesTypes));
                                 }
                               },
                               color: redColor,

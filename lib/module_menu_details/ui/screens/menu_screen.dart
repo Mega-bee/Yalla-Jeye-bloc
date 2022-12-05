@@ -52,38 +52,55 @@ class MenuDetailsScreenState extends State<MenuDetailsScreen> {
               fontWeight: FontWeight.bold,
             )),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Hero(
-            tag: menuDetailsModel?.image ?? '',
-            child: CachedNetworkImage(
-              imageUrl: menuDetailsModel?.image ?? '',
-              fit: BoxFit.fitWidth,
-              width: double.maxFinite,
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Text(
-              menuDetailsModel?.restaurantName ?? '',
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Hero(
+              tag: menuDetailsModel?.image ?? '',
+              child: CachedNetworkImage(
+                imageUrl: menuDetailsModel?.image ?? '',
+                fit: BoxFit.fitWidth,
+                width: double.maxFinite,
               ),
             ),
-          ),
-        ],
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(
+                menuDetailsModel?.restaurantName ?? '',
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            menuDetailsModel!.menuImages!.isNotEmpty
+                ? GridView.builder(
+                    itemBuilder: (context, index) => Image.network(
+                        menuDetailsModel!.menuImages![index].menuImage ?? ''),
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: menuDetailsModel!.menuImages!.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: (3.5 / 4),
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 10,
+                    ))
+                : Container()
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: CustomActionButton(
           model: menuDetailsModel,
           isLoginUser: widget._authService.isLoggedIn,
           claPrice: (request) {
-            widget.cubit.calculateTotalPrice(request ,this);
+            widget.cubit.calculateTotalPrice(request, this);
           }),
     );
   }

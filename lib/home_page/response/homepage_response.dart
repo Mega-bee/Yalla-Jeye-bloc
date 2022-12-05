@@ -207,9 +207,9 @@ class Places {
     title = json['title'];
     description = json['description'];
 
-    if (json['menu'] != null) {
+    if (json['menus'] != null) {
       menu = <PlaceMenu>[];
-      json['menu'].forEach((v) {
+      json['menus'].forEach((v) {
         menu!.add( PlaceMenu.fromJson(v));
       });
     }
@@ -227,12 +227,14 @@ class Places {
 
 class PlaceMenu {
   int? id;
+  int? placeMenuTypeId;
   String? menuImage;
 
-  PlaceMenu({this.id, this.menuImage});
+  PlaceMenu({this.id, this.menuImage , this.placeMenuTypeId});
   PlaceMenu.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     menuImage = json['menu'];
+    placeMenuTypeId = json['placeMenuTypeId'];
   }
 }
 

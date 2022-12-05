@@ -107,8 +107,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i23.SplashModule(get<_i9.SplashScreen>()));
   gh.factory<_i24.AddressRepository>(() =>
       _i24.AddressRepository(get<_i10.ApiClient>(), get<_i4.AuthService>()));
-  gh.factory<_i25.CheckOutCubit>(
-      () => _i25.CheckOutCubit(get<_i11.CheckOutRepository>()));
+  gh.factory<_i25.CheckOutCubit>(() => _i25.CheckOutCubit(
+      get<_i11.CheckOutRepository>(), get<_i12.CustomRepository>()));
   gh.factory<_i26.CheckOutScreen>(
       () => _i26.CheckOutScreen(get<_i25.CheckOutCubit>()));
   gh.factory<_i27.CustomCubit>(
