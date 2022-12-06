@@ -14,13 +14,17 @@ import '../repository/homepage_repository.dart';
 import '../response/homepage_response.dart';
 import '../ui/screens/home_page.dart';
 import '../ui/state/homepage_sucess.dart';
-
+import 'package:rxdart/rxdart.dart';
 @injectable
 class HomePageCubit extends Cubit<States> {
   final HomePageRepository _homePageRepository;
   final CheckOutRepository _checkOutRepository;
 
   HomePageCubit(this._homePageRepository, this._checkOutRepository) : super(LoadingState());
+
+      final PublishSubject<String>  _cartSubject = PublishSubject<String>();
+
+  Stream<String> get cartStream =>  _cartSubject.stream;
 
   getHomePage(HomePageState state) {
     emit(LoadingHomePage());
@@ -59,5 +63,9 @@ class HomePageCubit extends Cubit<States> {
         TipDialogHelper.dismiss();
       }
     });
+  }
+
+  refreshHome(){
+    _cartSubject.add('updateCart');
   }
 }

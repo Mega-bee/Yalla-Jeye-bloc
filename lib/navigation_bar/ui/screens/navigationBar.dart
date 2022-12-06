@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/di/di_config.dart';
+import 'package:untitled1/home_page/state_manager/homepage.dart';
 import 'package:untitled1/orders/ui/screens/order_page_list.dart';
 import 'package:untitled1/utils/images/images.dart';
 
@@ -13,6 +14,10 @@ import '../../../utils/Colors/colors.dart';
 
 @injectable
 class Navigationbar extends StatefulWidget {
+  final HomePageCubit cubit;
+
+  Navigationbar(this.cubit);
+
   @override
   State<Navigationbar> createState() => NavigationbarrState();
 }
@@ -32,6 +37,12 @@ class NavigationbarrState extends State<Navigationbar> {
       getIt<Order>(),
       getIt<SettingProfilePage>(),
     ];
+    widget.cubit.cartStream.listen((event) {
+      print('refreeshhhhhh');
+      setState(() {
+
+      });
+    });
   }
 
 

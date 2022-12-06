@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/module_addresses/address_module.dart';
+import 'package:untitled1/module_driver/module_driver_orders/driver_order_module.dart';
 import 'package:untitled1/module_menu_details/menu_module.dart';
 import 'package:untitled1/module_splash/splash_module.dart';
 import 'package:untitled1/module_splash/splash_routes.dart';
@@ -66,6 +67,7 @@ class MyApp extends StatefulWidget {
   final ProfilePageModule _profilePageModule;
   final MenuDetailsModule _menuDetailsModule;
   final SplashModule _splashModule;
+  final DriverOrderModule _driverOrderModule;
 
   MyApp(
     this._navigatorModule,
@@ -78,7 +80,8 @@ class MyApp extends StatefulWidget {
     this._logInModule,
     this._profilePageModule,
       this._menuDetailsModule,
-      this._splashModule
+      this._splashModule ,
+      this._driverOrderModule
   );
 
   @override

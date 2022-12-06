@@ -11,6 +11,9 @@ class Urls {
   static const String AUTH= DOMAIN + 'Accounts/';
   static const String PROMO_CODE= '${DOMAIN}PromoCodes/';
 
+  static const String DRIVERS= '${DOMAIN}Drivers/';
+
+  /*--------------------------home----------------------*/
   static const String GET_HOME_PAGE = BASE_HOME_PAGE + 'GetHomePage';
   static const String GET_ORDERS = BASE_HOME_PAGE + 'PlaceOrder';
 
@@ -35,7 +38,7 @@ class Urls {
   static const String CONFIRM_PRICE = '${BASE_ORDER}ConfirmPrice';
 
 
-  ///PROMOO
+    /*-----------------------PromoCode----------------------------------*/
   static const String checkPromoCode = '${PROMO_CODE}CheckPromoCode';
 
 
@@ -54,7 +57,10 @@ class Urls {
   static const String NOTIFICATION = '${BASE_NOTIFICATION}GetAllNotifications';
 
 
-
+  /*-------------------DRIVERS----------------*/
+    static const String GET_DRIVER_ORDERS = '${DRIVERS}GetOrders';
+    static const String GET_DRIVER_ORDERS_DETAILS = '${DRIVERS}GetOrderDetails/';
+    static const String ORDER_STATUS = '${DRIVERS}SetOrderStatus';
 
 
 }

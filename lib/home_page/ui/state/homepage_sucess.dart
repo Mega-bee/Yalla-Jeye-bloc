@@ -76,7 +76,7 @@ class HomePageSuccess extends States {
                                   placesList: homepage.destinationWithPlaces![index].places ?? [],
 
                                 )),
-                              );
+                              ).then((value) => homepageState.refresh());
                             },
                             child: DestinationCard(model: homepage.destinations![index],));
                       },

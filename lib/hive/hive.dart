@@ -22,7 +22,6 @@ class AuthPrefsHelper {
   void setToken(String username) {
     box.put('token', username);
   }
-
   String? getToken() {
     return box.get('token');
   }
@@ -46,6 +45,21 @@ class AuthPrefsHelper {
 
   String? getLocation() {
     return box.get('cityname') ?? "Zahlee";
+  }
+  void setRoleId(int id) {
+    box.put('role', id);
+  }
+  int? getRoleId() {
+    return box.get('role');
+  }
+
+  bool isDriver() {
+    try {
+      int? uid = getRoleId();
+      return uid == 4;
+    } catch (e) {
+      return false;
+    }
   }
 }
 
