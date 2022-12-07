@@ -9,23 +9,21 @@ import '../../request/log_in_request.dart';
 import '../screens/log_in_list.dart';
 import '../widget/custom_button.dart';
 
-class LoginInitState extends States{
+class LoginInitState extends States {
   final loginScreenState _screenState;
   String? errorMessage;
 
-
-  LoginInitState(this.errorMessage,this._screenState) ;
+  LoginInitState(this.errorMessage, this._screenState);
 
   final _formKey = GlobalKey<FormState>();
   final phone = TextEditingController();
   final password = TextEditingController();
 
-
   @override
   Widget getUI(BuildContext context) {
     var mediaQueryHeight = MediaQuery.of(context).size.height;
     var mediaQueryWidth = MediaQuery.of(context).size.width;
-    return  SingleChildScrollView(
+    return SingleChildScrollView(
       child: Column(children: [
         Container(
           color: redColor,
@@ -53,7 +51,7 @@ class LoginInitState extends States{
                   padding: const EdgeInsets.only(left: 15),
                   child: Text(
                       "Please enter your phone numbe and password to "
-                          "login to Yalla Jeye!",
+                      "login to Yalla Jeye!",
                       style: TextStyle(color: Colors.white, fontSize: 17)),
                 ),
               ),
@@ -110,54 +108,53 @@ class LoginInitState extends States{
                       child: Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: mediaQueryWidth * 0.05),
-                            child:TextFormField(
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return "Required";
-                                }
-                                return null;
-                              },
-                              autofillHints: [AutofillHints.name],
-                              controller: phone,
-                              keyboardType: TextInputType.phone,
-                              decoration: InputDecoration(
-                                hintText: 'Enter your phone number',
-                                hintStyle: TextStyle(
-                                  color: Color.fromRGBO(204, 204, 204, 0.5),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: mediaQueryWidth * 0.05),
+                              child: TextFormField(
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return "Required";
+                                  }
+                                  return null;
+                                },
+                                autofillHints: [AutofillHints.name],
+                                controller: phone,
+                                keyboardType: TextInputType.phone,
+                                decoration: InputDecoration(
+                                  hintText: 'Enter your phone number',
+                                  hintStyle: TextStyle(
+                                    color: Color.fromRGBO(204, 204, 204, 0.5),
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 20.0, horizontal: 13.0),
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color:
+                                            Color.fromRGBO(204, 204, 204, 0.5),
+                                        width: 2.0),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.grey, width: 2.0),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                  ),
                                 ),
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 20.0, horizontal: 13.0),
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: Color.fromRGBO(204, 204, 204, 0.5),
-                                      width: 2.0),
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide:
-                                  BorderSide(color: Colors.grey, width: 2.0),
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
-                                ),
-                              ),
-                            )
-                          ),
+                              )),
                           SizedBox(
-                            height:
-                            MediaQuery.of(context).size.height * 0.02,
+                            height: MediaQuery.of(context).size.height * 0.02,
                           ),
                           Padding(
                               padding: EdgeInsets.symmetric(
                                 horizontal: mediaQueryWidth * 0.05,
                               ),
-                              child:TextFormField(
+                              child: TextFormField(
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return "Required";
@@ -176,56 +173,76 @@ class LoginInitState extends States{
                                       vertical: 20.0, horizontal: 13.0),
                                   border: OutlineInputBorder(
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
+                                        BorderRadius.all(Radius.circular(5.0)),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: const BorderSide(
-                                        color: Color.fromRGBO(204, 204, 204, 0.5),
+                                        color:
+                                            Color.fromRGBO(204, 204, 204, 0.5),
                                         width: 2.0),
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
+                                        BorderRadius.all(Radius.circular(5.0)),
                                   ),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                    BorderSide(color: Colors.grey, width: 2.0),
+                                    borderSide: BorderSide(
+                                        color: Colors.grey, width: 2.0),
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
+                                        BorderRadius.all(Radius.circular(5.0)),
                                   ),
                                 ),
                               )),
+                          InkWell(
+                            onTap: (){
+                              Navigator.pushNamed(context, AuthRoutes.FORGET_PASSWORD);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 22.0,top: 10),
+                              child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: Text(
+                                  "Forget pasword",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    decoration: TextDecoration.underline,
+                                  ),
+
+                                ),
+                              ),
+                            ),
+                          ),
                           SizedBox(
-                            height:
-                            MediaQuery.of(context).size.height * 0.01,
+                            height: MediaQuery.of(context).size.height * 0.01,
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child:
-                            CustomButton(
+                            child: CustomButton(
                               buttonTab: () {
                                 if (password.text.isEmpty ||
                                     phone.text.isEmpty ||
                                     password.text.length < 6) {
                                   _formKey.currentState!.validate();
                                 }
-                                _screenState.loginRequest(LogInRequest(Phone:phone.text, password:password.text));
+                                _screenState.loginRequest(LogInRequest(
+                                    Phone: phone.text,
+                                    password: password.text));
                               },
-                              loading: _screenState.loadingSnapshotLogin.connectionState ==
+                              loading: _screenState
+                                      .loadingSnapshotLogin.connectionState ==
                                   ConnectionState.waiting,
                               text: 'Login',
                               bgColor: redColor,
                               textColor: Colors.black,
                             ),
                           ),
-
                           SizedBox(
                             height: mediaQueryHeight * 0.02,
                           ),
-                          errorMessage==null?
-                          Container():
-                          Text("${errorMessage}",style: TextStyle(color: Colors.red),),
-
-
-
+                          errorMessage == null
+                              ? Container()
+                              : Text(
+                                  "${errorMessage}",
+                                  style: TextStyle(color: Colors.red),
+                                ),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -239,11 +256,11 @@ class LoginInitState extends States{
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black,
-                                        decoration: TextDecoration.underline
-                                    ),
+                                        decoration: TextDecoration.underline),
                                   ),
                                   onPressed: () {
-                                    Navigator.pushNamed(context, AuthRoutes.signUp);
+                                    Navigator.pushNamed(
+                                        context, AuthRoutes.signUp);
 //                                  Navigator.push(
 //                                      context,
 //                                      CustomPageRoute(
@@ -252,8 +269,7 @@ class LoginInitState extends States{
                                 ),
                               ]),
                           SizedBox(
-                            height:
-                            MediaQuery.of(context).size.height * 0.1,
+                            height: MediaQuery.of(context).size.height * 0.1,
                           ),
                         ],
                       ),

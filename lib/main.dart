@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
@@ -19,7 +20,6 @@ import 'di/di_config.dart';
 import 'hive/hive.dart';
 import 'home_page/homepage_module.dart';
 import 'navigation_bar/navigator_module.dart';
-import 'navigation_bar/navigator_routes.dart';
 import 'notification/Notification_module.dart';
 import 'order_details/order_module.dart';
 
@@ -29,7 +29,7 @@ import 'order_details/order_module.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp();
   await HiveSetUp.init();
 
 //  ByteData data = await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
@@ -68,18 +68,17 @@ class MyApp extends StatefulWidget {
   final SplashModule _splashModule;
 
   MyApp(
-    this._navigatorModule,
-    this._notificationModule,
-    this._orderModule,
-    this._customModule,
-    this._addressModule,
-    this._homePageModule,
-    this._detailsModule,
-    this._logInModule,
-    this._profilePageModule,
+      this._navigatorModule,
+      this._notificationModule,
+      this._orderModule,
+      this._customModule,
+      this._addressModule,
+      this._homePageModule,
+      this._detailsModule,
+      this._logInModule,
+      this._profilePageModule,
       this._menuDetailsModule,
-      this._splashModule
-  );
+      this._splashModule);
 
   @override
   State<MyApp> createState() => _MyAppState();

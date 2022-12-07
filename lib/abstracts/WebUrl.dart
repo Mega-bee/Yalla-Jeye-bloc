@@ -48,6 +48,9 @@ class Urls {
   static const String UPDATE_PROFILE = AUTH + 'UpdateProfile';
   static const  String GET_PROFILE = AUTH + 'GetProfile';
   static const String CONFIRM_PHONE_NUMBER = AUTH + 'ConfirmPhoneNumber';
+  static const String FORGET_PASSWORD = AUTH + 'ForgotPassword';
+  static const String FCM_TOKEN = AUTH + 'RefreshFcmToken';
+  static const String RESET_PASSWORD = AUTH + 'ResetPassword';
 
 
   /*-----------------------NOTIFICATION----------------------------------*/

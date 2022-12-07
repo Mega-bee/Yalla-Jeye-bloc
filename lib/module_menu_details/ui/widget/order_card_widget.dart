@@ -134,43 +134,43 @@ class _OrderCardWidgetState extends State<OrderCardWidget> {
             SizedBox(
               height: 20,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Before picking your order, driver will :"),
-                Column(
-                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Switch(
-                            dragStartBehavior: DragStartBehavior.down,
-                            activeColor: redColor,
-                            value: widget.orderModel.makeOrder ?? false,
-                            onChanged: (value) => setState(() {
-                                  widget.orderModel.makeOrder = value;
-                                })),
-                        Text(
-                            "Call ${widget.orderModel.placeName} and make order"),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Switch(
-                            dragStartBehavior: DragStartBehavior.down,
-                            activeColor: redColor,
-                            value: widget.orderModel.payOrder ?? false,
-                            onChanged: (value) => setState(() {
-                                  widget.orderModel.payOrder = value;
-                                })),
-                        Text("Pay ${widget.orderModel.placeName} bill"),
-                      ],
-                    ),
-                  ],
-                )
-              ],
-            )
+            // Column(
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Text("Before picking your order, driver will :"),
+            //     Column(
+            //       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: [
+            //         Row(
+            //           children: [
+            //             Switch(
+            //                 dragStartBehavior: DragStartBehavior.down,
+            //                 activeColor: redColor,
+            //                 value: widget.orderModel.makeOrder ?? false,
+            //                 onChanged: (value) => setState(() {
+            //                       widget.orderModel.makeOrder = value;
+            //                     })),
+            //             Text(
+            //                 "Call ${widget.orderModel.placeName} and make order"),
+            //           ],
+            //         ),
+            //         Row(
+            //           children: [
+            //             Switch(
+            //                 dragStartBehavior: DragStartBehavior.down,
+            //                 activeColor: redColor,
+            //                 value: widget.orderModel.payOrder ?? false,
+            //                 onChanged: (value) => setState(() {
+            //                       widget.orderModel.payOrder = value;
+            //                     })),
+            //             Text("Pay ${widget.orderModel.placeName} bill"),
+            //           ],
+            //         ),
+            //       ],
+            //     )
+            //   ],
+            // )
           ],
         ),
       ),

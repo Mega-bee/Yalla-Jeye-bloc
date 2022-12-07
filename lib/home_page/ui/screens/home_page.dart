@@ -7,6 +7,8 @@ import 'package:untitled1/custom/model/OrderModel.dart';
 import 'package:untitled1/module_menu_details/ui/widget/custom_action_botton.dart';
 import '../../../abstracts/states/state.dart';
 import '../../../hive/hive.dart';
+import '../../../notification_module/request/notification_request.dart';
+import '../../../services/fire_notification_service.dart';
 import '../../../utils/images/images.dart';
 import '../../state_manager/homepage.dart';
 
@@ -23,6 +25,8 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  static FireNotificationService fireNotificationService =
+  FireNotificationService();
   @override
   void initState() {
     super.initState();
@@ -30,6 +34,11 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     widget.cubit.getHomePage(this);
     controller = BottomSheet.createAnimationController(this);
     controller.duration = Duration(milliseconds: 500);
+    String FirebaseToken = '';
+    fireNotificationService.GetFireBaseToken().then((tokenFire) {
+      FirebaseToken = tokenFire ?? '';
+      NotificationRequest(firebaseToken: FirebaseToken);
+    });
   }
 
   getHome() {

@@ -94,7 +94,7 @@ class CustomSuccess extends States {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Deliver From",
+                                "Collect from",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 16),
                               ),
@@ -139,7 +139,7 @@ class CustomSuccess extends States {
                             height: 3,
                           ),
                           Text(
-                            "${model2.title ?? "Please select your addres\nyou want to deliver from"}",
+                            "${model2.title ?? "Please select your addres\nyou want to collect from"}",
                           ),
                           SizedBox(
                             height: 10,

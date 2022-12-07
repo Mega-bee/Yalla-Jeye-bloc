@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:lottie/lottie.dart';
@@ -9,6 +8,7 @@ import 'package:untitled1/utils/images/images.dart';
 @injectable
 class SplashScreen extends StatefulWidget {
   final AuthService _authService;
+
   SplashScreen(this._authService);
 
   @override
@@ -19,9 +19,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((Dura) {
-       _getNextRoute().then((route) {
-         Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
-       });
+      _getNextRoute().then((route) {
+        Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
+      });
     });
     super.initState();
   }
@@ -29,22 +29,29 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-      SafeArea(child:  Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Lottie.asset(ImageAsset.SPLASH_SCREEN,),
-                SizedBox(height: 20,),
-                Text('YALLA JEYE' , style: TextStyle(fontWeight: FontWeight.bold , fontSize: 35),)
-              ],
-            ),
-          )) )
-    );
+        body: SafeArea(
+            child: Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Lottie.asset(
+                        ImageAsset.SPLASH_SCREEN,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'YALLA JEYE',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 35),
+                      )
+                    ],
+                  ),
+                ))));
   }
 
   Future<String> _getNextRoute() async {

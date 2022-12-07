@@ -9,7 +9,10 @@ class OrderPageSuccess extends States {
   final List<OrderResponse> orderHistory;
   OrderState state;
 
-  OrderPageSuccess({required this.orderCurrent, required this.orderHistory , required this.state});
+  OrderPageSuccess(
+      {required this.orderCurrent,
+      required this.orderHistory,
+      required this.state});
 
   @override
   Widget getUI(BuildContext context) {
@@ -18,18 +21,38 @@ class OrderPageSuccess extends States {
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight),
-          child:   SizedBox(
+          child: SizedBox(
             height: 50,
             child: TabBar(
-              tabs: [Text("Current" ,style: TextStyle(color: Colors.black,fontSize: 16),), Text("History",style: TextStyle(color: Colors.black,fontSize: 16),)],
+              tabs: [
+                Text(
+                  "Current",
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                ),
+                Text(
+                  "History",
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                )
+              ],
             ),
           ),
         ),
         body: TabBarView(
           children: <Widget>[
-           ListView.builder(itemBuilder: (context, index) => OrderCard(order: orderCurrent[index],),shrinkWrap: true,itemCount: orderCurrent.length,),
-           ListView.builder(itemBuilder: (context, index) => OrderCard(order: orderHistory[index],),shrinkWrap: true,itemCount: orderHistory.length,)
-
+            ListView.builder(
+              itemBuilder: (context, index) => OrderCard(
+                order: orderCurrent[index],
+              ),
+              shrinkWrap: true,
+              itemCount: orderCurrent.length,
+            ),
+            ListView.builder(
+              itemBuilder: (context, index) => OrderCard(
+                order: orderHistory[index],
+              ),
+              shrinkWrap: true,
+              itemCount: orderHistory.length,
+            )
           ],
         ),
       ),

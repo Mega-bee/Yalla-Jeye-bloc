@@ -69,7 +69,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                           children: [
                             Row(
                               children: [
-                                Icon(Icons.calendar_month),
+                                Icon(Icons.shopping_cart),
                                 SizedBox(width: 15),
                                 Padding(
                                   padding:
@@ -225,6 +225,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                     }
                                   }
                                 }
+                                Navigator.pop(context);
                                 Navigator.pop(context);
                               },
                               color: Colors.white,

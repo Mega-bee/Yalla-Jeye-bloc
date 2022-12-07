@@ -7,57 +7,65 @@ class OrderTracking extends StatelessWidget {
   final OrderDetailsResponse orderDetailsResponse;
   final OrderDetailsScreenState screenState;
 
-  OrderTracking({required this.orderDetailsResponse ,required this.screenState}) : super() {
+  OrderTracking({required this.orderDetailsResponse, required this.screenState})
+      : super() {
     currentStep = StatusHelper.getStatusIndex(orderDetailsResponse.statusId);
   }
 
   int? currentStep;
+
   @override
   Widget build(BuildContext context) {
     return Stepper(
       controlsBuilder: (context, details) {
-        if(details.currentStep == 2) {
-          return Row(children:   [
-            InkWell(
-              onTap: (){
-                screenState.confirmPrice();
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.red.shade700),
-                    borderRadius: BorderRadius.circular(12)
+        if (details.currentStep == 2) {
+          return Row(
+            children: [
+              InkWell(
+                onTap: () {
+                  screenState.confirmPrice();
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.red.shade700),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      'Proceed',
+                      style: TextStyle(color: Colors.red.shade700),
+                    ),
+                  ),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child:   Text('Proceed',style: TextStyle(color: Colors.red.shade700),),
-                ),),
-            ),
-
-           const SizedBox(width: 15,),
-
-            InkWell(
-              onTap: (){
-                screenState.rejectPrice();
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.circular(12)
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              InkWell(
+                onTap: () {
+                  screenState.rejectPrice();
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: const Text('Decline'),
+                  ),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: const Text('Decline'),
-                ),),
-            ),
-          ],);
+              ),
+            ],
+          );
         }
         return Container();
       },
       type: StepperType.vertical,
       currentStep: currentStep ?? 0,
       elevation: 5,
-      onStepCancel: (){},
-      onStepContinue: (){},
+      onStepCancel: () {},
+      onStepContinue: () {},
       steps: [
         Step(
             title: Text("Pending"),
@@ -111,22 +119,29 @@ class OrderTracking extends StatelessWidget {
               title: Text("Delivered"),
               subtitle: Text("Hope you had a good service"),
               content: Container(),
-              isActive: true,state:   StepState.complete  )
+              isActive: true,
+              state: StepState.complete)
         else if (orderDetailsResponse.statusId == 6)
           Step(
               title: Text("Cancelled"),
               subtitle: Text("Hope you had a good service"),
-              content: Container(),isActive: true,state:   StepState.error  )
+              content: Container(),
+              isActive: true,
+              state: StepState.error)
         else if (orderDetailsResponse.statusId == 8)
           Step(
               title: Text("Rejected By Admin"),
               subtitle: Text("rejected"),
-              content: Container(),isActive: true,state:   StepState.error  )
+              content: Container(),
+              isActive: true,
+              state: StepState.error)
         else if (orderDetailsResponse.statusId == 10)
           Step(
               title: Text("Rejected By Client"),
               subtitle: Text("Rejected"),
-              content: Container(),isActive: true,state:   StepState.error  )
+              content: Container(),
+              isActive: true,
+              state: StepState.error)
       ],
     );
   }

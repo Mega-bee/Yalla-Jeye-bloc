@@ -10,11 +10,13 @@ class PlaceCard extends StatelessWidget {
   final String categoryName;
   final int? placeTypeId;
   final Places model;
-  const PlaceCard({ required this.model, required this.categoryName, this.placeTypeId});
+
+  const PlaceCard(
+      {required this.model, required this.categoryName, this.placeTypeId});
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       width: 280,
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -24,39 +26,40 @@ class PlaceCard extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {
-                Navigator.pushNamed(context, MenuRoutes.menuPage ,
+                Navigator.pushNamed(context, MenuRoutes.menuPage,
                     arguments: MenuDetailsModel(
-                  categoryName: categoryName,
-                      image: model.image ?? '',
-                      restaurantName: model.title ?? '',
-                      menuImages: model.menu ,
-                      placeId: model.id,
-                      placeTypeId: 0
-                ));
+                        categoryName: categoryName,
+                        image: model.image ?? '',
+                        restaurantName: model.title ?? '',
+                        menuImages: model.menu,
+                        placeId: model.id,
+                        placeTypeId: 0));
               },
               child: Hero(
                 tag: model.image ?? '',
                 child: ClipRRect(
-                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(15),topRight:  Radius.circular(15)),
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15)),
                   child: CachedNetworkImage(
                     key: UniqueKey(),
-                    imageUrl:model.image ?? '',
+                    imageUrl: model.image ?? '',
                     fit: BoxFit.cover,
                     height: 170,
-                    imageBuilder: (context, imageProvider) =>
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.only(topLeft: Radius.circular(15),topRight:  Radius.circular(15)),
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(15),
+                            topRight: Radius.circular(15)),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
                         ),
+                      ),
+                    ),
                     placeholder: (context, url) => Center(
                       child: LoadingAnimationWidget.inkDrop(
-                          color: Theme.of(context).primaryColor,
-                          size: 20),
+                          color: Theme.of(context).primaryColor, size: 20),
                     ),
                     errorWidget: (context, url, error) =>
                         Center(child: Icon(Icons.error)),
@@ -64,9 +67,8 @@ class PlaceCard extends StatelessWidget {
                 ),
               ),
             ),
-
             Padding(
-              padding: const EdgeInsetsDirectional.only(start: 8,top: 8),
+              padding: const EdgeInsetsDirectional.only(start: 8, top: 8),
               child: Text(
                 "${model.title}",
                 style: GoogleFonts.poppins(

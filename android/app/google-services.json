@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "636520650039",
+    "project_id": "yalla-jeye-dba3f",
+    "storage_bucket": "yalla-jeye-dba3f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636520650039:android:d264b2ece20bc6235936b2",
+        "android_client_info": {
+          "package_name": "com.megabee.yallajeye"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "636520650039-eoeudtj1h98hkbvtdc84g951f4vnoriu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrUjvKSHJ6bzbqNIK9lXYYJ0sLRXDzj6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "636520650039-eoeudtj1h98hkbvtdc84g951f4vnoriu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
