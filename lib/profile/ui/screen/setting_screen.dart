@@ -7,12 +7,13 @@ import 'package:untitled1/auth/service/auth_service.dart';
 import 'package:untitled1/di/di_config.dart';
 import 'package:untitled1/hive/hive.dart';
 import 'package:untitled1/module_addresses/address_route.dart';
+import 'package:untitled1/my_notification/Notification_module_route.dart';
 import 'package:untitled1/navigation_bar/navigator_routes.dart';
 import 'package:untitled1/profile/profile_module_route.dart';
+import 'package:untitled1/utils/Colors/colors.dart';
 import 'package:untitled1/utils/components/custom_alert_dialog.dart';
 import 'package:untitled1/utils/images/images.dart';
 import '../../state_manager/profile.dart';
-
 
 @injectable
 class SettingProfilePage extends StatefulWidget {
@@ -34,11 +35,9 @@ class ProfilePageState extends State<SettingProfilePage> {
     }
   }
 
-
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
@@ -64,7 +63,6 @@ class ProfilePageState extends State<SettingProfilePage> {
               SizedBox(
                 height: 30,
               ),
-
               Stack(
                 children: [
                   Card(
@@ -115,7 +113,7 @@ class ProfilePageState extends State<SettingProfilePage> {
                             thickness: 1,
                           ),
                           InkWell(
-                            onTap: (){
+                            onTap: () {
                               Navigator.pushNamed(
                                 context,
                                 AddressRoutes.VIEW_ADDRESS,
@@ -137,32 +135,64 @@ class ProfilePageState extends State<SettingProfilePage> {
                               ],
                             ),
                           ),
-
+                          Divider(
+                            thickness: 1,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                NotificationRoutes.Notifications,
+                              );
+                            },
+                            child: Row(
+                              children:   [
+                                Icon(
+                                  Icons.notifications_none,
+                                  size: 23,
+                                  color: Colors.red.shade800,
+                                ),
+                                SizedBox(
+                                  height: 40,
+                                  width: 8,
+                                ),
+                                Text(
+                                  "Notifications",
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   ),
-                  widget._authService.isLoggedIn ? Container():   InkWell(
-                    onTap: (){
-                      showDialog(context: context, builder: (context) => const CustomDialogBox(title: 'Login in first'),);
-                    },
-                    child: Center(
-                      child: Container(
-                        width: double.infinity,
-                        color: Colors.grey.shade100.withOpacity(0.6) ,
-                        height: 205,
-                        child:
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(ImageAsset.PASSWORD),
-                          ],),),
-                    ),
-                  )
+                  widget._authService.isLoggedIn
+                      ? Container()
+                      : InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => const CustomDialogBox(
+                                  title: 'Login in first'),
+                            );
+                          },
+                          child: Center(
+                            child: Container(
+                              width: double.infinity,
+                              color: Colors.grey.shade100.withOpacity(0.6),
+                              height: 205,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(ImageAsset.PASSWORD),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
                 ],
               ),
-
               SizedBox(
                 height: 30,
               ),
@@ -230,12 +260,13 @@ class ProfilePageState extends State<SettingProfilePage> {
                 ),
                 child: InkWell(
                   onTap: () {
-                    widget._authService.isLoggedIn ?
-                    getIt<AuthPrefsHelper>().clearToken().then((value) {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, NavRoutes.nav_rout, (route) => false);
-                    }) :  Navigator.pushNamedAndRemoveUntil(
-                        context, AuthRoutes.login, (route) => false);
+                    widget._authService.isLoggedIn
+                        ? getIt<AuthPrefsHelper>().clearToken().then((value) {
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, NavRoutes.nav_rout, (route) => false);
+                          })
+                        : Navigator.pushNamedAndRemoveUntil(
+                            context, AuthRoutes.login, (route) => false);
                   },
                   child: Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -249,12 +280,13 @@ class ProfilePageState extends State<SettingProfilePage> {
                             height: 40,
                             width: 8,
                           ),
-                          getIt<AuthPrefsHelper>().isSignedIn()  ?  Text("Sign out") : Text("Sign in"),
+                          getIt<AuthPrefsHelper>().isSignedIn()
+                              ? Text("Sign out")
+                              : Text("Sign in"),
                         ],
                       )),
                 ),
               ),
-
             ],
           ),
         ),

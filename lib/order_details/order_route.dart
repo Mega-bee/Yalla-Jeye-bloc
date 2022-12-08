@@ -1,4 +1,4 @@
 class OrderDetailsRoutes {
-  static const orders = '/order';
+  static const ordersDetails = '/order';
 
 }

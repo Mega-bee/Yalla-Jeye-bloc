@@ -4,7 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/abstracts/states/state.dart';
 import 'package:untitled1/auth/service/auth_service.dart';
+import 'package:untitled1/di/di_config.dart';
+import 'package:untitled1/hive/hive.dart';
 import 'package:untitled1/module_driver/module_driver_orders/state_manager/driver_order_state_manager.dart';
+import 'package:untitled1/navigation_bar/navigator_routes.dart';
 
 @injectable
 class DriverOrderScreen extends StatefulWidget {
@@ -51,8 +54,20 @@ class DriverOrderScreenState extends State<DriverOrderScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 2,
+        actions: [
+          InkWell(
+              onTap: (){
+                getIt<AuthPrefsHelper>().clearToken().then((value) {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, NavRoutes.nav_rout, (route) => false);
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(end: 20),
+                child: Icon(Icons.logout),
+              ))
+        ],
       ),
       body: BlocBuilder<DriverOrderCubit, States>(
         bloc: widget.cubit,

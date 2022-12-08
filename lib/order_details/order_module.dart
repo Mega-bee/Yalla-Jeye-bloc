@@ -14,6 +14,6 @@ class  OrderDetailsModule extends RoutModule {
   }
   Map<String, WidgetBuilder> getRoutes() {
     return {
-      OrderDetailsRoutes.orders: (context) => _order,};
+      OrderDetailsRoutes.ordersDetails: (context) => _order,};
   }
 }

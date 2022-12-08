@@ -22,7 +22,7 @@ class OrderCard extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(
                 context,
-                OrderDetailsRoutes.orders,
+                OrderDetailsRoutes.ordersDetails,
                 arguments: order.id.toString(),
               );
             },

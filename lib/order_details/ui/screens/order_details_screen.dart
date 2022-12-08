@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/order_details/request/order_request.dart';
+import 'package:untitled1/order_details/request/rate_request.dart';
 import '../../../abstracts/states/state.dart';
 import '../../state_manager/detailes_state_manager.dart';
 
@@ -32,7 +33,10 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
     widget.cubit.confirmOrderPrice(
         this, ChangeOrderPriceRequest(orderId: int.parse(id)));
   }
-
+  rateOrder(double rateNumber) {
+    widget.cubit.rateOrder(
+        this, RateRequest(orderId: int.parse(id),rating: rateNumber));
+  }
   rejectPrice() {
     widget.cubit.rejectOrderPrice(
         this, ChangeOrderPriceRequest(orderId: int.parse(id)));
