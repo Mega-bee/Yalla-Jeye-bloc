@@ -1,5 +1,7 @@
 class ForgetPasswordRequest {
   String? phoneNumber;
+  String? otp;
+  String? password;
 
   ForgetPasswordRequest( {this.phoneNumber});
 

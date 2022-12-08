@@ -8,6 +8,7 @@ import '../../request/confirm_phone_number_request.dart';
 import '../../request/generate_otp_request.dart';
 import '../../state_manager/forget_password.dart';
 import '../../state_manager/otp_state.dart';
+import '../state/otp_forget_pass_state.dart';
 import '../state/otp_state.dart';
 
 
@@ -26,15 +27,13 @@ class ForgetPassVerificationScreenState extends State<ForgetPassVerificationScre
   bool flags = true;
 
 
-  void ConfirmOtpRequest(ConfOtpRequest request){
-    widget.cubit.OtpConf(request,this);
-  }
-  // void ResendOtp(GenOtpRequest request){
-  //   widget.cubit.ResendOtp(request,this);
+
+  // void ConfirmOtpForgetPass(ConfOtpRequest request){
+  //   widget.cubit.OtpConf(request,this);
   // }
 
-  void ConfirmPhoneForgetPassRequest(ConfPhoneNumbRequest request){
-    widget.cubit.ConfirmPhoneNumberForgetPass(request,this);
+  void ConfirmOtp(ConfOtpRequest request){
+    widget.cubit.OtpConf(request, this);
   }
 
 
@@ -55,7 +54,7 @@ class ForgetPassVerificationScreenState extends State<ForgetPassVerificationScre
         });
       }
     });
-    // widget.cubit.emit(OtpInitState(this,""));
+
   }
 
   // @override
@@ -80,7 +79,7 @@ class ForgetPassVerificationScreenState extends State<ForgetPassVerificationScre
       var  args = ModalRoute.of(context)?.settings.arguments;
       if (args != null && args is Map) {
         String phone = args['phoneNumber'];
-        // widget.cubit.emit(OtpInitState(screenState: this,errorMessage: '',phone: phone));
+        widget.cubit.emit(OtpForgetPassInitState(screenState: this,errorMessage: '',phoneOtp: phone));
       }
       flags = false;
     }

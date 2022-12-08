@@ -3,7 +3,7 @@ class ConfOtpRequest {
   String? phoneNumber;
   String? password;
 
-  ConfOtpRequest(this.otp, this.phoneNumber,this.password);
+  ConfOtpRequest({this.otp, this.phoneNumber,this.password});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

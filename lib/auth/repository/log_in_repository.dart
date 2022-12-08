@@ -9,6 +9,7 @@ import '../request/confirm_phone_number_request.dart';
 import '../request/forget_password.dart';
 import '../request/generate_otp_request.dart';
 import '../request/log_in_request.dart';
+import '../request/reset_pasword.dart';
 import '../request/sign_up_request.dart';
 
 @injectable
@@ -84,6 +85,18 @@ class LogInRepository {
   Future<WebServiceResponse?> forgetPassword(ForgetPasswordRequest request) async {
     var token = _authService.getToken();
     WebServiceResponse? response = await _apiClient.post(
+      Urls.FORGET_PASSWORD,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ' '$token'},
+    );
+    if (response == null) return null;
+    return response;
+  }
+
+
+  Future<WebServiceResponse?> ResetPassword(ResetPasswordRequest request) async {
+    var token = _authService.getToken();
+    WebServiceResponse? response = await _apiClient.put(
       Urls.FORGET_PASSWORD,
       request.toJson(),
       headers: {'Authorization': 'Bearer ' '$token'},

@@ -4,8 +4,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:untitled1/module_deep_links/service/deep_links_service.dart';
 
+import 'location_service.dart';
+
 class ChooseLocationWidget extends StatefulWidget {
   LatLng? previousLocation;
+
   ChooseLocationWidget({this.previousLocation});
 
   @override
@@ -17,6 +20,7 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
     target: LatLng(-33.852, 151.211),
     zoom: 15.0,
   );
+  TextEditingController _searchController = TextEditingController();
 
   CameraPosition _position = _kInitialPosition;
   bool _isMapCreated = false;
@@ -35,19 +39,24 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
   bool _myLocationEnabled = true;
   bool _myTrafficEnabled = false;
   bool _myLocationButtonEnabled = true;
+
   // late GoogleMapController _controller;/
   late CustomInfoWindowController customInfoWindowController;
   bool _nightMode = false;
   Set<Marker> markers = {};
+
   // Completer<GoogleMapController> _controller = Completer();
   @override
   void initState() {
     super.initState();
     // _controller = GoogleMapController.init(id, _position);
-    _position = widget.previousLocation != null ? CameraPosition(
-      target: LatLng(widget.previousLocation!.latitude, widget.previousLocation!.longitude),
-      zoom: 15.0,
-    )  :_kInitialPosition;
+    _position = widget.previousLocation != null
+        ? CameraPosition(
+            target: LatLng(widget.previousLocation!.latitude,
+                widget.previousLocation!.longitude),
+            zoom: 15.0,
+          )
+        : _kInitialPosition;
     customInfoWindowController = CustomInfoWindowController();
     getDefualtLocation(widget.previousLocation);
   }
@@ -61,7 +70,7 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
       print(POS);
       print('ddddddddddddddddddddddddddd');
     } else {
-     await Future.delayed(Duration(milliseconds: 30));
+      await Future.delayed(Duration(milliseconds: 30));
       print('innnnnnnnelllssseeeee');
       print(previous);
       POS = previous;
@@ -73,6 +82,14 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
     setState(() {
       print('ssssssssss');
     });
+  }
+
+  Future<void>_goToPlace(Map<String,dynamic> place) async {
+   final double lat = place['geometry']['location']['lat'];
+   final double lng = place['geometry']['location']['lng'];
+
+   // final GoogleMapController controller = await _cameraTargetBounds.f
+ // con
   }
 
   @override
@@ -107,14 +124,37 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
             Marker(markerId: MarkerId(v.latitude.toString()), position: v));
         setState(() {});
       },
-
     );
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Select location'),
       ),
-      body: Container(child: googleMap),
+      body: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  controller: _searchController,
+                  textCapitalization: TextCapitalization.words,
+                  decoration: InputDecoration(hintText: 'Search by City'),
+                  onChanged: (value) {
+                    print(value);
+                  },
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  LocationService().getPlace(_searchController.text);
+                },
+                icon: Icon(Icons.search),
+              ),
+            ],
+          ),
+          Expanded(child: googleMap),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pop(context, markers.first.position);

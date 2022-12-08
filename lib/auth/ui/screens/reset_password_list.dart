@@ -9,27 +9,29 @@ import 'package:untitled1/auth/state_manager/log_in.dart';
 import '../../../abstracts/states/state.dart';
 import '../../../utils/Colors/colors.dart';
 import '../../request/forget_password.dart';
+import '../../request/reset_pasword.dart';
 import '../../state_manager/forget_password.dart';
+import '../../state_manager/reset_password.dart';
 import '../state/forget_password_state.dart';
 import '../state/log_in_sucess.dart';
 import 'otp_forget_pass_screen.dart';
 
 @injectable
-class ForgetPasswordScreen extends StatefulWidget {
-  final ForgetPasswordCubit cubit;
+class ResetPasswordScreen extends StatefulWidget {
+  final ResetPasswordCubit cubit;
 
-  ForgetPasswordScreen({required this.cubit});
+  ResetPasswordScreen({required this.cubit});
 
   @override
-  State<ForgetPasswordScreen> createState() => ForgetPasswordScreenState();
+  State<ResetPasswordScreen> createState() => ResetPasswordScreenState();
 }
 
-class ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
+class ResetPasswordScreenState extends State<ResetPasswordScreen> {
   late AsyncSnapshot loadingSnapshotLogin;
   late AsyncSnapshot loadingSnapshotForget;
 
-  void forgetPasswordRequest(ForgetPasswordRequest request,) {
-    widget.cubit.forgetPass(request,this,);
+  void resetPassword(ResetPasswordRequest request,) {
+    widget.cubit.resetPass(request,this);
   }
 
   @override
@@ -45,7 +47,7 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         });
       }
     });
-    widget.cubit.emit(ForgetPasswordState(this,''));
+    // widget.cubit.emit(ForgetPasswordState(this,''));
   }
 
   @override
@@ -55,7 +57,7 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
           backgroundColor: redColor,
           elevation: 0,
         ),
-        body: BlocBuilder<ForgetPasswordCubit, States>(
+        body: BlocBuilder<ResetPasswordCubit, States>(
           bloc: widget.cubit,
           builder: (context, state) {
             return state.getUI(context);

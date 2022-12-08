@@ -6,20 +6,23 @@ import 'package:untitled1/utils/Colors/colors.dart';
 import '../../../abstracts/states/state.dart';
 import '../../auth_module_route.dart';
 import '../../request/forget_password.dart';
+import '../../request/reset_pasword.dart';
 import '../../request/sign_up_request.dart';
 import '../screens/forget_password_list.dart';
+import '../screens/reset_password_list.dart';
 import '../screens/sign_up_list.dart';
 import '../widget/custom_button.dart';
 
-class ForgetPasswordState extends States {
-  final ForgetPasswordScreenState screenState;
+class ResetPasswordState extends States {
+  final ResetPasswordScreenState screenState;
 
   String? errorMessage;
 
-  ForgetPasswordState(this.screenState, this.errorMessage);
+  ResetPasswordState(this.screenState, this.errorMessage);
 
   final _formKey = GlobalKey<FormState>();
-  final Mobile = TextEditingController();
+  final password = TextEditingController();
+  final newPass = TextEditingController();
 
   String validatePass(value) {
     if (value.isEmpty) {
@@ -113,14 +116,51 @@ class ForgetPasswordState extends States {
                           child: TextFormField(
                             cursorColor: redColor,
                             style: const TextStyle(fontSize: 14),
-                            controller: Mobile,
+                            controller: password,
                             decoration: InputDecoration(
-                              labelText: "phone number",
+                              labelText: "Password",
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.black)),
                               filled: true,
                               fillColor: Colors.white,
-                              hintText: " phone number",
+                              hintText: "Password",
+                              labelStyle: TextStyle(color: Colors.black),
+                              enabledBorder: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  borderSide: BorderSide(
+                                      width: 0, color: Colors.black12)),
+                              border: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                            keyboardType: TextInputType.phone,
+                            validator: MultiValidator([
+                              RequiredValidator(
+                                  errorText: 'Mobile number Required *'),
+                            ]),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03,
+                        ),Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: mediaQueryWidth * 0.05),
+                          child: TextFormField(
+                            cursorColor: redColor,
+                            style: const TextStyle(fontSize: 14),
+                            controller: newPass,
+                            decoration: InputDecoration(
+                              labelText: "New password",
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black)),
+                              filled: true,
+                              fillColor: Colors.white,
+                              hintText: "New password",
                               labelStyle: TextStyle(color: Colors.black),
                               enabledBorder: const OutlineInputBorder(
                                   borderRadius:
@@ -155,13 +195,14 @@ class ForgetPasswordState extends States {
                           padding: const EdgeInsets.all(8.0),
                           child: CustomButton(
                             buttonTab: () {
-                              if (Mobile.text.isEmpty
+                              if (password.text.isEmpty || newPass.text.isEmpty
                                  ) {
                                 _formKey.currentState!.validate();
                               }
-                              screenState.forgetPasswordRequest(
-                                  ForgetPasswordRequest(phoneNumber: Mobile.text,)
+                              screenState.resetPassword(
+                                  ResetPasswordRequest(password: password.text)
                               );
+                              // Navigator.pushNamed(context, AuthRoutes.OTP_SCREEN);
                             },
                             loading:
                                 screenState.loadingSnapshotLogin.connectionState ==

@@ -30,38 +30,40 @@ class ForgetPasswordCubit extends Cubit<States> {
   final LogInRepository _logInRepository;
   final AuthService _authService;
 
-
-  ForgetPasswordCubit(
-    this._logInRepository,this._authService
-  ) : super(LoadingState());
+  ForgetPasswordCubit(this._logInRepository, this._authService)
+      : super(LoadingState()
+  );
 
   final _loadingStateSubject = PublishSubject<AsyncSnapshot>();
+
   Stream<AsyncSnapshot> get loadingStream => _loadingStateSubject.stream;
 
   final _loadingStateSubjectForget = PublishSubject<AsyncSnapshot>();
+
   Stream<AsyncSnapshot> get loadingStreamForeget =>
       _loadingStateSubjectForget.stream;
 
-  forgetPass(ForgetPasswordRequest request,ForgetPasswordScreenState state,) {
+  forgetPass(ForgetPasswordRequest request,
+      ForgetPasswordScreenState state,
+     ) {
     _loadingStateSubject.add(AsyncSnapshot.waiting());
     _logInRepository.forgetPassword(request).then((value) {
       if (value == null) {
         _loadingStateSubject.add(AsyncSnapshot.nothing());
         Fluttertoast.showToast(msg: 'Connection error');
-      }else if (value.code != 200){
-        _loadingStateSubject.add(AsyncSnapshot.nothing());
-        Fluttertoast.showToast(msg:value.errorMessage);
-      }
-      else if (value.code == 200) {
-        OtpGen(GenOtpRequest(phone: request.phoneNumber),request.phoneNumber??"",state.context);
-        // Navigator.pushNamed(state.context, AuthRoutes.OTP_SCREEN , );
+      } else if (value.code == 200) {
+        // OtpConf(ConfOtpRequest(phoneNumber: request.phoneNumber),state,request.phoneNumber??"",request.password??"",);
+        // OtpConf(ConfOtpRequest(phoneNumber: request.phoneNumber,otp: request.otp),state);
+        print('pushhhhh');
+        Navigator.pushNamed(state.context, AuthRoutes.FORGET_PASSWORD_OPT);
+
       }
     });
   }
 
 
-
-  OtpConf(ConfOtpRequest request, ForgetPassVerificationScreenState screenState) {
+  OtpConf(ConfOtpRequest request,
+      ForgetPassVerificationScreenState screenState) {
     _logInRepository.ConfirmOtpRequest(request).then((value) {
       _loadingStateSubject.add(AsyncSnapshot.waiting());
 
@@ -85,7 +87,7 @@ class ForgetPasswordCubit extends Cubit<States> {
             // _authService.setName(TT.name ??"");
             // _authService.setToken(value.data.insideData ?? "");
             Navigator.pushNamedAndRemoveUntil(
-                screenState.context, AuthRoutes.login, (route) => false);
+                screenState.context, NavRoutes.nav_rout, (route) => false);
             print("HOme");
           } else if (value.code != 200) {
             _loadingStateSubject.add(AsyncSnapshot.nothing());
@@ -102,49 +104,4 @@ class ForgetPasswordCubit extends Cubit<States> {
       }
     });
   }
-
-  ConfirmPhoneNumberForgetPass(ConfPhoneNumbRequest request,
-      ForgetPassVerificationScreenState screenState) {
-    _loadingStateSubject.add(AsyncSnapshot.waiting());
-    _logInRepository.ConfirmPhoneNumber(request).then((value) {
-      if (value == null) {
-        _loadingStateSubject.add(AsyncSnapshot.nothing());
-        Fluttertoast.showToast(msg: 'Connection error');
-      } else if (value.code == 200) {
-        logInModel TT = logInModel.fromJson(value.data.insideData);
-        _authService.setToken(
-          TT.token ?? "",);
-        _loadingStateSubject.add(AsyncSnapshot.nothing());
-        Fluttertoast.showToast(msg: "Phone Number Verified");
-        Navigator.pushNamedAndRemoveUntil(
-            screenState.context,  AuthRoutes.login, (route) => false);
-      }
-    });
-  }
-
-
-  OtpGen(GenOtpRequest request, String number,BuildContext context) {
-    _logInRepository.GenerateOtpRequest(request).then((value) {
-      if (value == null) {
-        _loadingStateSubject.add(AsyncSnapshot.nothing());
-        Fluttertoast.showToast(msg: 'Connection error');
-      } else if (value.code == 200) {
-
-        _loadingStateSubject.add(AsyncSnapshot.nothing());
-        Fluttertoast.showToast(msg: value.errorMessage);
-        Navigator.pushNamed(
-            context,
-            AuthRoutes.OTP_SCREEN,
-            arguments: {'phoneNumber':number,});
-      }
-    });
-  }
-
-
-
-
-
 }
-
-
-

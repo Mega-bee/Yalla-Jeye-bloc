@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
 import '../../../abstracts/states/state.dart';
+import '../../auth_module_route.dart';
+import '../../request/confirm_otp.dart';
 import '../../request/confirm_phone_number_request.dart';
 import '../../request/generate_otp_request.dart';
 import '../screens/otp_forget_pass_screen.dart';
@@ -12,11 +14,12 @@ import '../widget/custom_button.dart';
 
 
 class OtpForgetPassInitState extends States{
-  final String? phone;
+  final String? phoneOtp;
   final ForgetPassVerificationScreenState screenState;
   String? errorMessage;
-  OtpForgetPassInitState({this.phone,required this.screenState,this.errorMessage,}) ;
+  OtpForgetPassInitState({this.phoneOtp,required this.screenState,this.errorMessage,}) ;
   TextEditingController otptext = TextEditingController();
+  TextEditingController phoneNum = TextEditingController();
   StreamController<ErrorAnimationType>? errorController;
 
 
@@ -42,15 +45,6 @@ class OtpForgetPassInitState extends States{
             width: MediaQuery.of(context).size.width,
             child: ListView(
               children: <Widget>[
-                // SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                // SizedBox(
-                //   height: MediaQuery.of(context).size.height / 5,
-                //   child: ClipRRect(
-                //     borderRadius: BorderRadius.circular(30),
-                //     child: Image.asset('assets/images/hooka_logo.png',
-                //         fit: BoxFit.cover),
-                //   ),
-                // ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -72,7 +66,7 @@ class OtpForgetPassInitState extends States{
                         text: "Enter the code sent to ",
                         children: [
                           TextSpan(
-                              text: "${phone}",
+                              text: "${phoneOtp}",
                               style: const TextStyle(
                                   color: Colors.red,
                                   fontWeight: FontWeight.bold,
@@ -173,19 +167,6 @@ class OtpForgetPassInitState extends States{
                       "Didn't receive the code? ",
                       style: TextStyle(color: Colors.black54, fontSize: 15),
                     ),
-                    // Container(
-                    //     child: TextButton(
-                    //       onPressed: () => {
-                    //         screenState.ResendOtp(GenOtpRequest(phone: phone))
-                    //       },
-                    //       child: Text(
-                    //         "RESEND",
-                    //         style: TextStyle(
-                    //             color: redColor,
-                    //             fontWeight: FontWeight.bold,
-                    //             fontSize: 16),
-                    //       ),
-                    //     )),
                   ],
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
@@ -194,10 +175,11 @@ class OtpForgetPassInitState extends States{
                   child: CustomButton(
                     buttonTab: () {
                       formKey.currentState!.validate();
-                      screenState.ConfirmPhoneForgetPassRequest(ConfPhoneNumbRequest(
-                        phoneNumber:phone,
+                      screenState.ConfirmOtp(ConfOtpRequest(
+                        phoneNumber:phoneOtp,
                         otp:otptext.text,
-                      ));
+                      )
+                      );
                     },
                     loading: screenState.loadingSnapshot.connectionState ==
                         ConnectionState.waiting,
@@ -217,15 +199,7 @@ class OtpForgetPassInitState extends States{
                             otptext.clear();
                           },
                         )),
-                    // Flexible(
-                    //     child: TextButton(
-                    //   child: const Text("Set Text"),
-                    //   onPressed: () {
-                    //     setState(() {
-                    //       textEditingController.text = "1234";
-                    //     });
-                    //   },
-                    // )),
+
                   ],
                 ),
                 SizedBox(
