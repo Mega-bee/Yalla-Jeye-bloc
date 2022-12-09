@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:untitled1/notification/ui/screens/Notification_list.dart';
+import 'package:untitled1/my_notification/ui/screens/Notification_list.dart';
 
 import '../abstracts/module/rout_module.dart';
 import 'Notification_module_route.dart';
@@ -15,10 +15,7 @@ class  NotificationModule extends RoutModule {
 
   Map<String, WidgetBuilder> getRoutes() {
     return {
-
       NotificationRoutes.Notifications: (context) => _notificationPage,
-
-
     };
   }
 }

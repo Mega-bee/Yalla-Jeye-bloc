@@ -15,6 +15,7 @@ class DriverOrderDetailsSuccess extends States {
   Widget getUI(BuildContext context) {
     return DefaultTabController(
         length: 2,
+        initialIndex:screenState.initIndex ,
         child: Scaffold(
           appBar: const PreferredSize(
             preferredSize: Size.fromHeight(kToolbarHeight),

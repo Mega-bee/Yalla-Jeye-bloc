@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/auth/service/auth_service.dart';
 import 'package:untitled1/order_details/request/order_request.dart';
+import 'package:untitled1/order_details/request/rate_request.dart';
 
 import '../../abstracts/WebUrl.dart';
 import '../../abstracts/model/WebServiceResponse.dart';
@@ -40,6 +41,19 @@ class OrderDetailRepository {
     var token = _authService.getToken();
     WebServiceResponse? response = await _apiClient.put(
       Urls.REJECT_PRICE,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ' '$token'},
+    );
+    if (response == null) return null;
+    return response;
+  }
+
+
+  Future<WebServiceResponse?> rateOrder(
+      RateRequest request) async {
+    var token = _authService.getToken();
+    WebServiceResponse? response = await _apiClient.put(
+      Urls.RATE_ORDER,
       request.toJson(),
       headers: {'Authorization': 'Bearer ' '$token'},
     );

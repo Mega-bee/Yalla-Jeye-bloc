@@ -36,6 +36,7 @@ class Urls {
 
   static const String REJECT_PRICE = '${BASE_ORDER}RejectPrice';
   static const String CONFIRM_PRICE = '${BASE_ORDER}ConfirmPrice';
+  static const String RATE_ORDER = '${BASE_ORDER}RateOrder';
 
 
     /*-----------------------PromoCode----------------------------------*/

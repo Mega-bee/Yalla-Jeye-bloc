@@ -9,8 +9,6 @@ class StatusHelper {
       return OrderStatusEnum.Preparing;
     } else if (status == 3) {
       return OrderStatusEnum.On_The_Way;
-    } else if (status == 4) {
-      return OrderStatusEnum.Five_Minutes_Away;
     } else if (status == 5) {
       return OrderStatusEnum.Delivered;
     } else if (status == 6) {
@@ -48,7 +46,7 @@ class StatusHelper {
       case OrderStatusEnum.Confirm_Price:
         return Colors.orange;
 
-        ///////////////////////////////////////
+      ///////////////////////////////////////
       case OrderStatusEnum.Delivered:
         return Colors.green.shade900;
 
@@ -64,30 +62,59 @@ class StatusHelper {
   static int getStatusIndex(int? status) {
     if (status == 1) {
       return 0;
-    } else if (status == 11) {
-      return 1;
     } else if (status == 9) {
+      return 1;
+    } else if (status == 11) {
       return 2;
     } else if (status == 2) {
       return 3;
     } else if (status == 3) {
       return 4;
-    } else if (status == 4) {
-      return 5;
     } else if (status == 7) {
-      return 6;
+      return 5;
       // deleiverd
     } else if (status == 5) {
-      return 7;
+      return 6;
       // canecl
     } else if (status == 6) {
-      return 7;
+      return 6;
       // reject
     } else if (status == 8) {
-      return 7;
+      return 6;
       // reject
     } else if (status == 10) {
+      return 6;
+    }
+    return 0;
+  }
+
+  static int getStatusIndexDriver(int? status) {
+    if (status == 11) {
+      return 0;
+    } else if (status == 2) {
+      return 1;
+    } else if (status == 3) {
+      return 2;
+    } else if (status == 7) {
+      return 3;
+    } else if (status == 5) {
+      return 4;
+    }
+    return 0;
+  }
+
+
+  static int getNextStepDriver(int? status) {
+    if (status == 11) {
+      return 2;
+    } else if (status == 2) {
+      return 3;
+    } else if (status == 3) {
       return 7;
+    } else if (status == 7) {
+      return 5;
+    } else if (status == 5) {
+      return 0;
     }
     return 0;
   }

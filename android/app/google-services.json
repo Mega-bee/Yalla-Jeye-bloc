@@ -7,7 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:636520650039:android:d264b2ece20bc6235936b2",
+        "mobilesdk_app_id": "1:636520650039:android:f708d478fd94cbab5936b2",
         "android_client_info": {
           "package_name": "com.megabee.yallajeye"
         }
@@ -20,7 +20,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDrUjvKSHJ6bzbqNIK9lXYYJ0sLRXDzj6k"
+          "current_key": "AIzaSyCsxu4rkOgGEzsF0mbEuXVuQ4g2zCpcb-s"
         }
       ],
       "services": {

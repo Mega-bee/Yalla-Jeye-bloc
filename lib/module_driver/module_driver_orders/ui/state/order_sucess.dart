@@ -12,7 +12,11 @@ class OrderPageSuccess extends States {
 
   @override
   Widget getUI(BuildContext context) {
-    return ListView.builder(itemBuilder: (context, index) => DriverOrderCard(order: orderCurrent[index],),shrinkWrap: true,itemCount: orderCurrent.length,);
+    return RefreshIndicator(
+        onRefresh: () async{
+          screenState.getOrder();
+        },
+        child: ListView.builder(itemBuilder: (context, index) => DriverOrderCard(order: orderCurrent[index],),shrinkWrap: true,itemCount: orderCurrent.length,));
 
   }
 }

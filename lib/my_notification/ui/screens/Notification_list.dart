@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import '../../../abstracts/states/state.dart';
-import '../../request/Notification_request.dart';
 import '../../state_manager/Notification.dart';
 
 @injectable
@@ -33,12 +32,10 @@ class NotificationPageState extends State<NotificationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        title: const Text('Notifications'),
+        // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 5,
-        centerTitle: true,
-       actions: [
-         Icon(Icons.shopping_cart,color: Colors.redAccent,)
-       ],
+        // centerTitle: true,
       ),
       body: BlocBuilder<NotificationCubit, States>(
         bloc: widget.cubit,

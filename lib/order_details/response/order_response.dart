@@ -7,6 +7,8 @@ class OrderDetailsResponse {
   num? totalDistance;
   num? totalPrice;
   CustomOrder? customOrder;
+  bool  requiresRating = false;
+  num? rating;
 
 
   OrderDetailsResponse({
@@ -18,11 +20,14 @@ class OrderDetailsResponse {
     this.totalPrice,
     this.totalDistance,
     this.customOrder,
-    // this.fromAddress
+    this.rating,
+   required this.requiresRating
   });
 
   OrderDetailsResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    rating = json['rating'];
+    requiresRating = json['requiresRating'];
     statusId = json['statusId'];
     statusName = json['statusName'];
     isCustom = json['isCustom'];
