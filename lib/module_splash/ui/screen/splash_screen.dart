@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:lottie/lottie.dart';
 import 'package:untitled1/auth/service/auth_service.dart';
+import 'package:untitled1/module_driver/module_driver_orders/driver_order_route.dart';
 import 'package:untitled1/navigation_bar/navigator_routes.dart';
 import 'package:untitled1/utils/images/images.dart';
 
@@ -56,12 +57,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<String> _getNextRoute() async {
     await Future.delayed(Duration(seconds: 4));
-    return NavRoutes.nav_rout;
-    // if (widget._authService.isLoggedIn) {
-    //   return NavRoutes.nav_rout;
-    // }
-    // else{
-    //   return AuthorizationRoutes.LOGIN_SCREEN;
-    // }
+    // return NavRoutes.nav_rout;
+    if (widget._authService.isDriverRole) {
+      return DriverOrderRoutes.driverOrders;
+    }
+    else{
+      return NavRoutes.nav_rout;
+    }
   }
 }

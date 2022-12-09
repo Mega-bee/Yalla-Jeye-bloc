@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/auth/service/auth_service.dart';
+import 'package:untitled1/module_driver/module_driver_orders/driver_order_route.dart';
 import '../../abstracts/states/loading_state.dart';
 import '../../abstracts/states/state.dart';
 import '../../navigation_bar/navigator_routes.dart';
@@ -19,10 +20,7 @@ class LogInCubit extends Cubit<States> {
   final LogInRepository _logInRepository;
   final AuthService _authService;
 
-
-  LogInCubit(
-    this._logInRepository,this._authService
-  ) : super(LoadingState());
+  LogInCubit(this._logInRepository, this._authService) : super(LoadingState());
 
   final _loadingStateSubject = PublishSubject<AsyncSnapshot>();
   Stream<AsyncSnapshot> get loadingStream => _loadingStateSubject.stream;
@@ -37,17 +35,25 @@ class LogInCubit extends Cubit<States> {
     _logInRepository.loginRequest(request).then((value) {
       if (value == null) {
         _loadingStateSubject.add(AsyncSnapshot.nothing());
-        Fluttertoast.showToast(msg: 'Incorrect Password',backgroundColor: redColor);
+        Fluttertoast.showToast(
+            msg: 'Incorrect Password', backgroundColor: redColor);
       } else if (value.code == 200) {
         logInModel TT = logInModel.fromJson(value.data.insideData);
-        _authService.setToken(TT.token ??"",);
-        // _authService.setName(TT.name ??"");
-        Navigator.pushNamedAndRemoveUntil(
-            _screenState.context, NavRoutes.nav_rout, (route) => false);
-      }
-      else{
+        _authService.setToken(
+          TT.token ?? "",
+        );
+        _authService.setRoleId(TT.roleId ?? -1);
+        if (TT.roleId == 4) {
+          Navigator.pushNamedAndRemoveUntil(_screenState.context,
+              DriverOrderRoutes.driverOrders, (route) => false);
+        } else {
+          Navigator.pushNamedAndRemoveUntil(
+              _screenState.context, NavRoutes.nav_rout, (route) => false);
+        }
+      } else {
         _loadingStateSubject.add(AsyncSnapshot.nothing());
-        Fluttertoast.showToast(msg: value.errorMessage,backgroundColor: redColor);
+        Fluttertoast.showToast(
+            msg: value.errorMessage, backgroundColor: redColor);
       }
     });
   }

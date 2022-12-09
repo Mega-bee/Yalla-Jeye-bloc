@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/auth/service/auth_service.dart';
+import 'package:untitled1/home_page/state_manager/homepage.dart';
 import 'package:untitled1/module_menu_details/model/menu_model.dart';
 import 'package:untitled1/module_menu_details/ui/widget/custom_action_botton.dart';
 import '../../state_manager/menu_state_manager.dart';
@@ -11,9 +12,11 @@ import '../../state_manager/menu_state_manager.dart';
 class MenuDetailsScreen extends StatefulWidget {
   final CheckOutCubit cubit;
   final AuthService _authService;
+  final HomePageCubit _homePageCubit;
   const MenuDetailsScreen(
     this.cubit,
     this._authService,
+      this._homePageCubit
   );
 
   @override

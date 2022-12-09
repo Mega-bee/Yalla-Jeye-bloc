@@ -75,18 +75,18 @@ class OrderTracking extends StatelessWidget {
             label: Container(),
             state: currentStep! > 0 ? StepState.complete : StepState.indexed),
         Step(
-            title: Text("Received"),
-            subtitle: Text("Yalla-Jeye received your order"),
-            content: Container(),
-            isActive: currentStep! >= 1 ? true : false,
-            state: currentStep! > 1 ? StepState.complete : StepState.indexed),
-        Step(
             title: const Text("Price confirmation"),
             subtitle: Text(
                 "total delivery price is ${orderDetailsResponse.totalPrice} L.L"),
             content: Container(),
             isActive: currentStep! >= 2 ? true : false,
             state: currentStep! > 2 ? StepState.complete : StepState.editing),
+        Step(
+            title: Text("Received"),
+            subtitle: Text("Yalla-Jeye received your order"),
+            content: Container(),
+            isActive: currentStep! >= 1 ? true : false,
+            state: currentStep! > 1 ? StepState.complete : StepState.indexed),
         Step(
             title: Text("Preparing"),
             subtitle: Text("Driver is on the way to pick your order"),
@@ -100,13 +100,6 @@ class OrderTracking extends StatelessWidget {
             content: Container(),
             isActive: currentStep! >= 4 ? true : false,
             state: currentStep! > 4 ? StepState.complete : StepState.indexed),
-        Step(
-          title: Text("Five minutes away"),
-          subtitle: Text("Driver has picked your order and on the way to you"),
-          content: Container(),
-          isActive: currentStep! >= 5 ? true : false,
-          state: currentStep! > 5 ? StepState.complete : StepState.indexed,
-        ),
         Step(
             title: Text("Two minutes away"),
             subtitle:

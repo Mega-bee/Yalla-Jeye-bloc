@@ -1,14 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/auth/service/auth_service.dart';
 import 'package:untitled1/custom/model/OrderModel.dart';
+import 'package:untitled1/di/di_config.dart';
 import 'package:untitled1/module_menu_details/ui/widget/custom_action_botton.dart';
+import 'package:untitled1/utils/global/global_state_manager.dart';
 import '../../../abstracts/states/state.dart';
 import '../../../hive/hive.dart';
-import '../../../notification_module/request/notification_request.dart';
-import '../../../services/fire_notification_service.dart';
 import '../../../utils/images/images.dart';
 import '../../state_manager/homepage.dart';
 
@@ -18,27 +20,28 @@ class HomePage extends StatefulWidget {
   final AuthPrefsHelper locationHelper;
   final AuthService _authService;
 
-  const HomePage(this.cubit,this.locationHelper, this._authService);
+   HomePage(this.cubit,this.locationHelper, this._authService);
 
   @override
   State<HomePage> createState() => HomePageState();
 }
 
 class HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  static FireNotificationService fireNotificationService =
-  FireNotificationService();
+  StreamSubscription? _globalStateManager;
   @override
   void initState() {
     super.initState();
-    currentLocation;
     widget.cubit.getHomePage(this);
     controller = BottomSheet.createAnimationController(this);
-    controller.duration = Duration(milliseconds: 500);
-    String FirebaseToken = '';
-    fireNotificationService.GetFireBaseToken().then((tokenFire) {
-      FirebaseToken = tokenFire ?? '';
-      NotificationRequest(firebaseToken: FirebaseToken);
-    });
+    controller.duration = const Duration(milliseconds: 500);
+    _globalStateManager =
+        getIt<GlobalStateManager>().stateStream.listen((event) {
+          if (mounted) {
+           setState(() {
+
+           });
+          }
+        });
   }
 
   getHome() {
@@ -52,6 +55,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   void refresh() {
+    print('reffesss hommee');
     if (mounted) {
       setState(() {});
     }

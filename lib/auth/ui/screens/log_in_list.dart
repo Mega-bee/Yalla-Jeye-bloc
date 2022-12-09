@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -32,7 +30,6 @@ class loginScreenState extends State<loginScreen> {
   @override
   void initState() {
     super.initState();
-
     loadingSnapshotLogin = AsyncSnapshot.nothing();
     loadingSnapshotForget = AsyncSnapshot.nothing();
     widget.cubit.loadingStream.listen((event) {

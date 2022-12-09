@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/module_addresses/address_module.dart';
+import 'package:untitled1/module_driver/module_driver_orders/driver_order_module.dart';
 import 'package:untitled1/module_menu_details/menu_module.dart';
 import 'package:untitled1/module_splash/splash_module.dart';
 import 'package:untitled1/module_splash/splash_routes.dart';
@@ -20,6 +20,7 @@ import 'di/di_config.dart';
 import 'hive/hive.dart';
 import 'home_page/homepage_module.dart';
 import 'navigation_bar/navigator_module.dart';
+import 'navigation_bar/navigator_routes.dart';
 import 'notification/Notification_module.dart';
 import 'order_details/order_module.dart';
 
@@ -29,7 +30,7 @@ import 'order_details/order_module.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
   await HiveSetUp.init();
 
 //  ByteData data = await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
@@ -66,19 +67,22 @@ class MyApp extends StatefulWidget {
   final ProfilePageModule _profilePageModule;
   final MenuDetailsModule _menuDetailsModule;
   final SplashModule _splashModule;
+  final DriverOrderModule _driverOrderModule;
 
   MyApp(
-      this._navigatorModule,
-      this._notificationModule,
-      this._orderModule,
-      this._customModule,
-      this._addressModule,
-      this._homePageModule,
-      this._detailsModule,
-      this._logInModule,
-      this._profilePageModule,
+    this._navigatorModule,
+    this._notificationModule,
+    this._orderModule,
+    this._customModule,
+    this._addressModule,
+    this._homePageModule,
+    this._detailsModule,
+    this._logInModule,
+    this._profilePageModule,
       this._menuDetailsModule,
-      this._splashModule);
+      this._splashModule ,
+      this._driverOrderModule
+  );
 
   @override
   State<MyApp> createState() => _MyAppState();

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:untitled1/custom/model/OrderModel.dart';
+import 'package:untitled1/di/di_config.dart';
+import 'package:untitled1/home_page/state_manager/homepage.dart';
+import 'package:untitled1/home_page/ui/screens/home_page.dart';
 import 'package:untitled1/navigation_bar/navigator_routes.dart';
 import 'package:untitled1/navigation_bar/ui/screens/navigationBar.dart';
 
@@ -38,7 +41,7 @@ class SuccessRateAlter extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.all(8.0),
             child: Text(
-            'Your order created successfully,\n thank your for using YALA-JEHE',
+            'Your order created successfully,\n thank your for using YALA-JEYE',
               style: TextStyle(fontWeight: FontWeight.w600 , fontSize: 18),
             ),
           ),
@@ -50,6 +53,7 @@ class SuccessRateAlter extends StatelessWidget {
                 stateObject?.currentIndex = 2;
                 stateObject?.setState(() {});
                 orderModelList.clear();
+                // getIt<HomePageCubit>().cartSubject.add('removeCart');
                 Navigator.pushNamedAndRemoveUntil(context, NavRoutes.nav_rout, (route) => false);
               },
               child: Text('ok'),
