@@ -47,6 +47,7 @@ class OtpForgetPassInitState extends States{
               children: <Widget>[
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 const Padding(
+
                   padding: EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
                     'Phone Number Verification',
