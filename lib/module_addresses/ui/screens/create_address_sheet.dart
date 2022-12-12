@@ -14,6 +14,8 @@ import 'package:untitled1/module_addresses/state_manager/create_address_state_ma
 import 'package:untitled1/module_addresses/ui/widget/choose_location_wedgit.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
 
+import '../../../controller.dart';
+
 class CreateAddressSheet extends StatefulWidget {
   final Function(CreateAddressRequest) createAddress;
   final AddressResponse? response;
@@ -104,7 +106,7 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
 
                               //Do something with the user input.
                             },
-                            controller: titleController,
+                            controller: Controller.titleController,
                             decoration: InputDecoration(
                               hintText: 'write your custom nickname',
                               contentPadding:
@@ -186,7 +188,7 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
 
 
                                   autofillHints: [AutofillHints.name],
-                                  controller: streetController,
+                                  controller: Controller.streetController,
                                   decoration: InputDecoration(
                                     hintText: 'Street',
                                     contentPadding: EdgeInsets.symmetric(
@@ -216,7 +218,7 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                                     }
                                     return null;
                                   },
-                                  controller: buldingNameController,
+                                  controller: Controller.buldingNameController,
                                   decoration: InputDecoration(
                                     hintText: 'Building name',
                                     contentPadding: EdgeInsets.symmetric(
@@ -246,7 +248,7 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                                     }
                                     return null;
                                   },
-                                  controller: floorController,
+                                  controller: Controller.floorController,
                                   keyboardType: TextInputType.numberWithOptions(signed: true,),
                                   // inputFormatters: [
                                   //   FilteringTextInputFormatter.digitsOnly,
@@ -344,12 +346,12 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                                   buttonTab: () {
                                     if (_addAddressKey.currentState!.validate() && addressLoca != null) {
                                       widget.createAddress(CreateAddressRequest(
-                                        buildingName: buldingNameController.text,
+                                        buildingName: Controller.buldingNameController.text,
                                         city: selectedRegion?.id ,
-                                        description: desController.text,
-                                        floorNumber:int.parse(floorController.text) ,
-                                        street: streetController.text,
-                                        title: titleController.text,
+                                        description: Controller.desController.text,
+                                        floorNumber:int.parse(Controller.floorController.text) ,
+                                        street: Controller.streetController.text,
+                                        title: Controller.titleController.text,
                                         latitude: addressLoca?.latitude.toString(),
                                         longitude: addressLoca?.longitude.toString(),
                                       ));

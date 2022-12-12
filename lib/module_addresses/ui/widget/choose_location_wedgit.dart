@@ -1,8 +1,14 @@
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_api_headers/google_api_headers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_webservice/places.dart';
+import 'package:untitled1/home_page/response/homepage_response.dart';
 import 'package:untitled1/module_deep_links/service/deep_links_service.dart';
+import 'package:untitled1/order_details/response/order_response.dart';
 
 import 'location_service.dart';
 
@@ -14,6 +20,9 @@ class ChooseLocationWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => ChooseLocationWidgetState();
 }
+
+const kGoogleApiKey = 'AIzaSyAUb3BCjipGx9ZhrmI15migHs6RVan7XPE';
+final homeScaffoldKey = GlobalKey<ScaffoldState>();
 
 class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
   static const CameraPosition _kInitialPosition = CameraPosition(
@@ -44,6 +53,7 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
   late CustomInfoWindowController customInfoWindowController;
   bool _nightMode = false;
   Set<Marker> markers = {};
+  final Mode _mode = Mode.overlay;
 
   // Completer<GoogleMapController> _controller = Completer();
   @override
@@ -84,12 +94,12 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
     });
   }
 
-  Future<void>_goToPlace(Map<String,dynamic> place) async {
-   final double lat = place['geometry']['location']['lat'];
-   final double lng = place['geometry']['location']['lng'];
+  Future<void> _goToPlace(Map<String, dynamic> place) async {
+    final double lat = place['geometry']['location']['lat'];
+    final double lng = place['geometry']['location']['lng'];
 
-   // final GoogleMapController controller = await _cameraTargetBounds.f
- // con
+    // final GoogleMapController controller = await _cameraTargetBounds.f
+    // con
   }
 
   @override
@@ -127,32 +137,17 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
     );
 
     return Scaffold(
+      key: homeScaffoldKey,
       appBar: AppBar(
         title: Text('Select location'),
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: TextFormField(
-                  controller: _searchController,
-                  textCapitalization: TextCapitalization.words,
-                  decoration: InputDecoration(hintText: 'Search by City'),
-                  onChanged: (value) {
-                    print(value);
-                  },
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  LocationService().getPlace(_searchController.text);
-                },
-                icon: Icon(Icons.search),
-              ),
-            ],
+          googleMap,
+          ElevatedButton(
+            onPressed: _handlePressButton,
+            child: Text("Search Places"),
           ),
-          Expanded(child: googleMap),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -167,10 +162,61 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
     );
   }
 
+  Future<void> _handlePressButton() async {
+    Prediction? p = await PlacesAutocomplete.show(
+        context: context,
+        apiKey: kGoogleApiKey,
+        onError: onError,
+        mode: _mode,
+        language: 'en',
+        strictbounds: false,
+        types: [""],
+        decoration: InputDecoration(
+          hintText: 'Search',
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: BorderSide(color: Colors.white),
+          ),
+        ),
+        components: [Component(Component.country, "zahle")]);
+
+    displayPrediction(p!, homeScaffoldKey.currentState);
+  }
+
+  void onError(PlacesAutocompleteResponse response) {
+    Fluttertoast.showToast(
+      msg: response.errorMessage.toString(),
+    );
+  }
+
   void onMapCreated(GoogleMapController controller) {
     setState(() {
       customInfoWindowController.googleMapController = controller;
       // _isMapCreated = true;
     });
+  }
+
+  Future<void> displayPrediction(
+      Prediction p, ScaffoldState? currentState) async {
+    GoogleMapsPlaces places = GoogleMapsPlaces(
+        apiKey: kGoogleApiKey,
+        apiHeaders: await const GoogleApiHeaders().getHeaders());
+    PlacesDetailsResponse detail = await places.getDetailsByPlaceId(p.placeId!);
+
+    final lat = detail.result.geometry!.location.lat;
+    final lng = detail.result.geometry!.location.lng;
+
+    markers.clear();
+    markers.add(
+      Marker(
+          markerId: const MarkerId("0"),
+          position: LatLng(lat, lng),
+          infoWindow: InfoWindow(title: detail.result.name)),
+    );
+    setState(() {});
+
+    customInfoWindowController.googleMapController!.animateCamera(
+      CameraUpdate.newLatLngZoom(LatLng(lat, lng), 14.0),
+    );
   }
 }

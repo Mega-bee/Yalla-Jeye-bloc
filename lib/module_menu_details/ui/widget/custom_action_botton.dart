@@ -48,6 +48,7 @@ class _CustomActionButtonState extends State<CustomActionButton>
                   CustomDialogBox(title: 'You should login to make new order'),);
             }else {
               showModalBottomSheet(
+                enableDrag: true,
                 transitionAnimationController: controller,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(

@@ -8,6 +8,7 @@ import 'package:untitled1/module_menu_details/ui/screens/checkout_screen.dart';
 import 'package:untitled1/module_menu_details/ui/widget/distance_card.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
 
+import '../../../controller.dart';
 import '../../../custom/model/OrderModel.dart';
 
 class CheckOutSuccess extends States{
@@ -125,7 +126,7 @@ class CheckOutSuccess extends States{
                              onChanged: (value) {
                                //Do something with the user input.
                              },
-                             controller: titleController,
+                             controller: Controller.titleControllerHomrPage,
                              decoration: InputDecoration(
                                hintText: 'write your code',
                                contentPadding:
@@ -151,7 +152,7 @@ class CheckOutSuccess extends States{
                            child: CustomButton(
                              buttonTab: () {
                                screenState.checkPromoCode(
-                                   CheckPromoCodeRequest(titleController.text.trim()));
+                                   CheckPromoCodeRequest(Controller.titleControllerHomrPage.text.trim()));
                                Navigator.pop(context);
                              },
                              loading: screenState.loadingSnapshotPromoCode.connectionState ==
