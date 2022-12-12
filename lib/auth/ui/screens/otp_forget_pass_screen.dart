@@ -55,6 +55,7 @@ class ForgetPassVerificationScreenState extends State<ForgetPassVerificationScre
       }
     });
 
+
   }
 
   // @override
@@ -79,7 +80,8 @@ class ForgetPassVerificationScreenState extends State<ForgetPassVerificationScre
       var  args = ModalRoute.of(context)?.settings.arguments;
       if (args != null && args is Map) {
         String phone = args['phoneNumber'];
-        widget.cubit.emit(OtpForgetPassInitState(screenState: this,errorMessage: '',phoneOtp: phone));
+        widget.cubit.emit(OtpForgetPassInitState(screenState: this,errorMessage: '',phoneOtp: phone)
+        );
       }
       flags = false;
     }

@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -69,294 +70,308 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
   }
   @override
   Widget build(BuildContext context) {
-    return DraggableScrollableSheet(
-      initialChildSize: 0.75, //set this as you want
-      maxChildSize: 1, //set this as you want
-      minChildSize: 0.75, //set this as you want
-      // expand: true,
-      builder: (context, scrollController) =>
-       Container(
-        decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            borderRadius: BorderRadius.circular(15)),
-        child: Padding(
-          padding: const EdgeInsetsDirectional.only(start: 20 ,end: 20 ,top: 30),
-          child: SingleChildScrollView(
-            controller: scrollController,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Nickname",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  onChanged: (value) {
-                    //Do something with the user input.
-                  },
-                  controller: titleController,
-                  decoration: InputDecoration(
-                    hintText: 'write your custom nickname',
-                    contentPadding:
-                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          color: Color.fromRGBO(204, 204, 204, 0.5), width: 2.0),
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey, width: 2.0),
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "Address details",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                BlocBuilder<RegionsCubit , States>(
-                  bloc: widget.cubit,
+    return GestureDetector(
+      onTap: ()=>FocusScope.of(context).unfocus(),
+      child: StatefulBuilder(
+        builder: (ctx,setState){
+          return DraggableScrollableSheet(
+            initialChildSize: 0.75, //set this as you want
+            maxChildSize: 1, //set this as you want
+            minChildSize: 0.75, //set this as you want
+            // expand: true,
+            builder: (context, scrollController) =>
+                Container(
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.only(start: 20 ,end: 20 ,top: 30),
+                    child: SingleChildScrollView(
+                      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                      controller: scrollController,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Nickname",
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          TextField(
+                            onChanged: (value) {
 
-                  builder: (context, state) {
-                    return state.getUI(context);
-                  },),
-                SizedBox(
-                  height: 20,
-                ),
-                Form(
-                  key: _addAddressKey,
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Required";
-                          }
-                          return null;
-                        },
-                        controller: desController,
-                        decoration: InputDecoration(
-                          hintText: 'Decription',
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 20.0, horizontal: 13.0),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(204, 204, 204, 0.5),
-                                width: 2.0),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey, width: 2.0),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 17,
-                      ),
-                      TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Required";
-                          }
-                          return null;
-                        },
-                        autofillHints: [AutofillHints.name],
-                        controller: streetController,
-                        decoration: InputDecoration(
-                          hintText: 'Street',
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 20.0, horizontal: 13.0),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(204, 204, 204, 0.5),
-                                width: 2.0),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey, width: 2.0),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 17,
-                      ),
-                      TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Required";
-                          }
-                          return null;
-                        },
-                        controller: buldingNameController,
-                        decoration: InputDecoration(
-                          hintText: 'Building name',
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 20.0, horizontal: 13.0),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(204, 204, 204, 0.5),
-                                width: 2.0),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey, width: 2.0),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 17,
-                      ),
-                      TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Required";
-                          }
-                          return null;
-                        },
-                        controller: floorController,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          hintText: 'Floor number',
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 20.0, horizontal: 13.0),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(204, 204, 204, 0.5),
-                                width: 2.0),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey, width: 2.0),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          ),
-                        ),
-                      ),
-
-
-                      SizedBox(
-                        height: 20,
-                      ),
-                      // locationn
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Theme.of(context).secondaryHeaderColor
-                        ),
-                        child: widget.isUpdated
-                            ? TextButton.icon(icon: Icon(Icons.location_on),label: Text('Update location',),onPressed: (){
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ChooseLocationWidget(
-                                    previousLocation: addressLoca,
-                                  ))).then((value) {
-                            if (value != null) {
-                              addressLoca = value as LatLng;
-                              ca = CameraPosition(
-                                  target: addressLoca!, zoom: 15);
-                              mapController?.animateCamera(CameraUpdate.newCameraPosition(ca));
-                              setState(() {});
-                            }
-                          });
-                        },)
-                            :TextButton.icon(icon: Icon(Icons.location_on),label: Text('Mark your location on map',),onPressed: (){
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ChooseLocationWidget(
-                                    previousLocation: addressLoca,
-                                  ))).then((value) {
-                            if (value != null) {
-                              addressLoca = value as LatLng;
-                              ca = CameraPosition(
-                                  target: addressLoca!, zoom: 15);
-                              mapController?.animateCamera(CameraUpdate.newCameraPosition(ca));
-                              setState(() {});
-                            }
-                          });
-                        },),
-                      ),
-                      addressLoca != null
-                          ? Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          height: 150,
-                          child: GoogleMap(
-                            onMapCreated: (controller){
-                              setState(() {
-                                mapController = controller;
-                              });
+                              //Do something with the user input.
                             },
-                            markers: {
-                              Marker(
-                                  markerId: MarkerId(
-                                      Random().nextInt(100).toString()),
-                                  position: addressLoca!)
-                            }, initialCameraPosition: ca,),
-                        ),
-                      )
-                          : Container(),
+                            controller: titleController,
+                            decoration: InputDecoration(
+                              hintText: 'write your custom nickname',
+                              contentPadding:
+                              EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Color.fromRGBO(204, 204, 204, 0.5), width: 2.0),
+                                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey, width: 2.0),
+                                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "Address details",
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          BlocBuilder<RegionsCubit , States>(
+                            bloc: widget.cubit,
+
+                            builder: (context, state) {
+                              return state.getUI(context);
+                            },),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Form(
+                            key: _addAddressKey,
+                            child: Column(
+                              children: [
+                                // TextFormField(
+                                //   validator: (value) {
+                                //     if (value == null || value.isEmpty) {
+                                //       return "Required";
+                                //     }
+                                //     return null;
+                                //   },
+                                //   controller: desController,
+                                //   decoration: InputDecoration(
+                                //     hintText: 'Description',
+                                //     contentPadding: EdgeInsets.symmetric(
+                                //         vertical: 20.0, horizontal: 13.0),
+                                //     border: OutlineInputBorder(
+                                //       borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                //     ),
+                                //     enabledBorder: OutlineInputBorder(
+                                //       borderSide: const BorderSide(
+                                //           color: Color.fromRGBO(204, 204, 204, 0.5),
+                                //           width: 2.0),
+                                //       borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                //     ),
+                                //     focusedBorder: OutlineInputBorder(
+                                //       borderSide: BorderSide(color: Colors.grey, width: 2.0),
+                                //       borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                //     ),
+                                //   ),
+                                // ),
+                                // SizedBox(
+                                //   height: 17,
+                                // ),
+                                TextFormField(
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return "Required";
+                                    }
+                                    return null;
+                                  },
 
 
-                      SizedBox(
-                        height: 20,
+                                  autofillHints: [AutofillHints.name],
+                                  controller: streetController,
+                                  decoration: InputDecoration(
+                                    hintText: 'Street',
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 20.0, horizontal: 13.0),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Color.fromRGBO(204, 204, 204, 0.5),
+                                          width: 2.0),
+                                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey, width: 2.0),
+                                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 17,
+                                ),
+                                TextFormField(
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return "Required";
+                                    }
+                                    return null;
+                                  },
+                                  controller: buldingNameController,
+                                  decoration: InputDecoration(
+                                    hintText: 'Building name',
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 20.0, horizontal: 13.0),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Color.fromRGBO(204, 204, 204, 0.5),
+                                          width: 2.0),
+                                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey, width: 2.0),
+                                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 17,
+                                ),
+                                TextFormField(
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return "Required";
+                                    }
+                                    return null;
+                                  },
+                                  controller: floorController,
+                                  keyboardType: TextInputType.numberWithOptions(signed: true,),
+                                  // inputFormatters: [
+                                  //   FilteringTextInputFormatter.digitsOnly,
+                                  // ],
+                                  decoration: InputDecoration(
+                                    hintText: 'Floor number',
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 20.0, horizontal: 13.0),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Color.fromRGBO(204, 204, 204, 0.5),
+                                          width: 2.0),
+                                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey, width: 2.0),
+                                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                    ),
+                                  ),
+                                ),
+
+
+                                SizedBox(
+                                  height: 50,
+                                ),
+                                // locationn
+                                Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Theme.of(context).secondaryHeaderColor
+                                  ),
+                                  child: widget.isUpdated
+                                      ? TextButton.icon(icon: Icon(Icons.location_on),label: Text('Update location',),onPressed: (){
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ChooseLocationWidget(
+                                              previousLocation: addressLoca,
+                                            ))).then((value) {
+                                      if (value != null) {
+                                        addressLoca = value as LatLng;
+                                        ca = CameraPosition(
+                                            target: addressLoca!, zoom: 15);
+                                        mapController?.animateCamera(CameraUpdate.newCameraPosition(ca));
+                                        setState(() {});
+                                      }
+                                    });
+                                  },)
+                                      :TextButton.icon(icon: Icon(Icons.location_on),label: Text('Pin location',),onPressed: (){
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ChooseLocationWidget(
+                                              previousLocation: addressLoca,
+                                            ))).then((value) {
+                                      if (value != null) {
+                                        addressLoca = value as LatLng;
+                                        ca = CameraPosition(
+                                            target: addressLoca!, zoom: 15);
+                                        mapController?.animateCamera(CameraUpdate.newCameraPosition(ca));
+                                        setState(() {});
+                                      }
+                                    });
+                                  },),
+                                ),
+                                addressLoca != null
+                                    ? Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                    height: 150,
+                                    child: GoogleMap(
+                                      onMapCreated: (controller){
+                                        setState(() {
+                                          mapController = controller;
+                                        });
+                                      },
+                                      markers: {
+                                        Marker(
+                                            markerId: MarkerId(
+                                                Random().nextInt(100).toString()),
+                                            position: addressLoca!)
+                                      }, initialCameraPosition: ca,),
+                                  ),
+                                )
+                                    : Container(),
+
+
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                CustomButton(
+                                  buttonTab: () {
+                                    if (_addAddressKey.currentState!.validate() && addressLoca != null) {
+                                      widget.createAddress(CreateAddressRequest(
+                                        buildingName: buldingNameController.text,
+                                        city: selectedRegion?.id ,
+                                        description: desController.text,
+                                        floorNumber:int.parse(floorController.text) ,
+                                        street: streetController.text,
+                                        title: titleController.text,
+                                        latitude: addressLoca?.latitude.toString(),
+                                        longitude: addressLoca?.longitude.toString(),
+                                      ));
+                                    }else{
+                                      Fluttertoast.showToast(msg: 'Pin location');
+                                    }
+                                  },
+                                  loading: false,
+                                  text: 'Confirm',
+                                  bgColor: redColor,
+                                  textColor: Colors.white,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                      CustomButton(
-                        buttonTab: () {
-                          if (_addAddressKey.currentState!.validate() && addressLoca != null) {
-                            widget.createAddress(CreateAddressRequest(
-                              buildingName: buldingNameController.text,
-                              city: selectedRegion?.id ,
-                              description: desController.text,
-                              floorNumber:int.parse(floorController.text) ,
-                              street: streetController.text,
-                              title: titleController.text,
-                              latitude: addressLoca?.latitude.toString(),
-                              longitude: addressLoca?.longitude.toString(),
-                            ));
-                          }else{
-                            Fluttertoast.showToast(msg: 'Select location please');
-                          }
-                        },
-                        loading: false,
-                        text: 'Confirm',
-                        bgColor: redColor,
-                        textColor: Colors.white,
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

@@ -22,6 +22,7 @@ class CustomSuccess extends States {
     return Container(
       color: Colors.grey.shade50,
       child: SingleChildScrollView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         physics: BouncingScrollPhysics(),
         child: Column(
           children: [

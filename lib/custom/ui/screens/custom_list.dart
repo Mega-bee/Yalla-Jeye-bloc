@@ -54,25 +54,28 @@ class CustomPageState extends State<CustomPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // backgroundColor: Colors.white,
-        title: Text(
-          "Custom order",
-          style: GoogleFonts.poppins(
-            fontStyle: FontStyle.normal,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: ()=>FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          // backgroundColor: Colors.white,
+          title: Text(
+            "Custom order",
+            style: GoogleFonts.poppins(
+              fontStyle: FontStyle.normal,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
           ),
+          // elevation: 1,
+          // centerTitle: true,
         ),
-        // elevation: 1,
-        // centerTitle: true,
-      ),
-      body: BlocBuilder<CustomCubit, States>(
-        bloc: widget.cubit,
-        builder: (context, state) {
-          return state.getUI(context);
-        },
+        body: BlocBuilder<CustomCubit, States>(
+          bloc: widget.cubit,
+          builder: (context, state) {
+            return state.getUI(context);
+          },
+        ),
       ),
     );
   }
