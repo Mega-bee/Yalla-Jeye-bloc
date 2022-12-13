@@ -52,9 +52,8 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
   // late GoogleMapController _controller;/
   late CustomInfoWindowController customInfoWindowController;
   bool _nightMode = false;
-  Set<Marker> markers = {};
   final Mode _mode = Mode.overlay;
-
+  final List<Marker> markers = [];
   // Completer<GoogleMapController> _controller = Completer();
   @override
   void initState() {
@@ -126,8 +125,13 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
       myLocationEnabled: _myLocationEnabled,
       myLocationButtonEnabled: _myLocationButtonEnabled,
       trafficEnabled: _myTrafficEnabled,
-      // onCameraMove: _updateCameraPosition,
-      markers: markers,
+      onCameraMove: (position){
+        setState(() {
+            markers.first=markers.first.copyWith(positionParam: position.target);
+
+        });
+      },
+      markers: markers.toSet(),
       onTap: (v) {
         markers.clear();
         markers.add(
@@ -142,14 +146,17 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
         title: Text('Select location'),
       ),
       body: Stack(
+        alignment: Alignment.center,
         children: [
           googleMap,
-          ElevatedButton(
-            onPressed: _handlePressButton,
-            child: Text("Search Places"),
-          ),
+          // ElevatedButton(
+          //   onPressed: _handlePressButton,
+          //   child: Text("Search Places"),
+          // ),
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pop(context, markers.first.position);
