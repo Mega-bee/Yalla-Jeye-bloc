@@ -10,8 +10,8 @@ class CreateAddressRequest {
   String? latitude;
   int? floorNumber;
 
-  CreateAddressRequest({
-      this.id,
+  CreateAddressRequest(
+      {this.id,
       this.city,
       this.description,
       this.street,
@@ -25,6 +25,7 @@ class CreateAddressRequest {
     return {
       'id': id ?? 0,
       'Title': title,
+      'Description': description,
       "CityId": city,
       "Country": '',
       "Street": street,

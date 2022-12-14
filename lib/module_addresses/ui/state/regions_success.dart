@@ -22,6 +22,7 @@ class RegionsSuccess extends States {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: DropdownButton(
+          isDense: true,
           // Initial Value
           value: screenState.selectedRegion,
 

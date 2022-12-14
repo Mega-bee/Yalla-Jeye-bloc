@@ -88,7 +88,7 @@ class AddressScreenState extends State<AddressScreen> {
                   elevation: 5);
             },
             child: const Padding(
-              padding: EdgeInsetsDirectional.only(end: 25),
+              padding: EdgeInsetsDirectional.only(end: 25,start: 25),
               child: Icon(Icons.add_comment),
             ),
           )
