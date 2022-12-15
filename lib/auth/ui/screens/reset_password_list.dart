@@ -14,6 +14,7 @@ import '../../state_manager/forget_password.dart';
 import '../../state_manager/reset_password.dart';
 import '../state/forget_password_state.dart';
 import '../state/log_in_sucess.dart';
+import '../state/reset_password_state.dart';
 import 'otp_forget_pass_screen.dart';
 
 @injectable
@@ -33,6 +34,8 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen> {
   void resetPassword(ResetPasswordRequest request,) {
     widget.cubit.resetPass(request,this);
   }
+  bool flags = true;
+
 
   @override
   void initState() {
@@ -47,11 +50,19 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen> {
         });
       }
     });
-    // widget.cubit.emit(ForgetPasswordState(this,''));
   }
 
   @override
   Widget build(BuildContext context) {
+    if(flags){
+      var  args = ModalRoute.of(context)?.settings.arguments;
+      if (args != null && args is Map) {
+        String phone = args['phoneNumber'];
+        widget.cubit.emit(ResetPasswordState(this,"",phone)
+        );
+      }
+      flags = false;
+    }
     return Scaffold(
         appBar: AppBar(
           backgroundColor: redColor,

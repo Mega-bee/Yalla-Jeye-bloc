@@ -204,8 +204,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i58.CustomModule(get<_i34.CustomPage>()));
   gh.factory<_i59.DriverOrderModule>(() => _i59.DriverOrderModule(
       get<_i37.DriverOrderScreen>(), get<_i36.DriverOrderDetailsScreen>()));
-  gh.factory<_i60.ForgetPassVerificationScreen>(
-      () => _i60.ForgetPassVerificationScreen(get<_i39.ForgetPasswordCubit>()));
+  gh.factory<_i60.ForgetPassVerificationScreen>(() =>
+      _i60.ForgetPassVerificationScreen(get<_i40.ForgetPasswordOtpCubit>()));
   gh.factory<_i61.GetProfilePage>(
       () => _i61.GetProfilePage(get<_i52.ProfileCubit>()));
   gh.factory<_i62.HomePage>(() => _i62.HomePage(get<_i42.HomePageCubit>(),

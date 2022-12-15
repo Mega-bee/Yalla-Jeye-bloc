@@ -15,14 +15,14 @@ import '../widget/custom_button.dart';
 
 class ResetPasswordState extends States {
   final ResetPasswordScreenState screenState;
-
+  final String? phone;
   String? errorMessage;
 
-  ResetPasswordState(this.screenState, this.errorMessage);
+  ResetPasswordState(this.screenState, this.errorMessage,this.phone);
 
   final _formKey = GlobalKey<FormState>();
   final password = TextEditingController();
-  final newPass = TextEditingController();
+  final confirmPass = TextEditingController();
 
   String validatePass(value) {
     if (value.isEmpty) {
@@ -49,7 +49,7 @@ class ResetPasswordState extends States {
                 Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "Please enter your Phone number",
+                      "Please enter your new password",
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 28,
@@ -86,7 +86,7 @@ class ResetPasswordState extends States {
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Text(
-                            "Forget password",
+                            "Reset password",
                             style: TextStyle(
                               fontSize: 26,
                               fontWeight: FontWeight.w600,
@@ -153,14 +153,14 @@ class ResetPasswordState extends States {
                           child: TextFormField(
                             cursorColor: redColor,
                             style: const TextStyle(fontSize: 14),
-                            controller: newPass,
+                            controller: confirmPass,
                             decoration: InputDecoration(
-                              labelText: "New password",
+                              labelText: "Confirm password",
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.black)),
                               filled: true,
                               fillColor: Colors.white,
-                              hintText: "New password",
+                              hintText: "Confirm password",
                               labelStyle: TextStyle(color: Colors.black),
                               enabledBorder: const OutlineInputBorder(
                                   borderRadius:
@@ -195,12 +195,12 @@ class ResetPasswordState extends States {
                           padding: const EdgeInsets.all(8.0),
                           child: CustomButton(
                             buttonTab: () {
-                              if (password.text.isEmpty || newPass.text.isEmpty
+                              if (password.text.isEmpty || confirmPass.text.isEmpty
                                  ) {
                                 _formKey.currentState!.validate();
                               }
                               screenState.resetPassword(
-                                  ResetPasswordRequest(password: password.text)
+                                  ResetPasswordRequest(password: password.text,phone: phone)
                               );
                               // Navigator.pushNamed(context, AuthRoutes.OTP_SCREEN);
                             },

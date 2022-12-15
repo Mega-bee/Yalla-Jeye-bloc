@@ -55,7 +55,7 @@ class ForgetPasswordCubit extends Cubit<States> {
         // OtpConf(ConfOtpRequest(phoneNumber: request.phoneNumber),state,request.phoneNumber??"",request.password??"",);
         // OtpConf(ConfOtpRequest(phoneNumber: request.phoneNumber,otp: request.otp),state);
         print('pushhhhh');
-        Navigator.pushNamed(state.context, AuthRoutes.FORGET_PASSWORD_OPT);
+        Navigator.pushNamed(state.context, AuthRoutes.FORGET_PASSWORD_OPT,arguments: {'phoneNumber':request.phoneNumber,});
 
       }
     });
