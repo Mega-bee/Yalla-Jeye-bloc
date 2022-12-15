@@ -97,7 +97,7 @@ class LogInRepository {
   Future<WebServiceResponse?> ResetPassword(ResetPasswordRequest request) async {
     var token = _authService.getToken();
     WebServiceResponse? response = await _apiClient.put(
-      Urls.FORGET_PASSWORD,
+      Urls.RESET_PASSWORD,
       request.toJson(),
       headers: {'Authorization': 'Bearer ' '$token'},
     );

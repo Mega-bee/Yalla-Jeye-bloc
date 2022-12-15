@@ -3,7 +3,7 @@ class ForgetPasswordRequest {
   String? otp;
   String? password;
 
-  ForgetPasswordRequest( {this.phoneNumber});
+  ForgetPasswordRequest( {this.phoneNumber,this.password});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

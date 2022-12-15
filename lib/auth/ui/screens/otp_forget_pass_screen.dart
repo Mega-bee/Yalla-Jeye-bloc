@@ -7,6 +7,7 @@ import '../../request/confirm_otp.dart';
 import '../../request/confirm_phone_number_request.dart';
 import '../../request/generate_otp_request.dart';
 import '../../state_manager/forget_password.dart';
+import '../../state_manager/forget_password_otp.dart';
 import '../../state_manager/otp_state.dart';
 import '../state/otp_forget_pass_state.dart';
 import '../state/otp_state.dart';
@@ -14,7 +15,7 @@ import '../state/otp_state.dart';
 
 @injectable
 class ForgetPassVerificationScreen extends StatefulWidget {
-  final ForgetPasswordCubit cubit ;
+  final ForgetPasswordOtpCubit cubit ;
 // final SignUpCubit cubit ;
   ForgetPassVerificationScreen(this.cubit,);
   @override
@@ -99,7 +100,7 @@ class ForgetPassVerificationScreenState extends State<ForgetPassVerificationScre
             style: TextStyle(color: Colors.black),
           ),
         ),
-        body: BlocBuilder<ForgetPasswordCubit, States>(
+        body: BlocBuilder<ForgetPasswordOtpCubit, States>(
           bloc: widget.cubit,
           builder: (context, state) {
             return state.getUI(context);

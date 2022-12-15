@@ -71,14 +71,14 @@ class OtpCubit extends Cubit<States> {
           } else if (value.code != 200) {
             _loadingStateSubject.add(AsyncSnapshot.nothing());
 
-            Fluttertoast.showToast(msg: "Otp Is Wrong");
+            Fluttertoast.showToast(msg: "Otp  Wrong");
 //        emit(LoginInitState(screenState,value.errorMessage ));
           }
         });
         // Navigator.pushNamedAndRemoveUntil(screenState.context,  AuthRoutes.LOGIN_SCREEN, (route) => false, );
       } else if (value.code != 200) {
         _loadingStateSubject.add(AsyncSnapshot.nothing());
-        Fluttertoast.showToast(msg: "Otp Is Wrong");
+        Fluttertoast.showToast(msg: " Is Wrong");
 //        emit(LoginInitState(screenState,value.errorMessage ));
       }
     });
