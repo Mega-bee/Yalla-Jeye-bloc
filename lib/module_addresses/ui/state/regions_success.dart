@@ -30,16 +30,17 @@ class RegionsSuccess extends States {
           icon: const Icon(Icons.keyboard_arrow_down),
 
           // Array list of items
-          items: regions.map((RegionsResponse items) {
-            return DropdownMenuItem(
+          items: regions.map((RegionsResponse? items) {
+            return
+              DropdownMenuItem(
               value: items,
-              child: Text(items.location ?? ''),
+              child: Text(items!.location ?? ''),
             );
           }).toList(),
           // After selecting the desired option,it will
           // change button value to selected value
           onChanged: (newValue) {
-            screenState.selectedRegion = newValue as RegionsResponse?;
+            screenState.selectedRegion= newValue as RegionsResponse;
             screenState.refresh();
           },
           hint: Text('Select region'),

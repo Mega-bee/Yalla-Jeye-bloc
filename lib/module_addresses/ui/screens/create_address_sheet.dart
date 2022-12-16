@@ -46,6 +46,8 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
   GoogleMapController? mapController;
   RegionsResponse? selectedRegion;
 
+
+
   @override
   void initState() {
     super.initState();
@@ -56,10 +58,17 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
       floorController.text = widget.response?.floorNumber.toString() ?? '';
       desController.text = widget.response?.description ?? '';
       streetController.text = widget.response?.street ?? '';
-      selectedRegion = RegionsResponse(
-        location: widget.response?.city,
-        id: widget.response?.cityId,
-      );
+
+   // print("cityID: ${widget.response?.cityId}");
+   // print("city: ${widget.response?.city}");
+   //
+   //    // selectedRegion = RegionsResponse(
+   //    //   location: widget.response?.city,
+   //    //   id: widget.response?.cityId,
+   //    // );
+   //
+   //    // print("Selected: ${selectedRegion}");
+
       if (widget.response!.latitude!.isEmpty ||
           widget.response!.longitude!.isEmpty) {
       } else {
@@ -75,7 +84,6 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
       setState(() {});
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -83,14 +91,14 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
       child: StatefulBuilder(
         builder: (ctx, setState) {
           return DraggableScrollableSheet(
-            initialChildSize: 0.75,
+            initialChildSize: 0.9,
             //set this as you want
             maxChildSize: 1,
             //set this as you want
             minChildSize: 0.75,
             //set this as you want
-            expand: true,
-            snap: true,
+            // expand: true,
+            // snap: true,
 
             builder: (context, scrollController) => Container(
               decoration: BoxDecoration(
@@ -100,6 +108,7 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                 padding: const EdgeInsetsDirectional.only(
                     start: 20, end: 20, top: 30),
                 child: SingleChildScrollView(
+
                   keyboardDismissBehavior:
                       ScrollViewKeyboardDismissBehavior.onDrag,
                   controller: scrollController,
@@ -116,7 +125,13 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                       SizedBox(
                         height: 10,
                       ),
-                      TextField(
+                      TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Required";
+                          }
+                          return null;
+                        },
                         onChanged: (value) {
                           //Do something with the user input.
                         },
@@ -401,7 +416,7 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                             CustomButton(
                               buttonTab: () {
                                 if (_addAddressKey.currentState!.validate() &&
-                                    addressLoca != null) {
+                                    addressLoca != null&&selectedRegion!=null) {
                                   widget.createAddress(CreateAddressRequest(
                                     buildingName: buldingNameController.text,
                                     city: selectedRegion?.id,
@@ -415,7 +430,7 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                                         addressLoca?.longitude.toString(),
                                   ));
                                 } else {
-                                  Fluttertoast.showToast(msg: 'Pin location');
+                                  Fluttertoast.showToast(msg: 'Please fill all fields');
                                 }
                                 // buldingNameController.clear();
                                 // desController.clear();
