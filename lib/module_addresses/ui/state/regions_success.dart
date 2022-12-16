@@ -7,7 +7,17 @@ class RegionsSuccess extends States {
   List<RegionsResponse> regions;
   CreateAddressSheetState screenState;
 
-  RegionsSuccess({required this.regions, required this.screenState});
+  RegionsSuccess({required this.regions, required this.screenState}) : super(){
+   if(screenState.selectedRegion != null){
+      regions.forEach((element) {
+        if(element.id == screenState.selectedRegion?.id){
+          regions.remove(element);
+          regions.add(screenState.selectedRegion ?? RegionsResponse());
+        }
+      });
+
+   }
+  }
 
 
   @override
@@ -22,13 +32,8 @@ class RegionsSuccess extends States {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: DropdownButton(
-          // Initial Value
           value: screenState.selectedRegion,
-
-          // Down Arrow Icon
           icon: const Icon(Icons.keyboard_arrow_down),
-
-          // Array list of items
           items: regions.map((RegionsResponse items) {
             return DropdownMenuItem(
               value: items,
@@ -41,7 +46,7 @@ class RegionsSuccess extends States {
             screenState.selectedRegion = newValue as RegionsResponse?;
             screenState.refresh();
           },
-          hint: Text('Select region'),
+          hint: const Text('Select region'),
           isExpanded: true,
           underline: Container(),
         ),

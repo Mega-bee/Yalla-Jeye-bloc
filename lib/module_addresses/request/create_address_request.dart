@@ -31,7 +31,8 @@ class CreateAddressRequest {
       "BuildingName": buildingName,
       "Longitude": longitude,
       "Latitude": latitude,
-      "FloorNumber": floorNumber
+      "FloorNumber": floorNumber,
+      "description": description
     };
   }
 }

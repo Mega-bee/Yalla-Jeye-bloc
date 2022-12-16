@@ -8,7 +8,6 @@ import 'package:untitled1/auth/ui/widget/custom_button.dart';
 import 'package:untitled1/module_addresses/request/create_address_request.dart';
 import 'package:untitled1/module_addresses/response/address_response.dart';
 import 'package:untitled1/module_addresses/response/regions_response.dart';
-import 'package:untitled1/module_addresses/state_manager/address_state_manager.dart';
 import 'package:untitled1/module_addresses/state_manager/create_address_state_manager.dart';
 import 'package:untitled1/module_addresses/ui/widget/choose_location_wedgit.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
@@ -49,6 +48,7 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
       floorController.text = widget.response?.floorNumber.toString() ?? '';
       desController.text = widget.response?.description ?? '';
       streetController.text = widget.response?.street ?? '';
+      selectedRegion = RegionsResponse(id:widget.response?.cityId , location: widget.response?.city);
       if (widget.response!.latitude!.isEmpty ||
           widget.response!.longitude!.isEmpty) {
       } else {
@@ -128,7 +128,6 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                 ),
                 BlocBuilder<RegionsCubit , States>(
                   bloc: widget.cubit,
-
                   builder: (context, state) {
                     return state.getUI(context);
                   },),

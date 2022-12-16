@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:untitled1/abstracts/states/state.dart';
 import 'package:untitled1/module_addresses/request/create_address_request.dart';
+import 'package:untitled1/module_addresses/state_manager/address_state_manager.dart';
 import 'package:untitled1/module_addresses/state_manager/create_address_state_manager.dart';
-import '../../../abstracts/states/state.dart';
-import '../../state_manager/address_state_manager.dart';
 import 'create_address_sheet.dart';
 
 @injectable

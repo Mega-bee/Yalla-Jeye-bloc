@@ -9,11 +9,13 @@ class AddressResponse {
     this.latitude,
     this.longitude,
     this.description,
+    this.cityId,
     this.isSelected = false
    });
 
     int? id;
    String? city;
+   int? cityId;
 
    String? street;
    String? buildingName;
@@ -35,6 +37,7 @@ class AddressResponse {
        latitude = json["latitude"] ?? '';
        floorNumber = json["floorNumber"];
        description = json["description"];
+       cityId = json["cityId"];
        isSelected = false;
      }
  }
