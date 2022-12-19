@@ -1,12 +1,11 @@
 class NotificationRequest{
-  String? firebaseToken;
+  String? fireBaseToken;
 
-  NotificationRequest({this.firebaseToken});
+  NotificationRequest({this.fireBaseToken});
 
-  Map<String, dynamic> toJson() {
+  Map<String,dynamic> toJson(){
     return {
-      "fcmToken":firebaseToken,
+      "fcmToken":fireBaseToken,
     };
   }
-
 }
