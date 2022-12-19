@@ -11,6 +11,7 @@ class HiveSetUp {
   static Future<void> publicBoxes() async {
     await Hive.openBox('Authorization');
     await Hive.openBox('modelList');
+    await Hive.openBox('createAddressData');
   }
 }
 
@@ -90,5 +91,46 @@ class ThemeHelper {
     return box.get('theme');
   }
 }
+
+
+
+class NewAddressData {
+  var box = Hive.box('createAddressData');
+
+  void setStreet(String street) {
+    box.put('street', street);
+  }
+
+  void setBuildingName(String buildingName) {
+    box.put('buildingName', buildingName);
+  }
+
+  void setFloorNumber(String floorNumber) {
+    box.put('floorNumber', floorNumber);
+  }
+
+  void setDescription(String description) {
+    box.put('description', description);
+  }
+
+
+  String? getStreet() {
+    return box.get('street');
+  }
+
+  String? getBuildingName() {
+    return box.get('buildingName');
+  }
+
+  String? getFloorNumber() {
+    return box.get('floorNumber');
+  }
+
+  String? getDescription() {
+    return box.get('description');
+  }
+
+}
+
 
 
