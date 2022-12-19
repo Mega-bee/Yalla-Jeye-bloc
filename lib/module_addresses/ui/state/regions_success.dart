@@ -9,12 +9,12 @@ class RegionsSuccess extends States {
 
   RegionsSuccess({required this.regions, required this.screenState}) : super(){
    if(screenState.selectedRegion != null){
-      regions.forEach((element) {
+      for (var element in regions) {
         if(element.id == screenState.selectedRegion?.id){
           regions.remove(element);
           regions.add(screenState.selectedRegion ?? RegionsResponse());
         }
-      });
+      }
 
    }
   }
