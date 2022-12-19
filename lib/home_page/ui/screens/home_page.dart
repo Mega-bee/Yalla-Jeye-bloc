@@ -8,9 +8,11 @@ import 'package:untitled1/auth/service/auth_service.dart';
 import 'package:untitled1/custom/model/OrderModel.dart';
 import 'package:untitled1/di/di_config.dart';
 import 'package:untitled1/module_menu_details/ui/widget/custom_action_botton.dart';
+import 'package:untitled1/module_notifications/service/fire_notification_service/fire_notification_service.dart';
 import 'package:untitled1/utils/global/global_state_manager.dart';
 import '../../../abstracts/states/state.dart';
 import '../../../hive/hive.dart';
+import '../../../module_notifications/request/notification_request.dart';
 import '../../../utils/images/images.dart';
 import '../../state_manager/homepage.dart';
 
@@ -42,7 +44,16 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
            });
           }
         });
+
+    String FireBaseToken = '';
+    fireNotificationService.getFcmToken().then((value) {
+      FireBaseToken = value ?? "";
+      NotificationRequest(fireBaseToken: FireBaseToken);
+    });
+
   }
+
+  static FireNotificationService fireNotificationService = FireNotificationService();
 
   getHome() {
     widget.cubit.getHomePage(this);
