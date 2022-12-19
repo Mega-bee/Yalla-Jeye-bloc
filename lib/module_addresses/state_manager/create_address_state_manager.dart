@@ -2,12 +2,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/abstracts/states/error_state.dart';
+import 'package:untitled1/abstracts/states/loading_state.dart';
+import 'package:untitled1/abstracts/states/state.dart';
 import 'package:untitled1/module_addresses/repository/address_repository.dart';
 import 'package:untitled1/module_addresses/response/regions_response.dart';
 import 'package:untitled1/module_addresses/ui/screens/create_address_sheet.dart';
 import 'package:untitled1/module_addresses/ui/state/regions_success.dart';
-import '../../abstracts/states/loading_state.dart';
-import '../../abstracts/states/state.dart';
+
 
 @injectable
 class RegionsCubit extends Cubit<States> {

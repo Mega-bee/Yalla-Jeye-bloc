@@ -1,34 +1,41 @@
-{
+  {
   "project_info": {
-    "project_number": "636520650039",
-    "project_id": "yalla-jeye-dba3f",
-    "storage_bucket": "yalla-jeye-dba3f.appspot.com"
+    "project_number": "1035432384632",
+    "project_id": "yalla-jeye-42bdc",
+    "storage_bucket": "yalla-jeye-42bdc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:636520650039:android:f708d478fd94cbab5936b2",
+        "mobilesdk_app_id": "1:1035432384632:android:8d667559fcfea43d9ef58d",
         "android_client_info": {
           "package_name": "com.megabee.yallajeye"
         }
       },
       "oauth_client": [
         {
-          "client_id": "636520650039-eoeudtj1h98hkbvtdc84g951f4vnoriu.apps.googleusercontent.com",
+          "client_id": "1035432384632-3sg53dcjofa8nng6t8sufmee59ovv8mj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCsxu4rkOgGEzsF0mbEuXVuQ4g2zCpcb-s"
+          "current_key": "AIzaSyCoD_cDAZkOiQkP06g8PL_WW0zDgTTqhbE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "636520650039-eoeudtj1h98hkbvtdc84g951f4vnoriu.apps.googleusercontent.com",
+              "client_id": "1035432384632-3sg53dcjofa8nng6t8sufmee59ovv8mj.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1035432384632-oca8m6burt2e2qkru79o7l6jbtrikv5c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.megabee.yallajeye"
+              }
             }
           ]
         }

@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -9,26 +8,17 @@ import 'package:untitled1/auth/ui/widget/custom_button.dart';
 import 'package:untitled1/module_addresses/request/create_address_request.dart';
 import 'package:untitled1/module_addresses/response/address_response.dart';
 import 'package:untitled1/module_addresses/response/regions_response.dart';
-import 'package:untitled1/module_addresses/state_manager/address_state_manager.dart';
 import 'package:untitled1/module_addresses/state_manager/create_address_state_manager.dart';
 import 'package:untitled1/module_addresses/ui/widget/choose_location_wedgit.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
-import 'package:untitled1/utils/images/images.dart';
-
-import '../../../controller.dart';
 
 class CreateAddressSheet extends StatefulWidget {
   final Function(CreateAddressRequest) createAddress;
   final AddressResponse? response;
   final bool isUpdated;
   final RegionsCubit cubit;
-
-  const CreateAddressSheet({
-    required this.createAddress,
-    this.response,
-    required this.isUpdated,
-    required this.cubit,
-  });
+  const CreateAddressSheet(
+      {required this.createAddress, this.response, required this.isUpdated, required this.cubit});
 
   @override
   State<CreateAddressSheet> createState() => CreateAddressSheetState();
@@ -36,20 +26,14 @@ class CreateAddressSheet extends StatefulWidget {
 
 class CreateAddressSheetState extends State<CreateAddressSheet> {
   var titleController = TextEditingController();
+
   var buldingNameController = TextEditingController();
   var floorController = TextEditingController();
   var desController = TextEditingController();
   var streetController = TextEditingController();
 
-  // var titleUpdateController = TextEditingController();
-  // var floorUpdateController = TextEditingController();
-  // var streetUpdateController = TextEditingController();
-  // var descriptionUpdateController = TextEditingController();
-  // var buildingUpdateController = TextEditingController();
-  // var StreetUpdateController = TextEditingController();
-
   LatLng? addressLoca;
-  CameraPosition ca = CameraPosition(target: LatLng(0, 0));
+   CameraPosition ca = CameraPosition(target: LatLng(0, 0));
   final GlobalKey<FormState> _addAddressKey = GlobalKey<FormState>();
   GoogleMapController? mapController;
   RegionsResponse? selectedRegion;
@@ -64,17 +48,7 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
       floorController.text = widget.response?.floorNumber.toString() ?? '';
       desController.text = widget.response?.description ?? '';
       streetController.text = widget.response?.street ?? '';
-
-      // print("cityID: ${widget.response?.cityId}");
-      // print("city: ${widget.response?.city}");
-      //
-      //    // selectedRegion = RegionsResponse(
-      //    //   location: widget.response?.city,
-      //    //   id: widget.response?.cityId,
-      //    // );
-      //
-      //    // print("Selected: ${selectedRegion}");
-
+      selectedRegion = RegionsResponse(id:widget.response?.cityId , location: widget.response?.city);
       if (widget.response!.latitude!.isEmpty ||
           widget.response!.longitude!.isEmpty) {
       } else {
@@ -85,12 +59,14 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
     }
   }
 
-  void refresh() {
-    if (mounted) {
-      setState(() {});
+
+  void refresh(){
+    if(mounted) {
+      setState(() {
+
+    });
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -101,7 +77,7 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
             borderRadius: BorderRadius.circular(15)),
         child: Padding(
           padding:
-              const EdgeInsetsDirectional.only(start: 20, end: 20, top: 10),
+          const EdgeInsetsDirectional.only(start: 20, end: 20, top: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -112,13 +88,13 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                 ),
                 child: Center(
                     child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(
-                    Icons.cancel_outlined,
-                  ),
-                )),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(
+                        Icons.cancel_outlined,
+                      ),
+                    )),
               ),
               Text(
                 "Nickname",
@@ -142,7 +118,7 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                 decoration: InputDecoration(
                   hintText: 'write your custom nickname',
                   contentPadding:
-                      EdgeInsets.symmetric(vertical: 15.0, horizontal: 9.0),
+                  EdgeInsets.symmetric(vertical: 15.0, horizontal: 9.0),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(5.0)),
                   ),
@@ -204,7 +180,7 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(color: Colors.grey, width: 2.0),
+                          BorderSide(color: Colors.grey, width: 2.0),
                           borderRadius: BorderRadius.all(Radius.circular(5.0)),
                         ),
                       ),
@@ -235,7 +211,7 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(color: Colors.grey, width: 2.0),
+                          BorderSide(color: Colors.grey, width: 2.0),
                           borderRadius: BorderRadius.all(Radius.circular(5.0)),
                         ),
                       ),
@@ -270,7 +246,7 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(color: Colors.grey, width: 2.0),
+                          BorderSide(color: Colors.grey, width: 2.0),
                           borderRadius: BorderRadius.all(Radius.circular(5.0)),
                         ),
                       ),
@@ -302,7 +278,7 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(color: Colors.grey, width: 2.0),
+                          BorderSide(color: Colors.grey, width: 2.0),
                           borderRadius: BorderRadius.all(Radius.circular(5.0)),
                         ),
                       ),
@@ -318,75 +294,75 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                           color: Theme.of(context).secondaryHeaderColor),
                       child: widget.isUpdated
                           ? TextButton.icon(
-                              icon: Icon(Icons.location_on),
-                              label: Text(
-                                'Update location',
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ChooseLocationWidget(
-                                              previousLocation: addressLoca,
-                                            ))).then((value) {
-                                  if (value != null) {
-                                    addressLoca = value as LatLng;
-                                    ca = CameraPosition(
-                                        target: addressLoca!, zoom: 15);
-                                    mapController?.animateCamera(
-                                        CameraUpdate.newCameraPosition(ca));
-                                    setState(() {});
-                                  }
-                                });
-                              },
-                            )
+                        icon: Icon(Icons.location_on),
+                        label: Text(
+                          'Update location',
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ChooseLocationWidget(
+                                        previousLocation: addressLoca,
+                                      ))).then((value) {
+                            if (value != null) {
+                              addressLoca = value as LatLng;
+                              ca = CameraPosition(
+                                  target: addressLoca!, zoom: 15);
+                              mapController?.animateCamera(
+                                  CameraUpdate.newCameraPosition(ca));
+                              setState(() {});
+                            }
+                          });
+                        },
+                      )
                           : TextButton.icon(
-                              icon: Icon(Icons.location_on),
-                              label: Text(
-                                'Pin location',
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ChooseLocationWidget(
-                                              previousLocation: addressLoca,
-                                            ))).then((value) {
-                                  if (value != null) {
-                                    addressLoca = value as LatLng;
-                                    ca = CameraPosition(
-                                        target: addressLoca!, zoom: 15);
-                                    mapController?.animateCamera(
-                                        CameraUpdate.newCameraPosition(ca));
-                                    setState(() {});
-                                  }
-                                });
-                              },
-                            ),
+                        icon: Icon(Icons.location_on),
+                        label: Text(
+                          'Pin location',
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ChooseLocationWidget(
+                                        previousLocation: addressLoca,
+                                      ))).then((value) {
+                            if (value != null) {
+                              addressLoca = value as LatLng;
+                              ca = CameraPosition(
+                                  target: addressLoca!, zoom: 15);
+                              mapController?.animateCamera(
+                                  CameraUpdate.newCameraPosition(ca));
+                              setState(() {});
+                            }
+                          });
+                        },
+                      ),
                     ),
                     addressLoca != null
                         ? Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              height: 150,
-                              child: GoogleMap(
-                                onMapCreated: (controller) {
-                                  setState(() {
-                                    mapController = controller;
-                                  });
-                                },
-                                markers: {
-                                  Marker(
-                                      markerId: MarkerId(
-                                          Random().nextInt(100).toString()),
-                                      position: addressLoca!)
-                                },
-                                initialCameraPosition: ca,
-                              ),
-                            ),
-                          )
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        height: 150,
+                        child: GoogleMap(
+                          onMapCreated: (controller) {
+                            setState(() {
+                              mapController = controller;
+                            });
+                          },
+                          markers: {
+                            Marker(
+                                markerId: MarkerId(
+                                    Random().nextInt(100).toString()),
+                                position: addressLoca!)
+                          },
+                          initialCameraPosition: ca,
+                        ),
+                      ),
+                    )
                         : Container(),
 
                     SizedBox(
