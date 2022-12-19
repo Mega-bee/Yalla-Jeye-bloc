@@ -51,6 +51,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     fireNotificationService.getFcmToken().then((value) {
       FireBaseToken = value ??"";
       print("FBT: ${value}");
+      // widget.cubit.FireBase(this, NotificationRequest(fireBaseToken: value)
+      // );
       NotificationRequest(fireBaseToken: value);
 
     });
