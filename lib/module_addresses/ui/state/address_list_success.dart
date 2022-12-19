@@ -26,15 +26,18 @@ class AddressListSuccess extends States {
               backgroundColor: Colors.transparent,
               context: context,
               builder: (context) {
-                return CreateAddressSheet(
-                  createAddress: (req) {
-                    req.id = addressList[index].id;
-                    Navigator.pop(context);
-                    screenState.updateAddress(req);
-                  },
-                  isUpdated: true,
-                  response: addressList[index],
-                  cubit: screenState.widget.regionsCubit,
+                return Container(
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  child: CreateAddressSheet(
+                    createAddress: (req) {
+                      req.id = addressList[index].id;
+                      Navigator.pop(context);
+                      screenState.updateAddress(req);
+                    },
+                    isUpdated: true,
+                    response: addressList[index],
+                    cubit: screenState.widget.regionsCubit,
+                  ),
                 );
               },
               shape: RoundedRectangleBorder(
