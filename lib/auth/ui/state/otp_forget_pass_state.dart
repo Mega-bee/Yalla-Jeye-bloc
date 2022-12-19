@@ -160,16 +160,16 @@ class OtpForgetPassInitState extends States{
                         fontWeight: FontWeight.w400),
                   ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "Didn't receive the code? ",
-                      style: TextStyle(color: Colors.black54, fontSize: 15),
-                    ),
-                  ],
-                ),
+                // SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     const Text(
+                //       "Didn't receive the code? ",
+                //       style: TextStyle(color: Colors.black54, fontSize: 15),
+                //     ),
+                //   ],
+                // ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 Padding(
                   padding: const EdgeInsets.all(8.0),

@@ -136,7 +136,7 @@ class ResetPasswordState extends States {
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
-                            keyboardType: TextInputType.phone,
+                            // keyboardType: TextInputType.phone,
                             validator: MultiValidator([
                               RequiredValidator(
                                   errorText: 'Mobile number Required *'),
@@ -173,7 +173,7 @@ class ResetPasswordState extends States {
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
-                            keyboardType: TextInputType.phone,
+                            // keyboardType: TextInputType.phone,
                             validator: MultiValidator([
                               RequiredValidator(
                                   errorText: 'Mobile number Required *'),

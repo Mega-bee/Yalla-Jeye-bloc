@@ -50,29 +50,10 @@ class ForgetPasswordOtpCubit extends Cubit<States> {
       if (value == null) {
         _loadingStateSubject.add(AsyncSnapshot.nothing());
         Fluttertoast.showToast(msg: 'Connection error');
-      } else if (value.code == 200) {
-        _logInRepository
-            .forgetPassword(
-          ForgetPasswordRequest(
-            phoneNumber: request.phoneNumber,
-            password: request.password,
-          ),
-
-        )
-            .then((value) {
-          if (value == null) {
-            _loadingStateSubject.add(AsyncSnapshot.nothing());
-            Fluttertoast.showToast(msg: 'Connection error');
-//        emit(ErrorState(errorMessage: 'Connection error', retry: () {}));
-          } else if (value.code == 200) {
-            Navigator.pushNamed(screenState.context, AuthRoutes.RESET_PASSWORD,arguments: {'phoneNumber':request.phoneNumber,});
-            print("Home");
-          } else if (value.code != 200) {
-            _loadingStateSubject.add(AsyncSnapshot.nothing());
-
-            Fluttertoast.showToast(msg: "Otp Is Wrong");
-          }
-        });
+      }
+      else if (value.code == 200) {
+        Navigator.pushNamed(screenState.context, AuthRoutes.RESET_PASSWORD,arguments: {'phoneNumber':request.phoneNumber,});
+        print("Home");
       } else if (value.code != 200) {
         _loadingStateSubject.add(AsyncSnapshot.nothing());
         Fluttertoast.showToast(msg: "Otp Is Wrong");
