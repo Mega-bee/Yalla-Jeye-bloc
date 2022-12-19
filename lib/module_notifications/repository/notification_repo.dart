@@ -1,10 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/auth/service/auth_service.dart';
 import 'package:untitled1/module_network/http_client/http_client.dart';
-import 'package:untitled1/module_notifications/request/notification_request.dart';
-
-import '../../abstracts/WebUrl.dart';
-import '../../abstracts/model/WebServiceResponse.dart';
 
 @injectable
 class NotificationRepo {
@@ -13,16 +9,7 @@ class NotificationRepo {
 
   NotificationRepo(this._apiClient, this._authService);
 
-  Future<WebServiceResponse?> postToken(String? token) async {
-    NotificationRequest? request;
-    var token = _authService.getToken();
-    WebServiceResponse? response = await _apiClient.put(
-      Urls.FCM_TOKEN,
-      request!.toJson(),
-      headers: {'Authorization': 'Bearer ' '$token'},
-    );
-    if (response == null) return null;
-    return response;
+  void postToken(String? token) {
 
     // _authService.getToken().then(
     //   (value) {
@@ -33,5 +20,5 @@ class NotificationRepo {
     //           {'token': token.toString(), 'sound': sound},
     //           headers: {'Authorization': 'Bearer ${value}'});
     //     }
-      }
   }
+}

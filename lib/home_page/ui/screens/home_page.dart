@@ -30,7 +30,6 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   StreamSubscription? _globalStateManager;
-  static FireNotificationService fireNotificationService = FireNotificationService();
 
   @override
   void initState() {
@@ -47,15 +46,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
           }
         });
 
-    String FireBaseToken = '';
-    fireNotificationService.getFcmToken().then((value) {
-      FireBaseToken = value ??"";
-      print("FBT: ${value}");
-      // widget.cubit.FireBase(this, NotificationRequest(fireBaseToken: value)
-      // );
-      NotificationRequest(fireBaseToken: value);
 
-    });
 
 
   }

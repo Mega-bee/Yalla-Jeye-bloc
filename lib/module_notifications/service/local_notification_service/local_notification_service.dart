@@ -10,10 +10,10 @@ import 'package:rxdart/rxdart.dart';
 @injectable
 class LocalNotificationService {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  FlutterLocalNotificationsPlugin();
 
   static final PublishSubject<Map<String, dynamic>> _onNotificationReceived =
-      PublishSubject();
+  PublishSubject();
 
   Stream<Map<String, dynamic>> get onLocalNotificationStream =>
       _onNotificationReceived.stream;

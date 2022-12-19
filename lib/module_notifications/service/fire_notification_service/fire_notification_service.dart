@@ -9,18 +9,20 @@ import 'package:untitled1/module_notifications/repository/notification_repo.dart
 
 @injectable
 class FireNotificationService {
+  final NotificationRepo _notificationRepo;
 
-
+  FireNotificationService(
+      this._notificationRepo,
+      );
 
   static final PublishSubject<RemoteMessage> _onNotificationReceived =
-      PublishSubject();
+  PublishSubject();
 
   Stream get onNotificationStream => _onNotificationReceived.stream;
 
   static StreamSubscription? iosSubscription;
 
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-  late final NotificationRepo _notificationRepo;
 
   Future<void> init() async {
     if (p.Platform.isIOS) {
@@ -98,7 +100,6 @@ class FireNotificationService {
   Future<String?> getFcmToken() async {
     try {
       var token = await _fcm.getToken();
-      print("Firebase token: $token");
       return token;
     } catch (e) {}
   }
