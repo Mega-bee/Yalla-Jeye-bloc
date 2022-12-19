@@ -7,6 +7,7 @@ import 'package:untitled1/module_menu_details/menu_route.dart';
 import 'package:untitled1/module_menu_details/repository/menu_details_repository.dart';
 import 'package:untitled1/module_menu_details/request/calculate_price_request.dart';
 import 'package:untitled1/module_menu_details/response/calculate_response.dart';
+import 'package:untitled1/module_notifications/request/notification_request.dart';
 import '../../abstracts/states/error_state.dart';
 import '../../abstracts/states/loading_state.dart';
 import '../../abstracts/states/state.dart';
@@ -67,5 +68,10 @@ class HomePageCubit extends Cubit<States> {
 
   refreshHome(){
     _cartSubject.add('updateCart');
+  }
+
+  FireBase(HomePageState state,NotificationRequest request){
+    emit(LoadingState());
+    _homePageRepository.FBT(request).then((value) {});
   }
 }

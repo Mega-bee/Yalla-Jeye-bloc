@@ -5,6 +5,7 @@ import 'package:untitled1/auth/service/auth_service.dart';
 import '../../abstracts/WebUrl.dart';
 import '../../abstracts/model/WebServiceResponse.dart';
 import '../../module_network/http_client/http_client.dart';
+import '../../module_notifications/request/notification_request.dart';
 
 @injectable
 class HomePageRepository {
@@ -20,6 +21,17 @@ class HomePageRepository {
       Urls.GET_HOME_PAGE,
       headers: {'Authorization': 'Bearer ' '$token'},
 
+    );
+    if (response == null) return null;
+    return response;
+  }
+
+  Future<WebServiceResponse?> FBT(NotificationRequest request) async {
+    var token = _authService.getToken();
+    WebServiceResponse? response = await _apiClient.put(
+      Urls.FCM_TOKEN,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ' '$token'},
     );
     if (response == null) return null;
     return response;
