@@ -32,6 +32,7 @@ class RegionsSuccess extends States {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: DropdownButton(
+          isDense: true,
           value: screenState.selectedRegion,
           icon: const Icon(Icons.keyboard_arrow_down),
           items: regions.map((RegionsResponse items) {

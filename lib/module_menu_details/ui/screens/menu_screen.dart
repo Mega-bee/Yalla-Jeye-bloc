@@ -45,66 +45,70 @@ class MenuDetailsScreenState extends State<MenuDetailsScreen> {
       menuDetailsModel = args as MenuDetailsModel;
       flags = false;
     }
-    return Scaffold(
-      appBar: AppBar(
-        // backgroundColor: Colors.white,
-        title: Text(menuDetailsModel?.categoryName ?? '',
-            style: GoogleFonts.poppins(
-              fontStyle: FontStyle.normal,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            )),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Hero(
-              tag: menuDetailsModel?.image ?? '',
-              child: CachedNetworkImage(
-                imageUrl: menuDetailsModel?.image ?? '',
-                fit: BoxFit.fitWidth,
-                width: double.maxFinite,
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
-                menuDetailsModel?.restaurantName ?? '',
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: ()=>FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          // backgroundColor: Colors.white,
+          title: Text(menuDetailsModel?.categoryName ?? '',
+              style: GoogleFonts.poppins(
+                fontStyle: FontStyle.normal,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              )),
+        ),
+        resizeToAvoidBottomInset: true,
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Hero(
+                tag: menuDetailsModel?.image ?? '',
+                child: CachedNetworkImage(
+                  imageUrl: menuDetailsModel?.image ?? '',
+                  fit: BoxFit.fitWidth,
+                  width: double.maxFinite,
                 ),
               ),
-            ),
-            menuDetailsModel!.menuImages!.isNotEmpty
-                ? GridView.builder(
-                    itemBuilder: (context, index) => Image.network(
-                        menuDetailsModel!.menuImages![index].menuImage ?? ''),
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: menuDetailsModel!.menuImages!.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: (3.5 / 4),
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 10,
-                    ))
-                : Container()
-          ],
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  menuDetailsModel?.restaurantName ?? '',
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              menuDetailsModel!.menuImages!.isNotEmpty
+                  ? GridView.builder(
+                      itemBuilder: (context, index) => Image.network(
+                          menuDetailsModel!.menuImages![index].menuImage ?? ''),
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: menuDetailsModel!.menuImages!.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: (3.5 / 4),
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 10,
+                      ))
+                  : Container()
+            ],
+          ),
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: CustomActionButton(
+            model: menuDetailsModel,
+            isLoginUser: widget._authService.isLoggedIn,
+            claPrice: (request) {
+              widget.cubit.calculateTotalPrice(request, this);
+            }),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: CustomActionButton(
-          model: menuDetailsModel,
-          isLoginUser: widget._authService.isLoggedIn,
-          claPrice: (request) {
-            widget.cubit.calculateTotalPrice(request, this);
-          }),
     );
   }
 }

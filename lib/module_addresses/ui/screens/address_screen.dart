@@ -78,22 +78,15 @@ class AddressScreenState extends State<AddressScreen> {
                     backgroundColor: Colors.transparent,
                     context: context,
                     isScrollControlled: true,
-                    enableDrag: false,
                     builder: (context) {
-                      return Container(
-                        height: MediaQuery.of(context).size.height * 0.7,
-                        child: CreateAddressSheet(
-                          createAddress: (req) {
-                            Navigator.pop(context);
-                            createAddress(req, goToSelectedState);
-                          },
-                          isUpdated: false,
-                          cubit: widget.regionsCubit,
-                        ),
-                      );
+                      return CreateAddressSheet(createAddress: (req){
+                        Navigator.pop(context);
+                        createAddress(req,goToSelectedState);
+                      },isUpdated: false, cubit: widget.regionsCubit,);
                     },
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
+                        borderRadius:
+                        BorderRadius.circular(15)),
                     elevation: 5);
               },
               child: const Padding(

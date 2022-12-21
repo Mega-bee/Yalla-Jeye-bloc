@@ -26,23 +26,20 @@ class AddressListSuccess extends States {
               backgroundColor: Colors.transparent,
               context: context,
               builder: (context) {
-                return Container(
-                  height: MediaQuery.of(context).size.height * 0.7,
-                  child: CreateAddressSheet(
-                    createAddress: (req) {
-                      req.id = addressList[index].id;
-                      Navigator.pop(context);
-                      screenState.updateAddress(req);
-                    },
-                    isUpdated: true,
-                    response: addressList[index],
-                    cubit: screenState.widget.regionsCubit,
-                  ),
+                return CreateAddressSheet(
+                  createAddress: (req) {
+                    req.id = addressList[index].id;
+                    Navigator.pop(context);
+                    screenState.updateAddress(req);
+                  },
+                  isUpdated: true,
+                  response: addressList[index],
+                  cubit: screenState.widget.regionsCubit,
                 );
               },
               shape: RoundedRectangleBorder(
                   borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(15))),
+                  BorderRadius.vertical(top: Radius.circular(15))),
               isScrollControlled: true,
               elevation: 5);
         },
