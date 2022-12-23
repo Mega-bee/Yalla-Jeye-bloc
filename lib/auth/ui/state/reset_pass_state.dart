@@ -95,6 +95,8 @@ class ResetPasswordState extends States {
                         child: Padding(
                           padding: EdgeInsets.only(right: 2, left: 24),
                           child: Container(
+
+
                             color:redColor,
                             height: 4,
                             width: 35,
