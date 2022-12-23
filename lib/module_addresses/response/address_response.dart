@@ -41,3 +41,6 @@ class AddressResponse {
        isSelected = false;
      }
  }
+
+ AddressResponse? modelAddress1;
+AddressResponse? modelAddress2;

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:untitled1/auth/ui/screens/forgot_password_list.dart';
 import 'package:untitled1/auth/ui/screens/log_in_list.dart';
+import 'package:untitled1/auth/ui/screens/otp_forgot_password.dart';
 import 'package:untitled1/auth/ui/screens/otp_screen.dart';
+import 'package:untitled1/auth/ui/screens/reset_password.dart';
 import 'package:untitled1/auth/ui/screens/sign_up_list.dart';
 import 'package:untitled1/custom/ui/screens/custom_list.dart';
 
@@ -14,8 +17,11 @@ class  LogInModule extends RoutModule {
   final loginScreen _login;
   final SignupScreen _signUp;
   final PinCodeVerificationScreen _pinCodeVerificationScreen;
+  final ForgetPasswordScreen _forgetPasswordScreen;
+  final ResetPasswordScreen _resetPasswordScreen;
+  final ForgetPassVerificationScreen _forgetPassVerificationScreen;
 
-  LogInModule(this._login,this._signUp,this._pinCodeVerificationScreen) {
+  LogInModule(this._login,this._signUp,this._pinCodeVerificationScreen,this._forgetPassVerificationScreen,this._forgetPasswordScreen,this._resetPasswordScreen) {
     RoutModule.RoutesMap.addAll(getRoutes());
   }
 
@@ -25,6 +31,9 @@ class  LogInModule extends RoutModule {
       AuthRoutes.login: (context) => _login,
       AuthRoutes.signUp: (context) => _signUp,
       AuthRoutes.OTP_SCREEN: (context) => _pinCodeVerificationScreen,
+      AuthRoutes.FORGET_PASSWORD: (context) => _forgetPasswordScreen,
+      AuthRoutes.RESET_PASSWORD: (context) => _resetPasswordScreen,
+      AuthRoutes.FORGET_PASSWORD_OPT: (context) => _forgetPassVerificationScreen,
 
 
 

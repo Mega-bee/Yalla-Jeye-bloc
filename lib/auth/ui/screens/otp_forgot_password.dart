@@ -1,38 +1,40 @@
+
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 import '../../../abstracts/states/state.dart';
 import '../../request/confirm_otp.dart';
 import '../../request/confirm_phone_number_request.dart';
 import '../../request/generate_otp_request.dart';
-import '../../state_manager/otp_state.dart';
-import '../state/otp_state.dart';
+import '../../state_manager/forgot_password_otp.dart';
+import '../state/otp_forgot_password_state.dart';
+
 
 
 @injectable
-class PinCodeVerificationScreen extends StatefulWidget {
-  final OtpCubit cubit ;
+class ForgetPassVerificationScreen extends StatefulWidget {
+  final ForgetPasswordOtpCubit cubit ;
 // final SignUpCubit cubit ;
-  PinCodeVerificationScreen(this.cubit,);
+  ForgetPassVerificationScreen(this.cubit,);
   @override
-  PinCodeVerificationScreenState createState() =>
-      PinCodeVerificationScreenState();
+  ForgetPassVerificationScreenState createState() =>
+      ForgetPassVerificationScreenState();
 }
 
-class PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
+class ForgetPassVerificationScreenState extends State<ForgetPassVerificationScreen> {
   late AsyncSnapshot loadingSnapshot;
   bool flags = true;
-  void ConfirmOtpRequest(ConfOtpRequest request){
-    widget.cubit.OtpConf(request,this);
-  }
-  void ResendOtp(GenOtpRequest request){
-    widget.cubit.ResendOtp(request,this);
-  }
 
-  void ConfirmPhoneRequest(ConfPhoneNumbRequest request){
-    widget.cubit.ConfirmPhoneNumber(request,this);
+
+
+  // void ConfirmOtpForgetPass(ConfOtpRequest request){
+  //   widget.cubit.OtpConf(request,this);
+  // }
+
+  void ConfirmOtp(ConfOtpRequest request){
+    widget.cubit.OtpConf(request, this);
   }
 
 
@@ -53,7 +55,8 @@ class PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
         });
       }
     });
-    // widget.cubit.emit(OtpInitState(this,""));
+
+
   }
 
   // @override
@@ -78,7 +81,8 @@ class PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
       var  args = ModalRoute.of(context)?.settings.arguments;
       if (args != null && args is Map) {
         String phone = args['phoneNumber'];
-        widget.cubit.emit(OtpInitState(screenState: this,errorMessage: '',phone: phone));
+        widget.cubit.emit(OtpForgetPassInitState(screenState: this,errorMessage: '',phoneOtp: phone)
+        );
       }
       flags = false;
     }
@@ -96,7 +100,7 @@ class PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
             style: TextStyle(color: Colors.black),
           ),
         ),
-        body: BlocBuilder<OtpCubit, States>(
+        body: BlocBuilder<ForgetPasswordOtpCubit, States>(
           bloc: widget.cubit,
           builder: (context, state) {
             return state.getUI(context);

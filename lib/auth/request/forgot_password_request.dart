@@ -1,13 +1,14 @@
-class ConfOtpRequest {
-  String? otp;
+
+
+class ForgetPasswordRequest {
   String? phoneNumber;
+  String? otp;
   String? password;
 
-  ConfOtpRequest({this.otp, this.phoneNumber});
+  ForgetPasswordRequest( {this.phoneNumber,this.password});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['otp'] = otp;
     data['phoneNumber'] = phoneNumber;
 
     return data;

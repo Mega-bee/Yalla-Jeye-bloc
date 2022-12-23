@@ -13,11 +13,8 @@ class MenuDetailsScreen extends StatefulWidget {
   final CheckOutCubit cubit;
   final AuthService _authService;
   final HomePageCubit _homePageCubit;
-  const MenuDetailsScreen(
-    this.cubit,
-    this._authService,
-      this._homePageCubit
-  );
+
+  const MenuDetailsScreen(this.cubit, this._authService, this._homePageCubit);
 
   @override
   State<MenuDetailsScreen> createState() => MenuDetailsScreenState();
@@ -46,7 +43,7 @@ class MenuDetailsScreenState extends State<MenuDetailsScreen> {
       flags = false;
     }
     return GestureDetector(
-      onTap: ()=>FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
           // backgroundColor: Colors.white,
@@ -102,12 +99,14 @@ class MenuDetailsScreenState extends State<MenuDetailsScreen> {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: CustomActionButton(
+        floatingActionButton:
+        CustomActionButton(
             model: menuDetailsModel,
             isLoginUser: widget._authService.isLoggedIn,
             claPrice: (request) {
               widget.cubit.calculateTotalPrice(request, this);
             }),
+
       ),
     );
   }

@@ -66,7 +66,33 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                         padding: const EdgeInsets.all(5),
                         child: ElevatedButton(
                           onPressed: () {
+                            if (widget.model != null) {
+                              if (widget.model?.placeId != 0) {
+                                var containP = orderModelList.where(
+                                        (element) =>
+                                    element.placeId ==
+                                        widget.model?.placeId);
+                                if (containP.isEmpty) {
+                                  orderModelList.insert(
+                                      0, currentCartModel);
+                                }
+                              } else {
+                                var contain = orderModelList.where(
+                                        (element) =>
+                                    element.placeTypeId ==
+                                        widget.model?.placeTypeId &&
+                                        element.placeId ==
+                                            widget.model?.placeId);
+                                if (contain.isEmpty) {
+                                  orderModelList.insert(
+                                      0, currentCartModel);
+                                }
+                              }
+                              print('seend event');
+                              getIt<GlobalStateManager>().update();
+                            }
                             Navigator.pop(context);
+
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: redColor,

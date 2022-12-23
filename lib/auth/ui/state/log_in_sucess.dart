@@ -52,7 +52,7 @@ class LoginInitState extends States{
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Text(
-                      "Please enter your phone numbe and password to "
+                      "Please enter your phone number and password to "
                           "login to Yalla Jeye!",
                       style: TextStyle(color: Colors.white, fontSize: 17)),
                 ),
@@ -214,6 +214,25 @@ class LoginInitState extends States{
                               text: 'Login',
                               bgColor: redColor,
                               textColor: Colors.black,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: (){
+                              Navigator.pushNamed(context, AuthRoutes.FORGET_PASSWORD);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 22.0,top: 10),
+                              child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: Text(
+                                  "Forget pasword",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    decoration: TextDecoration.underline,
+                                  ),
+
+                                ),
+                              ),
                             ),
                           ),
 

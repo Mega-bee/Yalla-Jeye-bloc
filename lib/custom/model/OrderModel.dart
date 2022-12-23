@@ -33,3 +33,5 @@ class CartOrderModel {
 
 List<CartOrderModel> orderModelList = [];
 AddressResponse? selectedAddressModel  ;
+AddressResponse? Addressmodel1  ;
+AddressResponse? Addressmodel2  ;

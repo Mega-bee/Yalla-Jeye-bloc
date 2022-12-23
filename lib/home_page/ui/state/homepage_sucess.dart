@@ -13,9 +13,12 @@ import '../widget/Carousel_slider_widget/carousel_image_slider.dart';
 
 class HomePageSuccess extends States {
   final HomePageModel homepage;
+
   HomePageState homepageState;
 
   HomePageSuccess({required this.homepage, required this.homepageState});
+  late List<HomePageModel> SearchPlaces;
+  late List<HomePageModel> SearchPlaces1;
 
   @override
   Widget getUI(BuildContext context) {
