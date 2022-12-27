@@ -14,7 +14,7 @@ import '../widget/Carousel_slider_widget/carousel_image_slider.dart';
 
 
 class SearchPlaceSuccess extends States {
-  final SearchTermsModel searchTerm;
+  List<SearchTermsModel>  searchTerm;
 
   SearchPlaceSuccess({required this.searchTerm});
 

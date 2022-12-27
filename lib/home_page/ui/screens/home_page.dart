@@ -95,16 +95,18 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
         centerTitle: true,
         actions: [
           Padding(
-              padding: EdgeInsets.only(right: 15.0),
-              child: IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, HomePageRoutes.searchTerms);
-                },
-                icon: Icon(
-                  CupertinoIcons.search,
-                  color: Colors.red,
-                ),
-              ))
+            padding: EdgeInsets.only(right: 15.0),
+            child: IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, HomePageRoutes.searchTerms);
+              },
+              icon: Icon(
+                CupertinoIcons.search,
+                color: Colors.red,
+                size: 30,
+              ),
+            ),
+          )
         ],
       ),
       body: BlocBuilder<HomePageCubit, States>(

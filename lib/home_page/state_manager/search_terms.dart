@@ -49,9 +49,9 @@ class SearchTermsCubit extends Cubit<States> {
         for(var item in value.data.insideData){
           search.add(SearchTermsModel.fromJson(item));
         }
-        // emit(
-        //     SearchPlaceSuccess( searchTerm: search )
-        // );
+        emit(
+            SearchPlaceSuccess( searchTerm: search )
+        );
       }
     });
   }

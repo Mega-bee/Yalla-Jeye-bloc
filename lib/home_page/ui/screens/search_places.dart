@@ -23,49 +23,26 @@ class SearchPlaces extends StatefulWidget {
   final AuthPrefsHelper locationHelper;
   final AuthService _authService;
 
-  SearchPlaces(this.cubit,this.locationHelper, this._authService);
+  SearchPlaces(this.cubit, this.locationHelper, this._authService);
 
   @override
   State<SearchPlaces> createState() => SearchPlacesState();
 }
 
-class SearchPlacesState extends State<SearchPlaces> with TickerProviderStateMixin {
+class SearchPlacesState extends State<SearchPlaces>
+    with TickerProviderStateMixin {
   StreamSubscription? _globalStateManager;
+
   @override
   void initState() {
     super.initState();
-
-
-  }
-
-  static FireNotificationService fireNotificationService = FireNotificationService();
-
-
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
   }
 
   void refresh() {
-    print('reffesss hommee');
     if (mounted) {
       setState(() {});
     }
   }
-
-  // String dropdownValue = 'One';
-  // GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-
-  late AnimationController controller;
-
-  // TextEditingController textFieldController = TextEditingController();
-
-  String currentLocation = 'Zahle';
-  // final DestinationWithPlaces homepage = DestinationWithPlaces();
-  // final Destinations dest = Destinations();
-
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +50,8 @@ class SearchPlacesState extends State<SearchPlaces> with TickerProviderStateMixi
       appBar: AppBar(
         title: Image.asset(ImageAsset.LOGO),
         leadingWidth: 150,
-        backgroundColor: Colors.grey.shade50,elevation: 0,
+        backgroundColor: Colors.grey.shade50,
+        elevation: 0,
         centerTitle: true,
       ),
       body: BlocBuilder<SearchTermsCubit, States>(
@@ -82,7 +60,6 @@ class SearchPlacesState extends State<SearchPlaces> with TickerProviderStateMixi
           return state.getUI(context);
         },
       ),
-
     );
   }
 }
