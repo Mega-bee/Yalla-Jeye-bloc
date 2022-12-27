@@ -83,7 +83,7 @@ class NavigationbarrState extends State<Navigationbar> {
 
               ),
             ),
-            label: 'Delivery',
+            label: 'Menu',
           ),
           BottomNavigationBarItem(
             icon: Container(
@@ -93,7 +93,7 @@ class NavigationbarrState extends State<Navigationbar> {
                 color: currentIndex == 1 ? redColor : Colors.black,
               ),
             ),
-            label: 'Custom',
+            label: 'Pick up',
           ),
           BottomNavigationBarItem(
             icon: Container(

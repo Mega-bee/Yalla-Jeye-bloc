@@ -14,50 +14,33 @@ import '../../../abstracts/states/state.dart';
 import '../../../hive/hive.dart';
 import '../../../module_notifications/request/notification_request.dart';
 import '../../../utils/images/images.dart';
-import '../../homepage_route.dart';
 import '../../state_manager/homepage.dart';
+import '../../state_manager/search_terms.dart';
 
 @injectable
-class HomePage extends StatefulWidget {
-  final HomePageCubit cubit;
+class SearchPlaces extends StatefulWidget {
+  final SearchTermsCubit cubit;
   final AuthPrefsHelper locationHelper;
   final AuthService _authService;
 
-  HomePage(this.cubit, this.locationHelper, this._authService);
+  SearchPlaces(this.cubit,this.locationHelper, this._authService);
 
   @override
-  State<HomePage> createState() => HomePageState();
+  State<SearchPlaces> createState() => SearchPlacesState();
 }
 
-class HomePageState extends State<HomePage> with TickerProviderStateMixin {
+class SearchPlacesState extends State<SearchPlaces> with TickerProviderStateMixin {
   StreamSubscription? _globalStateManager;
-
   @override
   void initState() {
     super.initState();
-    widget.cubit.getHomePage(this);
-    controller = BottomSheet.createAnimationController(this);
-    controller.duration = const Duration(milliseconds: 500);
-    _globalStateManager =
-        getIt<GlobalStateManager>().stateStream.listen((event) {
-      if (mounted) {
-        setState(() {});
-      }
-    });
 
-    String FireBaseToken = '';
-    fireNotificationService.getFcmToken().then((value) {
-      FireBaseToken = value ?? "";
-      NotificationRequest(fireBaseToken: FireBaseToken);
-    });
+
   }
 
-  static FireNotificationService fireNotificationService =
-      FireNotificationService();
+  static FireNotificationService fireNotificationService = FireNotificationService();
 
-  getHome() {
-    widget.cubit.getHomePage(this);
-  }
+
 
   @override
   void dispose() {
@@ -80,9 +63,9 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   // TextEditingController textFieldController = TextEditingController();
 
   String currentLocation = 'Zahle';
-
   // final DestinationWithPlaces homepage = DestinationWithPlaces();
   // final Destinations dest = Destinations();
+
 
   @override
   Widget build(BuildContext context) {
@@ -90,38 +73,16 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       appBar: AppBar(
         title: Image.asset(ImageAsset.LOGO),
         leadingWidth: 150,
-        backgroundColor: Colors.grey.shade50,
-        elevation: 0,
+        backgroundColor: Colors.grey.shade50,elevation: 0,
         centerTitle: true,
-        actions: [
-          Padding(
-              padding: EdgeInsets.only(right: 15.0),
-              child: IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, HomePageRoutes.searchTerms);
-                },
-                icon: Icon(
-                  CupertinoIcons.search,
-                  color: Colors.red,
-                ),
-              ))
-        ],
       ),
-      body: BlocBuilder<HomePageCubit, States>(
+      body: BlocBuilder<SearchTermsCubit, States>(
         bloc: widget.cubit,
         builder: (context, state) {
           return state.getUI(context);
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: orderModelList.isNotEmpty
-          ? CustomActionButton(
-              model: null,
-              isLoginUser: widget._authService.isLoggedIn,
-              claPrice: (request) {
-                widget.cubit.calculateTotalPrice(request, this);
-              })
-          : Container(),
+
     );
   }
 }

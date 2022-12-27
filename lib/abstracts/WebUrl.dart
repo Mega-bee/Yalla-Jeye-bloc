@@ -16,6 +16,7 @@ class Urls {
   /*--------------------------home----------------------*/
   static const String GET_HOME_PAGE = BASE_HOME_PAGE + 'GetHomePage';
   static const String GET_ORDERS = BASE_HOME_PAGE + 'PlaceOrder';
+  static const String SEARCH_PLACES = BASE_HOME_PAGE + 'SearchPlaces';
 
   /*-----------------------ADDRESSES--------------------------------------*/
   static const String GET_ADDRESSES = '${BASE_ADDRESSES}GetAllAddresses';
