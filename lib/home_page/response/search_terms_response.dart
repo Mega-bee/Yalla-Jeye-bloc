@@ -21,7 +21,7 @@ class SearchTermsModel {
     image = json['image'];
     title = json['title'];
     description = json['description'];
-    sortId = json['sortId'];
+    // sortId = json['sortId'];
     address =
         json['address'] != null ? new Address.fromJson(json['address']) : null;
     if (json['menus'] != null) {
@@ -38,7 +38,7 @@ class SearchTermsModel {
     data['image'] = this.image;
     data['title'] = this.title;
     data['description'] = this.description;
-    data['sortId'] = this.sortId;
+    // data['sortId'] = this.sortId;
     if (this.address != null) {
       data['address'] = this.address!.toJson();
     }
@@ -125,4 +125,9 @@ class Menus {
     data['menu'] = this.menu;
     return data;
   }
+
+
+
 }
+
+

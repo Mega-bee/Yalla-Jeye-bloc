@@ -16,6 +16,7 @@ import '../request/search_terms_request.dart';
 import '../response/homepage_response.dart';
 import '../response/search_terms_response.dart';
 import '../ui/screens/home_page.dart';
+import '../ui/screens/search_places.dart';
 import '../ui/state/homepage_sucess.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -34,9 +35,9 @@ class SearchTermsCubit extends Cubit<States> {
 
 
 
-  SearchTerms(SearcPlacesRequest request, HomePageState screenState) {
-    TipDialogHelper.loading("Loading");
-    _searchTermRepository.SearchPlaces().then((value) async {
+  SearchTerms(SearcPlacesRequest request, SearchPlacesState screenState) {
+    // TipDialogHelper.loading("Loading");
+    _searchTermRepository.SearchPlaces(request).then((value) async {
       if (value == null) {
         emit(
           ErrorState(
@@ -50,7 +51,7 @@ class SearchTermsCubit extends Cubit<States> {
           search.add(SearchTermsModel.fromJson(item));
         }
         emit(
-            SearchPlaceSuccess( searchTerm: search )
+            SearchPlaceSuccess( screenState,search)
         );
       }
     });

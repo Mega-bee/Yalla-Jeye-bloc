@@ -14,8 +14,10 @@ import '../../../abstracts/states/state.dart';
 import '../../../hive/hive.dart';
 import '../../../module_notifications/request/notification_request.dart';
 import '../../../utils/images/images.dart';
+import '../../request/search_terms_request.dart';
 import '../../state_manager/homepage.dart';
 import '../../state_manager/search_terms.dart';
+import '../state/search_place_sucess.dart';
 
 @injectable
 class SearchPlaces extends StatefulWidget {
@@ -29,13 +31,11 @@ class SearchPlaces extends StatefulWidget {
   State<SearchPlaces> createState() => SearchPlacesState();
 }
 
-class SearchPlacesState extends State<SearchPlaces>
-    with TickerProviderStateMixin {
-  StreamSubscription? _globalStateManager;
-
+class SearchPlacesState extends State<SearchPlaces> {
   @override
   void initState() {
     super.initState();
+    widget.cubit.emit(SearchPlaceSuccess(this, []));
   }
 
   void refresh() {
@@ -44,12 +44,26 @@ class SearchPlacesState extends State<SearchPlaces>
     }
   }
 
+  getSearch(SearcPlacesRequest request) {
+    widget.cubit.SearchTerms(request, this);
+    print("mahfouz");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(ImageAsset.LOGO),
-        leadingWidth: 150,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+        ),
+        // leadingWidth: 150,
         backgroundColor: Colors.grey.shade50,
         elevation: 0,
         centerTitle: true,
