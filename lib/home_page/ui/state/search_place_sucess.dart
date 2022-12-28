@@ -68,14 +68,7 @@ class SearchPlaceSuccess extends States {
             // autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
         ),
-        // ElevatedButton(
-        //   onPressed: () {
-        //     state.getSearch(SearcPlacesRequest(
-        //       isSearch: search.text,
-        //     ));
-        //   },
-        //   child: Text("Search"),
-        // ),
+
         SizedBox(
           height: 40,
         ),

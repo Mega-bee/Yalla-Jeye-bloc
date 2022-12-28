@@ -15,7 +15,7 @@ class ResetPasswordState extends States {
   final String? phone;
   String? errorMessage;
 
-  ResetPasswordState(this.screenState, this.errorMessage,this.phone);
+  ResetPasswordState(this.screenState, this.errorMessage, this.phone);
 
   final _formKey = GlobalKey<FormState>();
   final password = TextEditingController();
@@ -27,7 +27,9 @@ class ResetPasswordState extends States {
     }
     return "";
   }
+
   bool _isObscure = true;
+
   @override
   Widget getUI(BuildContext context) {
     var mediaQueryHeight = MediaQuery.of(context).size.height;
@@ -54,7 +56,6 @@ class ResetPasswordState extends States {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
-
               ],
             ),
           ),
@@ -95,9 +96,7 @@ class ResetPasswordState extends States {
                         child: Padding(
                           padding: EdgeInsets.only(right: 2, left: 24),
                           child: Container(
-
-
-                            color:redColor,
+                            color: redColor,
                             height: 4,
                             width: 35,
                           ),
@@ -107,7 +106,6 @@ class ResetPasswordState extends States {
                         height: mediaQueryHeight * 0.05,
                       ),
                       Column(children: [
-
                         Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: mediaQueryWidth * 0.05),
@@ -125,12 +123,12 @@ class ResetPasswordState extends States {
                               labelStyle: TextStyle(color: Colors.black),
                               enabledBorder: const OutlineInputBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
+                                      BorderRadius.all(Radius.circular(10)),
                                   borderSide: BorderSide(
                                       width: 0, color: Colors.black12)),
                               border: OutlineInputBorder(
                                 borderSide:
-                                const BorderSide(color: Colors.grey),
+                                    const BorderSide(color: Colors.grey),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
@@ -140,12 +138,14 @@ class ResetPasswordState extends States {
                                   errorText: 'Mobile number Required *'),
                             ]),
                             autovalidateMode:
-                            AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.onUserInteraction,
+                            obscureText: true,
                           ),
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.03,
-                        ),Padding(
+                        ),
+                        Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: mediaQueryWidth * 0.05),
                           child: TextFormField(
@@ -155,19 +155,22 @@ class ResetPasswordState extends States {
                             decoration: InputDecoration(
                               labelText: "Confirm password",
                               focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black)),
+                                borderSide: BorderSide(
+                                  color: Colors.black,
+                                ),
+                              ),
                               filled: true,
                               fillColor: Colors.white,
                               hintText: "Confirm password",
                               labelStyle: TextStyle(color: Colors.black),
                               enabledBorder: const OutlineInputBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
+                                      BorderRadius.all(Radius.circular(10)),
                                   borderSide: BorderSide(
                                       width: 0, color: Colors.black12)),
                               border: OutlineInputBorder(
                                 borderSide:
-                                const BorderSide(color: Colors.grey),
+                                    const BorderSide(color: Colors.grey),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
@@ -177,15 +180,13 @@ class ResetPasswordState extends States {
                                   errorText: 'Mobile number Required *'),
                             ]),
                             autovalidateMode:
-                            AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.onUserInteraction,
+                            obscureText: true,
                           ),
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.03,
                         ),
-
-
-
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.03,
                         ),
@@ -193,26 +194,23 @@ class ResetPasswordState extends States {
                           padding: const EdgeInsets.all(8.0),
                           child: CustomButton(
                             buttonTab: () {
-                              if (password.text.isEmpty || confirmPass.text.isEmpty
-                              ) {
+                              if (password.text.isEmpty ||
+                                  confirmPass.text.isEmpty) {
                                 _formKey.currentState!.validate();
                               }
-                              screenState.resetPassword(
-                                  ResetPasswordRequest(password: password.text,phone: phone)
-                              );
+                              screenState.resetPassword(ResetPasswordRequest(
+                                  password: password.text, phone: phone));
                               // Navigator.pushNamed(context, AuthRoutes.OTP_SCREEN);
                             },
-                            loading:
-                            screenState.loadingSnapshotLogin.connectionState ==
+                            loading: screenState
+                                    .loadingSnapshotLogin.connectionState ==
                                 ConnectionState.waiting,
                             text: 'SEND',
                             bgColor: redColor,
                             textColor: Colors.black,
                           ),
                         ),
-
                       ]),
-
                       SizedBox(
                         height: 100,
                       ),
