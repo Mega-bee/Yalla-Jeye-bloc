@@ -18,7 +18,7 @@ class SearchPlaceSuccess extends States {
   List<SearchTermsModel> searchTerm;
   SearchPlacesState state;
 
-  SearchPlaceSuccess( this.state,this.searchTerm);
+  SearchPlaceSuccess(this.state, this.searchTerm);
 
   // HomePageState homepageState;
 
@@ -29,16 +29,15 @@ class SearchPlaceSuccess extends States {
     double width = MediaQuery.of(context).size.width;
     return Column(
       children: [
-        SizedBox(height: 15,),
+        SizedBox(
+          height: 15,
+        ),
         Padding(
-          padding:  EdgeInsets.all(width * 0.05),
+          padding: EdgeInsets.all(width * 0.05),
           child: TextField(
-
-            onChanged: (valuee){
+            onChanged: (valuee) {
               state.getSearch(SearcPlacesRequest(
-
                 isSearch: valuee,
-
               ));
             },
             //controller: searchTermController,
@@ -46,10 +45,9 @@ class SearchPlaceSuccess extends States {
             style: const TextStyle(fontSize: 14),
             decoration: InputDecoration(
               labelText: "Search",
-              focusedBorder:
-                  OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                  borderRadius:BorderRadius.circular(10)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                  borderRadius: BorderRadius.circular(10)),
               filled: true,
               fillColor: Colors.white,
               hintText: "Search",
@@ -62,7 +60,7 @@ class SearchPlaceSuccess extends States {
                 borderRadius: BorderRadius.circular(10.0),
               ),
             ),
-            keyboardType: TextInputType.text,
+            // keyboardType: TextInputType.text,
             // validator: MultiValidator([
             //   RequiredValidator(
             //       errorText: 'Mobile number Required *'),
@@ -78,22 +76,25 @@ class SearchPlaceSuccess extends States {
         //   },
         //   child: Text("Search"),
         // ),
-        SizedBox(height: 40,),
+        SizedBox(
+          height: 40,
+        ),
         Expanded(
-          child: ListView.builder(
-            itemCount: searchTerm.length,
-              itemBuilder: (context,index){
-            return Column(
-              children: [
-                ListTile(
-                  // leading: Image.network(searchTerm[index].image.toString()),
-                  title: Text("${searchTerm[index].title}"),
-                  subtitle: Text("${searchTerm[index].description}"),
-
-                )
-              ],
-            );
-          }),
+          child: ListView.separated(
+              separatorBuilder: (BuildContext context, int index) =>
+                  const Divider(),
+              itemCount: searchTerm.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    ListTile(
+                      // leading: Image.network(searchTerm[index].image.toString()),
+                      title: Text("${searchTerm[index].title}"),
+                      subtitle: Text("${searchTerm[index].description}"),
+                    )
+                  ],
+                );
+              }),
         )
       ],
     );
