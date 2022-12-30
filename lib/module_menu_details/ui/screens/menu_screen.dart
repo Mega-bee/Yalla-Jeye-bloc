@@ -23,6 +23,8 @@ class MenuDetailsScreen extends StatefulWidget {
 class MenuDetailsScreenState extends State<MenuDetailsScreen> {
   MenuDetailsModel? menuDetailsModel;
   bool flags = true;
+  String id = '-1';
+
 
   @override
   void initState() {
@@ -42,6 +44,12 @@ class MenuDetailsScreenState extends State<MenuDetailsScreen> {
       menuDetailsModel = args as MenuDetailsModel;
       flags = false;
     }
+
+    // final argsId = ModalRoute.of(context)!.settings.arguments;
+    // if (argsId is String && flags) {
+    //   id = argsId;
+    //   flags = false;
+    // }
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(

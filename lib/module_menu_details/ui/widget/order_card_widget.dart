@@ -19,6 +19,7 @@ class _OrderCardWidgetState extends State<OrderCardWidget> {
 
   @override
   Widget build(BuildContext context) {
+
     _descriptionController.text = widget.orderModel.description ?? '';
     return Card(
       shape: RoundedRectangleBorder(

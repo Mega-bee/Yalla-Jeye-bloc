@@ -6,6 +6,8 @@ import 'package:untitled1/home_page/ui/widget/destination_card.dart';
 import 'package:untitled1/home_page/ui/widget/destination_place_card.dart';
 import 'package:untitled1/home_page/ui/widget/title_home.dart';
 import '../../../abstracts/states/state.dart';
+import '../../../module_menu_details/menu_route.dart';
+import '../../../module_menu_details/model/menu_model.dart';
 import '../../../utils/Colors/colors.dart';
 import '../../request/search_terms_request.dart';
 import '../../response/homepage_response.dart';
@@ -60,6 +62,7 @@ class SearchPlaceSuccess extends States {
                 borderRadius: BorderRadius.circular(10.0),
               ),
             ),
+            autofocus: true,
             // keyboardType: TextInputType.text,
             // validator: MultiValidator([
             //   RequiredValidator(
@@ -68,7 +71,6 @@ class SearchPlaceSuccess extends States {
             // autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
         ),
-
         SizedBox(
           height: 40,
         ),
@@ -80,10 +82,19 @@ class SearchPlaceSuccess extends States {
               itemBuilder: (context, index) {
                 return Column(
                   children: [
-                    ListTile(
-                      // leading: Image.network(searchTerm[index].image.toString()),
-                      title: Text("${searchTerm[index].title}"),
-                      subtitle: Text("${searchTerm[index].description}"),
+                    InkWell(
+                      // onTap: () {
+                      //   Navigator.pushNamed(
+                      //     context,
+                      //     MenuRoutes.menuPage,
+                      //     arguments: searchTerm[index].id.toString(),
+                      //   );
+                      // },
+                      child: ListTile(
+                        // leading: Image.network(searchTerm[index].image.toString()),
+                        title: Text("${searchTerm[index].title}"),
+                        subtitle: Text("${searchTerm[index].description}"),
+                      ),
                     )
                   ],
                 );

@@ -164,10 +164,12 @@ class ResetPasswordState extends States {
                               hintText: "Confirm password",
                               labelStyle: TextStyle(color: Colors.black),
                               enabledBorder: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  borderSide: BorderSide(
-                                      width: 0, color: Colors.black12)),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                                borderSide:
+                                    BorderSide(width: 0, color: Colors.black12),
+                              ),
                               border: OutlineInputBorder(
                                 borderSide:
                                     const BorderSide(color: Colors.grey),
