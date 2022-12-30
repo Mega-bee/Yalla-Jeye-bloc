@@ -42,6 +42,8 @@ class OrderPageSuccess extends States {
             ListView.builder(
               itemBuilder: (context, index) => OrderCard(
                 order: orderCurrent[index],
+                state: state,
+
               ),
               shrinkWrap: true,
               itemCount: orderCurrent.length,
@@ -49,6 +51,7 @@ class OrderPageSuccess extends States {
             ListView.builder(
               itemBuilder: (context, index) => OrderCard(
                 order: orderHistory[index],
+                state: state,
               ),
               shrinkWrap: true,
               itemCount: orderHistory.length,

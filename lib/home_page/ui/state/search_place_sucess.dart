@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:untitled1/home_page/ui/screens/placess_list_screen.dart';
@@ -46,22 +47,37 @@ class SearchPlaceSuccess extends States {
             cursorColor: redColor,
             style: const TextStyle(fontSize: 14),
             decoration: InputDecoration(
+              prefixIcon: Icon(CupertinoIcons.search),
               labelText: "Search",
               focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black),
-                  borderRadius: BorderRadius.circular(10)),
+                borderSide: BorderSide(color: Colors.black),
+                borderRadius: BorderRadius.circular(
+                  10,
+                ),
+              ),
               filled: true,
               fillColor: Colors.white,
-              hintText: "Search",
+              hintText: "Restaurant name...",
               labelStyle: TextStyle(color: Colors.black),
               enabledBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(width: 0, color: Colors.black12)),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(
+                    10,
+                  ),
+                ),
+                borderSide: BorderSide(
+                  width: 0,
+                  color: Colors.black12,
+                ),
+              ),
               border: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.grey),
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: BorderRadius.circular(
+                  10.0,
+                ),
               ),
             ),
+
             autofocus: true,
             // keyboardType: TextInputType.text,
             // validator: MultiValidator([
@@ -83,13 +99,13 @@ class SearchPlaceSuccess extends States {
                 return Column(
                   children: [
                     InkWell(
-                      // onTap: () {
-                      //   Navigator.pushNamed(
-                      //     context,
-                      //     MenuRoutes.menuPage,
-                      //     arguments: searchTerm[index].id.toString(),
-                      //   );
-                      // },
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          MenuRoutes.menuPage,
+                          arguments: searchTerm[index].id.toString(),
+                        );
+                      },
                       child: ListTile(
                         // leading: Image.network(searchTerm[index].image.toString()),
                         title: Text("${searchTerm[index].title}"),

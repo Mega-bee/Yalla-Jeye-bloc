@@ -25,7 +25,6 @@ class MenuDetailsScreenState extends State<MenuDetailsScreen> {
   bool flags = true;
   String id = '-1';
 
-
   @override
   void initState() {
     super.initState();
@@ -39,17 +38,12 @@ class MenuDetailsScreenState extends State<MenuDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments;
-    if (args != null && flags) {
-      menuDetailsModel = args as MenuDetailsModel;
+    final argsId = ModalRoute.of(context)!.settings.arguments;
+    if (argsId is String && flags) {
+      id = argsId;
       flags = false;
     }
 
-    // final argsId = ModalRoute.of(context)!.settings.arguments;
-    // if (argsId is String && flags) {
-    //   id = argsId;
-    //   flags = false;
-    // }
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -107,14 +101,12 @@ class MenuDetailsScreenState extends State<MenuDetailsScreen> {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton:
-        CustomActionButton(
+        floatingActionButton: CustomActionButton(
             model: menuDetailsModel,
             isLoginUser: widget._authService.isLoggedIn,
             claPrice: (request) {
               widget.cubit.calculateTotalPrice(request, this);
             }),
-
       ),
     );
   }
