@@ -248,3 +248,8 @@ class PlaceMenu {
 //     menuImage = json['menu'];
 //   }
 // }
+
+
+
+
+

@@ -17,10 +17,12 @@ class ApiClient {
   ApiClient(this._logger);
 
   Future<WebServiceResponse?> get(
+
     String url, {
     Map<String, dynamic>? queryParams,
     Map<String, String>? headers,
   }) async {
+
     try {
       _logger.info(tag, 'Requesting GET to: ' + url);
       _logger.info(tag, 'Headers: ' + headers.toString());
@@ -44,6 +46,8 @@ class ApiClient {
         // client.options.headers['Access-Control-Allow-Origin'] =
         //     '*';
       }
+     //USE THIS
+
       //  client.options.headers['Access-Control-Allow-Origin'] = '*';
       var response = await client.get(
         url,

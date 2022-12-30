@@ -15,16 +15,20 @@ import '../response/homepage_response.dart';
 import '../ui/screens/home_page.dart';
 import '../ui/state/homepage_sucess.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../ui/state/search_place_sucess.dart';
+
 @injectable
 class HomePageCubit extends Cubit<States> {
   final HomePageRepository _homePageRepository;
   final CheckOutRepository _checkOutRepository;
 
-  HomePageCubit(this._homePageRepository, this._checkOutRepository) : super(LoadingState());
+  HomePageCubit(this._homePageRepository, this._checkOutRepository)
+      : super(LoadingState());
 
-      final PublishSubject<String>  _cartSubject = PublishSubject<String>();
+  final PublishSubject<String> _cartSubject = PublishSubject<String>();
 
-  Stream<String> get cartStream =>  _cartSubject.stream;
+  Stream<String> get cartStream => _cartSubject.stream;
 
   getHomePage(HomePageState state) {
     emit(LoadingHomePage());
@@ -54,9 +58,9 @@ class HomePageCubit extends Cubit<States> {
         TipDialogHelper.dismiss();
         Navigator.pop(screenState.context);
         CalculatePriceResponse response =
-        CalculatePriceResponse.fromJson(value.data.insideData);
+            CalculatePriceResponse.fromJson(value.data.insideData);
         Navigator.pushNamed(screenState.context, MenuRoutes.checkOutPage,
-            arguments: {'model':response ,"custom":false});
+            arguments: {'model': response, "custom": false});
       } else {
         TipDialogHelper.fail("Something Wrong");
         await Future.delayed(const Duration(seconds: 5));
@@ -65,7 +69,8 @@ class HomePageCubit extends Cubit<States> {
     });
   }
 
-  refreshHome(){
+  refreshHome() {
     _cartSubject.add('updateCart');
   }
+
 }

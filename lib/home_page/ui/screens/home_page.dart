@@ -14,6 +14,7 @@ import '../../../abstracts/states/state.dart';
 import '../../../hive/hive.dart';
 import '../../../module_notifications/request/notification_request.dart';
 import '../../../utils/images/images.dart';
+import '../../homepage_route.dart';
 import '../../state_manager/homepage.dart';
 
 @injectable
@@ -22,7 +23,7 @@ class HomePage extends StatefulWidget {
   final AuthPrefsHelper locationHelper;
   final AuthService _authService;
 
-   HomePage(this.cubit,this.locationHelper, this._authService);
+  HomePage(this.cubit, this.locationHelper, this._authService);
 
   @override
   State<HomePage> createState() => HomePageState();
@@ -30,6 +31,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   StreamSubscription? _globalStateManager;
+
   @override
   void initState() {
     super.initState();
@@ -38,22 +40,20 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     controller.duration = const Duration(milliseconds: 500);
     _globalStateManager =
         getIt<GlobalStateManager>().stateStream.listen((event) {
-          if (mounted) {
-           setState(() {
-
-           });
-          }
-        });
+      if (mounted) {
+        setState(() {});
+      }
+    });
 
     String FireBaseToken = '';
     fireNotificationService.getFcmToken().then((value) {
       FireBaseToken = value ?? "";
       NotificationRequest(fireBaseToken: FireBaseToken);
     });
-
   }
 
-  static FireNotificationService fireNotificationService = FireNotificationService();
+  static FireNotificationService fireNotificationService =
+      FireNotificationService();
 
   getHome() {
     widget.cubit.getHomePage(this);
@@ -80,9 +80,9 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   // TextEditingController textFieldController = TextEditingController();
 
   String currentLocation = 'Zahle';
+
   // final DestinationWithPlaces homepage = DestinationWithPlaces();
   // final Destinations dest = Destinations();
-
 
   @override
   Widget build(BuildContext context) {
@@ -90,15 +90,21 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       appBar: AppBar(
         title: Image.asset(ImageAsset.LOGO),
         leadingWidth: 150,
-        backgroundColor: Colors.grey.shade50,elevation: 0,
+        backgroundColor: Colors.grey.shade50,
+        elevation: 0,
         centerTitle: true,
-        actions: const [
+        actions: [
           Padding(
             padding: EdgeInsets.only(right: 15.0),
-            child: Icon(
-              CupertinoIcons.search,
-              color: Colors.red,
-              size: 35,
+            child: IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, HomePageRoutes.searchTerms);
+              },
+              icon: Icon(
+                CupertinoIcons.search,
+                color: Colors.red,
+                size: 30,
+              ),
             ),
           )
         ],
@@ -110,12 +116,14 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton:orderModelList.isNotEmpty ? CustomActionButton(
-          model: null,
-          isLoginUser: widget._authService.isLoggedIn,
-          claPrice: (request) {
-            widget.cubit.calculateTotalPrice(request ,this);
-          }) :Container(),
+      floatingActionButton: orderModelList.isNotEmpty
+          ? CustomActionButton(
+              model: null,
+              isLoginUser: widget._authService.isLoggedIn,
+              claPrice: (request) {
+                widget.cubit.calculateTotalPrice(request, this);
+              })
+          : Container(),
     );
   }
 }

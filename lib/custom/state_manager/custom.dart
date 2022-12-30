@@ -23,7 +23,7 @@ class CustomCubit extends Cubit<States> {
   Stream<AsyncSnapshot> get loadingStream => _loadingStateSubject.stream;
 
   calculateCustomPrice(CustomOrderRequest request, CustomPageState customPageState) {
-    _loadingStateSubject.add(AsyncSnapshot.waiting());
+    // _loadingStateSubject.add(AsyncSnapshot.waiting());
     _customRepository
         .calculateCustomPrice(CalculateCustomPrice(
         fromAddressId: request.FromAddressId,
