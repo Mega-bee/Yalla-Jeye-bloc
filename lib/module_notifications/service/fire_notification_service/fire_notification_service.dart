@@ -9,8 +9,10 @@ import 'package:untitled1/module_notifications/repository/notification_repo.dart
 
 @injectable
 class FireNotificationService {
+  final NotificationRepo _notificationRepo;
 
 
+  FireNotificationService(this._notificationRepo);
 
   static final PublishSubject<RemoteMessage> _onNotificationReceived =
       PublishSubject();
@@ -20,9 +22,9 @@ class FireNotificationService {
   static StreamSubscription? iosSubscription;
 
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-  late final NotificationRepo _notificationRepo;
 
   Future<void> init() async {
+    print('in iniiit');
     if (p.Platform.isIOS) {
       await _fcm.requestPermission(
         sound: true,
