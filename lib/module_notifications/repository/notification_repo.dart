@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:untitled1/abstracts/WebUrl.dart';
 import 'package:untitled1/auth/service/auth_service.dart';
 import 'package:untitled1/module_network/http_client/http_client.dart';
 
@@ -9,16 +10,13 @@ class NotificationRepo {
 
   NotificationRepo(this._apiClient, this._authService);
 
-  void postToken(String? token) {
-
-    // _authService.getToken().then(
-    //   (value) {
-    //     if (value != null) {
-    //       var sound =
-    //           NotificationsPrefHelper().getNotification().split('/').last;
-    //       _apiClient.post(Urls.NOTIFICATION_API,
-    //           {'token': token.toString(), 'sound': sound},
-    //           headers: {'Authorization': 'Bearer ${value}'});
-    //     }
-      }
+  void postToken(String? fireBase) {
+    print('toookenn');
+    var token = _authService.getToken();
+    _apiClient.put(Urls.FCM_TOKEN, {
+      'fcmToken': fireBase.toString(),
+    }, headers: {
+      'Authorization': 'Bearer $token'
+    });
   }
+}
