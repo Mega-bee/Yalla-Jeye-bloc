@@ -39,22 +39,38 @@ class OrderPageSuccess extends States {
         ),
         body: TabBarView(
           children: <Widget>[
-            ListView.builder(
-              itemBuilder: (context, index) => OrderCard(
-                order: orderCurrent[index],
-                state: state,
+            Container(
+              height: 900,
+              child: RefreshIndicator(
+                onRefresh: ()async{
+                  state.getOrder();
+                },
+                child: ListView.builder(
+                  itemBuilder: (context, index) => OrderCard(
+                    order: orderCurrent[index],
+                    state: state,
 
+                  ),
+                  shrinkWrap: true,
+                  itemCount: orderCurrent.length,
+                ),
               ),
-              shrinkWrap: true,
-              itemCount: orderCurrent.length,
             ),
-            ListView.builder(
-              itemBuilder: (context, index) => OrderCard(
-                order: orderHistory[index],
-                state: state,
+            Container(
+              height: 900,
+              child: RefreshIndicator(
+                onRefresh: ()async{
+                  state.getOrder();
+                },
+                child: ListView.builder(
+                  itemBuilder: (context, index) => OrderCard(
+                    order: orderHistory[index],
+                    state: state,
+                  ),
+                  shrinkWrap: true,
+                  itemCount: orderHistory.length,
+                ),
               ),
-              shrinkWrap: true,
-              itemCount: orderHistory.length,
             )
           ],
         ),

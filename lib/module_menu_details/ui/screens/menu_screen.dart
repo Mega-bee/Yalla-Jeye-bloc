@@ -23,7 +23,8 @@ class MenuDetailsScreen extends StatefulWidget {
 class MenuDetailsScreenState extends State<MenuDetailsScreen> {
   MenuDetailsModel? menuDetailsModel;
   bool flags = true;
-  String id = '-1';
+  String? id = '-1';
+
 
   @override
   void initState() {
@@ -38,11 +39,19 @@ class MenuDetailsScreenState extends State<MenuDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final argsId = ModalRoute.of(context)!.settings.arguments;
-    if (argsId is String && flags) {
-      id = argsId;
+    final args = ModalRoute.of(context)!.settings.arguments;
+    if (args != null && flags) {
+      menuDetailsModel = args as MenuDetailsModel;
       flags = false;
     }
+
+
+
+    // final argsId = ModalRoute.of(context)!.settings.arguments;
+    // if (argsId is String && flags) {
+    //   id = argsId;
+    //   flags = false;
+    // }
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -101,12 +110,14 @@ class MenuDetailsScreenState extends State<MenuDetailsScreen> {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: CustomActionButton(
+        floatingActionButton:
+        CustomActionButton(
             model: menuDetailsModel,
             isLoginUser: widget._authService.isLoggedIn,
             claPrice: (request) {
               widget.cubit.calculateTotalPrice(request, this);
             }),
+
       ),
     );
   }

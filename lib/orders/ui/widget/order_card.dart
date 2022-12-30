@@ -11,100 +11,91 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: ()async{
-        state.getOrder();
-      },
-      child: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Card(
-              color: order.statusId == 9 ?
-              Colors.blueGrey.shade100 :Colors.white,
-              elevation: 5,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      OrderDetailsRoutes.ordersDetails,
-                      arguments: order.id.toString(),
-                    );
-                  },
-                  child: ListTile(
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "${order.serialNumber}",
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: StatusHelper.getOrderStatusColor(
-                                      StatusHelper.getStatusEnum(order.statusId)),
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  order.statusName ?? '',
-                                  style: TextStyle(color: Colors.white, fontSize: 14),
-                                ),
-                              ),
-                            )
-                          ],
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Card(
+        color: order.statusId == 9 ?
+        Colors.blueGrey.shade100 :Colors.white,
+        elevation: 5,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: InkWell(
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                OrderDetailsRoutes.ordersDetails,
+                arguments: order.id.toString(),
+              );
+            },
+            child: ListTile(
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "${order.serialNumber}",
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: StatusHelper.getOrderStatusColor(
+                                StatusHelper.getStatusEnum(order.statusId)),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            order.statusName ?? '',
+                            style: TextStyle(color: Colors.white, fontSize: 14),
+                          ),
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          order.deliveryPrice
-                              .toString()
-                              .split('.')
-                              .first +
-                              ' L.L',
-                          style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Wrap(
-                          children: [
-                            Text(
-                              'From: ',
-                              style: TextStyle(fontWeight: FontWeight.w500),
-                            ),
-                            Wrap(
-                                children: order.places!
-                                    .map((e) => Text(e + ' , '))
-                                    .toList()),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              'To: ',
-                              style: TextStyle(fontWeight: FontWeight.w500),
-                            ),
-                            Text(order.destinationAddressTitle.toString()),
-                          ],
-                        ),
-
-
-                      ],
-                    ),
+                      )
+                    ],
                   ),
-                ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    order.deliveryPrice
+                        .toString()
+                        .split('.')
+                        .first +
+                        ' L.L',
+                    style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Wrap(
+                    children: [
+                      Text(
+                        'From: ',
+                        style: TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                      Wrap(
+                          children: order.places!
+                              .map((e) => Text(e + ' , '))
+                              .toList()),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'To: ',
+                        style: TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                      Text(order.destinationAddressTitle.toString()),
+                    ],
+                  ),
+
+
+                ],
               ),
             ),
           ),
