@@ -35,7 +35,7 @@ class SearchPlacesState extends State<SearchPlaces> {
   @override
   void initState() {
     super.initState();
-    widget.cubit.emit(SearchPlaceSuccess(this, []));
+    widget.cubit.emit(SearchPlaceSuccess(this, [],"",0));
   }
 
   void refresh() {

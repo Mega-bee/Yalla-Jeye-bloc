@@ -9,13 +9,15 @@ import 'package:untitled1/module_notifications/repository/notification_repo.dart
 
 @injectable
 class FireNotificationService {
-  final NotificationRepo _notificationRepo;
 
 
-  FireNotificationService(this._notificationRepo);
+  // FireNotificationService(this._notificationRepo);
 
   static final PublishSubject<RemoteMessage> _onNotificationReceived =
       PublishSubject();
+
+  late final NotificationRepo _notificationRepo;
+
 
   Stream get onNotificationStream => _onNotificationReceived.stream;
 

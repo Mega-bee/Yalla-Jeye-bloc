@@ -10,6 +10,7 @@ import 'package:untitled1/module_menu_details/response/calculate_response.dart';
 import '../../abstracts/states/error_state.dart';
 import '../../abstracts/states/loading_state.dart';
 import '../../abstracts/states/state.dart';
+import '../../module_notifications/request/notification_request.dart';
 import '../repository/homepage_repository.dart';
 import '../response/homepage_response.dart';
 import '../ui/screens/home_page.dart';
@@ -68,6 +69,10 @@ class HomePageCubit extends Cubit<States> {
       }
     });
   }
+  FireBase(HomePageState screenState, NotificationRequest request) {
+    emit(LoadingState());
+    _homePageRepository.FBT(request).then((value) {
+    });}
 
   refreshHome() {
     _cartSubject.add('updateCart');

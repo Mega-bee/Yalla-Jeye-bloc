@@ -51,7 +51,7 @@ class SearchTermsCubit extends Cubit<States> {
           search.add(SearchTermsModel.fromJson(item));
         }
         emit(
-            SearchPlaceSuccess( screenState,search)
+            SearchPlaceSuccess( screenState,search,"",0,)
         );
       }
     });

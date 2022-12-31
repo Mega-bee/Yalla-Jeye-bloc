@@ -10,7 +10,7 @@ class NotificationRepo {
 
   NotificationRepo(this._apiClient, this._authService);
 
-  void postToken(String? fireBase) {
+  void postToken(String? fireBase,) {
     print('toookenn');
     var token = _authService.getToken();
     _apiClient.put(Urls.FCM_TOKEN, {

@@ -14,7 +14,7 @@ class MenuDetailsScreen extends StatefulWidget {
   final AuthService _authService;
   final HomePageCubit _homePageCubit;
 
-  const MenuDetailsScreen(this.cubit, this._authService, this._homePageCubit);
+  const MenuDetailsScreen(this.cubit, this._authService, this._homePageCubit,);
 
   @override
   State<MenuDetailsScreen> createState() => MenuDetailsScreenState();
@@ -23,8 +23,7 @@ class MenuDetailsScreen extends StatefulWidget {
 class MenuDetailsScreenState extends State<MenuDetailsScreen> {
   MenuDetailsModel? menuDetailsModel;
   bool flags = true;
-  String? id = '-1';
-
+  String id = '-1';
 
   @override
   void initState() {
@@ -39,14 +38,11 @@ class MenuDetailsScreenState extends State<MenuDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments;
+    var args = ModalRoute.of(context)!.settings.arguments;
     if (args != null && flags) {
       menuDetailsModel = args as MenuDetailsModel;
       flags = false;
     }
-
-
-
     // final argsId = ModalRoute.of(context)!.settings.arguments;
     // if (argsId is String && flags) {
     //   id = argsId;
@@ -91,13 +87,12 @@ class MenuDetailsScreenState extends State<MenuDetailsScreen> {
                   ),
                 ),
               ),
-              menuDetailsModel!.menuImages!.isNotEmpty
-                  ? GridView.builder(
+              GridView.builder(
                       itemBuilder: (context, index) => Image.network(
                           menuDetailsModel!.menuImages![index].menuImage ?? ''),
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: menuDetailsModel!.menuImages!.length,
+                      itemCount: menuDetailsModel?.menuImages?.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
@@ -105,19 +100,17 @@ class MenuDetailsScreenState extends State<MenuDetailsScreen> {
                         crossAxisSpacing: 12,
                         mainAxisSpacing: 10,
                       ))
-                  : Container()
+
             ],
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton:
-        CustomActionButton(
+        floatingActionButton: CustomActionButton(
             model: menuDetailsModel,
             isLoginUser: widget._authService.isLoggedIn,
             claPrice: (request) {
               widget.cubit.calculateTotalPrice(request, this);
             }),
-
       ),
     );
   }

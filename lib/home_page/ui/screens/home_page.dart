@@ -44,7 +44,17 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
         setState(() {});
       }
     });
+
+    String FirebaseToken = '';
+    fireNotificationService.getFcmToken().then((tokenFire) {
+      FirebaseToken = tokenFire ?? '';
+      print(tokenFire);
+      widget.cubit.FireBase(this, NotificationRequest(fireBaseToken:  tokenFire));
+      print(FirebaseToken);
+    });
   }
+  static FireNotificationService fireNotificationService =
+  FireNotificationService();
 
 
   getHome() {
