@@ -46,6 +46,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
     if (args is String && flags) {
+
       id = args;
       flags = false;
       getOrderDetails();

@@ -51,7 +51,8 @@ class HomePageSuccess extends States {
                               int pageViewIndex) =>
                           CarouselImageSlider(
                             imageUrl: homepage.events!.services![itemIndex].imageUrl ?? '',
-                          )),
+                          ),
+                  ),
                   const TitleHome(title: 'Nearest shop',body: 'You dont mind which shop, just order from the nearest', ),
 
                   Container(

@@ -67,6 +67,7 @@ class _CarouselImageSliderState extends State<CarouselImageSlider> {
                               ),
                             ),
                           ),)
+
                   ),
                 ),
               );
@@ -76,14 +77,14 @@ class _CarouselImageSliderState extends State<CarouselImageSlider> {
         // cacheManager: customCacheManager,
         // maxHeightDiskCache: 100,
         key: UniqueKey(),
-        imageUrl: widget.imageUrl,
+        imageUrl: widget.imageUrl,fit: BoxFit.cover,
         imageBuilder: (context, imageProvider) =>
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
                 image: DecorationImage(
                   image: imageProvider,
-                  fit: BoxFit.fitWidth,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),

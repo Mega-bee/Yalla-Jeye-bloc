@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -15,6 +16,7 @@ import 'package:untitled1/module_splash/splash_routes.dart';
 import 'package:untitled1/my_notification/Notification_module.dart';
 import 'package:untitled1/orders/order_module.dart';
 import 'package:untitled1/profile/profile_module.dart';
+import 'package:untitled1/profile/profile_module_route.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
 import 'package:untitled1/utils/global/global_state_manager.dart';
 import 'package:untitled1/utils/logger/logger.dart';
@@ -27,9 +29,10 @@ import 'home_page/homepage_module.dart';
 import 'navigation_bar/navigator_module.dart';
 import 'navigation_bar/navigator_routes.dart';
 import 'order_details/order_module.dart';
+import 'order_details/order_route.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-FlutterLocalNotificationsPlugin();
+    FlutterLocalNotificationsPlugin();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -70,22 +73,22 @@ class MyApp extends StatefulWidget {
 
   final FireNotificationService _fireNotificationService;
   final LocalNotificationService _localNotificationService;
+
   MyApp(
-    this._navigatorModule,
-    this._notificationModule,
-    this._orderModule,
-    this._customModule,
-    this._addressModule,
-    this._homePageModule,
-    this._detailsModule,
-    this._logInModule,
-    this._profilePageModule,
+      this._navigatorModule,
+      this._notificationModule,
+      this._orderModule,
+      this._customModule,
+      this._addressModule,
+      this._homePageModule,
+      this._detailsModule,
+      this._logInModule,
+      this._profilePageModule,
       this._menuDetailsModule,
-      this._splashModule ,
+      this._splashModule,
       this._driverOrderModule,
       this._fireNotificationService,
-      this._localNotificationService
-  );
+      this._localNotificationService);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -110,7 +113,7 @@ class _MyAppState extends State<MyApp> {
         fontFamily: 'Roboto',
       ),
       debugShowCheckedModeBanner: false,
-       navigatorKey: GlobalVariable.navState,
+      navigatorKey: GlobalVariable.navState,
       locale: Locale.fromSubtags(
         languageCode: "en",
       ),
@@ -126,13 +129,31 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     widget._fireNotificationService.init();
     widget._localNotificationService.init();
+    widget._localNotificationService.onLocalNotificationStream.listen((event) {
+      setState(() {});
+    });
     widget._fireNotificationService.onNotificationStream.listen((event) {
       widget._localNotificationService.showNotification(event);
     });
-    widget._localNotificationService.onLocalNotificationStream.listen((event) {
-        // Navigator.pushNamed(GlobalVariable.navState.currentContext!,
-        //     OrderDetailsRoutes.ordersDetails,arguments: );
 
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print("message: ${message.sentTime}");
+
+      // int id = int.parse(message.data["orderId"].toString());
+      // Navigator.pushNamed(
+      //   GlobalVariable.mainScreenScaffold.currentContext!,
+      //   OrderDetailsRoutes.ordersDetails,
+      //   // arguments: ,
+      // );
     });
+
+    // widget._fireNotificationService.onNotificationStream.listen((event) {
+    //   widget._localNotificationService.showNotification(event);
+    // });
+    // widget._localNotificationService.onLocalNotificationStream.listen((event) {
+    //     // Navigator.pushNamed(GlobalVariable.navState.currentContext!,
+    //     //     OrderDetailsRoutes.ordersDetails,arguments: );
+    //
+    // });
   }
 }

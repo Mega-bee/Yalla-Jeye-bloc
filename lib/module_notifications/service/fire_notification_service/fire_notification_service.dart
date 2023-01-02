@@ -1,23 +1,24 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io' as p;
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:untitled1/module_notifications/preferences/notification_preferences/notification_preferences.dart';
 import 'package:untitled1/module_notifications/repository/notification_repo.dart';
 
+import '../../../global_nav_key.dart';
+import '../../../order_details/order_route.dart';
+
 @injectable
 class FireNotificationService {
-
-
   // FireNotificationService(this._notificationRepo);
 
   static final PublishSubject<RemoteMessage> _onNotificationReceived =
       PublishSubject();
 
   late final NotificationRepo _notificationRepo;
-
 
   Stream get onNotificationStream => _onNotificationReceived.stream;
 
@@ -65,24 +66,18 @@ class FireNotificationService {
           _onNotificationReceived.add(message);
         });
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-          // NotificationModel notificationModel =
-          //     NotificationModel.fromJson(message.data);
-          // SchedulerBinding.instance?.addPostFrameCallback(
-          //   (_) {
-          //     if (notificationModel.navigateRoute == ChatRoutes.chatRoute) {
-          //       Navigator.pushNamed(GlobalVariable.navState.currentContext!,
-          //           notificationModel.navigateRoute ?? '',
-          //           arguments: ChatArgument(
-          //               roomID:
-          //                   notificationModel.chatNotification?.roomID ?? '',
-          //               userID: notificationModel.chatNotification?.senderID,
-          //               userType: 'store'));
-          //     } else {
-          //       Navigator.pushNamed(GlobalVariable.navState.currentContext!,
-          //           notificationModel.navigateRoute ?? '',
-          //           arguments: notificationModel.argument);
-          //     }
-          //   },
+          print(message);
+          print(message.data["orderId"].toString());
+          int id = int.parse(message.data["orderId"].toString());
+          print("id: $id");
+          // print("Patientt2");
+          // print(id.toString());
+          //
+          Navigator.pushNamed(
+            GlobalVariable.mainScreenScaffold.currentContext!,
+            OrderDetailsRoutes.ordersDetails,
+            arguments: id,
+          );
           // );
         });
         FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);
