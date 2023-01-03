@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:untitled1/home_page/ui/state/home_state.dart';
 import '../../../abstracts/states/state.dart';
 import '../../response/order_response.dart';
 import '../screens/order_page_list.dart';
 import '../widget/order_card.dart';
 
-class OrderPageSuccess extends States {
+class OrderPageSuccess extends HomeStates {
   final List<OrderResponse> orderCurrent;
   final List<OrderResponse> orderHistory;
   OrderState state;

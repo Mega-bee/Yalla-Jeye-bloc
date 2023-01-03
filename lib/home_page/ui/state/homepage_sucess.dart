@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled1/home_page/ui/screens/placess_list_screen.dart';
+import 'package:untitled1/home_page/ui/state/home_state.dart';
 import 'package:untitled1/home_page/ui/widget/destination_card.dart';
 import 'package:untitled1/home_page/ui/widget/destination_place_card.dart';
 import 'package:untitled1/home_page/ui/widget/title_home.dart';
@@ -11,7 +12,7 @@ import '../screens/home_page.dart';
 import '../widget/Carousel_slider_widget/carousel_image_slider.dart';
 
 
-class HomePageSuccess extends States {
+class HomePageSuccess extends HomeStates {
   final HomePageModel homepage;
 
   HomePageState homepageState;

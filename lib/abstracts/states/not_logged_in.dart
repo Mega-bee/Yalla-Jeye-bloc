@@ -2,12 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:untitled1/abstracts/states/state.dart';
+import 'package:untitled1/home_page/ui/state/home_state.dart';
 import 'package:untitled1/utils/components/custom_red_button.dart';
 import 'package:untitled1/utils/images/images.dart';
 
 import '../../auth/auth_module_route.dart';
 
-class NotLoggedIn extends States {
+class NotLoggedIn extends HomeStates {
   @override
   Widget getUI(BuildContext context) {
     return Column(

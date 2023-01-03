@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:untitled1/home_page/ui/state/home_state.dart';
 
 import '../../abstracts/states/error_state.dart';
 import '../../abstracts/states/loading_state.dart';
@@ -10,16 +11,16 @@ import '../ui/screens/order_page_list.dart';
 import '../ui/state/order_sucess.dart';
 
 @injectable
-class OrderCubit extends Cubit<States> {
+class OrderCubit extends Cubit<HomeStates> {
   final OrderRepository _orderRepository;
 
-  OrderCubit(this._orderRepository) : super(LoadingState());
+  OrderCubit(this._orderRepository) : super(LoadingTesState());
 
   getOrder(OrderState Orderstatee) {
-    emit(LoadingState());
+    emit(LoadingTesState());
     _orderRepository.getOrder().then((value) {
       if (value == null) {
-        emit(ErrorState(
+        emit(ErrorHomeState(
             errorMessage: 'Connection error',
             retry: () {
               getOrder(Orderstatee);

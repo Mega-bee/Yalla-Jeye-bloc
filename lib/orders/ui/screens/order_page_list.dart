@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/auth/service/auth_service.dart';
+import 'package:untitled1/home_page/ui/state/home_state.dart';
 import '../../../abstracts/states/not_logged_in.dart';
 import '../../../abstracts/states/state.dart';
 import '../../state_manager/order.dart';
@@ -57,7 +58,7 @@ class OrderState extends State<Order> {
         // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 2,
       ),
-      body: BlocBuilder<OrderCubit, States>(
+      body: BlocBuilder<OrderCubit, HomeStates>(
         bloc: widget.cubit,
         builder: (context, state) {
           return state.getUI(context);

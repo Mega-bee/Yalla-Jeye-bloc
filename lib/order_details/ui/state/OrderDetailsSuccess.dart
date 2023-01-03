@@ -7,14 +7,16 @@ import 'order_tracking_tab.dart';
 
 class OrderDetailsSuccess extends States {
   final OrderDetailsResponse ordersuccess;
+  final int firstIndex;
  final OrderDetailsScreenState screenState;
 
-  OrderDetailsSuccess({required this.ordersuccess, required this.screenState});
+  OrderDetailsSuccess(this.firstIndex, {required this.ordersuccess, required this.screenState});
 
   @override
   Widget getUI(BuildContext context) {
     return DefaultTabController(
         length: 2,
+        initialIndex:firstIndex ,
         child: Scaffold(
           appBar: const PreferredSize(
             preferredSize: Size.fromHeight(kToolbarHeight),

@@ -1,19 +1,22 @@
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:untitled1/module_notifications/model/notification_model.dart';
+import 'package:untitled1/order_details/order_route.dart';
+import 'package:untitled1/utils/global/global_state_manager.dart';
 
 @injectable
 class LocalNotificationService {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  FlutterLocalNotificationsPlugin();
 
   static final PublishSubject<Map<String, dynamic>> _onNotificationReceived =
-      PublishSubject();
+  PublishSubject();
 
   Stream<Map<String, dynamic>> get onLocalNotificationStream =>
       _onNotificationReceived.stream;
@@ -49,7 +52,8 @@ class LocalNotificationService {
         ?.createNotificationChannel(_channel);
     debugPrint("channelInitialized");
 
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings,);
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onDidReceiveNotificationResponse: selectNotification);
   }
 
   Future<void> showNotification(RemoteMessage message) async {
@@ -61,7 +65,7 @@ class LocalNotificationService {
           _channel.name,
           channelDescription: _channel.description,
           importance: Importance.high,
-          priority: Priority.high,
+          // priority: Priority.high,
           visibility: NotificationVisibility.public,
           channelShowBadge: true,
           playSound: true,
@@ -76,12 +80,13 @@ class LocalNotificationService {
 
       int id = DateTime.now().second;
       if (message.notification != null) {
+        print(json.encode(message.data));
         await flutterLocalNotificationsPlugin.show(
           id,
           notification!.title,
           notification.body,
-
           notificationDetails,
+          payload: json.encode(message.data)
           // todo payload: message.data["route"],
         );
       }
@@ -94,9 +99,9 @@ class LocalNotificationService {
 
   }
 
-  Future selectNotification(String? payload) async {
-    if (payload != null) {
-      var data = json.decode(payload);
+  Future selectNotification(NotificationResponse? response) async {
+    if (response?.payload != null) {
+      var data = json.decode(response?.payload ?? '');
       _onNotificationReceived.add(data);
     }
   }
