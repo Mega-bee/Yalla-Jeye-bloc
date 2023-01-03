@@ -32,24 +32,23 @@ class DriverOrderCubit extends Cubit<States> {
         List<DriverOrderResponse> orderHistory = [];
         for (var item in value.data.insideData) {
           DriverOrderResponse s = DriverOrderResponse.fromJson(item);
-          if (s.statusId == 5 ||
-              s.statusId == 6 ||
-              s.statusId == 8 ||
-              s.statusId == 10 ||
-              s.statusId == 1 ||
-              s.statusId == 11) {
+          if (s.statusId == 5) {
             orderHistory.add(s);
-          } else if (s.statusId == 1 || s.statusId == 11 || s.statusId == 3) {
+          } else if (s.statusId == 1 ||
+              s.statusId == 2 ||
+              s.statusId == 3 ||
+              s.statusId == 6 ||
+              s.statusId == 7 ||
+              s.statusId == 8 ||
+              s.statusId == 9 ||
+              s.statusId == 10) {
             orderCurrent.add(s);
           }
         }
-        emit(
-          OrderPageSuccess(
+        emit(OrderPageSuccess(
             screenState: screenState,
             orderCurrent: orderCurrent,
-            orderHistory: orderHistory,
-          ),
-        );
+            orderHistory: orderHistory));
       }
     });
   }

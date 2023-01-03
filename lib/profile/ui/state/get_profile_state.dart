@@ -28,6 +28,9 @@ class GetProfilePageSuccess extends States {
       child: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(
+              height: 30,
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -61,13 +64,15 @@ class GetProfilePageSuccess extends States {
                   height: 30,
                 ),
                 TextField(
+
+                  onChanged: (value) {
+                    //Do something with the user input.
+                  },
                   readOnly: true,
-                  // autofillHints: [AutofillHints.name],
                   controller: number,
-                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
+                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 13.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     ),
@@ -75,15 +80,14 @@ class GetProfilePageSuccess extends States {
                       borderSide: const BorderSide(
                           color: Color.fromRGBO(204, 204, 204, 0.5),
                           width: 2.0),
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5.0),
+                      ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey, width: 2.0),
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     ),
-                    hoverColor: Colors.grey.shade400,
-                    filled: true,
-                    fillColor: Colors.grey.shade400
                   ),
                 ),
               ],

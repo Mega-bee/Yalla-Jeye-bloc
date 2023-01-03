@@ -98,8 +98,8 @@ class ProfilePageState extends State<SettingProfilePage> {
                             child: Row(
                               children: [
                                 SvgPicture.asset(
-                                  ImageAsset.profileSetting,
-                                  height: height,
+                                  ImageAsset.new_profle,
+                                  height: 17,
                                 ),
                                 SizedBox(
                                   height: 40,
@@ -122,8 +122,8 @@ class ProfilePageState extends State<SettingProfilePage> {
                             child: Row(
                               children: [
                                 SvgPicture.asset(
-                                  ImageAsset.addressesSetting,
-                                  height: height,
+                                  ImageAsset.new_addresses,
+                                  height: 17,
                                 ),
                                 SizedBox(
                                   height: 40,
@@ -147,10 +147,9 @@ class ProfilePageState extends State<SettingProfilePage> {
                             },
                             child: Row(
                               children:   [
-                                Icon(
-                                  Icons.notifications_none,
-                                  size: 23,
-                                  color: Colors.red.shade800,
+                                SvgPicture.asset(
+                                  ImageAsset.new_notification,
+                                  height: 17,
                                 ),
                                 SizedBox(
                                   height: 40,
@@ -221,8 +220,8 @@ class ProfilePageState extends State<SettingProfilePage> {
                       Row(
                         children: [
                           SvgPicture.asset(
-                            ImageAsset.customerSupport,
-                            height: height,
+                            ImageAsset.new_customer_support,
+                            height: 17,
                           ),
                           SizedBox(
                             height: 40,
@@ -237,12 +236,12 @@ class ProfilePageState extends State<SettingProfilePage> {
                       Row(
                         children: [
                           SvgPicture.asset(
-                            ImageAsset.emergencyNumber,
-                            height: 30,
+                            ImageAsset.new_emergency_number,
+                            height: 24,
                           ),
                           SizedBox(
                             height: 40,
-                            width: 1,
+                            width: 8,
                           ),
                           Text("Emergency number"),
                         ],
@@ -252,7 +251,7 @@ class ProfilePageState extends State<SettingProfilePage> {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 30,
               ),
               Card(
                 shape: RoundedRectangleBorder(
@@ -273,8 +272,8 @@ class ProfilePageState extends State<SettingProfilePage> {
                       child: Row(
                         children: [
                           SvgPicture.asset(
-                            ImageAsset.signOut,
-                            height: height,
+                            ImageAsset.new_sign_out,
+                            height: 17,
                           ),
                           SizedBox(
                             height: 40,

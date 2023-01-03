@@ -38,7 +38,7 @@ class OrderCard extends StatelessWidget {
                       Text(
                         "${order.serialNumber}",
                         style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
+                            fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                       Container(
                         decoration: BoxDecoration(
@@ -64,7 +64,7 @@ class OrderCard extends StatelessWidget {
                         .split('.')
                         .first +
                         ' L.L',
-                    style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20),
+                    style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18),
                   ),
                   SizedBox(
                     height: 10,

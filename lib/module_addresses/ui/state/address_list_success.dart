@@ -14,35 +14,42 @@ class AddressListSuccess extends States {
   @override
   Widget getUI(BuildContext context) {
     return ListView.builder(
-      itemBuilder: (context, index) => AddressCard(
-        onSelect: (){},
-        model: addressList[index],
-        isSelectedPage: false,
-        onDelete: () {
-          screenState.deleteAddress(addressList[index].id.toString());
-        },
-        onEdit: () {
-          showModalBottomSheet(
-              backgroundColor: Colors.transparent,
-              context: context,
-              builder: (context) {
-                return CreateAddressSheet(
-                  createAddress: (req) {
-                    req.id = addressList[index].id;
-                    Navigator.pop(context);
-                    screenState.updateAddress(req);
+      itemBuilder: (context, index) => Column(
+        children: [
+          SizedBox(
+            height: 30,
+          ),
+          AddressCard(
+            onSelect: (){},
+            model: addressList[index],
+            isSelectedPage: false,
+            onDelete: () {
+              screenState.deleteAddress(addressList[index].id.toString());
+            },
+            onEdit: () {
+              showModalBottomSheet(
+                  backgroundColor: Colors.transparent,
+                  context: context,
+                  builder: (context) {
+                    return CreateAddressSheet(
+                      createAddress: (req) {
+                        req.id = addressList[index].id;
+                        Navigator.pop(context);
+                        screenState.updateAddress(req);
+                      },
+                      isUpdated: true,
+                      response: addressList[index],
+                      cubit: screenState.widget.regionsCubit,
+                    );
                   },
-                  isUpdated: true,
-                  response: addressList[index],
-                  cubit: screenState.widget.regionsCubit,
-                );
-              },
-              shape: RoundedRectangleBorder(
-                  borderRadius:
-                  BorderRadius.vertical(top: Radius.circular(15))),
-              isScrollControlled: true,
-              elevation: 5);
-        },
+                  shape: RoundedRectangleBorder(
+                      borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(15))),
+                  isScrollControlled: true,
+                  elevation: 5);
+            },
+          ),
+        ],
       ),
       itemCount: addressList.length,
       physics: BouncingScrollPhysics(),

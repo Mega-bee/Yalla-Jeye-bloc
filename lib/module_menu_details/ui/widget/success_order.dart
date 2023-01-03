@@ -37,11 +37,11 @@ class SuccessRateAlter extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Lottie.asset('assets/images/successful.json'),
+          Lottie.asset('assets/images/success_red.json',),
           const Padding(
             padding: EdgeInsets.all(8.0),
             child: Text(
-            'Your order created successfully,\n thank your for using YALA-JEYE',
+            'Order successfully created.Thank you for using YALLA-JEYE',
               style: TextStyle(fontWeight: FontWeight.w600 , fontSize: 18),
             ),
           ),

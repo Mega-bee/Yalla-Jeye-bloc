@@ -22,12 +22,37 @@ class ImageAsset {
   static const PASSWORD = ROOT +'pass.png';
   static const NO_ORDER = ROOT +'no-order.png';
   static const NO_ADDREESS = ROOT +'no-address.png';
+  static const new_profle = ROOT + 'new_profile.svg';
+  static const new_addresses = ROOT + 'new_address.svg';
+  static const new_emergency_number = ROOT + 'new_emergency call.svg';
+  static const new_sign_out= ROOT + 'new_sign_out.svg';
+  static const new_customer_support= ROOT + 'new_customer_service.svg';
+  static const new_notification= ROOT + 'new_notification.svg';
 
 
   static const SPLASH_SCREEN = '${ROOT}yala.json';
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
