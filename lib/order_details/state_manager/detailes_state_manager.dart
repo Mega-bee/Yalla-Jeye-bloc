@@ -17,20 +17,20 @@ class OrderDetailCubit extends Cubit<States> {
   OrderDetailCubit(this._orderDetailsRepository) : super(LoadingState());
 
   getOrderDetails(
-      {required OrderDetailsScreenState state, required String id}) {
+      {required OrderDetailsScreenState state, required String id , required int firstIndex}) {
     emit(LoadingState());
     _orderDetailsRepository.getOrderDetails(id).then((value) {
       if (value == null) {
         emit(ErrorState(
             errorMessage: 'Connection error',
             retry: () {
-              getOrderDetails(id: id, state: state);
+              getOrderDetails(id: id, state: state,firstIndex: 0);
             }));
       } else if (value.code == 200) {
         OrderDetailsResponse orderDetailsModel =
             OrderDetailsResponse.fromJson(value.data.insideData);
         emit(
-          OrderDetailsSuccess(
+          OrderDetailsSuccess(firstIndex,
               ordersuccess: orderDetailsModel, screenState: state),
         );
       }
@@ -45,10 +45,10 @@ class OrderDetailCubit extends Cubit<States> {
         emit(ErrorState(
             errorMessage: 'Connection error',
             retry: () {
-              getOrderDetails(id: request.orderId.toString(), state: state);
+              getOrderDetails(id: request.orderId.toString(), state: state,firstIndex: 0);
             }));
       } else if (value.code == 200) {
-        getOrderDetails(id: request.orderId.toString(), state: state);
+        getOrderDetails(id: request.orderId.toString(), state: state,firstIndex: 0);
       }
     });
   }
@@ -61,10 +61,10 @@ class OrderDetailCubit extends Cubit<States> {
         emit(ErrorState(
             errorMessage: 'Connection error',
             retry: () {
-              getOrderDetails(id: request.orderId.toString(), state: state);
+              getOrderDetails(id: request.orderId.toString(), state: state,firstIndex: 0);
             }));
       } else if (value.code == 200) {
-        getOrderDetails(id: request.orderId.toString(), state: state);
+        getOrderDetails(id: request.orderId.toString(), state: state,firstIndex: 0);
       }
     });
   }
@@ -77,10 +77,10 @@ class OrderDetailCubit extends Cubit<States> {
         emit(ErrorState(
             errorMessage: 'Connection error',
             retry: () {
-              getOrderDetails(id: request.orderId.toString(), state: state);
+              getOrderDetails(id: request.orderId.toString(), state: state,firstIndex: 0);
             }));
       } else if (value.code == 201) {
-        getOrderDetails(id: request.orderId.toString(), state: state);
+        getOrderDetails(id: request.orderId.toString(), state: state,firstIndex: 0);
       }
     });
   }

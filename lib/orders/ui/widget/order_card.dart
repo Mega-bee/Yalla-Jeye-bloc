@@ -25,7 +25,7 @@ class OrderCard extends StatelessWidget {
               Navigator.pushNamed(
                 context,
                 OrderDetailsRoutes.ordersDetails,
-                arguments: order.id.toString(),
+                arguments: {'orderId':order.id.toString() ,'isTrack':false},
               );
             },
             child: ListTile(

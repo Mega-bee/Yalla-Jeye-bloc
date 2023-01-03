@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
@@ -9,6 +10,7 @@ import 'package:injectable/injectable.dart';
 import 'package:untitled1/module_addresses/address_module.dart';
 import 'package:untitled1/module_driver/module_driver_orders/driver_order_module.dart';
 import 'package:untitled1/module_menu_details/menu_module.dart';
+import 'package:untitled1/module_notifications/model/notification_model.dart';
 import 'package:untitled1/module_notifications/service/fire_notification_service/fire_notification_service.dart';
 import 'package:untitled1/module_notifications/service/local_notification_service/local_notification_service.dart';
 import 'package:untitled1/module_splash/splash_module.dart';
@@ -33,11 +35,13 @@ import 'order_details/order_route.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
+RemoteMessage? initialMessage;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await HiveSetUp.init();
+  // FirebaseMessaging.onBackgroundMessage(FireNotificationService.backgroundMessageHandler);
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((_) async {
@@ -119,41 +123,30 @@ class _MyAppState extends State<MyApp> {
       ),
       title: 'Yalla jeye',
       routes: fullRoutesList,
-      initialRoute: SplashRoutes.SPLASH_SCREEN,
+      initialRoute: SplashRoutes.SPLASH_SCREEN  ,
       // home:MyStepper(),
     );
   }
 
   @override
-  void initState() {
+  void initState()  {
     super.initState();
     widget._fireNotificationService.init();
     widget._localNotificationService.init();
-    widget._localNotificationService.onLocalNotificationStream.listen((event) {
-      setState(() {});
-    });
     widget._fireNotificationService.onNotificationStream.listen((event) {
       widget._localNotificationService.showNotification(event);
     });
+    widget._localNotificationService.onLocalNotificationStream.listen((event) {
+      RemoteNotificationModel notificationModel =
+      RemoteNotificationModel.fromJson(event);
+      SchedulerBinding.instance?.addPostFrameCallback(
+            (_) {
+          Navigator.pushNamed(GlobalVariable.navState.currentContext!,
+              OrderDetailsRoutes.ordersDetails,
+              arguments: {'orderId' :notificationModel.orderId.toString() , 'isTrack':true});
+        },
+      );
 
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print("message: ${message.sentTime}");
-
-      // int id = int.parse(message.data["orderId"].toString());
-      // Navigator.pushNamed(
-      //   GlobalVariable.mainScreenScaffold.currentContext!,
-      //   OrderDetailsRoutes.ordersDetails,
-      //   // arguments: ,
-      // );
     });
-
-    // widget._fireNotificationService.onNotificationStream.listen((event) {
-    //   widget._localNotificationService.showNotification(event);
-    // });
-    // widget._localNotificationService.onLocalNotificationStream.listen((event) {
-    //     // Navigator.pushNamed(GlobalVariable.navState.currentContext!,
-    //     //     OrderDetailsRoutes.ordersDetails,arguments: );
-    //
-    // });
   }
 }

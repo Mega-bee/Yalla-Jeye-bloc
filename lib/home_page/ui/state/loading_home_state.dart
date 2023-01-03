@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:untitled1/abstracts/states/state.dart';
+import 'package:untitled1/home_page/ui/state/home_state.dart';
 
-class LoadingHomePage extends States {
+class LoadingHomePage extends HomeStates {
   @override
   Widget getUI(BuildContext context) {
     return Shimmer.fromColors(

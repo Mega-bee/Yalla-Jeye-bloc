@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:untitled1/auth/ui/widget/custom_button.dart';
 import 'package:untitled1/custom/request/custom_request.dart';
+import 'package:untitled1/home_page/ui/state/home_state.dart';
 import 'package:untitled1/module_addresses/address_route.dart';
 import 'package:untitled1/module_addresses/response/address_response.dart';
 import 'package:untitled1/utils/components/custom_alert_dialog.dart';
@@ -10,7 +11,7 @@ import '../../../abstracts/states/state.dart';
 import '../../../utils/Colors/colors.dart';
 import '../screens/custom_list.dart';
 
-class CustomSuccess extends States {
+class CustomSuccess extends HomeStates {
   CustomPageState customPageState;
 
   CustomSuccess({required this.customPageState});

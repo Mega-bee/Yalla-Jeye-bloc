@@ -19,6 +19,7 @@ class OrderDetailsScreen extends StatefulWidget {
 class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   bool flags = true;
   String id = '-1';
+  bool isTrack=false;
   void refresh() {
     if (mounted) {
       setState(() {});
@@ -26,7 +27,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   }
 
   getOrderDetails() {
-    widget.cubit.getOrderDetails(state: this, id: id);
+    widget.cubit.getOrderDetails(state: this, id: id,firstIndex: isTrack ? 1:0);
   }
 
   confirmPrice() {
@@ -45,9 +46,9 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
-    if (args is String && flags) {
-
-      id = args;
+    if (args is Map && flags) {
+      id = args['orderId'];
+      isTrack=args['isTrack'];
       flags = false;
       getOrderDetails();
     }

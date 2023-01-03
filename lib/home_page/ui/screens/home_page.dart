@@ -7,6 +7,7 @@ import 'package:injectable/injectable.dart';
 import 'package:untitled1/auth/service/auth_service.dart';
 import 'package:untitled1/custom/model/OrderModel.dart';
 import 'package:untitled1/di/di_config.dart';
+import 'package:untitled1/home_page/ui/state/home_state.dart';
 import 'package:untitled1/module_menu_details/ui/widget/custom_action_botton.dart';
 import 'package:untitled1/module_notifications/service/fire_notification_service/fire_notification_service.dart';
 import 'package:untitled1/utils/global/global_state_manager.dart';
@@ -22,8 +23,9 @@ class HomePage extends StatefulWidget {
   final HomePageCubit cubit;
   final AuthPrefsHelper locationHelper;
   final AuthService _authService;
+  final FireNotificationService fireNotificationService;
 
-  HomePage(this.cubit, this.locationHelper, this._authService);
+  HomePage(this.cubit, this.locationHelper, this._authService, this.fireNotificationService);
 
   @override
   State<HomePage> createState() => HomePageState();
@@ -44,17 +46,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
         setState(() {});
       }
     });
-
-    String FirebaseToken = '';
-    fireNotificationService.getFcmToken().then((tokenFire) {
-      FirebaseToken = tokenFire ?? '';
-      print(tokenFire);
-      widget.cubit.FireBase(this, NotificationRequest(fireBaseToken:  tokenFire));
-      print(FirebaseToken);
-    });
+    widget.fireNotificationService.refreshToken();
   }
-  static FireNotificationService fireNotificationService =
-  FireNotificationService();
 
 
   getHome() {
@@ -111,7 +104,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
           )
         ],
       ),
-      body: BlocBuilder<HomePageCubit, States>(
+      body: BlocBuilder<HomePageCubit, HomeStates>(
         bloc: widget.cubit,
         builder: (context, state) {
           return state.getUI(context);

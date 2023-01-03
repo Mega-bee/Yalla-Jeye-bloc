@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/auth/service/auth_service.dart';
+import 'package:untitled1/home_page/ui/state/home_state.dart';
 import 'package:untitled1/utils/components/custom_alert_dialog.dart';
 import '../../../abstracts/states/state.dart';
 import '../../request/custom_request.dart';
@@ -68,7 +69,7 @@ class CustomPageState extends State<CustomPage> {
         // elevation: 1,
         // centerTitle: true,
       ),
-      body: BlocBuilder<CustomCubit, States>(
+      body: BlocBuilder<CustomCubit, HomeStates>(
         bloc: widget.cubit,
         builder: (context, state) {
           return state.getUI(context);
