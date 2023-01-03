@@ -49,17 +49,21 @@ class SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          backgroundColor: redColor,
-          elevation: 0,
-        ),
-        body: BlocBuilder<SignUpCubit, States>(
-          bloc: widget.cubit,
-          builder: (context, state) {
-            return state.getUI(context);
-          },
-        ));
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+
+      child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            backgroundColor: redColor,
+            elevation: 0,
+          ),
+          body: BlocBuilder<SignUpCubit, States>(
+            bloc: widget.cubit,
+            builder: (context, state) {
+              return state.getUI(context);
+            },
+          )),
+    );
   }
 }

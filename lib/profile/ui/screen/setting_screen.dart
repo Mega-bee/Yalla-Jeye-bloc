@@ -265,8 +265,8 @@ class ProfilePageState extends State<SettingProfilePage> {
                             Navigator.pushNamedAndRemoveUntil(
                                 context, NavRoutes.nav_rout, (route) => false);
                           })
-                        : Navigator.pushNamedAndRemoveUntil(
-                            context, AuthRoutes.login, (route) => false);
+                        : Navigator.pushNamed(
+                            context, AuthRoutes.login,);
                   },
                   child: Padding(
                       padding: const EdgeInsets.all(10.0),

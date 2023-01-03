@@ -52,10 +52,9 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                 alignment: Alignment.bottomRight,
                 child: TextButton.icon(
                   onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(
+                    Navigator.pushNamed(
                       context,
                       AuthRoutes.login,
-                      (route) => false,
                     );
                   },
                   icon: Icon(Icons.login),

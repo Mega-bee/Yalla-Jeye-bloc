@@ -14,7 +14,7 @@ class OrderDetailsSuccess extends States {
   @override
   Widget getUI(BuildContext context) {
     return DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: const PreferredSize(
             preferredSize: Size.fromHeight(kToolbarHeight),
@@ -33,12 +33,12 @@ class OrderDetailsSuccess extends States {
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
-                Tab(
-                  child: Text(
-                    "Chat",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
+                // Tab(
+                //   child: Text(
+                //     "Chat",
+                //     style: TextStyle(color: Colors.black),
+                //   ),
+                // ),
               ]),
             ),
           ),
@@ -52,7 +52,7 @@ class OrderDetailsSuccess extends States {
                 orderDetailsResponse: ordersuccess,
                 screenState:  screenState,
               ),
-              Center(child: Container(child: Text('SOON'),))
+              // Center(child: Container(child: Text('SOON'),))
             ],
           ),
         ));

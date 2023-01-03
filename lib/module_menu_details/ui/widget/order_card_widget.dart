@@ -104,7 +104,7 @@ class _OrderCardWidgetState extends State<OrderCardWidget> {
             ),
             TextField(
               controller: _descriptionController,
-              maxLines: 10,
+              maxLines: 20,
               decoration: InputDecoration(
                 hintText: 'What do you want to order',
                 hintStyle: TextStyle(

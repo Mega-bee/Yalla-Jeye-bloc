@@ -50,16 +50,21 @@ class loginScreenState extends State<loginScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: redColor,
-          elevation: 0,
-        ),
-        body: BlocBuilder<LogInCubit, States>(
-          bloc: widget.cubit,
-          builder: (context, state) {
-            return state.getUI(context);
-          },
-        ));
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+
+      child: Scaffold(
+
+          appBar: AppBar(
+            backgroundColor: redColor,
+            elevation: 0,
+          ),
+          body: BlocBuilder<LogInCubit, States>(
+            bloc: widget.cubit,
+            builder: (context, state) {
+              return state.getUI(context);
+            },
+          )),
+    );
   }
 }

@@ -5,11 +5,13 @@ import 'package:untitled1/utils/Colors/colors.dart';
 
 class OrderPlaceCard extends StatelessWidget {
   final PlacesDetails placesDetails;
-    OrderPlaceCard({  required this.placesDetails}):super(){
-    _descriptionController.text = placesDetails.description ??'';
+
+  OrderPlaceCard({required this.placesDetails}) : super() {
+    _descriptionController.text = placesDetails.description ?? '';
   }
 
-  final TextEditingController  _descriptionController =TextEditingController() ;
+  final TextEditingController _descriptionController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -19,6 +21,7 @@ class OrderPlaceCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(18.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -40,33 +43,16 @@ class OrderPlaceCard extends StatelessWidget {
             ),
             TextField(
               controller: _descriptionController,
+              maxLines: 17,
               readOnly: true,
               decoration: InputDecoration(
                 hintText: 'What do you want to order',
                 hintStyle: TextStyle(
                   color: Color.fromRGBO(204, 204, 204, 0.5),
                 ),
-                contentPadding:
-                EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                      color: Color.fromRGBO(204, 204, 204, 0.5), width: 2.0),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5.0),
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5.0),
-                  ),
-                ),
+                border: InputBorder.none,
               ),
-              onChanged: (value) {
-
-              },
+              onChanged: (value) {},
             ),
             SizedBox(
               height: 20,

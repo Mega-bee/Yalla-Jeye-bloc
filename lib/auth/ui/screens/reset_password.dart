@@ -60,16 +60,20 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen> {
       }
       flags = false;
     }
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: redColor,
-          elevation: 0,
-        ),
-        body: BlocBuilder<ResetPasswordCubit, States>(
-          bloc: widget.cubit,
-          builder: (context, state) {
-            return state.getUI(context);
-          },
-        ));
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+
+      child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: redColor,
+            elevation: 0,
+          ),
+          body: BlocBuilder<ResetPasswordCubit, States>(
+            bloc: widget.cubit,
+            builder: (context, state) {
+              return state.getUI(context);
+            },
+          )),
+    );
   }
 }

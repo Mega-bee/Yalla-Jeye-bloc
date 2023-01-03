@@ -14,7 +14,11 @@ class MenuDetailsScreen extends StatefulWidget {
   final AuthService _authService;
   final HomePageCubit _homePageCubit;
 
-  const MenuDetailsScreen(this.cubit, this._authService, this._homePageCubit,);
+  const MenuDetailsScreen(
+    this.cubit,
+    this._authService,
+    this._homePageCubit,
+  );
 
   @override
   State<MenuDetailsScreen> createState() => MenuDetailsScreenState();
@@ -87,20 +91,35 @@ class MenuDetailsScreenState extends State<MenuDetailsScreen> {
                   ),
                 ),
               ),
-              GridView.builder(
-                      itemBuilder: (context, index) => Image.network(
-                          menuDetailsModel!.menuImages![index].menuImage ?? ''),
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: menuDetailsModel?.menuImages?.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: (3.5 / 4),
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 10,
-                      ))
 
+              // ListView.builder(
+              //   shrinkWrap: true,
+              //     itemCount: menuDetailsModel?.menuImages?.length,
+              //     itemBuilder: (context, index) {
+              //       return Image.network(
+              //           menuDetailsModel!.menuImages![index].menuImage ?? '');
+              //     })
+              GridView.builder(
+                  itemBuilder: (context, index) => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                          width: double.infinity,
+                          child: Image.network(
+                            menuDetailsModel!.menuImages![index].menuImage ?? '',
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                  ),
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: menuDetailsModel?.menuImages?.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1,
+                    childAspectRatio: (4.8 / 4),
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 10,
+                  )),
+              SizedBox(height: 40,),
             ],
           ),
         ),
