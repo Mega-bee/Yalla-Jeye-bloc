@@ -19,6 +19,7 @@ class OrderTracking extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 10,),
+          orderDetailsResponse.statusId == 5?
           RatingBarIndicator(
             rating: double.parse(orderDetailsResponse.rating.toString()),
             itemBuilder: (context, index) => Icon(
@@ -26,7 +27,7 @@ class OrderTracking extends StatelessWidget {
               color: Colors.amber,
             ),
             itemCount: 5,
-          ),
+          ):Container(),
           SizedBox(height: 10,),
           Stepper(
             physics: NeverScrollableScrollPhysics(),

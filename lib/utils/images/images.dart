@@ -28,6 +28,8 @@ class ImageAsset {
   static const new_sign_out= ROOT + 'new_sign_out.svg';
   static const new_customer_support= ROOT + 'new_customer_service.svg';
   static const new_notification= ROOT + 'new_notification.svg';
+  static const new_app_logo='${ROOT}Logo-yalla-jeye-walid.png';
+  static const new_app_icon='${ROOT}app_icon.png';
 
 
   static const SPLASH_SCREEN = '${ROOT}yala.json';

@@ -83,7 +83,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(ImageAsset.LOGO),
+        title: Image.asset(ImageAsset.new_app_logo,height: 43,),
         leadingWidth: 150,
         backgroundColor: Colors.grey.shade50,
         elevation: 0,
