@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:untitled1/module_deep_links/service/deep_links_service.dart';
+import 'package:untitled1/utils/Colors/colors.dart';
 
 class ChooseLocationWidget extends StatefulWidget {
   LatLng? previousLocation;
+
   ChooseLocationWidget({this.previousLocation});
 
   @override
@@ -35,19 +37,24 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
   bool _myLocationEnabled = true;
   bool _myTrafficEnabled = false;
   bool _myLocationButtonEnabled = true;
+
   // late GoogleMapController _controller;/
   late CustomInfoWindowController customInfoWindowController;
   bool _nightMode = false;
   final List<Marker> markers = [];
+
   // Completer<GoogleMapController> _controller = Completer();
   @override
   void initState() {
     super.initState();
     // _controller = GoogleMapController.init(id, _position);
-    _position = widget.previousLocation != null ? CameraPosition(
-      target: LatLng(widget.previousLocation!.latitude, widget.previousLocation!.longitude),
-      zoom: 15.0,
-    )  :_kInitialPosition;
+    _position = widget.previousLocation != null
+        ? CameraPosition(
+            target: LatLng(widget.previousLocation!.latitude,
+                widget.previousLocation!.longitude),
+            zoom: 15.0,
+          )
+        : _kInitialPosition;
     customInfoWindowController = CustomInfoWindowController();
     getDefualtLocation(widget.previousLocation);
   }
@@ -61,7 +68,7 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
       print(POS);
       print('ddddddddddddddddddddddddddd');
     } else {
-     await Future.delayed(Duration(milliseconds: 30));
+      await Future.delayed(Duration(milliseconds: 30));
       print('innnnnnnnelllssseeeee');
       print(previous);
       POS = previous;
@@ -107,13 +114,12 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
             Marker(markerId: MarkerId(v.latitude.toString()), position: v));
         setState(() {});
       },
-      onCameraMove: (position){
+      onCameraMove: (position) {
         setState(() {
-          markers.first = markers.first.copyWith(positionParam: position.target);
-
+          markers.first =
+              markers.first.copyWith(positionParam: position.target);
         });
       },
-
     );
 
     return Scaffold(
@@ -122,18 +128,23 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
       ),
       body: Stack(
         alignment: Alignment.center,
-        children: [
-          googleMap
-        ],
+        children: [googleMap],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.pop(context, markers.first.position);
         },
-        child: Icon(
-          FontAwesomeIcons.checkDouble,
-          color: Colors.white,
+        label: InkWell(
+          onTap: (){
+            Navigator.pop(context, markers.first.position);
+
+          },
+          child: Text(
+            "Confirm location",
+          ),
         ),
+        backgroundColor: redColor,
       ),
     );
   }

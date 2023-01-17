@@ -17,6 +17,7 @@ class _CarouselImageSliderState extends State<CarouselImageSlider> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        print("Tapped");
         showDialog(
             context: context,
             builder: (_) {

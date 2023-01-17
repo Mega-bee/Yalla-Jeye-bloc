@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
+import 'package:pinch_zoom/pinch_zoom.dart';
 import 'package:untitled1/auth/service/auth_service.dart';
 import 'package:untitled1/home_page/state_manager/homepage.dart';
 import 'package:untitled1/module_menu_details/model/menu_model.dart';
@@ -100,15 +101,73 @@ class MenuDetailsScreenState extends State<MenuDetailsScreen> {
               //           menuDetailsModel!.menuImages![index].menuImage ?? '');
               //     })
               GridView.builder(
-                  itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                          width: double.infinity,
-                          child: Image.network(
-                            menuDetailsModel!.menuImages![index].menuImage ?? '',
-                            fit: BoxFit.fitWidth,
+                  itemBuilder: (context, index) => InkWell(
+                    onTap: (){
+                      showDialog(context: context, builder: (_){
+                        return Scaffold(
+                          appBar: AppBar(
+                            backgroundColor: Colors.black,
+                            elevation: 0,
+                            leading: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    color: Colors.black38,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Icon(
+                                      Icons.arrow_back,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                          backgroundColor: Colors.black,
+                          body: Dismissible(
+                            direction: DismissDirection.down,
+                            key: const Key('key'),
+                            onDismissed: (_) => Navigator.of(context).pop(),
+                            movementDuration: const Duration(milliseconds: 5),
+                            child: PinchZoom(
+                                resetDuration: const Duration(milliseconds: 150),
+                                onZoomStart: () {},
+                                onZoomEnd: () {},
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    width: double.infinity,
+                                    child: Image.network(
+                                      menuDetailsModel!.menuImages![index].menuImage ?? '',
+                                      fit: BoxFit.fitWidth,
+                                    ),
+                                  ),
+                                ),
+
+
+                            ),
+                          ),
+
+                        );
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                            width: double.infinity,
+                            child: Image.network(
+                              menuDetailsModel!.menuImages![index].menuImage ?? '',
+                              fit: BoxFit.fitWidth,
+                            ),
+                          ),
+                    ),
                   ),
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,

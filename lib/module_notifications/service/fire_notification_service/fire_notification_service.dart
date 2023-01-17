@@ -71,6 +71,8 @@ class FireNotificationService {
         FirebaseMessaging.onMessage.listen((RemoteMessage message) {
           _onNotificationReceived.add(message);
         });
+
+
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
           print('tappppppeddd notofication');
           print(message.data);

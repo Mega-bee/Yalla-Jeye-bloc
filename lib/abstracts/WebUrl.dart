@@ -2,7 +2,7 @@ class Urls {
   /*--------BASES-------------------*/
   // static const String DOMAIN = 'https://yalla-jeye.azurewebsites.net/api/v1/';
   static const String DOMAIN =
-      'http://peterjeye-001-site1.etempurl.com/api/v1/';
+      'http://kamalfrenn-002-site2.gtempurl.com/api/v1/';
 
   static const String BASE_HOME_PAGE = DOMAIN + 'HomePage/';
   static const String BASE_NOTIFICATION = DOMAIN + 'Notifications/';

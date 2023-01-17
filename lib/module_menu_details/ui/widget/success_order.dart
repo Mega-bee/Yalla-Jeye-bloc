@@ -41,7 +41,7 @@ class SuccessRateAlter extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.all(8.0),
             child: Text(
-            'Order successfully created.Thank you for using YALLA-JEYE',
+            'Order is successfully created.Thank you for using YALLA-JEYE',
               style: TextStyle(fontWeight: FontWeight.w600 , fontSize: 18),
             ),
           ),
