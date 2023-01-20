@@ -123,7 +123,6 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   // TextEditingController textFieldController = TextEditingController();
 
-
   // final DestinationWithPlaces homepage = DestinationWithPlaces();
   // final Destinations dest = Destinations();
 

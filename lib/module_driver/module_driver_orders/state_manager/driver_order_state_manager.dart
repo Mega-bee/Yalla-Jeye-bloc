@@ -18,6 +18,42 @@ class DriverOrderCubit extends Cubit<States> {
 
   DriverOrderCubit(this._orderRepository) : super(LoadingState());
 
+  // getDriverOrder(DriverOrderScreenState screenState) {
+  //   emit(LoadingState());
+  //   _orderRepository.getDriverOrder().then((value) {
+  //     if (value == null) {
+  //       emit(ErrorState(
+  //           errorMessage: 'Connection error',
+  //           retry: () {
+  //             getDriverOrder(screenState);
+  //           }));
+  //     } else if (value.code == 200) {
+  //       List<DriverOrderResponse> orderCurrent = [];
+  //       List<DriverOrderResponse> orderHistory = [];
+  //       for (var item in value.data.insideData) {
+  //         DriverOrderResponse s = DriverOrderResponse.fromJson(item);
+  //         if (s.statusId == 5) {
+  //           orderHistory.add(s);
+  //         }
+  //         if (s.statusId == 1 ||
+  //             s.statusId == 2 ||
+  //             s.statusId == 3 ||
+  //             s.statusId == 6 ||
+  //             s.statusId == 7 ||
+  //             s.statusId == 8 ||
+  //             s.statusId == 9 ||
+  //             s.statusId == 10) {
+  //           orderCurrent.add(s);
+  //         }
+  //       }
+  //       emit(OrderPageSuccess(
+  //           screenState: screenState,
+  //           orderCurrent: orderCurrent,
+  //           orderHistory: orderHistory));
+  //     }
+  //   });
+  // }
+
   getDriverOrder(DriverOrderScreenState screenState) {
     emit(LoadingState());
     _orderRepository.getDriverOrder().then((value) {
@@ -29,26 +65,12 @@ class DriverOrderCubit extends Cubit<States> {
             }));
       } else if (value.code == 200) {
         List<DriverOrderResponse> orderCurrent = [];
-        List<DriverOrderResponse> orderHistory = [];
         for (var item in value.data.insideData) {
           DriverOrderResponse s = DriverOrderResponse.fromJson(item);
-          if (s.statusId == 5) {
-            orderHistory.add(s);
-          } else if (s.statusId == 1 ||
-              s.statusId == 2 ||
-              s.statusId == 3 ||
-              s.statusId == 6 ||
-              s.statusId == 7 ||
-              s.statusId == 8 ||
-              s.statusId == 9 ||
-              s.statusId == 10) {
-            orderCurrent.add(s);
-          }
+          orderCurrent.add(s);
         }
         emit(OrderPageSuccess(
-            screenState: screenState,
-            orderCurrent: orderCurrent,
-            orderHistory: orderHistory));
+            screenState: screenState, orderCurrent: orderCurrent, orderHistory: []));
       }
     });
   }
