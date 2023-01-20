@@ -1,4 +1,3 @@
-
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/abstracts/WebUrl.dart';
 import 'package:untitled1/abstracts/model/WebServiceResponse.dart';
@@ -32,6 +31,7 @@ class AddressRepository {
     if (response == null) return null;
     return response;
   }
+
   Future<WebServiceResponse?> createAddress(
       CreateAddressRequest request) async {
     var token = await _authService.getToken();

@@ -43,6 +43,11 @@ class CustomSuccess extends HomeStates {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
+                          "You already placed an order? Stay at the comfort of your home and we’ll take care of the rest.",
+                          style: TextStyle(fontSize: 12,color: Colors.grey.shade800,),
+                        ),
+                        SizedBox(height: 15),
+                        Text(
                           "Your order",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16),
@@ -59,13 +64,14 @@ class CustomSuccess extends HomeStates {
                               }
                               return null;
                             },
-                            maxLines: 10,
+                            maxLines: 5,
                             onChanged: (value) {
                               //Do something with the user input.
                             },
                             controller: custom,
                             decoration: const InputDecoration(
-                              hintText: 'What do you want to order?',
+                              hintText:
+                                  'Please list what you would like us to collect and any other details to note.',
                               hintStyle: TextStyle(
                                 color: Color.fromRGBO(204, 204, 204, 0.5),
                               ),
@@ -96,7 +102,7 @@ class CustomSuccess extends HomeStates {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14),
@@ -110,7 +116,7 @@ class CustomSuccess extends HomeStates {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Deliver From",
+                                  "Collect From",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16),
@@ -158,7 +164,7 @@ class CustomSuccess extends HomeStates {
                               height: 3,
                             ),
                             Text(
-                              "${model2!.title ?? "Please select your addres\nyou want to deliver from"}",
+                              "${model2!.title ?? "Please select the address\nyou want to collect from"}",
                             ),
                             SizedBox(
                               height: 10,
@@ -173,7 +179,7 @@ class CustomSuccess extends HomeStates {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14),
@@ -237,7 +243,7 @@ class CustomSuccess extends HomeStates {
                               ],
                             ),
                             Text(
-                                "${model!.title ?? "Please select your address\nyou want to deliver to"}"),
+                                "${model!.title ?? "Please select the address\nyou want to deliver to"}"),
                             SizedBox(
                               height: 10,
                             ),
@@ -253,7 +259,7 @@ class CustomSuccess extends HomeStates {
                 ],
               ),
               SizedBox(
-                height: 18,
+                height: 0,
               ),
               Padding(
                 padding: const EdgeInsets.all(20.0),

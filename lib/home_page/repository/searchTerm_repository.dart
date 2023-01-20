@@ -17,12 +17,10 @@ class SearchTermRepository {
 
 
   Future<WebServiceResponse?> SearchPlaces(SearcPlacesRequest request) async {
-    // var token = _authService.getToken();
 
     WebServiceResponse? response = await _apiClient.get(
       Urls.SEARCH_PLACES,
    queryParams: request.toJson(),
-      // headers: {'Authorization': 'Bearer ' '$token'},
 
     );
     if (response == null) return null;

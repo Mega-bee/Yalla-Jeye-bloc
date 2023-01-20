@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/auth/service/auth_service.dart';
 import 'package:untitled1/custom/model/OrderModel.dart';
@@ -10,10 +12,9 @@ import 'package:untitled1/di/di_config.dart';
 import 'package:untitled1/home_page/ui/state/home_state.dart';
 import 'package:untitled1/module_menu_details/ui/widget/custom_action_botton.dart';
 import 'package:untitled1/module_notifications/service/fire_notification_service/fire_notification_service.dart';
+import 'package:untitled1/utils/Colors/colors.dart';
 import 'package:untitled1/utils/global/global_state_manager.dart';
-import '../../../abstracts/states/state.dart';
 import '../../../hive/hive.dart';
-import '../../../module_notifications/request/notification_request.dart';
 import '../../../utils/images/images.dart';
 import '../../homepage_route.dart';
 import '../../state_manager/homepage.dart';
@@ -25,7 +26,8 @@ class HomePage extends StatefulWidget {
   final AuthService _authService;
   final FireNotificationService fireNotificationService;
 
-  HomePage(this.cubit, this.locationHelper, this._authService, this.fireNotificationService);
+  HomePage(this.cubit, this.locationHelper, this._authService,
+      this.fireNotificationService);
 
   @override
   State<HomePage> createState() => HomePageState();
@@ -33,6 +35,11 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   StreamSubscription? _globalStateManager;
+
+  Position? _currentPosition;
+  String? _currentAddress;
+
+  // String? cityName;
 
   @override
   void initState() {
@@ -47,8 +54,50 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       }
     });
     widget.fireNotificationService.refreshToken();
+    _getCurrentLocation();
+    getPosition();
   }
 
+  _getCurrentLocation() async {
+    final position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    setState(() {
+      _currentPosition = position;
+    });
+    final placemark =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+    setState(() {
+      _currentAddress = placemark[0].locality!;
+    });
+  }
+
+  Future getPosition() async {
+    bool services;
+    LocationPermission per;
+
+    services = await Geolocator.isLocationServiceEnabled();
+    print(services);
+
+    per = await Geolocator.checkPermission();
+    print(per);
+
+    if (per == LocationPermission.denied) {
+      per = await Geolocator.requestPermission();
+      if (per == LocationPermission.always) {
+        _getCurrentLocation();
+      }
+    }
+  }
+
+  // void getCurrentLocation() async {
+  //   LocationData locationData = await Location().getLocation();
+  //   final coordinates = new Coordinates(locationData.latitude, locationData.longitude);
+  //   var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+  //   var first = addresses.first;
+  //   setState(() {
+  //     cityName = first.locality;
+  //   });
+  // }
 
   getHome() {
     widget.cubit.getHomePage(this);
@@ -74,17 +123,33 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   // TextEditingController textFieldController = TextEditingController();
 
-  String currentLocation = 'Zahle';
 
   // final DestinationWithPlaces homepage = DestinationWithPlaces();
   // final Destinations dest = Destinations();
 
   @override
   Widget build(BuildContext context) {
+    print('----------------');
+    print(_currentAddress);
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(ImageAsset.new_app_logo,height: 43,),
+        title: Image.asset(
+          ImageAsset.new_app_logo,
+          height: 43,
+        ),
         leadingWidth: 150,
+        leading: _currentAddress != null
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    '$_currentAddress',
+                    style: TextStyle(fontSize: 12, color: redColor),
+                  ),
+                ],
+              )
+            : Text("Processing..."),
         backgroundColor: Colors.grey.shade50,
         elevation: 0,
         centerTitle: true,
@@ -97,7 +162,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
               },
               icon: Icon(
                 CupertinoIcons.search,
-                color: Colors.red,
+                color: redColor,
                 size: 30,
               ),
             ),

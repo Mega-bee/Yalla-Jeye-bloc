@@ -1,4 +1,3 @@
-
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/auth/service/auth_service.dart';
 
@@ -20,11 +19,8 @@ class OrderRepository {
     WebServiceResponse? response = await _apiClient.get(
       Urls.GET_ORDER,
       headers: {'Authorization': 'Bearer ' '$token'},
-
     );
     if (response == null) return null;
     return response;
   }
-
-
 }

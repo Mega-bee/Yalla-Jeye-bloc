@@ -3,6 +3,7 @@ import 'package:untitled1/order_details/ui/state/order_details_info_tab.dart';
 import '../../../abstracts/states/state.dart';
 import '../../response/order_response.dart';
 import '../screens/order_details_screen.dart';
+import 'chat.dart';
 import 'order_tracking_tab.dart';
 
 class OrderDetailsSuccess extends States {
@@ -15,7 +16,7 @@ class OrderDetailsSuccess extends States {
   @override
   Widget getUI(BuildContext context) {
     return DefaultTabController(
-        length: 2,
+        length: 3,
         initialIndex:firstIndex ,
         child: Scaffold(
           appBar: const PreferredSize(
@@ -35,12 +36,12 @@ class OrderDetailsSuccess extends States {
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
-                // Tab(
-                //   child: Text(
-                //     "Chat",
-                //     style: TextStyle(color: Colors.black),
-                //   ),
-                // ),
+                Tab(
+                  child: Text(
+                    "Chat",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
               ]),
             ),
           ),
@@ -54,6 +55,7 @@ class OrderDetailsSuccess extends States {
                 orderDetailsResponse: ordersuccess,
                 screenState:  screenState,
               ),
+              ChatScreen()
               // Center(child: Container(child: Text('SOON'),))
             ],
           ),

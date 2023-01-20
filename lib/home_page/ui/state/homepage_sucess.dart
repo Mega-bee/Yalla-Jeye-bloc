@@ -54,7 +54,7 @@ class HomePageSuccess extends HomeStates {
                             imageUrl: homepage.events!.services![itemIndex].imageUrl ?? '',
                           ),
                   ),
-                  const TitleHome(title: 'Nearest shop',body: 'You dont mind which shop, just order from the nearest', ),
+                  const TitleHome(title: 'Categories',body: '', ),
 
                   Container(
                     height: 230,

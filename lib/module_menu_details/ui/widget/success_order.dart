@@ -10,7 +10,6 @@ import 'package:untitled1/navigation_bar/ui/screens/navigationBar.dart';
 class SuccessRateAlter extends StatelessWidget {
   const SuccessRateAlter({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -25,7 +24,7 @@ class SuccessRateAlter extends StatelessWidget {
   }
 
   contentBox(context) {
-    return  Container(
+    return Container(
       decoration: BoxDecoration(
           shape: BoxShape.rectangle,
           color: Theme.of(context).cardColor,
@@ -37,24 +36,32 @@ class SuccessRateAlter extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Lottie.asset('assets/images/success_red.json',),
+          Lottie.asset(
+            'assets/images/success_red.json',
+          ),
           const Padding(
             padding: EdgeInsets.all(8.0),
             child: Text(
-            'Order is successfully created.Thank you for using YALLA-JEYE',
-              style: TextStyle(fontWeight: FontWeight.w600 , fontSize: 18),
+              'Order is successfully created.Please track your order in the Order tab.Thank you for using Yalla Jeye!!',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 18,
+              ),
             ),
           ),
           Align(
             alignment: Alignment.bottomRight,
             child: TextButton(
               onPressed: () {
-                NavigationbarrState? stateObject =  context.findAncestorStateOfType<NavigationbarrState>();
+                NavigationbarrState? stateObject =
+                    context.findAncestorStateOfType<NavigationbarrState>();
                 stateObject?.currentIndex = 2;
                 stateObject?.setState(() {});
                 orderModelList.clear();
                 // getIt<HomePageCubit>().cartSubject.add('removeCart');
-                Navigator.pushNamedAndRemoveUntil(context, NavRoutes.nav_rout, (route) => false);
+                Navigator.pushNamedAndRemoveUntil(
+                    context, NavRoutes.nav_rout, (route) => false);
               },
               child: Text('ok'),
             ),
