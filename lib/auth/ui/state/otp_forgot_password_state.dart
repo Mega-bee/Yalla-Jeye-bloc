@@ -25,7 +25,7 @@ class OtpForgetPassInitState extends States{
 
   bool hasError = false;
   String currentText = "";
-  final formKey = GlobalKey<FormState>();
+  final formKeyOtpForgetPass = GlobalKey<FormState>();
   // snackBar(String? message) {
   //   return ScaffoldMessenger.of(context).showSnackBar(
   //     SnackBar(
@@ -80,7 +80,7 @@ class OtpForgetPassInitState extends States{
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 Form(
-                  key: formKey,
+                  key: formKeyOtpForgetPass,
                   child: Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 18.0, horizontal: 50),
@@ -100,7 +100,7 @@ class OtpForgetPassInitState extends States{
                         animationType: AnimationType.fade,
                         validator: (v) {
                           if (v!.length < 3) {
-                            return "I'm from validator";
+                            return "required";
                           } else {
                             return null;
                           }
@@ -175,7 +175,7 @@ class OtpForgetPassInitState extends States{
                   padding: const EdgeInsets.all(8.0),
                   child: CustomButton(
                     buttonTab: () {
-                      formKey.currentState!.validate();
+                      formKeyOtpForgetPass.currentState!.validate();
                       screenState.ConfirmOtp(ConfOtpRequest(
                        phoneNumber:  phoneOtp,
                         otp: otptext.text,

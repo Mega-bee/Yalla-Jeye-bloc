@@ -17,6 +17,7 @@ class CheckOutSuccess extends States {
   CheckOutSuccess({required this.response, required this.screenState});
 
   TextEditingController titleController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget getUI(BuildContext context) {
@@ -116,61 +117,84 @@ class CheckOutSuccess extends States {
                 onTap: () {
                   showModalBottomSheet(
                     context: context,
-                    builder: (context) => Container(
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: TextField(
-                              onChanged: (value) {
-                                //Do something with the user input.
-                              },
-                              controller: titleController,
-                              decoration: InputDecoration(
-                                hintText: 'write your code',
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 20.0, horizontal: 13.0),
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5.0)),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: Color.fromRGBO(204, 204, 204, 0.5),
-                                      width: 2.0),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5.0)),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.grey, width: 2.0),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5.0)),
+                    builder: (context) => StatefulBuilder(
+                      builder: (BuildContext context, StateSetter setState) {
+                        return Container(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Form(
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  key: _formKey,
+                                  child: TextFormField(
+                                    validator: (value) {
+                                      if (value == '') {
+                                        print('validationg..');
+                                        return 'Please fill in this field';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    onChanged: (value) {
+                                      screenState.refrech();
+                                      // screenState.setState(() {
+                                      // });
+                                    },
+                                    controller: titleController,
+                                    decoration: InputDecoration(
+                                      hintText: 'write your code',
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 20.0, horizontal: 13.0),
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            color:
+                                            Color.fromRGBO(204, 204, 204, 0.5),
+                                            width: 2.0),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey, width: 2.0),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: CustomButton(
-                              buttonTab: () {
-                                screenState.checkPromoCode(
-                                  CheckPromoCodeRequest(
-                                    titleController.text.trim(),
-                                  ),
-                                );
-                                Navigator.pop(context);
-                              },
-                              loading: screenState.loadingSnapshotPromoCode
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: CustomButton(
+                                  buttonTab: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      screenState.checkPromoCode(
+                                        CheckPromoCodeRequest(
+                                          titleController.text.trim(),
+                                        ),
+                                      );
+                                      Navigator.pop(context);
+                                    }
+                                  },
+                                  loading: screenState.loadingSnapshotPromoCode
                                       .connectionState ==
-                                  ConnectionState.waiting,
-                              text: 'Add promo code',
-                              bgColor: redColor,
-                              textColor: Colors.white,
-                            ),
+                                      ConnectionState.waiting,
+                                  text: 'Add promo code',
+                                  bgColor: redColor,
+                                  textColor: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        );
+                      }
+
+
                     ),
                   );
                 },

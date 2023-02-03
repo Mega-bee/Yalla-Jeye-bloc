@@ -35,7 +35,7 @@ class OtpCubit extends Cubit<States> {
         Fluttertoast.showToast(msg: 'Connection error');
       } else if (value.code == 200) {
         _loadingStateSubject.add(AsyncSnapshot.nothing());
-        Fluttertoast.showToast(msg: "Your Code Has Been Recent");
+        Fluttertoast.showToast(msg: "Your Code Has Been Resent");
       }
     });
   }
@@ -46,6 +46,8 @@ class OtpCubit extends Cubit<States> {
 
       if (value == null) {
         _loadingStateSubject.add(AsyncSnapshot.nothing());
+        print("Wrong sign up 3");
+
         Fluttertoast.showToast(msg: 'Connection error');
       } else if (value.code == 200) {
         _loginRepository
@@ -54,7 +56,7 @@ class OtpCubit extends Cubit<States> {
             .then((value) {
           if (value == null) {
             _loadingStateSubject.add(AsyncSnapshot.nothing());
-            Fluttertoast.showToast(msg: 'Connection error');
+            Fluttertoast.showToast(msg: value!.errorMessage);
 //        emit(ErrorState(errorMessage: 'Connection error', retry: () {}));
           } else if (value.code == 200) {
             logInModel TT = logInModel.fromJson(value.data.insideData);
@@ -68,15 +70,18 @@ class OtpCubit extends Cubit<States> {
             print("HOme");
           } else if (value.code != 200) {
             _loadingStateSubject.add(AsyncSnapshot.nothing());
+            print("Wrong sign up");
 
-            Fluttertoast.showToast(msg: "Otp Is Wrong");
+            Fluttertoast.showToast(msg: value.errorMessage);
 //        emit(LoginInitState(screenState,value.errorMessage ));
           }
         });
         // Navigator.pushNamedAndRemoveUntil(screenState.context,  AuthRoutes.LOGIN_SCREEN, (route) => false, );
       } else if (value.code != 200) {
         _loadingStateSubject.add(AsyncSnapshot.nothing());
-        Fluttertoast.showToast(msg: "Otp Is Wrong");
+        print("Wrong sign up 2");
+
+        Fluttertoast.showToast(msg: value.errorMessage);
 //        emit(LoginInitState(screenState,value.errorMessage ));
       }
     });
@@ -87,8 +92,9 @@ class OtpCubit extends Cubit<States> {
     _loadingStateSubject.add(AsyncSnapshot.waiting());
     _loginRepository.ConfirmPhoneNumber(request).then((value) {
       if (value == null) {
+        print("Maroun");
         _loadingStateSubject.add(AsyncSnapshot.nothing());
-        Fluttertoast.showToast(msg: 'Connection error');
+        Fluttertoast.showToast(msg: value!.errorMessage);
       } else if (value.code == 200) {
         logInModel TT = logInModel.fromJson(value.data.insideData);
         _authService.setToken(
@@ -97,6 +103,9 @@ class OtpCubit extends Cubit<States> {
         Fluttertoast.showToast(msg: "Phone Number Verified");
         Navigator.pushNamedAndRemoveUntil(
             screenState.context, NavRoutes.nav_rout, (route) => false);
+      }else if(value.code !=200){
+        _loadingStateSubject.add(AsyncSnapshot.nothing());
+        Fluttertoast.showToast(msg: value.errorMessage);
       }
     });
   }

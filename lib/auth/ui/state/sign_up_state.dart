@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
 
+import '../../../abstracts/states/eight_digits_password.dart';
 import '../../../abstracts/states/state.dart';
 import '../../request/sign_up_request.dart';
 import '../screens/sign_up_list.dart';
@@ -15,7 +18,7 @@ class SignupInitState extends States {
 
   SignupInitState(this.screenState, this.errorMessage);
 
-  final _formKey = GlobalKey<FormState>();
+  final _formKeySignUp = GlobalKey<FormState>();
   final newpass = TextEditingController();
   final confirmpass = TextEditingController();
   final firstname = TextEditingController();
@@ -29,6 +32,13 @@ class SignupInitState extends States {
   }
 
   bool _isObscure = true;
+
+  // String validateMobile(String value) {
+  //   if (value.length != 8) {
+  //     return 'Please enter 8 numbers';
+  //   }
+  //   return null;
+  // }
 
   @override
   Widget getUI(BuildContext context) {
@@ -82,7 +92,7 @@ class SignupInitState extends States {
                 ),
                 elevation: 15,
                 child: Form(
-                  key: _formKey,
+                  key: _formKeySignUp,
                   child: Column(
                     children: [
                       Align(
@@ -103,7 +113,7 @@ class SignupInitState extends States {
                         child: Padding(
                           padding: EdgeInsets.only(right: 2, left: 24),
                           child: Container(
-                            color:redColor,
+                            color: redColor,
                             height: 4,
                             width: 35,
                           ),
@@ -141,8 +151,7 @@ class SignupInitState extends States {
                                 ),
                               ),
                               validator: MultiValidator([
-                                RequiredValidator(
-                                    errorText: 'Name Required *'),
+                                RequiredValidator(errorText: 'Name Required *'),
                               ]),
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
@@ -177,10 +186,16 @@ class SignupInitState extends States {
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
-                            validator: MultiValidator([
-                              RequiredValidator(
-                                  errorText: 'Mobile number Required *'),
-                            ]),
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(8)
+                            ],
+                            validator: (value) {
+                              if (value!.length != 8) {
+                                return 'Please enter 8 numbers';
+                              }
+                              return null;
+                            },
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                           ),
@@ -234,17 +249,23 @@ class SignupInitState extends States {
                           padding: const EdgeInsets.all(8.0),
                           child: CustomButton(
                             buttonTab: () {
+                              if (Mobile.text.length != 8) {
+                                Fluttertoast.showToast(
+                                    msg: 'Enter 8 digit phone number');
+
+                                return;
+                              }
                               if (newpass.text.isEmpty ||
                                   newpass.text == confirmpass.text ||
-                                  newpass.text.length < 6) {
-                                _formKey.currentState!.validate();
+                                  newpass.text.length < 6 ||
+                                  Mobile.text.length != 8) {
+                                _formKeySignUp.currentState!.validate();
                               }
                               screenState.SignupRequest(
                                 SignUpReq(
-                                  PhoneNumber:Mobile.text ,
+                                  PhoneNumber: Mobile.text,
                                   name: firstname.text,
-                                  password:newpass.text,
-
+                                  password: newpass.text,
                                 ),
                               );
                             },

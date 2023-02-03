@@ -63,7 +63,7 @@ class SuccessRateAlter extends StatelessWidget {
                 Navigator.pushNamedAndRemoveUntil(
                     context, NavRoutes.nav_rout, (route) => false);
               },
-              child: Text('ok'),
+              child: Text('Ok',style: TextStyle(fontSize: 19),),
             ),
           )
         ],

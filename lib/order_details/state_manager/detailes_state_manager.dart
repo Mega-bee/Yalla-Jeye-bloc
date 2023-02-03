@@ -6,6 +6,7 @@ import '../../abstracts/states/error_state.dart';
 import '../../abstracts/states/loading_state.dart';
 import '../../abstracts/states/state.dart';
 import '../repository/order_repository.dart';
+import '../../orders/request/Reorder.dart';
 import '../response/order_response.dart';
 import '../ui/screens/order_details_screen.dart';
 import '../ui/state/OrderDetailsSuccess.dart';
@@ -84,4 +85,6 @@ class OrderDetailCubit extends Cubit<States> {
       }
     });
   }
+
+
 }

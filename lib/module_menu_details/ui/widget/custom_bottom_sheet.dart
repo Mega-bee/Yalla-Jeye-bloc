@@ -15,6 +15,8 @@ import 'package:untitled1/utils/Colors/colors.dart';
 import 'package:untitled1/utils/global/global_state_manager.dart';
 import 'package:untitled1/utils/images/images.dart';
 
+import 'order_card_widget_two.dart';
+
 class CustomBottomSheet extends StatefulWidget {
   final List<CartOrderModel> placesOrders;
   final MenuDetailsModel? model;
@@ -31,6 +33,10 @@ class CustomBottomSheet extends StatefulWidget {
 
 class _CustomBottomSheetState extends State<CustomBottomSheet> {
   late CartOrderModel currentCartModel;
+  var _descriptionController = TextEditingController();
+
+  final _formKey1 = GlobalKey<FormState>();
+  final _formKey2 = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -47,7 +53,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ()=>FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Container(
         height: MediaQuery.of(context).size.height * 0.950,
         color: Colors.grey.shade100,
@@ -57,8 +63,8 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
             child: Stack(
               children: [
                 SingleChildScrollView(
-                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
                   physics: BouncingScrollPhysics(),
                   child: Column(
                     children: [
@@ -68,31 +74,24 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                           onPressed: () {
                             if (widget.model != null) {
                               if (widget.model?.placeId != 0) {
-                                var containP = orderModelList.where(
-                                        (element) =>
-                                    element.placeId ==
-                                        widget.model?.placeId);
+                                var containP = orderModelList.where((element) =>
+                                    element.placeId == widget.model?.placeId);
                                 if (containP.isEmpty) {
-                                  orderModelList.insert(
-                                      0, currentCartModel);
+                                  orderModelList.insert(0, currentCartModel);
                                 }
                               } else {
-                                var contain = orderModelList.where(
-                                        (element) =>
+                                var contain = orderModelList.where((element) =>
                                     element.placeTypeId ==
                                         widget.model?.placeTypeId &&
-                                        element.placeId ==
-                                            widget.model?.placeId);
+                                    element.placeId == widget.model?.placeId);
                                 if (contain.isEmpty) {
-                                  orderModelList.insert(
-                                      0, currentCartModel);
+                                  orderModelList.insert(0, currentCartModel);
                                 }
                               }
                               print('seend event');
                               getIt<GlobalStateManager>().update();
                             }
                             Navigator.pop(context);
-
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: redColor,
@@ -156,8 +155,8 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                     const Text('Deliver To:   '),
                                     Text(
                                       selectedAddressModel?.title ?? '',
-                                      style:
-                                          TextStyle(fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ],
                                 ),
@@ -186,13 +185,17 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 0,),
+                      SizedBox(
+                        height: 0,
+                      ),
                       checkIfDesOrPlaceExist()
                           ? Container()
                           : OrderCardWidget(
                               orderModel: currentCartModel,
                               onDelete: () {},
-                              isCurrentItem: true),
+                              isCurrentItem: true,
+                              formKeyone: _formKey1,
+                            ),
                       ListView.builder(
                           shrinkWrap: true,
                           itemCount: orderModelList.length,
@@ -200,18 +203,19 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                           itemBuilder: (context, index) {
                             return Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: OrderCardWidget(
+                                child: OrderCardWidgetTwo(
                                   orderModel: orderModelList[index],
                                   onDelete: () {
                                     setStatet(() {});
                                     setState(() {});
                                   },
                                   isCurrentItem: false,
+                                  // formKey2: _formKey2,
                                 ));
                           }),
                       const SizedBox(
                         height: 200,
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -246,32 +250,45 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                 const Spacer(),
                                 MaterialButton(
                                   onPressed: () {
-                                    if (widget.model != null) {
-                                      if (widget.model?.placeId != 0) {
-                                        var containP = orderModelList.where(
-                                            (element) =>
-                                                element.placeId ==
-                                                widget.model?.placeId);
-                                        if (containP.isEmpty) {
+                                    if (_formKey1 != null &&
+                                        _formKey1.currentState != null &&
+                                        _formKey1.currentState!.validate()){
+                                      if (widget.model != null) {
+                                        var existingPlace =
+                                        orderModelList.firstWhere(
+                                                (element) =>
+                                            (element.placeId ==
+                                                widget
+                                                    .model!.placeId &&
+                                                widget.model!.placeId !=
+                                                    0) ||
+                                                (element.placeTypeId ==
+                                                    widget.model!
+                                                        .placeTypeId &&
+                                                    widget.model!.placeId ==
+                                                        0),
+                                            orElse: () => CartOrderModel());
+
+                                        if (existingPlace != null) {
+                                          int index = orderModelList
+                                              .indexOf(existingPlace);
+                                          if (index != -1) {
+                                            orderModelList[index] =
+                                                currentCartModel;
+                                          } else {
+                                            orderModelList.insert(
+                                                0, currentCartModel);
+                                          }
+                                        } else {
                                           orderModelList.insert(
                                               0, currentCartModel);
                                         }
-                                      } else {
-                                        var contain = orderModelList.where(
-                                            (element) =>
-                                                element.placeTypeId ==
-                                                    widget.model?.placeTypeId &&
-                                                element.placeId ==
-                                                    widget.model?.placeId);
-                                        if (contain.isEmpty) {
-                                          orderModelList.insert(
-                                              0, currentCartModel);
-                                        }
+                                        print('seend event');
+                                        getIt<GlobalStateManager>().update();
                                       }
-                                      print('seend event');
-                                      getIt<GlobalStateManager>().update();
+                                      Navigator.pop(context);
                                     }
-                                    Navigator.pop(context);
+
                                   },
                                   color: Colors.white,
                                   elevation: 0,
@@ -293,48 +310,74 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                 ),
                                 MaterialButton(
                                   onPressed: () {
-                                    if (selectedAddressModel == null) {
-                                      Fluttertoast.showToast(
-                                          msg: 'Select Address Please');
-                                    } else {
-                                      if (widget.model != null) {
-                                        if (widget.model?.placeId != 0) {
-                                          var containP = orderModelList.where(
-                                              (element) =>
-                                                  element.placeId ==
-                                                  widget.model?.placeId);
-                                          if (containP.isEmpty) {
-                                            orderModelList.insert(
-                                                0, currentCartModel);
+                                    print(
+                                        "first key: ${_formKey1} scnd key: ${_formKey2}");
+                                    if (_formKey1 != null &&
+                                        _formKey1.currentState != null &&
+                                        _formKey1.currentState!.validate()) {
+                                      if (selectedAddressModel == null) {
+                                        Fluttertoast.showToast(
+                                            msg: 'Select Address Please');
+                                      } else {
+                                        if (widget.model != null) {
+                                          if (widget.model!.placeId != 0) {
+                                            var containP = orderModelList.where(
+                                                (element) =>
+                                                    element.placeId ==
+                                                    widget.model!.placeId);
+                                            if (containP.isEmpty) {
+                                              orderModelList.insert(
+                                                  0, currentCartModel);
+                                            }
+                                          } else {
+                                            if (widget.model!.placeTypeId !=
+                                                null) {
+                                              var contain = orderModelList
+                                                  .where((element) =>
+                                                      element.placeTypeId ==
+                                                          widget.model!
+                                                              .placeTypeId &&
+                                                      element.placeId ==
+                                                          widget
+                                                              .model!.placeId);
+                                              if (contain.isEmpty) {
+                                                orderModelList.insert(
+                                                    0, currentCartModel);
+                                              }
+                                            }
                                           }
-                                        } else {
-                                          var contain = orderModelList.where(
-                                              (element) =>
-                                                  element.placeTypeId ==
-                                                      widget.model?.placeTypeId &&
-                                                  element.placeId ==
-                                                      widget.model?.placeId);
-                                          if (contain.isEmpty) {
-                                            orderModelList.insert(
-                                                0, currentCartModel);
+                                          print('seend event');
+                                        }
+                                        if (widget.placesOrders != null) {
+                                          List<int> allPlacesIds = [];
+                                          List<int> allPlacesTypes = [];
+                                          for (var element
+                                              in widget.placesOrders) {
+                                            if (element.placeId == 0) {
+                                              if (element.placeTypeId != null) {
+                                                allPlacesTypes.add(
+                                                    element.placeTypeId ?? -1);
+                                              }
+                                            } else {
+                                              if (element.placeId != null) {
+                                                allPlacesIds
+                                                    .add(element.placeId ?? -1);
+                                              }
+                                            }
+                                          }
+                                          if (selectedAddressModel!.id !=
+                                              null) {
+                                            widget.calculatePrice(
+                                                CalculatePriceRequest(
+                                                    addressId:
+                                                        selectedAddressModel!
+                                                            .id,
+                                                    placesId: allPlacesIds,
+                                                    placeTypes:
+                                                        allPlacesTypes));
                                           }
                                         }
-                                        print('seend event');
                                       }
-                                      List<int> allPlacesIds = [];
-                                      List<int> allPlacesTypes = [];
-                                      for (var element in widget.placesOrders) {
-                                        if (element.placeId == 0) {
-                                          allPlacesTypes
-                                              .add(element.placeTypeId ?? -1);
-                                        } else {
-                                          allPlacesIds.add(element.placeId ?? -1);
-                                        }
-                                      }
-                                      widget.calculatePrice(CalculatePriceRequest(
-                                          addressId: selectedAddressModel?.id,
-                                          placesId: allPlacesIds,
-                                          placeTypes: allPlacesTypes));
                                     }
                                   },
                                   color: redColor,

@@ -65,12 +65,21 @@ class DriverOrderCubit extends Cubit<States> {
             }));
       } else if (value.code == 200) {
         List<DriverOrderResponse> orderCurrent = [];
+        List<DriverOrderResponse> orderHistory = [];
         for (var item in value.data.insideData) {
           DriverOrderResponse s = DriverOrderResponse.fromJson(item);
-          orderCurrent.add(s);
+          if (s.statusId == 5) {
+            orderHistory.add(s);
+          } else if (s.statusId != 5) {
+            orderCurrent.add(s);
+          }
         }
-        emit(OrderPageSuccess(
-            screenState: screenState, orderCurrent: orderCurrent, orderHistory: []));
+        emit(
+          OrderPageSuccess(
+              screenState: screenState,
+              orderCurrent: orderCurrent,
+              orderHistory: orderHistory),
+        );
       }
     });
   }

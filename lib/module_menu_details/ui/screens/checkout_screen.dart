@@ -62,6 +62,13 @@ class CheckOutScreenState extends State<CheckOutScreen> {
     widget._checkOutCubit.checkPromoCode(request, this, isCustom,);
   }
 
+  refrech(){
+    if (mounted) {
+      setState(() {
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;

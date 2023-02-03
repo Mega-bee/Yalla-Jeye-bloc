@@ -79,34 +79,36 @@ class SearchPlaceSuccess extends States {
           height: 40,
         ),
         Expanded(
-          child: ListView.separated(
-              separatorBuilder: (BuildContext context, int index) =>
-                  const Divider(),
-              itemCount: searchTerm.length,
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, MenuRoutes.menuPage,
-                            arguments: MenuDetailsModel(
-                              categoryName: categoryName,
-                              image: searchTerm[index].image ?? '',
-                              restaurantName: searchTerm[index].title ?? '',
-                              menuImages: [],
-                              placeId: searchTerm[index].id,
-                              placeTypeId: 0,
-                            ));
-                      },
-                      child: ListTile(
-                        // leading: Image.network(searchTerm[index].image.toString()),
-                        title: Text("${searchTerm[index].title}"),
-                        subtitle: Text("${searchTerm[index].description}"),
-                      ),
-                    )
-                  ],
-                );
-              }),
+          child: searchTerm.isNotEmpty
+              ? ListView.separated(
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const Divider(),
+                  itemCount: searchTerm.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, MenuRoutes.menuPage,
+                                arguments: MenuDetailsModel(
+                                  categoryName: categoryName,
+                                  image: searchTerm[index].image ?? '',
+                                  restaurantName: searchTerm[index].title ?? '',
+                                  menuImages: [],
+                                  placeId: searchTerm[index].id,
+                                  placeTypeId: 0,
+                                ));
+                          },
+                          child: ListTile(
+                            // leading: Image.network(searchTerm[index].image.toString()),
+                            title: Text("${searchTerm[index].title}"),
+                            subtitle: Text("${searchTerm[index].description}"),
+                          ),
+                        )
+                      ],
+                    );
+                  })
+              : Text("No result found"),
         )
       ],
     );

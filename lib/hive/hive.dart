@@ -11,6 +11,7 @@ class HiveSetUp {
   static Future<void> publicBoxes() async {
     await Hive.openBox('Authorization');
     await Hive.openBox('modelList');
+    await Hive.openBox('selectedDate');
   }
 }
 
@@ -88,6 +89,20 @@ class ThemeHelper {
       return true;
     }
     return box.get('theme');
+  }
+}
+
+class SelectedDateHive {
+  var SelectDatePicker = Hive.box('selectedDate');
+  void setToken(String? selectedDate) {
+    SelectDatePicker.put('date', selectedDate);
+  }
+  String? getToken() {
+    var selectedDate = SelectDatePicker.get('date');
+    if(selectedDate == null){
+      return null;
+    }
+    return selectedDate;
   }
 }
 

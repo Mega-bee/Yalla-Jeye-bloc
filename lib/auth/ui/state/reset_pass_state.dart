@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
 
@@ -17,7 +18,7 @@ class ResetPasswordState extends States {
 
   ResetPasswordState(this.screenState, this.errorMessage, this.phone);
 
-  final _formKey = GlobalKey<FormState>();
+  final _formKeyResetPass = GlobalKey<FormState>();
   final password = TextEditingController();
   final confirmPass = TextEditingController();
 
@@ -29,7 +30,10 @@ class ResetPasswordState extends States {
   }
 
   bool _isObscure = true;
-
+  // final passwordValidator = EqualToValidator(
+  //     errorText: "Passwords do not match",
+  //     otherController: confirmPass
+  // );
   @override
   Widget getUI(BuildContext context) {
     var mediaQueryHeight = MediaQuery.of(context).size.height;
@@ -75,7 +79,7 @@ class ResetPasswordState extends States {
                 ),
                 elevation: 15,
                 child: Form(
-                  key: _formKey,
+                  key: _formKeyResetPass,
                   child: Column(
                     children: [
                       Align(
@@ -135,7 +139,7 @@ class ResetPasswordState extends States {
                             keyboardType: TextInputType.text,
                             validator: MultiValidator([
                               RequiredValidator(
-                                  errorText: 'Mobile number Required *'),
+                                  errorText: 'Password is Required *'),
                             ]),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
@@ -179,7 +183,7 @@ class ResetPasswordState extends States {
                             keyboardType: TextInputType.text,
                             validator: MultiValidator([
                               RequiredValidator(
-                                  errorText: 'Mobile number Required *'),
+                                  errorText: 'Password is Required *'),
                             ]),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
@@ -198,10 +202,15 @@ class ResetPasswordState extends States {
                             buttonTab: () {
                               if (password.text.isEmpty ||
                                   confirmPass.text.isEmpty) {
-                                _formKey.currentState!.validate();
+                                _formKeyResetPass.currentState!.validate();
+                              }else if(password.text != confirmPass.text){
+                                Fluttertoast.showToast(msg: "Password and confirm password don't match");
+
+                              }else{
+                                screenState.resetPassword(ResetPasswordRequest(
+                                    password: password.text, phone: phone));
                               }
-                              screenState.resetPassword(ResetPasswordRequest(
-                                  password: password.text, phone: phone));
+
                               // Navigator.pushNamed(context, AuthRoutes.OTP_SCREEN);
                             },
                             loading: screenState

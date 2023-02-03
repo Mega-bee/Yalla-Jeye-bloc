@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/src/foundation/assertions.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:injectable/injectable.dart';
@@ -41,6 +43,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await HiveSetUp.init();
+
   // FirebaseMessaging.onBackgroundMessage(FireNotificationService.backgroundMessageHandler);
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -49,9 +52,21 @@ void main() async {
       Logger().error('Main', details.toString(), StackTrace.current);
     };
     runZonedGuarded(() async {
+
       configureDependencies();
       // Your App Here
       await GetStorage.init();
+      FlutterErrorDetails details = FlutterErrorDetails(
+        exception: Exception('Test Crash'),
+        stack: StackTrace.current,
+        library: 'Your Library Name',
+        context: ErrorDescription('Button was pressed'),
+      );
+       FirebaseCrashlytics.instance.recordFlutterError(details).then((_) {
+        FlutterError.onError = (details) {
+          FirebaseCrashlytics.instance.recordFlutterError(details);
+        };
+      });
       runApp(getIt<MyApp>());
     }, (error, stackTrace) {
       Logger().error(
@@ -131,6 +146,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState()  {
     super.initState();
+    // FirebaseCrashlytics.instance.crash();
     widget._fireNotificationService.init();
     widget._localNotificationService.init();
     widget._fireNotificationService.onNotificationStream.listen((event) {

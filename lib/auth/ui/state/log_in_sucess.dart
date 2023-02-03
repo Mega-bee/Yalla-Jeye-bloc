@@ -16,7 +16,7 @@ class LoginInitState extends States{
 
   LoginInitState(this.errorMessage,this._screenState) ;
 
-  final _formKey = GlobalKey<FormState>();
+  final _formKeyLogIn = GlobalKey<FormState>();
   final phone = TextEditingController();
   final password = TextEditingController();
 
@@ -62,7 +62,8 @@ class LoginInitState extends States{
             ],
           ),
         ),
-        Stack(children: [
+        Stack(
+            children: [
           Container(
             height: MediaQuery.of(context).size.height * 0.10,
             color: redColor,
@@ -107,7 +108,7 @@ class LoginInitState extends States{
                       height: mediaQueryHeight * 0.03,
                     ),
                     Form(
-                      key: _formKey,
+                      key: _formKeyLogIn,
                       child: Column(
                         children: [
                           Padding(
@@ -206,7 +207,7 @@ class LoginInitState extends States{
                                 if (password.text.isEmpty ||
                                     phone.text.isEmpty ||
                                     password.text.length < 6) {
-                                  _formKey.currentState!.validate();
+                                  _formKeyLogIn.currentState!.validate();
                                 }
                                 _screenState.loginRequest(LogInRequest(Phone:phone.text, password:password.text));
                               },

@@ -11,13 +11,13 @@ import '../../response/homepage_response.dart';
 import '../screens/home_page.dart';
 import '../widget/Carousel_slider_widget/carousel_image_slider.dart';
 
-
 class HomePageSuccess extends HomeStates {
   final HomePageModel homepage;
 
   HomePageState homepageState;
 
   HomePageSuccess({required this.homepage, required this.homepageState});
+
   late List<HomePageModel> SearchPlaces;
   late List<HomePageModel> SearchPlaces1;
 
@@ -32,39 +32,53 @@ class HomePageSuccess extends HomeStates {
         child: Container(
           color: Colors.grey.shade50,
           child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.all(13.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CarouselSlider.builder(
-                      options: CarouselOptions(
-                          viewportFraction: 1,
-                          height: 250,
-                          autoPlay: true,
-                          enlargeCenterPage: true,
-                          enableInfiniteScroll: true,
-
-                          ),
-                      itemCount: homepage.events!.services!.length,
-                      itemBuilder: (BuildContext context, int itemIndex,
-                              int pageViewIndex) =>
-                          CarouselImageSlider(
-                            imageUrl: homepage.events!.services![itemIndex].imageUrl ?? '',
-                          ),
+                    options: CarouselOptions(
+                      viewportFraction: 1,
+                      height: 250,
+                      autoPlay: true,
+                      enlargeCenterPage: true,
+                      enableInfiniteScroll: true,
+                    ),
+                    itemCount: homepage.events!.services!.length,
+                    itemBuilder: (BuildContext context, int itemIndex,
+                            int pageViewIndex) =>
+                        CarouselImageSlider(
+                      imageUrl:
+                          homepage.events!.services![itemIndex].imageUrl ?? '',
+                    ),
                   ),
-                  const TitleHome(title: 'Categories',body: '', ),
-
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: const Text(
+                        'Categories',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ),
+                  ),
                   Container(
-                    height: 230,
+                    height: 200,
                     child: GridView.builder(
                       // physics: BouncingScrollPhysics(),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         childAspectRatio: (2 / 4),
-                        crossAxisSpacing:12,
+                        crossAxisSpacing: 12,
                         mainAxisSpacing: 0,
                       ),
                       // controller: _controller,
@@ -72,30 +86,41 @@ class HomePageSuccess extends HomeStates {
                       itemCount: homepage.destinations!.length,
                       itemBuilder: (context, index) {
                         return InkWell(
-                            onTap: (){
+                            onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => PlacesListScreen(
-                                  categoryName: homepage.destinations![index].title ?? '',
-                                  placeTypeId: homepage.destinations![index].id ?? -1,
-                                  placesList: homepage.destinationWithPlaces![index].places ?? [],
-
-                                )),
+                                MaterialPageRoute(
+                                    builder: (context) => PlacesListScreen(
+                                          categoryName: homepage
+                                                  .destinations![index].title ??
+                                              '',
+                                          placeTypeId: homepage
+                                                  .destinations![index].id ??
+                                              -1,
+                                          placesList: homepage
+                                                  .destinationWithPlaces![index]
+                                                  .places ??
+                                              [],
+                                        )),
                               ).then((value) => homepageState.refresh());
                             },
-                            child: DestinationCard(model: homepage.destinations![index],));
+                            child: DestinationCard(
+                              model: homepage.destinations![index],
+                            ));
                       },
                     ),
                   ),
-
-                  SizedBox(height: 15,),
-
+                  SizedBox(
+                    height: 15,
+                  ),
                   ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: homepage.destinationWithPlaces!.length,
                       itemBuilder: (context, index) {
-                         return DestWithPlaceCard(model: homepage.destinationWithPlaces![index],);
+                        return DestWithPlaceCard(
+                          model: homepage.destinationWithPlaces![index],
+                        );
                       }),
                 ],
               ),

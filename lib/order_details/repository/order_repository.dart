@@ -6,6 +6,7 @@ import 'package:untitled1/order_details/request/rate_request.dart';
 import '../../abstracts/WebUrl.dart';
 import '../../abstracts/model/WebServiceResponse.dart';
 import '../../module_network/http_client/http_client.dart';
+import '../../orders/request/Reorder.dart';
 
 @injectable
 class OrderDetailRepository {
@@ -60,4 +61,6 @@ class OrderDetailRepository {
     if (response == null) return null;
     return response;
   }
+
+
 }

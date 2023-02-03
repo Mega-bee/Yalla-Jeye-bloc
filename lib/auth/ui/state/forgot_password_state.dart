@@ -17,7 +17,7 @@ class ForgetPasswordState extends States {
 
   ForgetPasswordState(this.screenState, this.errorMessage);
 
-  final _formKey = GlobalKey<FormState>();
+  final _formKeyForgotPass = GlobalKey<FormState>();
   final Mobile = TextEditingController();
 
   String validatePass(value) {
@@ -75,7 +75,7 @@ class ForgetPasswordState extends States {
                 ),
                 elevation: 15,
                 child: Form(
-                  key: _formKey,
+                  key: _formKeyForgotPass,
                   child: Column(
                     children: [
                       Align(
@@ -133,7 +133,7 @@ class ForgetPasswordState extends States {
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
-                            keyboardType: TextInputType.phone,
+                            keyboardType: TextInputType.number,
                             validator: MultiValidator([
                               RequiredValidator(
                                   errorText: 'Mobile number Required *'),
@@ -157,7 +157,7 @@ class ForgetPasswordState extends States {
                             buttonTab: () {
                               if (Mobile.text.isEmpty
                               ) {
-                                _formKey.currentState!.validate();
+                                _formKeyForgotPass.currentState!.validate();
                               }
                               screenState.forgetPasswordRequest(
                                   ForgetPasswordRequest(phoneNumber: Mobile.text,)

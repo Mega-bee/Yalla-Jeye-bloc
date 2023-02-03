@@ -9,12 +9,16 @@ import '../../abstracts/states/loading_state.dart';
 import '../../abstracts/states/state.dart';
 import '../../navigation_bar/navigator_routes.dart';
 import '../../utils/Colors/colors.dart';
+import '../auth_module_route.dart';
 import '../repository/log_in_repository.dart';
+import '../request/generate_otp_request.dart';
 import '../request/log_in_request.dart';
 import '../response/log_in_Response.dart';
 import '../ui/screens/log_in_list.dart';
 import 'dart:async';
 import 'package:rxdart/rxdart.dart';
+
+import '../ui/screens/sign_up_list.dart';
 
 @injectable
 class LogInCubit extends Cubit<States> {
@@ -31,7 +35,7 @@ class LogInCubit extends Cubit<States> {
   Stream<AsyncSnapshot> get loadingStreamForeget =>
       _loadingStateSubjectForget.stream;
 
-  logIn(LogInRequest request, loginScreenState _screenState) {
+  logIn(LogInRequest request, loginScreenState _screenState,) {
     _loadingStateSubject.add(const AsyncSnapshot.waiting());
     _notificationService.getFcmToken().then((value) {
       if(value !=null) {
@@ -60,9 +64,34 @@ class LogInCubit extends Cubit<States> {
           Fluttertoast.showToast(
               msg: value.errorMessage, backgroundColor: redColor);
         }
+         if (value!.code == 401){
+        _loadingStateSubject.add(AsyncSnapshot.nothing());
+        Fluttertoast.showToast(msg:value.errorMessage);
+        OtpGen(GenOtpRequest(phone: request.Phone), _screenState, request.Phone??"",request.password ??"");
+        // Navigator.pushNamed(state.context, AuthRoutes.OTP_SCREEN , );
+
+        }
       });
     });
 
 
+  }
+
+
+  OtpGen(GenOtpRequest request, loginScreenState   screenState , String number,String pass) {
+    _logInRepository.GenerateOtpRequest(request).then((value) {
+      if (value == null) {
+        _loadingStateSubject.add(AsyncSnapshot.nothing());
+        Fluttertoast.showToast(msg: value!.errorMessage);
+      } else if (value.code == 200) {
+
+        _loadingStateSubject.add(AsyncSnapshot.nothing());
+        Fluttertoast.showToast(msg: value.errorMessage);
+        Navigator.pushNamed(
+            screenState.context,
+            AuthRoutes.OTP_SCREEN,
+            arguments: {'phoneNumber':number,'Password':pass});
+      }
+    });
   }
 }

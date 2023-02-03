@@ -43,7 +43,7 @@ class SignUpCubit extends Cubit<States> {
     _loginRepository.GenerateOtpRequest(request).then((value) {
       if (value == null) {
         _loadingStateSubject.add(AsyncSnapshot.nothing());
-        Fluttertoast.showToast(msg: 'Connection error');
+        Fluttertoast.showToast(msg: value!.errorMessage);
       } else if (value.code == 200) {
 
         _loadingStateSubject.add(AsyncSnapshot.nothing());

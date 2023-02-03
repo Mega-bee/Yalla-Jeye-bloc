@@ -13,6 +13,7 @@ import 'package:untitled1/profile/profile_module_route.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
 import 'package:untitled1/utils/components/custom_alert_dialog.dart';
 import 'package:untitled1/utils/images/images.dart';
+import '../../../utils/custom_alert_dialog/CustomDeleteDialog.dart';
 import '../../state_manager/profile.dart';
 
 @injectable
@@ -29,6 +30,7 @@ class SettingProfilePage extends StatefulWidget {
 class ProfilePageState extends State<SettingProfilePage> {
   bool flag = true;
   final double height = 20;
+
   void refresh() {
     if (mounted) {
       setState(() {});
@@ -146,7 +148,7 @@ class ProfilePageState extends State<SettingProfilePage> {
                               );
                             },
                             child: Row(
-                              children:   [
+                              children: [
                                 SvgPicture.asset(
                                   ImageAsset.new_notification,
                                   height: 17,
@@ -259,13 +261,29 @@ class ProfilePageState extends State<SettingProfilePage> {
                 ),
                 child: InkWell(
                   onTap: () {
+
                     widget._authService.isLoggedIn
-                        ? getIt<AuthPrefsHelper>().clearToken().then((value) {
-                            Navigator.pushNamedAndRemoveUntil(
-                                context, NavRoutes.nav_rout, (route) => false);
-                          })
+                        ? showDialog(
+                        context: context,
+                        builder: (context) => CustomDeleteDialog(
+                      title: 'Sign out',
+                      content: 'Are you sure you want to sign out?',
+                      yesBtn: () {
+                        getIt<AuthPrefsHelper>().clearToken().then((value) {
+
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, NavRoutes.nav_rout, (route) => false);
+                        });
+                      },
+                      noBtn: () {
+                        Navigator.pop(context);
+                      },
+
+                    ))
                         : Navigator.pushNamed(
-                            context, AuthRoutes.login,);
+                            context,
+                            AuthRoutes.login,
+                          );
                   },
                   child: Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -280,7 +298,9 @@ class ProfilePageState extends State<SettingProfilePage> {
                             width: 8,
                           ),
                           getIt<AuthPrefsHelper>().isSignedIn()
-                              ? Text("Sign out")
+                              ? Text(
+                                  "Sign out",
+                                )
                               : Text("Sign in"),
                         ],
                       )),

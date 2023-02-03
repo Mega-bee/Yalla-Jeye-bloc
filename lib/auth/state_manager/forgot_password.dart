@@ -56,7 +56,13 @@ class ForgetPasswordCubit extends Cubit<States> {
         print('pushhhhh');
         Navigator.pushNamed(state.context, AuthRoutes.FORGET_PASSWORD_OPT,arguments: {'phoneNumber':request.phoneNumber,});
 
+      }else if (value.code != 200) {
+        _loadingStateSubject.add(AsyncSnapshot.nothing());
+        Fluttertoast.showToast(msg: value.errorMessage.toString());
+//        emit(LoginInitState(screenState,value.errorMessage ));
       }
+
+
     });
   }
 

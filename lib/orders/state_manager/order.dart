@@ -6,6 +6,7 @@ import '../../abstracts/states/error_state.dart';
 import '../../abstracts/states/loading_state.dart';
 import '../../abstracts/states/state.dart';
 import '../repository/order_repository.dart';
+import '../request/Reorder.dart';
 import '../response/order_response.dart';
 import '../ui/screens/order_page_list.dart';
 import '../ui/state/order_sucess.dart';
@@ -45,6 +46,38 @@ class OrderCubit extends Cubit<HomeStates> {
             state: Orderstatee,
           ),
         );
+      }
+    });
+  }
+
+  reOrder(
+      OrderState state, ReorderRequest request) {
+    emit(LoadingTesState());
+    _orderRepository.Reorder(request).then((value) {
+      if (value == null) {
+        emit(ErrorHomeState(
+            errorMessage: 'Connection error',
+            retry: () {
+              getOrder(state);
+            }));
+      } else if (value.code == 200) {
+        getOrder(state);
+      }
+    });
+  }
+
+  reOrderCustom(
+      OrderState state, ReorderRequest request) {
+    emit(LoadingTesState());
+    _orderRepository.reorderCustom(request).then((value) {
+      if (value == null) {
+        emit(ErrorHomeState(
+            errorMessage: 'Connection error',
+            retry: () {
+              getOrder(state);
+            }));
+      } else if (value.code == 200) {
+        getOrder(state);
       }
     });
   }

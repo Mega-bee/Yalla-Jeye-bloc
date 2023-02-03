@@ -19,7 +19,7 @@ class CustomSuccess extends HomeStates {
   AddressResponse? model = AddressResponse();
   AddressResponse? model2 = AddressResponse();
   TextEditingController custom = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  final _formKeyCustom = GlobalKey<FormState>();
 
   @override
   Widget getUI(BuildContext context) {
@@ -44,7 +44,10 @@ class CustomSuccess extends HomeStates {
                       children: [
                         Text(
                           "You already placed an order? Stay at the comfort of your home and we’ll take care of the rest.",
-                          style: TextStyle(fontSize: 12,color: Colors.grey.shade800,),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey.shade800,
+                          ),
                         ),
                         SizedBox(height: 15),
                         Text(
@@ -56,7 +59,7 @@ class CustomSuccess extends HomeStates {
                           height: 15,
                         ),
                         Form(
-                          key: _formKey,
+                          key: _formKeyCustom,
                           child: TextFormField(
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -265,7 +268,7 @@ class CustomSuccess extends HomeStates {
                 padding: const EdgeInsets.all(20.0),
                 child: CustomButton(
                     buttonTab: () {
-                      if (_formKey.currentState!.validate() &&
+                      if (_formKeyCustom.currentState!.validate() &&
                           model!.isSelected == true &&
                           model2!.isSelected == true) {
                         customPageState.CustomOrder(CustomOrderRequest(
@@ -289,6 +292,13 @@ class CustomSuccess extends HomeStates {
               const SizedBox(
                 height: 100,
               ),
+              // ElevatedButton(
+              //   child: Text("Crash"),
+              //   onPressed: () async {
+              //     // force a crash
+              //     await Future.error(Exception('Test Crash'));
+              //   },
+              // )
             ],
           ),
         ),

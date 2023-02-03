@@ -8,6 +8,7 @@ class OrderResponse {
   num? finalDeliveryPrice;
   List<String>? places;
   String? destinationAddressTitle;
+  bool  isCustom = false;
 
   // OrderResponse.i? Card():COntainer()
   // i(){
@@ -25,7 +26,8 @@ class OrderResponse {
         this.totalPrice,
         this.finalDeliveryPrice,
         this.places,
-        this.destinationAddressTitle});
+        this.destinationAddressTitle,
+      required this.isCustom});
 
   OrderResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -37,6 +39,8 @@ class OrderResponse {
     finalDeliveryPrice = json['finalDeliveryPrice'];
     places = json['places'].cast<String>();
     destinationAddressTitle = json['destinationAddressTitle'];
+    isCustom = json['isCustom'];
+
   }
 
 }

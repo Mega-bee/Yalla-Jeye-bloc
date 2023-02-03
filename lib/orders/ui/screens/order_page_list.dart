@@ -6,6 +6,7 @@ import 'package:untitled1/auth/service/auth_service.dart';
 import 'package:untitled1/home_page/ui/state/home_state.dart';
 import '../../../abstracts/states/not_logged_in.dart';
 import '../../../abstracts/states/state.dart';
+import '../../request/Reorder.dart';
 import '../../state_manager/order.dart';
 
 @injectable
@@ -20,6 +21,8 @@ class Order extends StatefulWidget {
 }
 
 class OrderState extends State<Order> {
+  bool flags = true;
+  // String id = '-1';
   bool checkIsGuest() {
     return widget._authService.isLoggedIn;
   }
@@ -30,6 +33,18 @@ class OrderState extends State<Order> {
     checkIsGuest()
         ? widget.cubit.getOrder(this)
         : widget.cubit.emit(NotLoggedIn());
+  }
+
+
+
+  reOrder({required ReorderRequest request,required String id}) {
+    widget.cubit.reOrder(
+        this, ReorderRequest(orderId: int.parse(id),));
+  }
+
+  reOrderCustom({required ReorderRequest request,required String id}) {
+    widget.cubit.reOrderCustom(
+        this, ReorderRequest(orderId: int.parse(id),));
   }
 
   getOrder() {
@@ -43,7 +58,13 @@ class OrderState extends State<Order> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {var args = ModalRoute.of(context)?.settings.arguments;
+  // if (args != null && args is Map && flags) {
+  //   id = args['orderId'];
+  //   flags = false;
+  //   getOrder();
+  // }
+
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(

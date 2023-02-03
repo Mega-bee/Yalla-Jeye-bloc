@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class HomePageModel {
   Events? events;
   List<ItemTypes>? itemTypes;
@@ -164,12 +166,14 @@ class DestinationWithPlaces {
   int? id;
   String? title;
   String? description;
+  bool? requiresAge;
   List<Places>? places;
 
   DestinationWithPlaces({this.id, this.title, this.description, this.places});
 
   DestinationWithPlaces.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    requiresAge = json['requiresAge'];
     title = json['title'];
     description = json['description'];
     if (json['places'] != null) {
@@ -183,6 +187,7 @@ class DestinationWithPlaces {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
+    data['requiresAge'] = this.requiresAge;
     data['title'] = this.title;
     data['description'] = this.description;
     if (this.places != null) {
@@ -194,6 +199,7 @@ class DestinationWithPlaces {
 
 class Places {
   int? id;
+  bool? requiresAge;
   String? image;
   String? title;
   String? description;
@@ -203,6 +209,7 @@ class Places {
 
   Places.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    requiresAge = json['requiresAge'];
     image = json['image'];
     title = json['title'];
     description = json['description'];
@@ -210,7 +217,7 @@ class Places {
     if (json['menus'] != null) {
       menu = <PlaceMenu>[];
       json['menus'].forEach((v) {
-        menu!.add( PlaceMenu.fromJson(v));
+        menu!.add(PlaceMenu.fromJson(v));
       });
     }
   }
@@ -218,6 +225,7 @@ class Places {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] = this.id;
+    data['requiresAge'] = this.requiresAge;
     data['image'] = this.image;
     data['title'] = this.title;
     data['description'] = this.description;
@@ -230,7 +238,8 @@ class PlaceMenu {
   int? placeMenuTypeId;
   String? menuImage;
 
-  PlaceMenu({this.id, this.menuImage , this.placeMenuTypeId});
+  PlaceMenu({this.id, this.menuImage, this.placeMenuTypeId});
+
   PlaceMenu.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     menuImage = json['menu'];
@@ -248,8 +257,3 @@ class PlaceMenu {
 //     menuImage = json['menu'];
 //   }
 // }
-
-
-
-
-

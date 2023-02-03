@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:untitled1/order_details/request/order_request.dart';
 import 'package:untitled1/order_details/request/rate_request.dart';
 import '../../../abstracts/states/state.dart';
+import '../../../orders/request/Reorder.dart';
 import '../../state_manager/detailes_state_manager.dart';
 
 @injectable
@@ -38,6 +39,9 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
     widget.cubit.rateOrder(
         this, RateRequest(orderId: int.parse(id),rating: rateNumber));
   }
+
+
+
   rejectPrice() {
     widget.cubit.rejectOrderPrice(
         this, ChangeOrderPriceRequest(orderId: int.parse(id)));

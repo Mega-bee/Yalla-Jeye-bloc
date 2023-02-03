@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class CalculatePriceResponse{
   num? totalPrice;
   num? totalDistance;

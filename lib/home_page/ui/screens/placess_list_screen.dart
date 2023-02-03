@@ -13,6 +13,7 @@ class PlacesListScreen extends StatefulWidget {
 }
 
 class _PlacesListScreenState extends State<PlacesListScreen> {
+   DateTime? selectedDate;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +22,7 @@ class _PlacesListScreenState extends State<PlacesListScreen> {
         itemBuilder: ((context, index) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: PlaceCard(model: widget.placesList[index],categoryName: widget.categoryName ?? '',placeTypeId: widget.placeTypeId),
+            child: PlaceCard(model: widget.placesList[index],categoryName: widget.categoryName ?? '',placeTypeId: widget.placeTypeId,selectedDate: selectedDate??DateTime.now(),),
           );
         }),
         itemCount: widget.placesList.length,

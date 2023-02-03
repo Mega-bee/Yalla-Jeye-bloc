@@ -21,7 +21,7 @@ class OtpInitState extends States{
 
   bool hasError = false;
   String currentText = "";
-  final formKey = GlobalKey<FormState>();
+  final formKeyOtpState = GlobalKey<FormState>();
   // snackBar(String? message) {
   //   return ScaffoldMessenger.of(context).showSnackBar(
   //     SnackBar(
@@ -84,7 +84,7 @@ class OtpInitState extends States{
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 Form(
-                  key: formKey,
+                  key: formKeyOtpState,
                   child: Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 18.0, horizontal: 50),
@@ -104,7 +104,7 @@ class OtpInitState extends States{
                         animationType: AnimationType.fade,
                         validator: (v) {
                           if (v!.length < 3) {
-                            return "I'm from validator";
+                            return "required";
                           } else {
                             return null;
                           }
@@ -192,13 +192,13 @@ class OtpInitState extends States{
                   padding: const EdgeInsets.all(8.0),
                   child: CustomButton(
                     buttonTab: () {
-                      formKey.currentState!.validate();
+                      formKeyOtpState.currentState!.validate();
                       screenState.ConfirmPhoneRequest(ConfPhoneNumbRequest(
                         phoneNumber:phone,
                         otp:otptext.text,
                       ));
                     },
-                    loading: screenState.loadingSnapshot.connectionState ==
+                    loading:screenState.loadingSnapshot.connectionState ==
                         ConnectionState.waiting,
                     text: 'VERIFY',
                     bgColor: redColor,

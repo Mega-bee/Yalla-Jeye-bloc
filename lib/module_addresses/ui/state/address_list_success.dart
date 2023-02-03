@@ -16,9 +16,9 @@ class AddressListSuccess extends States {
     return ListView.builder(
       itemBuilder: (context, index) => Column(
         children: [
-          SizedBox(
-            height: 30,
-          ),
+          // SizedBox(
+          //   height: 30,
+          // ),
           AddressCard(
             onSelect: (){},
             model: addressList[index],

@@ -4,6 +4,7 @@ import 'package:untitled1/auth/service/auth_service.dart';
 import '../../abstracts/WebUrl.dart';
 import '../../abstracts/model/WebServiceResponse.dart';
 import '../../module_network/http_client/http_client.dart';
+import '../request/Reorder.dart';
 import '../request/order_request.dart';
 
 @injectable
@@ -18,6 +19,30 @@ class OrderRepository {
 
     WebServiceResponse? response = await _apiClient.get(
       Urls.GET_ORDER,
+      headers: {'Authorization': 'Bearer ' '$token'},
+    );
+    if (response == null) return null;
+    return response;
+  }
+
+  Future<WebServiceResponse?> Reorder(
+      ReorderRequest request) async {
+    var token = _authService.getToken();
+    WebServiceResponse? response = await _apiClient.post(
+      Urls.REORDER_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ' '$token'},
+    );
+    if (response == null) return null;
+    return response;
+  }
+
+  Future<WebServiceResponse?> reorderCustom(
+      ReorderRequest request) async {
+    var token = _authService.getToken();
+    WebServiceResponse? response = await _apiClient.post(
+      Urls.REORDER_CUSTOM_API,
+      request.toJson(),
       headers: {'Authorization': 'Bearer ' '$token'},
     );
     if (response == null) return null;
