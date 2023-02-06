@@ -11,7 +11,7 @@ import 'package:intl/intl.dart';
 import '../../../hive/hive.dart';
 import 'package:intl/intl.dart';
 
-class PlaceCard extends StatelessWidget {
+class PlaceCard extends StatefulWidget {
   final String categoryName;
   final int? placeTypeId;
   final Places model;
@@ -24,6 +24,11 @@ class PlaceCard extends StatelessWidget {
 
   DateTime selectedDate;
 
+  @override
+  State<PlaceCard> createState() => _PlaceCardState();
+}
+
+class _PlaceCardState extends State<PlaceCard> {
   double _getAge(DateTime birthdate) {
     final ageInDays = DateTime.now().difference(birthdate).inDays;
     return ageInDays / 365.25;
@@ -47,269 +52,300 @@ class PlaceCard extends StatelessWidget {
   }
 
   // void _checkAge() {
-  //   if(_getAge(selectedDate)<18)
-  //   {
-  //     showDialog(
-  //       context: context,
-  //       builder: (context) {
-  //         return AlertDialog(
-  //           title: Text('Age check'),
-  //           content: Text("You are under 18"),
-  //           actions: <Widget>[
-  //             FlatButton(
-  //               child: Text("OK"),
-  //               onPressed: () {
-  //                 Navigator.of(context).pop();
-  //               },
-  //             ),
-  //           ],
-  //         );
-  //       },
-  //     );
-  //   }
-  // }
+  bool _isChecked = false;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 280,
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        elevation: 2,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            InkWell(
-              onTap: () {
-                model.requiresAge == true
-                    ? SelectedDateHive().getToken() == null
-                        ? showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text('Verification of conditions'),
-                                content: Text(
-                                    'Are you over 18 years of age and are you a smoker or user of other nicotine products?'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    child: Text(
-                                      "No I'm not",
-                                      style: TextStyle(color: Colors.red),
+    return StatefulBuilder(
+        builder: (BuildContext context, StateSetter setStateBuilder) {
+      return Container(
+        width: 280,
+        child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          elevation: 2,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              InkWell(
+                onTap: () {
+                  widget.model.requiresAge == true
+                      ? SelectedDateHive().getToken() == null
+                          ? showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Verification of conditions'),
+                                  content: Text(
+                                      'Are you over 18 years of age and are you a smoker or user of other nicotine products?'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text(
+                                        "No I'm not",
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
                                     ),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  TextButton(
-                                    child: Text(
-                                      'Yes I am',
-                                      style: TextStyle(color: Colors.green),
-                                    ),
-                                    onPressed: () {
-                                      SelectedDateHive().getToken() == null
-                                          ? showCupertinoModalPopup(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return Container(
-                                                  color: Colors.white,
-                                                  height: 300,
-                                                  child: Column(
-                                                    children: [
-                                                      Expanded(
-                                                        child:
-                                                            CupertinoDatePicker(
-                                                          // initialDateTime:
-                                                          //     selectedDate,
-                                                          mode:
-                                                              CupertinoDatePickerMode
-                                                                  .date,
-                                                          minimumYear: 1900,
-                                                          maximumYear:
-                                                              DateTime.now()
-                                                                  .year,
-                                                          onDateTimeChanged:
-                                                              (DateTime value) {
-                                                            String date =
-                                                                DateFormat(
-                                                                        'dd/MM/yyyy')
-                                                                    .format(
-                                                                        value);
-                                                            SelectedDateHive()
-                                                                .setToken(date);
-                                                            final savedDate =
-                                                                SelectedDateHive()
-                                                                    .getToken();
-                                                            print(savedDate);
-                                                            selectedDate =
-                                                                value;
-                                                          },
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 10),
-                                                      Row(
-                                                        children: [
-                                                          Expanded(
-                                                            child:
-                                                                CupertinoButton(
-                                                              child: Text(
-                                                                  'Cancel'),
-                                                              onPressed: () {
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                              },
-                                                            ),
+                                    TextButton(
+                                      child: Text(
+                                        'Yes I am',
+                                        style: TextStyle(color: Colors.green),
+                                      ),
+                                      onPressed: () {
+                                        SelectedDateHive().getToken() == null
+                                            ? showCupertinoModalPopup(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return Container(
+                                                    color: Colors.white,
+                                                    height: 300,
+                                                    child: Column(
+                                                      children: [
+                                                        Expanded(
+                                                          child:
+                                                              CupertinoDatePicker(
+                                                            // initialDateTime:
+                                                            //     selectedDate,
+                                                            mode:
+                                                                CupertinoDatePickerMode
+                                                                    .date,
+                                                            minimumYear: 1900,
+                                                            maximumYear:
+                                                                DateTime.now()
+                                                                    .year,
+                                                            onDateTimeChanged:
+                                                                (DateTime
+                                                                    value) {
+                                                              String date =
+                                                                  DateFormat(
+                                                                          'dd/MM/yyyy')
+                                                                      .format(
+                                                                          value);
+                                                              SelectedDateHive()
+                                                                  .setToken(
+                                                                      date);
+                                                              final savedDate =
+                                                                  SelectedDateHive()
+                                                                      .getToken();
+                                                              print(savedDate);
+                                                              widget.selectedDate =
+                                                                  value;
+                                                            },
                                                           ),
-                                                          SizedBox(width: 10),
-                                                          Expanded(
-                                                            child:
-                                                                CupertinoButton(
-                                                              child: Text(
-                                                                  'Confirm'),
-                                                              onPressed: () {
-                                                                if (selectedDate
-                                                                    .add(Duration(
-                                                                        days: 365 *
-                                                                            18))
-                                                                    .isAfter(
-                                                                        DateTime
-                                                                            .now())) {
-                                                                  showCupertinoDialog(
+                                                        ),
+                                                        SizedBox(height: 10),
+                                                        Row(
+                                                          children: [
+                                                            Expanded(
+                                                              child:
+                                                                  CupertinoButton(
+                                                                child: Text(
+                                                                    'Cancel'),
+                                                                onPressed: () {
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                },
+                                                              ),
+                                                            ),
+                                                            SizedBox(width: 10),
+                                                            Expanded(
+                                                              child:
+                                                                  CupertinoButton(
+                                                                child: Text(
+                                                                    'Confirm'),
+                                                                onPressed: () {
+                                                                  if (widget
+                                                                      .selectedDate
+                                                                      .add(Duration(
+                                                                          days: 365 *
+                                                                              18))
+                                                                      .isAfter(
+                                                                          DateTime
+                                                                              .now())) {
+                                                                    showCupertinoDialog(
+                                                                        context:
+                                                                            context,
+                                                                        builder: (BuildContext
+                                                                                context) =>
+                                                                            CupertinoAlertDialog(
+                                                                              title: Text("Error"),
+                                                                              content: Text("You must be at least 18 years old."),
+                                                                              actions: [
+                                                                                CupertinoDialogAction(
+                                                                                  child: Text("OK"),
+                                                                                  onPressed: () => Navigator.of(context).pop(),
+                                                                                ),
+                                                                              ],
+                                                                            ));
+                                                                  } else {
+                                                                    showDialog(
                                                                       context:
                                                                           context,
-                                                                      builder: (BuildContext
-                                                                              context) =>
-                                                                          CupertinoAlertDialog(
-                                                                            title:
-                                                                                Text("Error"),
-                                                                            content:
-                                                                                Text("You must be at least 18 years old."),
-                                                                            actions: [
-                                                                              CupertinoDialogAction(
-                                                                                child: Text("OK"),
-                                                                                onPressed: () => Navigator.of(context).pop(),
+                                                                      builder:
+                                                                          (BuildContext
+                                                                              context) {
+                                                                        return AlertDialog(
+                                                                          title:
+                                                                              Text("Your Title"),
+                                                                          content:
+                                                                              Row(
+                                                                            children: [
+                                                                              Checkbox(
+                                                                                value: _isChecked,
+                                                                                focusNode: FocusNode(),
+                                                                                onChanged: (bool? value) {
+                                                                                 setState(() {
+                                                                                   _isChecked = value!;
+                                                                                 });
+                                                                                },
                                                                               ),
+                                                                              Text("Checkbox"),
                                                                             ],
-                                                                          ));
-                                                                } else {
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                  Navigator.pop(
-                                                                      context);
+                                                                          ),
 
-                                                                  Navigator.pushNamed(
-                                                                      context,
-                                                                      MenuRoutes
-                                                                          .menuPage,
-                                                                      arguments:
-                                                                          MenuDetailsModel(
-                                                                        categoryName:
-                                                                            categoryName,
-                                                                        image: model.image ??
-                                                                            '',
-                                                                        restaurantName:
-                                                                            model.title ??
-                                                                                '',
-                                                                        menuImages:
-                                                                            model.menu,
-                                                                        placeId:
-                                                                            model.id,
-                                                                        placeTypeId:
-                                                                            0,
-                                                                      ));
-                                                                }
-                                                              },
+                                                                          actions: [
+                                                                            ElevatedButton(
+                                                                              child: Text("OK"),
+                                                                              onPressed: () {
+                                                                                FocusScope.of(context).requestFocus();
+                                                                                if (AcceptSmoke().getSmoke() == null && _isChecked == true) {
+                                                                                  Navigator.pop(context);
+                                                                                  Navigator.pop(context);
+                                                                                  Navigator.pop(context);
+                                                                                  Navigator.pushNamed(context, MenuRoutes.menuPage,
+                                                                                      arguments: MenuDetailsModel(
+                                                                                        categoryName: widget.categoryName,
+                                                                                        image: widget.model.image ?? '',
+                                                                                        restaurantName: widget.model.title ?? '',
+                                                                                        menuImages: widget.model.menu,
+                                                                                        placeId: widget.model.id,
+                                                                                        placeTypeId: 0,
+                                                                                      ));
+                                                                                } else {
+                                                                                  Navigator.pop(context);
+                                                                                  Navigator.pop(context);
+                                                                                  Navigator.pop(context);
+                                                                                  Navigator.pushNamed(context, MenuRoutes.menuPage,
+                                                                                      arguments: MenuDetailsModel(
+                                                                                        categoryName: widget.categoryName,
+                                                                                        image: widget.model.image ?? '',
+                                                                                        restaurantName: widget.model.title ?? '',
+                                                                                        menuImages: widget.model.menu,
+                                                                                        placeId: widget.model.id,
+                                                                                        placeTypeId: 0,
+                                                                                      ));
+                                                                                }
+                                                                              },
+                                                                            ),
+                                                                          ],
+                                                                        );
+                                                                      },
+                                                                    );
+                                                                    // Navigator.pop(
+                                                                    //     context);
+                                                                    // Navigator.pop(
+                                                                    //     context);
+
+                                                                  }
+                                                                },
+                                                              ),
                                                             ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                );
-                                              },
-                                            )
-                                          : Navigator.pushNamed(
-                                              context, MenuRoutes.menuPage,
-                                              arguments: MenuDetailsModel(
-                                                categoryName: categoryName,
-                                                image: model.image ?? '',
-                                                restaurantName:
-                                                    model.title ?? '',
-                                                menuImages: model.menu,
-                                                placeId: model.id,
-                                                placeTypeId: 0,
-                                              ));
-                                    },
-                                  ),
-                                ],
-                              );
-                            },
-                          )
-                        : Navigator.pushNamed(context, MenuRoutes.menuPage,
-                            arguments: MenuDetailsModel(
-                              categoryName: categoryName,
-                              image: model.image ?? '',
-                              restaurantName: model.title ?? '',
-                              menuImages: model.menu,
-                              placeId: model.id,
-                              placeTypeId: 0,
-                            ))
-                    : Navigator.pushNamed(context, MenuRoutes.menuPage,
-                        arguments: MenuDetailsModel(
-                          categoryName: categoryName,
-                          image: model.image ?? '',
-                          restaurantName: model.title ?? '',
-                          menuImages: model.menu,
-                          placeId: model.id,
-                          placeTypeId: 0,
-                        ));
-              },
-              child: Hero(
-                tag: model.image ?? '',
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15)),
-                  child: CachedNetworkImage(
-                    key: UniqueKey(),
-                    imageUrl: model.image ?? '',
-                    fit: BoxFit.cover,
-                    height: 170,
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                            topRight: Radius.circular(15)),
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                },
+                                              )
+                                            : Navigator.pushNamed(
+                                                context, MenuRoutes.menuPage,
+                                                arguments: MenuDetailsModel(
+                                                  categoryName:
+                                                      widget.categoryName,
+                                                  image:
+                                                      widget.model.image ?? '',
+                                                  restaurantName:
+                                                      widget.model.title ?? '',
+                                                  menuImages: widget.model.menu,
+                                                  placeId: widget.model.id,
+                                                  placeTypeId: 0,
+                                                ));
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            )
+                          : Navigator.pushNamed(context, MenuRoutes.menuPage,
+                              arguments: MenuDetailsModel(
+                                categoryName: widget.categoryName,
+                                image: widget.model.image ?? '',
+                                restaurantName: widget.model.title ?? '',
+                                menuImages: widget.model.menu,
+                                placeId: widget.model.id,
+                                placeTypeId: 0,
+                              ))
+                      : Navigator.pushNamed(context, MenuRoutes.menuPage,
+                          arguments: MenuDetailsModel(
+                            categoryName: widget.categoryName,
+                            image: widget.model.image ?? '',
+                            restaurantName: widget.model.title ?? '',
+                            menuImages: widget.model.menu,
+                            placeId: widget.model.id,
+                            placeTypeId: 0,
+                          ));
+                },
+                child: Hero(
+                  tag: widget.model.image ?? '',
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15)),
+                    child: CachedNetworkImage(
+                      key: UniqueKey(),
+                      imageUrl: widget.model.image ?? '',
+                      fit: BoxFit.cover,
+                      height: 170,
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(15),
+                              topRight: Radius.circular(15)),
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
+                      placeholder: (context, url) => Center(
+                        child: LoadingAnimationWidget.inkDrop(
+                            color: Theme.of(context).primaryColor, size: 20),
+                      ),
+                      errorWidget: (context, url, error) =>
+                          Center(child: Icon(Icons.error)),
                     ),
-                    placeholder: (context, url) => Center(
-                      child: LoadingAnimationWidget.inkDrop(
-                          color: Theme.of(context).primaryColor, size: 20),
-                    ),
-                    errorWidget: (context, url, error) =>
-                        Center(child: Icon(Icons.error)),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsetsDirectional.only(start: 8, top: 8),
-              child: Text(
-                "${model.title}",
-                style: GoogleFonts.poppins(
-                  fontStyle: FontStyle.normal,
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
+              Padding(
+                padding: const EdgeInsetsDirectional.only(start: 8, top: 8),
+                child: Text(
+                  "${widget.model.title}",
+                  style: GoogleFonts.poppins(
+                    fontStyle: FontStyle.normal,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

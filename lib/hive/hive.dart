@@ -12,6 +12,7 @@ class HiveSetUp {
     await Hive.openBox('Authorization');
     await Hive.openBox('modelList');
     await Hive.openBox('selectedDate');
+    await Hive.openBox('acceptsmoke');
   }
 }
 
@@ -103,6 +104,20 @@ class SelectedDateHive {
       return null;
     }
     return selectedDate;
+  }
+}
+
+class AcceptSmoke {
+  var acceptSmoke = Hive.box('acceptsmoke');
+  void setSmoke(String? selectedsmoke) {
+    acceptSmoke.put('smoke', selectedsmoke);
+  }
+  String? getSmoke() {
+    var acceptSmokes = acceptSmoke.get('smoke');
+    if(acceptSmoke == null){
+      return null;
+    }
+    return acceptSmokes;
   }
 }
 
