@@ -134,10 +134,10 @@ class SignupInitState extends States {
                                 focusedBorder: OutlineInputBorder(
                                     borderSide:
                                         BorderSide(color: Colors.black)),
-                                labelText: "name",
+                                labelText: "Name",
                                 filled: true,
                                 fillColor: Colors.white,
-                                hintText: "name",
+                                hintText: "Name",
                                 labelStyle: TextStyle(color: Colors.black),
                                 enabledBorder: const OutlineInputBorder(
                                     borderRadius:
@@ -168,12 +168,12 @@ class SignupInitState extends States {
                             style: const TextStyle(fontSize: 14),
                             controller: Mobile,
                             decoration: InputDecoration(
-                              labelText: "phone number",
+                              labelText: "Phone number",
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.black)),
                               filled: true,
                               fillColor: Colors.white,
-                              hintText: " phone number",
+                              hintText: " Phone number",
                               labelStyle: TextStyle(color: Colors.black),
                               enabledBorder: const OutlineInputBorder(
                                   borderRadius:
@@ -242,9 +242,7 @@ class SignupInitState extends States {
                           height: MediaQuery.of(context).size.height * 0.03,
                         ),
 
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.03,
-                        ),
+
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CustomButton(

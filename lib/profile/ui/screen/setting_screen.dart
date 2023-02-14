@@ -170,28 +170,29 @@ class ProfilePageState extends State<SettingProfilePage> {
                   widget._authService.isLoggedIn
                       ? Container()
                       : InkWell(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => const CustomDialogBox(
-                                  title: 'Login in first'),
-                            );
-                          },
-                          child: Center(
-                            child: Container(
-                              width: double.infinity,
-                              color: Colors.grey.shade100.withOpacity(0.6),
-                              height: 205,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(ImageAsset.PASSWORD),
-                                ],
-                              ),
-                            ),
-                          ),
-                        )
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) =>
+                        const CustomDialogBox(
+                            title: 'Login in first'),
+                      );
+                    },
+                    child: Center(
+                      child: Container(
+                        width: double.infinity,
+                        color: Colors.grey.shade100.withOpacity(0.6),
+                        height: 205,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(ImageAsset.PASSWORD),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
               SizedBox(
@@ -261,29 +262,31 @@ class ProfilePageState extends State<SettingProfilePage> {
                 ),
                 child: InkWell(
                   onTap: () {
-
                     widget._authService.isLoggedIn
                         ? showDialog(
                         context: context,
-                        builder: (context) => CustomDeleteDialog(
-                      title: 'Sign out',
-                      content: 'Are you sure you want to sign out?',
-                      yesBtn: () {
-                        getIt<AuthPrefsHelper>().clearToken().then((value) {
-
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, NavRoutes.nav_rout, (route) => false);
-                        });
-                      },
-                      noBtn: () {
-                        Navigator.pop(context);
-                      },
-
-                    ))
+                        builder: (context) =>
+                            CustomDeleteDialog(
+                              title: 'Sign out',
+                              content: 'Are you sure you want to sign out?',
+                              yesBtn: () {
+                                SelectedDateHive().clearToken();
+                                AcceptSmoke().clearToken();
+                                getIt<AuthPrefsHelper>()
+                                    .clearToken()
+                                    .then((value) {
+                                  Navigator.pushNamedAndRemoveUntil(context,
+                                      NavRoutes.nav_rout, (route) => false);
+                                });
+                              },
+                              noBtn: () {
+                                Navigator.pop(context);
+                              },
+                            ))
                         : Navigator.pushNamed(
-                            context,
-                            AuthRoutes.login,
-                          );
+                      context,
+                      AuthRoutes.login,
+                    );
                   },
                   child: Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -299,9 +302,13 @@ class ProfilePageState extends State<SettingProfilePage> {
                           ),
                           getIt<AuthPrefsHelper>().isSignedIn()
                               ? Text(
-                                  "Sign out",
-                                )
-                              : Text("Sign in"),
+                            "Sign out",
+                          )
+                              : InkWell(
+                            child: Text(
+                              "Sign in",
+                            ),
+                          ),
                         ],
                       )),
                 ),

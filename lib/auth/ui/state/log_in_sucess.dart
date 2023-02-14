@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:untitled1/hive/hive.dart';
 
 import 'package:untitled1/utils/Colors/colors.dart';
 import '../../../abstracts/states/state.dart';
@@ -204,6 +206,8 @@ class LoginInitState extends States{
                             child:
                             CustomButton(
                               buttonTab: () {
+                                SelectedDateHive().clearToken();
+                                AcceptSmoke().clearToken();
                                 if (password.text.isEmpty ||
                                     phone.text.isEmpty ||
                                     password.text.length < 6) {
