@@ -210,7 +210,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                     setState(() {});
                                   },
                                   isCurrentItem: false,
-                                  // formKey2: _formKey2,
+                                  formKeytwo: _formKey2,
                                 ));
                           }),
                       const SizedBox(
@@ -250,7 +250,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                 const Spacer(),
                                 MaterialButton(
                                   onPressed: () {
-                                    if (_formKey1 != null &&
+                                    if (
                                         _formKey1.currentState != null &&
                                         _formKey1.currentState!.validate()){
                                       if (widget.model != null) {
@@ -312,7 +312,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                   onPressed: () {
                                     print(
                                         "first key: ${_formKey1} scnd key: ${_formKey2}");
-                                    if (_formKey1 != null &&
+                                    if (
                                         _formKey1.currentState != null &&
                                         _formKey1.currentState!.validate()) {
                                       if (selectedAddressModel == null) {

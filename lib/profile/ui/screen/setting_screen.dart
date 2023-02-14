@@ -261,29 +261,33 @@ class ProfilePageState extends State<SettingProfilePage> {
                 ),
                 child: InkWell(
                   onTap: () {
-
                     widget._authService.isLoggedIn
                         ? showDialog(
-                        context: context,
-                        builder: (context) => CustomDeleteDialog(
-                      title: 'Sign out',
-                      content: 'Are you sure you want to sign out?',
-                      yesBtn: () {
-                        getIt<AuthPrefsHelper>().clearToken().then((value) {
+                            context: context,
+                            builder: (context) => CustomDeleteDialog(
+                                  title: 'Sign out',
+                                  content: 'Are you sure you want to sign out?',
+                                  yesBtn: () {
+                                    SelectedDateHive().clearDate();
+                                    AcceptSmoke().clearSmoke();
+                                    getIt<AuthPrefsHelper>()
+                                        .clearToken()
+                                        .then((value) {
+                                      Navigator.pushNamedAndRemoveUntil(context,
+                                          NavRoutes.nav_rout, (route) => false);
 
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, NavRoutes.nav_rout, (route) => false);
-                        });
-                      },
-                      noBtn: () {
-                        Navigator.pop(context);
-                      },
+                                    });
+                                  },
+                                  noBtn: () {
+                                    Navigator.pop(context);
+                                  },
+                                ))
+                        :
 
-                    ))
-                        : Navigator.pushNamed(
-                            context,
-                            AuthRoutes.login,
-                          );
+                    Navigator.pushNamed(
+                      context,
+                      AuthRoutes.login,
+                    );
                   },
                   child: Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -301,11 +305,18 @@ class ProfilePageState extends State<SettingProfilePage> {
                               ? Text(
                                   "Sign out",
                                 )
-                              : Text("Sign in"),
+                              : InkWell(child: Text("Sign in",),),
                         ],
                       )),
                 ),
               ),
+              // ElevatedButton(
+              //   onPressed: () {
+              //     SelectedDateHive().clearDate();
+              //     AcceptSmoke().clearSmoke();
+              //   },
+              //   child: Text("Clear hive"),
+              // ),
             ],
           ),
         ),

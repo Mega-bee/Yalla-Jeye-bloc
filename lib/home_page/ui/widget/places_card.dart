@@ -52,7 +52,7 @@ class _PlaceCardState extends State<PlaceCard> {
   }
 
   // void _checkAge() {
-  bool _isChecked = false;
+  bool? _isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -69,235 +69,532 @@ class _PlaceCardState extends State<PlaceCard> {
             children: [
               InkWell(
                 onTap: () {
-                  widget.model.requiresAge == true
-                      ? SelectedDateHive().getToken() == null
-                          ? showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('Verification of conditions'),
-                                  content: Text(
-                                      'Are you over 18 years of age and are you a smoker or user of other nicotine products?'),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      child: Text(
-                                        "No I'm not",
-                                        style: TextStyle(color: Colors.red),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                    TextButton(
-                                      child: Text(
-                                        'Yes I am',
-                                        style: TextStyle(color: Colors.green),
-                                      ),
-                                      onPressed: () {
-                                        SelectedDateHive().getToken() == null
-                                            ? showCupertinoModalPopup(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return Container(
-                                                    color: Colors.white,
-                                                    height: 300,
-                                                    child: Column(
-                                                      children: [
-                                                        Expanded(
-                                                          child:
-                                                              CupertinoDatePicker(
-                                                            // initialDateTime:
-                                                            //     selectedDate,
-                                                            mode:
-                                                                CupertinoDatePickerMode
-                                                                    .date,
-                                                            minimumYear: 1900,
-                                                            maximumYear:
-                                                                DateTime.now()
-                                                                    .year,
-                                                            onDateTimeChanged:
-                                                                (DateTime
-                                                                    value) {
-                                                              String date =
-                                                                  DateFormat(
-                                                                          'dd/MM/yyyy')
-                                                                      .format(
-                                                                          value);
-                                                              SelectedDateHive()
-                                                                  .setToken(
-                                                                      date);
-                                                              final savedDate =
-                                                                  SelectedDateHive()
-                                                                      .getToken();
-                                                              print(savedDate);
-                                                              widget.selectedDate =
-                                                                  value;
-                                                            },
-                                                          ),
-                                                        ),
-                                                        SizedBox(height: 10),
-                                                        Row(
-                                                          children: [
-                                                            Expanded(
-                                                              child:
-                                                                  CupertinoButton(
-                                                                child: Text(
-                                                                    'Cancel'),
-                                                                onPressed: () {
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop();
-                                                                },
-                                                              ),
-                                                            ),
-                                                            SizedBox(width: 10),
-                                                            Expanded(
-                                                              child:
-                                                                  CupertinoButton(
-                                                                child: Text(
-                                                                    'Confirm'),
-                                                                onPressed: () {
-                                                                  if (widget
-                                                                      .selectedDate
-                                                                      .add(Duration(
-                                                                          days: 365 *
-                                                                              18))
-                                                                      .isAfter(
-                                                                          DateTime
-                                                                              .now())) {
-                                                                    showCupertinoDialog(
-                                                                        context:
-                                                                            context,
-                                                                        builder: (BuildContext
-                                                                                context) =>
-                                                                            CupertinoAlertDialog(
-                                                                              title: Text("Error"),
-                                                                              content: Text("You must be at least 18 years old."),
-                                                                              actions: [
-                                                                                CupertinoDialogAction(
-                                                                                  child: Text("OK"),
-                                                                                  onPressed: () => Navigator.of(context).pop(),
-                                                                                ),
-                                                                              ],
-                                                                            ));
-                                                                  } else {
-                                                                    showDialog(
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (BuildContext
-                                                                              context) {
-                                                                        return AlertDialog(
-                                                                          title:
-                                                                              Text("Your Title"),
-                                                                          content:
-                                                                              Row(
-                                                                            children: [
-                                                                              Checkbox(
-                                                                                value: _isChecked,
-                                                                                focusNode: FocusNode(),
-                                                                                onChanged: (bool? value) {
-                                                                                 setState(() {
-                                                                                   _isChecked = value!;
-                                                                                 });
-                                                                                },
-                                                                              ),
-                                                                              Text("Checkbox"),
-                                                                            ],
-                                                                          ),
-
-                                                                          actions: [
-                                                                            ElevatedButton(
-                                                                              child: Text("OK"),
-                                                                              onPressed: () {
-                                                                                FocusScope.of(context).requestFocus();
-                                                                                if (AcceptSmoke().getSmoke() == null && _isChecked == true) {
-                                                                                  Navigator.pop(context);
-                                                                                  Navigator.pop(context);
-                                                                                  Navigator.pop(context);
-                                                                                  Navigator.pushNamed(context, MenuRoutes.menuPage,
-                                                                                      arguments: MenuDetailsModel(
-                                                                                        categoryName: widget.categoryName,
-                                                                                        image: widget.model.image ?? '',
-                                                                                        restaurantName: widget.model.title ?? '',
-                                                                                        menuImages: widget.model.menu,
-                                                                                        placeId: widget.model.id,
-                                                                                        placeTypeId: 0,
-                                                                                      ));
-                                                                                } else {
-                                                                                  Navigator.pop(context);
-                                                                                  Navigator.pop(context);
-                                                                                  Navigator.pop(context);
-                                                                                  Navigator.pushNamed(context, MenuRoutes.menuPage,
-                                                                                      arguments: MenuDetailsModel(
-                                                                                        categoryName: widget.categoryName,
-                                                                                        image: widget.model.image ?? '',
-                                                                                        restaurantName: widget.model.title ?? '',
-                                                                                        menuImages: widget.model.menu,
-                                                                                        placeId: widget.model.id,
-                                                                                        placeTypeId: 0,
-                                                                                      ));
-                                                                                }
-                                                                              },
-                                                                            ),
-                                                                          ],
-                                                                        );
-                                                                      },
-                                                                    );
-                                                                    // Navigator.pop(
-                                                                    //     context);
-                                                                    // Navigator.pop(
-                                                                    //     context);
-
-                                                                  }
-                                                                },
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                },
-                                              )
-                                            : Navigator.pushNamed(
-                                                context, MenuRoutes.menuPage,
-                                                arguments: MenuDetailsModel(
-                                                  categoryName:
-                                                      widget.categoryName,
-                                                  image:
-                                                      widget.model.image ?? '',
-                                                  restaurantName:
-                                                      widget.model.title ?? '',
-                                                  menuImages: widget.model.menu,
-                                                  placeId: widget.model.id,
-                                                  placeTypeId: 0,
-                                                ));
-                                      },
-                                    ),
-                                  ],
-                                );
+                  print("REQUIRES AGE ONE: ${widget.model.requiresAge}");
+                  if (widget.model.requiresAge == true &&
+                      SelectedDateHive().getToken() == null) {
+                    print("REQUIRES AGE TWO: ${widget.model.requiresAge}");
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Verification of conditions'),
+                          content: Text(
+                              'Are you over 18 years of age and are you a smoker or user of other nicotine products?'),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text(
+                                "No I'm not",
+                                style: TextStyle(color: Colors.red),
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
                               },
-                            )
-                          : Navigator.pushNamed(context, MenuRoutes.menuPage,
-                              arguments: MenuDetailsModel(
-                                categoryName: widget.categoryName,
-                                image: widget.model.image ?? '',
-                                restaurantName: widget.model.title ?? '',
-                                menuImages: widget.model.menu,
-                                placeId: widget.model.id,
-                                placeTypeId: 0,
-                              ))
-                      : Navigator.pushNamed(context, MenuRoutes.menuPage,
-                          arguments: MenuDetailsModel(
-                            categoryName: widget.categoryName,
-                            image: widget.model.image ?? '',
-                            restaurantName: widget.model.title ?? '',
-                            menuImages: widget.model.menu,
-                            placeId: widget.model.id,
-                            placeTypeId: 0,
-                          ));
+                            ),
+                            TextButton(
+                              child: Text(
+                                'Yes I am',
+                                style: TextStyle(color: Colors.green),
+                              ),
+                              onPressed: () {
+                                SelectedDateHive().getToken() == null
+                                    ? showCupertinoModalPopup(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return Container(
+                                            color: Colors.white,
+                                            height: 300,
+                                            child: Column(
+                                              children: [
+                                                Expanded(
+                                                  child: CupertinoDatePicker(
+                                                    // initialDateTime:
+                                                    //     selectedDate,
+                                                    mode:
+                                                        CupertinoDatePickerMode
+                                                            .date,
+                                                    minimumYear: 1900,
+                                                    maximumYear:
+                                                        DateTime.now().year,
+                                                    onDateTimeChanged:
+                                                        (DateTime value) {
+                                                      String date = DateFormat(
+                                                              'dd/MM/yyyy')
+                                                          .format(value);
+                                                      SelectedDateHive()
+                                                          .setToken(date);
+                                                      final savedDate =
+                                                          SelectedDateHive()
+                                                              .getToken();
+                                                      print(savedDate);
+                                                      widget.selectedDate =
+                                                          value;
+                                                    },
+                                                  ),
+                                                ),
+                                                SizedBox(height: 10),
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: CupertinoButton(
+                                                        child: Text('Cancel'),
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 10),
+                                                    Expanded(
+                                                      child: CupertinoButton(
+                                                        child: Text('Confirm'),
+                                                        onPressed: () {
+                                                          print(
+                                                              "DATE One:${widget.selectedDate}");
+                                                          print('-----------------------');
+                                                          print("REQUIRES AGE TWO: ${widget.model.requiresAge}");
+
+                                                          if (widget
+                                                              .selectedDate
+                                                              .add(Duration(
+                                                                  days:
+                                                                      365 * 18))
+                                                              .isAfter(DateTime
+                                                                  .now())) {
+                                                            print(
+                                                                "DATE Two:${widget.selectedDate}");
+                                                            SelectedDateHive().clearDate();
+                                                            showCupertinoDialog(
+                                                                context:
+                                                                    context,
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    CupertinoAlertDialog(
+                                                                      title: Text(
+                                                                          "Error"),
+                                                                      content: Text(
+                                                                          "You must be at least 18 years old."),
+                                                                      actions: [
+                                                                        CupertinoDialogAction(
+                                                                          child:
+                                                                              Text("OK"),
+                                                                          onPressed:
+                                                                              () {
+                                                                            print('under 18');
+                                                                            Navigator.of(context).pop();
+                                                                            Navigator.of(context).pop();
+                                                                            Navigator.of(context).pop();
+                                                                          },
+                                                                        ),
+                                                                      ],
+                                                                    ));
+                                                          } else {
+                                                            showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (BuildContext
+                                                                      context) {
+                                                                return AlertDialog(
+                                                                  contentPadding:
+                                                                      EdgeInsets
+                                                                          .all(
+                                                                              20),
+                                                                  title: Column(
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Text(
+                                                                        'Sharing your information with',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                16,
+                                                                            fontWeight:
+                                                                                FontWeight.w400),
+                                                                      ),
+                                                                      SizedBox(
+                                                                        height:
+                                                                            4,
+                                                                      ),
+                                                                      Text(
+                                                                        'Iqos Store - Beirut (Up To 6 Hrs Delivery)',
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                          fontSize:
+                                                                              16,
+                                                                        ),
+                                                                      ),
+                                                                      SizedBox(
+                                                                        height:
+                                                                            8,
+                                                                      ),
+                                                                      Container(
+                                                                        alignment: Alignment.centerLeft,
+                                                                        child: Text(
+                                                                          'I accept to share information about me and/or my purchase with Philip Morris Management Services and its affiliates to benefit from additional Customer Care services',
+                                                                          style: TextStyle(
+                                                                              fontSize:
+                                                                                  16,
+                                                                              fontWeight:
+                                                                                  FontWeight.w400),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  content: Row(
+                                                                    children: [
+                                                                      StatefulBuilder(
+                                                                        builder: (BuildContext
+                                                                                context,
+                                                                            StateSetter
+                                                                                setState) {
+                                                                          return Checkbox(
+                                                                            value:
+                                                                                _isChecked,
+                                                                            onChanged:
+                                                                                (value) {
+                                                                              setState(() {
+                                                                                _isChecked = value;
+                                                                              });
+                                                                            },
+                                                                          );
+                                                                        },
+                                                                      ),
+                                                                      Expanded(
+                                                                        child:
+                                                                            Text(
+                                                                          "I agree to share my information (optional)",
+                                                                          style:
+                                                                              TextStyle(fontSize: 14),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+
+                                                                  actions: [
+                                                                    Center(
+                                                                      child:
+                                                                          TextButton(
+                                                                        child:
+                                                                            Text(
+                                                                          "Confirm",
+                                                                          style:
+                                                                              TextStyle(fontSize: 15),
+                                                                        ),
+                                                                        onPressed:
+                                                                            () {
+                                                                          FocusScope.of(context)
+                                                                              .requestFocus();
+                                                                          if (AcceptSmoke().getSmoke() == null &&
+                                                                              _isChecked == true) {
+                                                                            Navigator.pop(context);
+                                                                            Navigator.pop(context);
+                                                                            Navigator.pop(context);
+                                                                            Navigator.pushNamed(context,
+                                                                                MenuRoutes.menuPage,
+                                                                                arguments: MenuDetailsModel(
+                                                                                  categoryName: widget.categoryName,
+                                                                                  image: widget.model.image ?? '',
+                                                                                  restaurantName: widget.model.title ?? '',
+                                                                                  menuImages: widget.model.menu,
+                                                                                  placeId: widget.model.id,
+                                                                                  placeTypeId: 0,
+                                                                                ));
+                                                                          } else {
+                                                                            Navigator.pop(context);
+                                                                            Navigator.pop(context);
+                                                                            Navigator.pop(context);
+                                                                            Navigator.pushNamed(context,
+                                                                                MenuRoutes.menuPage,
+                                                                                arguments: MenuDetailsModel(
+                                                                                  categoryName: widget.categoryName,
+                                                                                  image: widget.model.image ?? '',
+                                                                                  restaurantName: widget.model.title ?? '',
+                                                                                  menuImages: widget.model.menu,
+                                                                                  placeId: widget.model.id,
+                                                                                  placeTypeId: 0,
+                                                                                ));
+                                                                          }
+                                                                        },
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                );
+                                                              },
+                                                            );
+                                                          }
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      )
+
+                                    : Navigator.pushNamed(
+                                        context, MenuRoutes.menuPage,
+                                        arguments: MenuDetailsModel(
+                                          categoryName: widget.categoryName,
+                                          image: widget.model.image ?? '',
+                                          restaurantName:
+                                              widget.model.title ?? '',
+                                          menuImages: widget.model.menu,
+                                          placeId: widget.model.id,
+                                          placeTypeId: 0,
+                                        ));
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    print("Pushedd");
+                    Navigator.pushNamed(context, MenuRoutes.menuPage,
+                        arguments: MenuDetailsModel(
+                          categoryName: widget.categoryName,
+                          image: widget.model.image ?? '',
+                          restaurantName: widget.model.title ?? '',
+                          menuImages: widget.model.menu,
+                          placeId: widget.model.id,
+                          placeTypeId: 0,
+                        ));
+                  }
+                  // widget.model.requiresAge == true
+                  //     ? SelectedDateHive().getToken() == null
+                  //         ? showDialog(
+                  //             context: context,
+                  //             builder: (BuildContext context) {
+                  //               return AlertDialog(
+                  //                 title: Text('Verification of conditions'),
+                  //                 content: Text(
+                  //                     'Are you over 18 years of age and are you a smoker or user of other nicotine products?'),
+                  //                 actions: <Widget>[
+                  //                   TextButton(
+                  //                     child: Text(
+                  //                       "No I'm not",
+                  //                       style: TextStyle(color: Colors.red),
+                  //                     ),
+                  //                     onPressed: () {
+                  //                       Navigator.pop(context);
+                  //                     },
+                  //                   ),
+                  //                   TextButton(
+                  //                     child: Text(
+                  //                       'Yes I am',
+                  //                       style: TextStyle(color: Colors.green),
+                  //                     ),
+                  //                     onPressed: () {
+                  //                       SelectedDateHive().getToken() == null
+                  //                           ? showCupertinoModalPopup(
+                  //                               context: context,
+                  //                               builder:
+                  //                                   (BuildContext context) {
+                  //                                 return Container(
+                  //                                   color: Colors.white,
+                  //                                   height: 300,
+                  //                                   child: Column(
+                  //                                     children: [
+                  //                                       Expanded(
+                  //                                         child:
+                  //                                             CupertinoDatePicker(
+                  //                                           // initialDateTime:
+                  //                                           //     selectedDate,
+                  //                                           mode:
+                  //                                               CupertinoDatePickerMode
+                  //                                                   .date,
+                  //                                           minimumYear: 1900,
+                  //                                           maximumYear:
+                  //                                               DateTime.now()
+                  //                                                   .year,
+                  //                                           onDateTimeChanged:
+                  //                                               (DateTime
+                  //                                                   value) {
+                  //                                             String date =
+                  //                                                 DateFormat(
+                  //                                                         'dd/MM/yyyy')
+                  //                                                     .format(
+                  //                                                         value);
+                  //                                             SelectedDateHive()
+                  //                                                 .setToken(
+                  //                                                     date);
+                  //                                             final savedDate =
+                  //                                                 SelectedDateHive()
+                  //                                                     .getToken();
+                  //                                             print(savedDate);
+                  //                                             widget.selectedDate =
+                  //                                                 value;
+                  //                                           },
+                  //                                         ),
+                  //                                       ),
+                  //                                       SizedBox(height: 10),
+                  //                                       Row(
+                  //                                         children: [
+                  //                                           Expanded(
+                  //                                             child:
+                  //                                                 CupertinoButton(
+                  //                                               child: Text(
+                  //                                                   'Cancel'),
+                  //                                               onPressed: () {
+                  //                                                 Navigator.of(
+                  //                                                         context)
+                  //                                                     .pop();
+                  //                                               },
+                  //                                             ),
+                  //                                           ),
+                  //                                           SizedBox(width: 10),
+                  //                                           Expanded(
+                  //                                             child:
+                  //                                                 CupertinoButton(
+                  //                                               child: Text(
+                  //                                                   'Confirm'),
+                  //                                               onPressed: () {
+                  //                                                 if (widget
+                  //                                                     .selectedDate
+                  //                                                     .add(Duration(
+                  //                                                         days: 365 *
+                  //                                                             18))
+                  //                                                     .isAfter(
+                  //                                                         DateTime
+                  //                                                             .now())) {
+                  //                                                   showCupertinoDialog(
+                  //                                                       context:
+                  //                                                           context,
+                  //                                                       builder: (BuildContext
+                  //                                                               context) =>
+                  //                                                           CupertinoAlertDialog(
+                  //                                                             title: Text("Error"),
+                  //                                                             content: Text("You must be at least 18 years old."),
+                  //                                                             actions: [
+                  //                                                               CupertinoDialogAction(
+                  //                                                                 child: Text("OK"),
+                  //                                                                 onPressed: () {
+                  //                                                                   print('under 18');
+                  //                                                                   Navigator.of(context).pop();
+                  //                                                                   Navigator.of(context).pop();
+                  //                                                                   Navigator.of(context).pop();
+                  //                                                                 },
+                  //                                                               ),
+                  //                                                             ],
+                  //                                                           ));
+                  //                                                 } else {
+                  //                                                   showDialog(
+                  //                                                     context:
+                  //                                                         context,
+                  //                                                     builder:
+                  //                                                         (BuildContext
+                  //                                                             context) {
+                  //                                                       return AlertDialog(
+                  //                                                         title:
+                  //                                                             Text("Your Title"),
+                  //                                                         content:
+                  //                                                             Row(
+                  //                                                           children: [
+                  //                                                             Checkbox(
+                  //                                                               value: _isChecked,
+                  //                                                               focusNode: FocusNode(),
+                  //                                                               onChanged: (bool? value) {
+                  //                                                                setState(() {
+                  //                                                                  _isChecked = value!;
+                  //                                                                });
+                  //                                                               },
+                  //                                                             ),
+                  //                                                             Text("Checkbox"),
+                  //                                                           ],
+                  //                                                         ),
+                  //
+                  //                                                         actions: [
+                  //                                                           ElevatedButton(
+                  //                                                             child: Text("OK"),
+                  //                                                             onPressed: () {
+                  //                                                               FocusScope.of(context).requestFocus();
+                  //                                                               if (AcceptSmoke().getSmoke() == null && _isChecked == true) {
+                  //                                                                 Navigator.pop(context);
+                  //                                                                 Navigator.pop(context);
+                  //                                                                 Navigator.pop(context);
+                  //                                                                 Navigator.pushNamed(context, MenuRoutes.menuPage,
+                  //                                                                     arguments: MenuDetailsModel(
+                  //                                                                       categoryName: widget.categoryName,
+                  //                                                                       image: widget.model.image ?? '',
+                  //                                                                       restaurantName: widget.model.title ?? '',
+                  //                                                                       menuImages: widget.model.menu,
+                  //                                                                       placeId: widget.model.id,
+                  //                                                                       placeTypeId: 0,
+                  //                                                                     ));
+                  //                                                               } else {
+                  //                                                                 Navigator.pop(context);
+                  //                                                                 Navigator.pop(context);
+                  //                                                                 Navigator.pop(context);
+                  //                                                                 Navigator.pushNamed(context, MenuRoutes.menuPage,
+                  //                                                                     arguments: MenuDetailsModel(
+                  //                                                                       categoryName: widget.categoryName,
+                  //                                                                       image: widget.model.image ?? '',
+                  //                                                                       restaurantName: widget.model.title ?? '',
+                  //                                                                       menuImages: widget.model.menu,
+                  //                                                                       placeId: widget.model.id,
+                  //                                                                       placeTypeId: 0,
+                  //                                                                     ));
+                  //                                                               }
+                  //                                                             },
+                  //                                                           ),
+                  //                                                         ],
+                  //                                                       );
+                  //                                                     },
+                  //                                                   );
+                  //
+                  //
+                  //                                                 }
+                  //                                               },
+                  //                                             ),
+                  //                                           ),
+                  //                                         ],
+                  //                                       ),
+                  //                                     ],
+                  //                                   ),
+                  //                                 );
+                  //                               },
+                  //                             )
+                  //                           : Navigator.pushNamed(
+                  //                               context, MenuRoutes.menuPage,
+                  //                               arguments: MenuDetailsModel(
+                  //                                 categoryName:
+                  //                                     widget.categoryName,
+                  //                                 image:
+                  //                                     widget.model.image ?? '',
+                  //                                 restaurantName:
+                  //                                     widget.model.title ?? '',
+                  //                                 menuImages: widget.model.menu,
+                  //                                 placeId: widget.model.id,
+                  //                                 placeTypeId: 0,
+                  //                               ));
+                  //                     },
+                  //                   ),
+                  //                 ],
+                  //               );
+                  //             },
+                  //           )
+                  //         : Navigator.pushNamed(context, MenuRoutes.menuPage,
+                  //             arguments: MenuDetailsModel(
+                  //               categoryName: widget.categoryName,
+                  //               image: widget.model.image ?? '',
+                  //               restaurantName: widget.model.title ?? '',
+                  //               menuImages: widget.model.menu,
+                  //               placeId: widget.model.id,
+                  //               placeTypeId: 0,
+                  //             ))
+                  //     : Navigator.pushNamed(context, MenuRoutes.menuPage,
+                  //         arguments: MenuDetailsModel(
+                  //           categoryName: widget.categoryName,
+                  //           image: widget.model.image ?? '',
+                  //           restaurantName: widget.model.title ?? '',
+                  //           menuImages: widget.model.menu,
+                  //           placeId: widget.model.id,
+                  //           placeTypeId: 0,
+                  //         ));
                 },
                 child: Hero(
                   tag: widget.model.image ?? '',

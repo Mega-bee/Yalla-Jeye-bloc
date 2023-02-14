@@ -76,7 +76,7 @@ class OrderCardWidgetState extends State<OrderCardWidget> {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: (value) {
           if (value!.isEmpty) {
-            return 'Please enter your email';
+            return 'Please enter a description';
           }
           return null;
         },

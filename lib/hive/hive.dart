@@ -105,6 +105,11 @@ class SelectedDateHive {
     }
     return selectedDate;
   }
+
+
+  Future<void> clearDate() async {
+    await SelectDatePicker.clear();
+  }
 }
 
 class AcceptSmoke {
@@ -118,6 +123,10 @@ class AcceptSmoke {
       return null;
     }
     return acceptSmokes;
+  }
+
+  Future<void> clearSmoke() async {
+    await acceptSmoke.clear();
   }
 }
 
