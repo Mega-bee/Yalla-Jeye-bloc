@@ -1,5 +1,6 @@
 class SearchTermsModel {
   int? id;
+  bool? requiresAge;
   String? image;
   String? title;
   String? description;
@@ -18,6 +19,7 @@ class SearchTermsModel {
 
   SearchTermsModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    requiresAge = json['requiresAge'];
     image = json['image'];
     title = json['title'];
     description = json['description'];
@@ -35,6 +37,7 @@ class SearchTermsModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
+    data['requiresAge'] = this.requiresAge;
     data['image'] = this.image;
     data['title'] = this.title;
     data['description'] = this.description;

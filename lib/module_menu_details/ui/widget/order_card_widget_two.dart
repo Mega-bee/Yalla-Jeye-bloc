@@ -7,7 +7,7 @@ class OrderCardWidgetTwo extends StatefulWidget {
   final Function onDelete;
   final CartOrderModel orderModel;
   final bool isCurrentItem;
-  final GlobalKey<FormState> formKeytwo;
+  // final GlobalKey formKeytwo;
 
 
   // var descriptionController = TextEditingController();
@@ -16,7 +16,7 @@ class OrderCardWidgetTwo extends StatefulWidget {
     required this.orderModel,
     required this.onDelete,
     required this.isCurrentItem,
-    required this.formKeytwo,
+    // required this.formKeytwo,
   });
 
   @override
@@ -72,7 +72,7 @@ class _OrderCardWidgetTwoState extends State<OrderCardWidgetTwo> {
             ),
             Form(
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              key: widget.formKeytwo,
+              // key: widget.formKeytwo,
               child: TextFormField(
                 validator: (value) {
                   if (value == '') {
