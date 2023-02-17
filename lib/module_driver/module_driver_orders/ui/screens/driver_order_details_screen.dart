@@ -8,9 +8,7 @@ import 'package:untitled1/module_driver/module_driver_orders/state_manager/drive
 @injectable
 class DriverOrderDetailsScreen extends StatefulWidget {
   final DriverOrderCubit cubit;
-
   const DriverOrderDetailsScreen(this.cubit);
-
   @override
   State<DriverOrderDetailsScreen> createState() =>
       DriverOrderDetailsScreenState();

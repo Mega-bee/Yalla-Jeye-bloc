@@ -69,7 +69,7 @@ class SignupInitState extends States {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                      "Please enter your email and password to signup for Yalla jeye!",
+                      "Please enter your phone number and password to signup for Yalla jeye!",
                       style: TextStyle(color: Colors.white, fontSize: 18)),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
