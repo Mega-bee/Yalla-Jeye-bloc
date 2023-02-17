@@ -1,5 +1,7 @@
 class OrderDetailsResponse {
   int? id;
+  String? long;
+  String? lat;
   int? statusId;
   String? statusName;
   bool  isCustom = false;
@@ -13,6 +15,8 @@ class OrderDetailsResponse {
 
   OrderDetailsResponse({
     this.id,
+    required this.long,
+    required this.lat,
     this.statusId,
     this.statusName,
    required this.isCustom,
@@ -26,6 +30,8 @@ class OrderDetailsResponse {
 
   OrderDetailsResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    lat = json['addressLatitude'];
+    long = json['addressLongitude'];
     rating = json['rating'];
     requiresRating = json['requiresRating'];
     statusId = json['statusId'];

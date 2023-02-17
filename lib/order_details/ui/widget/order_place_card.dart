@@ -63,41 +63,6 @@ class OrderPlaceCard extends StatelessWidget {
             height: 20,
           ),
 
-          // Column(
-          //   crossAxisAlignment: CrossAxisAlignment.start,
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     Text("Before picking your order, driver will :"),
-          //     Column(
-          //       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //       children: [
-          //         Row(
-          //           children: [
-          //             Switch(
-          //                 dragStartBehavior: DragStartBehavior.down,
-          //                 activeColor: redColor,
-          //                 value: placesDetails.makeOrder ?? false,
-          //                onChanged: (_){},
-          //                 ),
-          //             Text(
-          //                 "Call ${placesDetails.placeName} and make order"),
-          //           ],
-          //         ),
-          //         Row(
-          //           children: [
-          //             Switch(
-          //                 dragStartBehavior: DragStartBehavior.down,
-          //                 activeColor: redColor,
-          //                 value: placesDetails.payOrder ?? false,
-          //                 onChanged: (value) => {}
-          //                 ),
-          //             Text("Pay ${placesDetails.placeName} bill"),
-          //           ],
-          //         ),
-          //       ],
-          //     )
-          //   ],
-          // )
         ],
       ),
     );

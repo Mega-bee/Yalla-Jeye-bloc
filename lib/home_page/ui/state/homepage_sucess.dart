@@ -21,6 +21,7 @@ class HomePageSuccess extends HomeStates {
   late List<HomePageModel> SearchPlaces;
   late List<HomePageModel> SearchPlaces1;
 
+
   @override
   Widget getUI(BuildContext context) {
     return SafeArea(
@@ -131,3 +132,5 @@ class HomePageSuccess extends HomeStates {
     );
   }
 }
+
+

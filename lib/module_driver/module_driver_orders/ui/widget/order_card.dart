@@ -5,6 +5,7 @@ import '../../response/driver_order_response.dart';
 
 class DriverOrderCard extends StatelessWidget {
   final DriverOrderResponse order;
+
   const DriverOrderCard({required this.order});
 
   @override

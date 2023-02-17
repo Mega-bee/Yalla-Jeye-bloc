@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
@@ -41,6 +43,9 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   // String? cityName;
 
+  StreamSubscription<ConnectivityResult>? subscription;
+
+
   @override
   void initState() {
     super.initState();
@@ -56,6 +61,35 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     widget.fireNotificationService.refreshToken();
     _getCurrentLocation();
     getPosition();
+
+    // subscription = Connectivity().onConnectivityChanged.listen(_checkConnectivity);
+
+  }
+
+
+
+  void _checkConnectivity(ConnectivityResult connectivityResult) {
+    // Show the toast message based on the connectivity status
+    if (connectivityResult == ConnectivityResult.mobile) {
+      Fluttertoast.showToast(
+          msg: "Mobile data is on",
+          backgroundColor: redColor,
+          textColor: Colors.white,
+          gravity: ToastGravity.TOP,
+      );
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      Fluttertoast.showToast(
+          msg: "WiFi is on",
+          backgroundColor: redColor,
+          textColor: Colors.white,
+          gravity: ToastGravity.TOP);
+    } else {
+      Fluttertoast.showToast(
+          msg: "No network connection",
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          gravity: ToastGravity.TOP);
+    }
   }
 
   _getCurrentLocation() async {
@@ -107,6 +141,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void dispose() {
     controller.dispose();
     super.dispose();
+    subscription?.cancel();
+
   }
 
   void refresh() {
