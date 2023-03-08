@@ -7,6 +7,7 @@ import '../../abstracts/WebUrl.dart';
 import '../../abstracts/model/WebServiceResponse.dart';
 import '../../module_network/http_client/http_client.dart';
 import '../../orders/request/Reorder.dart';
+import '../request/sens-message-request.dart';
 
 @injectable
 class OrderDetailRepository {
@@ -55,6 +56,19 @@ class OrderDetailRepository {
     var token = _authService.getToken();
     WebServiceResponse? response = await _apiClient.put(
       Urls.RATE_ORDER,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ' '$token'},
+    );
+    if (response == null) return null;
+    return response;
+  }
+
+
+  Future<WebServiceResponse?> sendMessage(
+      SendMessageRequest request) async {
+    var token = _authService.getToken();
+    WebServiceResponse? response = await _apiClient.post(
+      Urls.chat,
       request.toJson(),
       headers: {'Authorization': 'Bearer ' '$token'},
     );

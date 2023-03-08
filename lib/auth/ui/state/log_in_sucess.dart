@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:untitled1/utils/Colors/colors.dart';
 import '../../../abstracts/states/state.dart';
 import '../../../hive/hive.dart';
 import '../../auth_module_route.dart';
+import '../../request/google_log_in_request.dart';
 import '../../request/log_in_request.dart';
 import '../screens/log_in_list.dart';
 import '../widget/custom_button.dart';
@@ -20,7 +23,35 @@ class LoginInitState extends States{
   final _formKeyLogIn = GlobalKey<FormState>();
   final phone = TextEditingController();
   final password = TextEditingController();
+  Future<bool> signInWithGoogle() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
 
+    try {
+      final googleUser = await googleSignIn.signIn();
+      final googleAuth = await googleUser!.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      final String? googleToken = googleAuth.accessToken;
+      print("Access token: $googleToken");
+
+      // Send tokens to API
+      _screenState.GoogleloginRequest(GoogleLogInRequest(
+        AccessToken: googleToken,
+      ));
+      print("Access token: $googleToken");
+
+      // Return true to indicate success
+      return true;
+    } catch (error) {
+      print(error);
+      // Return false to indicate failure
+      return false;
+    }
+  }
 
   @override
   Widget getUI(BuildContext context) {
@@ -112,6 +143,24 @@ class LoginInitState extends States{
                       key: _formKeyLogIn,
                       child: Column(
                         children: [
+                          // IconButton(
+                          //   onPressed: () async {
+                          //     final success = await signInWithGoogle();
+                          //     if (success) {
+                          //       // Fluttertoast.showToast(msg: "Google sign in");
+                          //     } else {
+                          //       // Show error message on failure
+                          //       ScaffoldMessenger.of(context).showSnackBar(
+                          //         SnackBar(content: Text('Sign in failed')),
+                          //       );
+                          //     }
+                          //   },
+                          //   icon: FaIcon(
+                          //     FontAwesomeIcons.google,
+                          //     color: Colors.red,
+                          //     size: 30,
+                          //   ),
+                          // ),
                           Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: mediaQueryWidth * 0.05),
@@ -241,6 +290,8 @@ class LoginInitState extends States{
                             ),
                           ),
 
+
+
                           SizedBox(
                             height: mediaQueryHeight * 0.02,
                           ),
@@ -274,6 +325,7 @@ class LoginInitState extends States{
 //                                          child: SignupScreen()));
                                   },
                                 ),
+
                               ]),
                           SizedBox(
                             height:
@@ -282,6 +334,7 @@ class LoginInitState extends States{
                         ],
                       ),
                     ),
+
                   ]),
                 ),
               ),

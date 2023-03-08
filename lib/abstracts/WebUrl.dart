@@ -48,6 +48,7 @@ class Urls {
 
   /*-----------------------AUTH----------------------------------*/
   static const String LOG_IN = AUTH + 'Login';
+  static const String GOOGLE_LOGIN = AUTH + 'ExternalLoginGoogle';
   static const String SIGN_UP = AUTH + 'SignUp';
   static const String GENERATE_OTP = AUTH + 'GenerateOtp';
   static const String CONFIRM_OTP = AUTH + 'ConfirmOtp';
@@ -65,4 +66,12 @@ class Urls {
   static const String GET_DRIVER_ORDERS = '${DRIVERS}GetOrders';
   static const String GET_DRIVER_ORDERS_DETAILS = '${DRIVERS}GetOrderDetails/';
   static const String ORDER_STATUS = '${DRIVERS}SetOrderStatus';
+
+  static const String  HUBS = 'http://kamalfrenn-002-site5.gtempurl.com/hubs/notification';
+
+  static const String chat = "http://kamalfrenn-002-site5.gtempurl.com/api/Chats/SendMessage";
+
 }
+
+
+

@@ -2,9 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 
+import '../../request/sens-message-request.dart';
 import '../../response/message.dart';
+import '../../response/order_response.dart';
+import '../screens/order_details_screen.dart';
 
 class ChatScreen extends StatefulWidget {
+  final OrderDetailsResponse orderDetailsResponse;
+  final OrderDetailsScreenState screenState;
+
+  ChatScreen({required this.orderDetailsResponse,required this.screenState});
+
+
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -50,7 +59,8 @@ class _ChatScreenState extends State<ChatScreen> {
   ].reversed.toList();
 
 
-
+int chat = 1;
+int voice = 2;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,6 +114,12 @@ class _ChatScreenState extends State<ChatScreen> {
                 hintText: 'Type your message here...',
               ),
               onSubmitted: (text) {
+                widget.screenState.sendMessage(SendMessageRequest(
+                  OrderId: widget.orderDetailsResponse.id,
+                  MessageTypeId: chat,
+                  Message: _textController.text,
+                  IsFromAdmin: false,
+                ));
                 final message = Message(
                   text: text,
                   date: DateTime.now(),

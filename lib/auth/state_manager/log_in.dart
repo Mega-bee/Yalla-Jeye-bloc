@@ -12,6 +12,7 @@ import '../../utils/Colors/colors.dart';
 import '../auth_module_route.dart';
 import '../repository/log_in_repository.dart';
 import '../request/generate_otp_request.dart';
+import '../request/google_log_in_request.dart';
 import '../request/log_in_request.dart';
 import '../response/log_in_Response.dart';
 import '../ui/screens/log_in_list.dart';
@@ -94,4 +95,26 @@ class LogInCubit extends Cubit<States> {
       }
     });
   }
+
+  GooglelogIn(GoogleLogInRequest request, loginScreenState _screenState) {
+    // emit(LoadingState());
+    _loadingStateSubject.add(AsyncSnapshot.waiting());
+    _logInRepository.GoogleloginRequest(request).then((value) {
+      if (value == null) {
+        _loadingStateSubject.add(AsyncSnapshot.nothing());
+        Fluttertoast.showToast(msg: 'Something went wrong',backgroundColor: Colors.black);
+      } else if (value.code == 200) {
+        logInModel TT = logInModel.fromJson(value.data.insideData);
+        _authService.setToken(TT.token ??"",);
+        Navigator.pushNamedAndRemoveUntil(
+            _screenState.context, NavRoutes.nav_rout, (route) => false);
+      }
+
+      else{
+        _loadingStateSubject.add(AsyncSnapshot.nothing());
+        Fluttertoast.showToast(msg: value.errorMessage,backgroundColor: Colors.blue);
+      }
+    });
+  }
+
 }

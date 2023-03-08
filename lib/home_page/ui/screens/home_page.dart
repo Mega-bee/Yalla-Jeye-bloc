@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
+import 'package:signalr_netcore/hub_connection_builder.dart';
 import 'package:untitled1/auth/service/auth_service.dart';
 import 'package:untitled1/custom/model/OrderModel.dart';
 import 'package:untitled1/di/di_config.dart';
@@ -34,6 +35,11 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> with TickerProviderStateMixin {
+
+
+
+
+
   StreamSubscription? _globalStateManager;
 
   Position? _currentPosition;
@@ -56,6 +62,9 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     widget.fireNotificationService.refreshToken();
     _getCurrentLocation();
     getPosition();
+    widget.cubit.initConnectFirstTime();
+
+
   }
 
   _getCurrentLocation() async {
@@ -102,6 +111,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   getHome() {
     widget.cubit.getHomePage(this);
   }
+
+
 
   @override
   void dispose() {

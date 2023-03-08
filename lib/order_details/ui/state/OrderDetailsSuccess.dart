@@ -13,6 +13,9 @@ class OrderDetailsSuccess extends States {
 
   OrderDetailsSuccess(this.firstIndex, {required this.ordersuccess, required this.screenState});
 
+
+
+
   @override
   Widget getUI(BuildContext context) {
     return DefaultTabController(
@@ -55,7 +58,10 @@ class OrderDetailsSuccess extends States {
                 orderDetailsResponse: ordersuccess,
                 screenState:  screenState,
               ),
-              ChatScreen()
+              ChatScreen(
+                orderDetailsResponse: ordersuccess,
+                screenState: screenState,
+              )
               // Center(child: Container(child: Text('SOON'),))
             ],
           ),

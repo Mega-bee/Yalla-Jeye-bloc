@@ -8,6 +8,7 @@ import '../request/confirm_otp.dart';
 import '../request/confirm_phone_number_request.dart';
 import '../request/forgot_password_request.dart';
 import '../request/generate_otp_request.dart';
+import '../request/google_log_in_request.dart';
 import '../request/log_in_request.dart';
 import '../request/reset_password_request.dart';
 import '../request/sign_up_request.dart';
@@ -93,4 +94,16 @@ class LogInRepository {
     if (response == null) return null;
     return response;
   }
+
+  Future<WebServiceResponse?> GoogleloginRequest(GoogleLogInRequest request) async {
+    var token = _authService.getToken();
+    WebServiceResponse? response = await _apiClient.post(
+      Urls.GOOGLE_LOGIN,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ' '$token'},
+    );
+    if (response == null) return null;
+    return response;
+  }
+
 }

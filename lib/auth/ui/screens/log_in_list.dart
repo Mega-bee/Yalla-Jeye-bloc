@@ -6,6 +6,7 @@ import 'package:untitled1/auth/state_manager/log_in.dart';
 
 import '../../../abstracts/states/state.dart';
 import '../../../utils/Colors/colors.dart';
+import '../../request/google_log_in_request.dart';
 import '../state/log_in_sucess.dart';
 
 
@@ -24,6 +25,11 @@ class loginScreenState extends State<loginScreen> {
 
   void loginRequest(LogInRequest request){
     widget.cubit.logIn(request,this);
+  }
+
+
+  void GoogleloginRequest(GoogleLogInRequest request){
+    widget.cubit.GooglelogIn(request,this);
   }
 
 

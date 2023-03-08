@@ -72,6 +72,8 @@ dependencies:
   pin_code_fields: ^7.4.0
   shimmer: ^2.0.0
   lottie:
+  google_sign_in: ^5.2.1
+  firebase_auth:
   pinch_zoom: ^1.0.0
   tip_dialog: ^4.0.0
   custom_info_window: ^1.0.1
@@ -84,6 +86,9 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   grouped_list: ^4.2.0
   firebase_crashlytics: ^3.0.11
+  showcaseview: ^2.0.1
+
+
 #  shared_preferences:
 #  geocoder:
 

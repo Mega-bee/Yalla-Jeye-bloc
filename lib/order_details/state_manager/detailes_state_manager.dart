@@ -7,6 +7,7 @@ import '../../abstracts/states/loading_state.dart';
 import '../../abstracts/states/state.dart';
 import '../repository/order_repository.dart';
 import '../../orders/request/Reorder.dart';
+import '../request/sens-message-request.dart';
 import '../response/order_response.dart';
 import '../ui/screens/order_details_screen.dart';
 import '../ui/state/OrderDetailsSuccess.dart';
@@ -82,6 +83,22 @@ class OrderDetailCubit extends Cubit<States> {
             }));
       } else if (value.code == 201) {
         getOrderDetails(id: request.orderId.toString(), state: state,firstIndex: 0);
+      }
+    });
+  }
+
+
+  sendMessage(
+      OrderDetailsScreenState state, SendMessageRequest request) {
+    emit(LoadingState());
+    _orderDetailsRepository.sendMessage(request).then((value) {
+      if (value == null) {
+        emit(ErrorState(
+            errorMessage: 'Connection error',
+            retry: () {
+            }));
+      } else if (value.code == 200) {
+
       }
     });
   }
