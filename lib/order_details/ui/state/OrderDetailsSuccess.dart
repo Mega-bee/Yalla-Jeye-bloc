@@ -22,11 +22,12 @@ class OrderDetailsSuccess extends States {
         length: 3,
         initialIndex:firstIndex ,
         child: Scaffold(
-          appBar: const PreferredSize(
+          appBar:  PreferredSize(
             preferredSize: Size.fromHeight(kToolbarHeight),
             child: SizedBox(
               height: 50,
-              child: TabBar(tabs: [
+              child:               ordersuccess.statusId != 5?
+              TabBar(tabs: [
                 Tab(
                   child: Text(
                     "Details",
@@ -45,7 +46,26 @@ class OrderDetailsSuccess extends States {
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
-              ]),
+              ]):TabBar(tabs: [
+                Tab(
+                  child: Text(
+                    "Details",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    "Tracking",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                // Tab(
+                //   child: Text(
+                //     "Chat",
+                //     style: TextStyle(color: Colors.black),
+                //   ),
+                // ),
+              ])
             ),
           ),
           body: TabBarView(

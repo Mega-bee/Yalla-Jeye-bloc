@@ -23,8 +23,8 @@ class ChatScreen extends StatefulWidget {
 
   ChatScreen(
       {required this.orderDetailsResponse,
-      required this.screenState,
-      this.chatMessage});
+        required this.screenState,
+        this.chatMessage});
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -34,7 +34,7 @@ class _ChatScreenState extends State<ChatScreen>
     with AutomaticKeepAliveClientMixin<ChatScreen> {
   final _textController = TextEditingController();
   final StreamController<List<Messages>> _chatMessageStreamController =
-      StreamController<List<Messages>>.broadcast();
+  StreamController<List<Messages>>.broadcast();
 
   @override
   bool get wantKeepAlive => true;
@@ -98,58 +98,58 @@ class _ChatScreenState extends State<ChatScreen>
         children: [
           Expanded(
               child: GroupedListView<Messages, DateTime>(
-            padding: const EdgeInsets.all(8),
-            reverse: true,
-            order: GroupedListOrder.DESC,
-            elements: widget.chatMessage??[],
-            groupBy: (message) => DateTime(
-              message.createdDate.year,
-              message.createdDate.month,
-              message.createdDate.day,
-            ),
-            groupHeaderBuilder: (Messages message) => SizedBox(
-              height: 40,
-              child: Center(
-                child: Card(
-                  color: Theme.of(context).primaryColor,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Text(
-                      DateFormat.yMMMd().format(message.createdDate),
-                      style: const TextStyle(color: Colors.white),
+                padding: const EdgeInsets.all(8),
+                reverse: true,
+                order: GroupedListOrder.DESC,
+                elements: widget.chatMessage??[],
+                groupBy: (message) => DateTime(
+                  message.createdDate.year,
+                  message.createdDate.month,
+                  message.createdDate.day,
+                ),
+                groupHeaderBuilder: (Messages message) => SizedBox(
+                  height: 40,
+                  child: Center(
+                    child: Card(
+                      color: Theme.of(context).primaryColor,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Text(
+                          DateFormat.yMMMd().format(message.createdDate),
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            itemBuilder: (context, Messages message) => Align(
-              alignment: message.isFromUser
-                  ? Alignment.centerRight
-                  : Alignment.centerLeft,
-              child: Card(
-                elevation: 8,
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: message.messageTypeId == 1
-                      ? Text(message.message ?? "")
-                      : Container(
-                          width: 220,
-                          child: VoiceMessage(
-                            contactPlayIconColor: Colors.black,
-                            contactFgColor: Colors.red,
-                            noiseCount: 20,
-                            audioSrc: message.message ?? "",
-                            played: true,
-                            // To show played badge or not.
-                            me: false,
-                            // Set message side.
-                            onPlay: () {}, // Do something when voice played.
-                          ),
+                itemBuilder: (context, Messages message) => Align(
+                  alignment: message.isFromUser
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
+                  child: Card(
+                    elevation: 8,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: message.messageTypeId == 1
+                          ? Text(message.message ?? "")
+                          : Container(
+                        width: 220,
+                        child: VoiceMessage(
+                          contactPlayIconColor: Colors.black,
+                          contactFgColor: Colors.red,
+                          noiseCount: 20,
+                          audioSrc: message.message ?? "",
+                          played: true,
+                          // To show played badge or not.
+                          me: false,
+                          // Set message side.
+                          onPlay: () {}, // Do something when voice played.
                         ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          )),
+              )),
           Container(
             color: Colors.grey.shade300,
             child: Row(
@@ -157,39 +157,39 @@ class _ChatScreenState extends State<ChatScreen>
                 Expanded(
                   child: isRecording
                       ? Padding(
-                          padding: const EdgeInsets.only(left: 12.0),
-                          child: Text(
-                            "Recording...",
-                            style: TextStyle(color: redColor),
-                          ),
-                        )
+                    padding: const EdgeInsets.only(left: 12.0),
+                    child: Text(
+                      "Recording...",
+                      style: TextStyle(color: redColor),
+                    ),
+                  )
                       : TextField(
-                          controller: _textController,
-                          decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.all(12),
-                            hintText: 'Type your message here...',
-                          ),
-                          onSubmitted: (text) {
-                            widget.screenState.sendMessage(SendMessageRequest(
-                              OrderId: widget.orderDetailsResponse.id,
-                              MessageTypeId: chat,
-                              Message: _textController.text,
-                              IsFromAdmin: false,
-                            ));
-                            final message = Messages(
-                                isFromUser: true,
-                                createdDate: DateTime.now(),
-                                message: _textController.text,
-                                messageTypeId: 1);
-                            setState(() {
+                    controller: _textController,
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.all(12),
+                      hintText: 'Type your message here...',
+                    ),
+                    onSubmitted: (text) {
+                      widget.screenState.sendMessage(SendMessageRequest(
+                        OrderId: widget.orderDetailsResponse.id,
+                        MessageTypeId: chat,
+                        Message: _textController.text,
+                        IsFromAdmin: false,
+                      ));
+                      final message = Messages(
+                          isFromUser: true,
+                          createdDate: DateTime.now(),
+                          message: _textController.text,
+                          messageTypeId: 1);
+                      setState(() {
 
-                              widget.chatMessage!.add(message);
-                              // widget.chatMessage!.insert(0, message); // add at the beginning of the list
+                        widget.chatMessage!.add(message);
+                        // widget.chatMessage!.insert(0, message); // add at the beginning of the list
 
-                              _textController.clear();
-                            });
-                          },
-                        ),
+                        _textController.clear();
+                      });
+                    },
+                  ),
                 ),
                 GestureDetector(
                   child: Container(
