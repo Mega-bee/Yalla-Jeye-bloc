@@ -1,4 +1,3 @@
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -16,6 +15,7 @@ import 'package:untitled1/utils/images/images.dart';
 @injectable
 class SplashScreen extends StatefulWidget {
   final AuthService _authService;
+
   SplashScreen(this._authService);
 
   @override
@@ -24,6 +24,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   RemoteMessage? initialMessage;
+
   @override
   void initState() {
     _getNextRoute();
@@ -33,42 +34,55 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-      SafeArea(child:  Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Lottie.asset(ImageAsset.SPLASH_SCREEN,),
-                SizedBox(height: 20,),
-                Text('YALLA JEYE' , style: TextStyle(fontWeight: FontWeight.bold , fontSize: 35),)
-              ],
-            ),
-          )) )
-    );
+        body: SafeArea(
+            child: Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Lottie.asset(
+                        ImageAsset.SPLASH_SCREEN,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'YALLA JEYE',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 35),
+                      )
+                    ],
+                  ),
+                ))));
   }
 
-    _getNextRoute() async {
+  _getNextRoute() async {
     initialMessage = await FirebaseMessaging.instance.getInitialMessage();
-    if(initialMessage != null){
+    if (initialMessage != null) {
       RemoteNotificationModel notificationModel =
-      RemoteNotificationModel.fromJson(initialMessage!.data);
-      Navigator.pushNamed(GlobalVariable.navState.currentContext!,
-          OrderDetailsRoutes.ordersDetails,
-          arguments: {'orderId' :notificationModel.orderId.toString() , 'isTrack':true});
-    }else{
+          RemoteNotificationModel.fromJson(initialMessage!.data);
+      Navigator.pushNamed(
+        GlobalVariable.navState.currentContext!,
+        OrderDetailsRoutes.ordersDetails,
+        arguments: {
+          'orderId': notificationModel.orderId.toString(),
+          'isTrack': notificationModel.notificationTypeId != "1",
+          'isChat': notificationModel.notificationTypeId == "1",
+        },
+      );
+    } else {
       await Future.delayed(Duration(seconds: 4));
       // return NavRoutes.nav_rout;
       if (widget._authService.isDriverRole) {
-        Navigator.pushNamedAndRemoveUntil(context, DriverOrderRoutes.driverOrders, (route) => false);
-      }
-      else{
-        Navigator.pushNamedAndRemoveUntil(context, NavRoutes.nav_rout, (route) => false);
+        Navigator.pushNamedAndRemoveUntil(
+            context, DriverOrderRoutes.driverOrders, (route) => false);
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+            context, NavRoutes.nav_rout, (route) => false);
       }
     }
-
   }
 }

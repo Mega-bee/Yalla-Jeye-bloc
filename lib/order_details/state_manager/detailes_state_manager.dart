@@ -90,14 +90,14 @@ class OrderDetailCubit extends Cubit<States> {
 
   sendMessage(
       OrderDetailsScreenState state, SendMessageRequest request) {
-    emit(LoadingState());
+    // emit(LoadingState());
     _orderDetailsRepository.sendMessage(request).then((value) {
       if (value == null) {
         emit(ErrorState(
             errorMessage: 'Connection error',
             retry: () {
             }));
-      } else if (value.code == 200) {
+      } else if (value.code == 201) {
 
       }
     });

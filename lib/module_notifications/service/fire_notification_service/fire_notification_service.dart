@@ -16,11 +16,10 @@ import 'package:untitled1/utils/global/global_state_manager.dart';
 class FireNotificationService {
   final NotificationRepo _notificationRepo;
 
-
   FireNotificationService(this._notificationRepo);
 
   static final PublishSubject<RemoteMessage> _onNotificationReceived =
-  PublishSubject();
+      PublishSubject();
 
   Stream get onNotificationStream => _onNotificationReceived.stream;
 
@@ -28,6 +27,7 @@ class FireNotificationService {
 
   final FirebaseMessaging fcm = FirebaseMessaging.instance;
   RemoteMessage? initialMessage;
+
   Future<void> init() async {
     print('in iniiit');
     if (p.Platform.isIOS) {
@@ -59,8 +59,8 @@ class FireNotificationService {
 
   Future<void> refreshNotificationToken() async {
     var token = await fcm.getToken();
-    initialMessage =  await  fcm.getInitialMessage();
-    if(initialMessage != null){
+    initialMessage = await fcm.getInitialMessage();
+    if (initialMessage != null) {
       _onNotificationReceived.add(initialMessage!);
     }
     log(token.toString());
@@ -72,17 +72,23 @@ class FireNotificationService {
           _onNotificationReceived.add(message);
         });
 
-
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
           print('tappppppeddd notofication');
+          print('');
           print(message.data);
           RemoteNotificationModel notificationModel =
-          RemoteNotificationModel.fromJson(message.data);
-          SchedulerBinding.instance?.addPostFrameCallback(
+              RemoteNotificationModel.fromJson(message.data);
+          print("NotificationTypeId: ${notificationModel.notificationTypeId}");
+          SchedulerBinding.instance.addPostFrameCallback(
             (_) {
-              Navigator.pushNamed(GlobalVariable.navState.currentContext!,
-                  OrderDetailsRoutes.ordersDetails,
-                  arguments: {'orderId' :notificationModel.orderId.toString() , 'isTrack':true});
+
+                  Navigator.pushNamed(GlobalVariable.navState.currentContext!,
+                      OrderDetailsRoutes.ordersDetails, arguments: {
+                      'orderId': notificationModel.orderId.toString(),
+                      'isTrack': notificationModel.notificationTypeId!="1",
+                      'isChat': notificationModel.notificationTypeId=="1"
+                    });
+
             },
           );
         });

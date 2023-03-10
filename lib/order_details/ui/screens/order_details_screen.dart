@@ -22,6 +22,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   bool flags = true;
   String id = '-1';
   bool isTrack = false;
+  bool isChat = false;
 
   void refresh() {
     if (mounted) {
@@ -30,8 +31,11 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   }
 
   getOrderDetails() {
+    print("isTrack:$isTrack");
+    print("isChat:$isChat");
     widget.cubit
-        .getOrderDetails(state: this, id: id, firstIndex: isTrack ? 1 : 0);
+        .getOrderDetails(state: this, id: id, firstIndex: isTrack ? 1 : isChat?2:0);
+
   }
 
   sendMessage(SendMessageRequest Request) {
@@ -60,6 +64,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
     if (args is Map && flags) {
       id = args['orderId'];
       isTrack = args['isTrack'];
+      isChat = args['isChat'];
       flags = false;
       getOrderDetails();
     }

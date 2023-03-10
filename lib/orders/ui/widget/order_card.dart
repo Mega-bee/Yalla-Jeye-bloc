@@ -33,7 +33,8 @@ class OrderCard extends StatelessWidget {
                     OrderDetailsRoutes.ordersDetails,
                     arguments: {
                       'orderId': order.id.toString(),
-                      'isTrack': false
+                      'isTrack': false,
+                      'isChat': false
                     },
                   );
                 },

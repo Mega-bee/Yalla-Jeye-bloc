@@ -3,8 +3,10 @@ import 'dart:developer';
 
 class RemoteNotificationModel {
   String? orderId;
-  RemoteNotificationModel({this.orderId,});
+  String? notificationTypeId;
+  RemoteNotificationModel({this.orderId,this.notificationTypeId});
   RemoteNotificationModel.fromJson(Map<String, dynamic> json) {
     orderId = json['orderId'];
+    notificationTypeId = json['notificationTypeId'];
   }
 }

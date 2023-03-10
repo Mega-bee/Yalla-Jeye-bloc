@@ -52,7 +52,6 @@ void main() async {
       Logger().error('Main', details.toString(), StackTrace.current);
     };
     runZonedGuarded(() async {
-
       configureDependencies();
       // Your App Here
       await GetStorage.init();
@@ -62,7 +61,7 @@ void main() async {
         library: 'Your Library Name',
         context: ErrorDescription('Button was pressed'),
       );
-       FirebaseCrashlytics.instance.recordFlutterError(details).then((_) {
+      FirebaseCrashlytics.instance.recordFlutterError(details).then((_) {
         FlutterError.onError = (details) {
           FirebaseCrashlytics.instance.recordFlutterError(details);
         };
@@ -138,13 +137,13 @@ class _MyAppState extends State<MyApp> {
       ),
       title: 'Yalla jeye',
       routes: fullRoutesList,
-      initialRoute: SplashRoutes.SPLASH_SCREEN  ,
+      initialRoute: SplashRoutes.SPLASH_SCREEN,
       // home:MyStepper(),
     );
   }
 
   @override
-  void initState()  {
+  void initState() {
     super.initState();
     // FirebaseCrashlytics.instance.crash();
     widget._fireNotificationService.init();
@@ -154,15 +153,23 @@ class _MyAppState extends State<MyApp> {
     });
     widget._localNotificationService.onLocalNotificationStream.listen((event) {
       RemoteNotificationModel notificationModel =
-      RemoteNotificationModel.fromJson(event);
-      SchedulerBinding.instance?.addPostFrameCallback(
-            (_) {
-          Navigator.pushNamed(GlobalVariable.navState.currentContext!,
-              OrderDetailsRoutes.ordersDetails,
-              arguments: {'orderId' :notificationModel.orderId.toString() , 'isTrack':true});
+          RemoteNotificationModel.fromJson(event);
+      print("NotificationTypeId: ${notificationModel.notificationTypeId}");
+
+      SchedulerBinding.instance.addPostFrameCallback(
+
+        (_) {
+          Navigator.pushNamed(
+            GlobalVariable.navState.currentContext!,
+            OrderDetailsRoutes.ordersDetails,
+            arguments: {
+              'orderId': notificationModel.orderId.toString(),
+              'isTrack': notificationModel.notificationTypeId != "1",
+              'isChat': notificationModel.notificationTypeId == "1"
+            },
+          );
         },
       );
-
     });
   }
 }

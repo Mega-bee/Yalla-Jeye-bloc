@@ -58,12 +58,13 @@ class OrderDetailsSuccess extends States {
                 orderDetailsResponse: ordersuccess,
                 screenState:  screenState,
               ),
+              ordersuccess.statusId != 5?
               ChatScreen(
                 orderDetailsResponse: ordersuccess,
                 screenState: screenState,
-              )
-              // Center(child: Container(child: Text('SOON'),))
-            ],
+                chatMessage: ordersuccess.chatList??[],
+              ):Container(),
+            ]
           ),
         ));
   }

@@ -86,11 +86,12 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   grouped_list: ^4.2.0
   firebase_crashlytics: ^3.0.11
-  showcaseview: ^2.0.1
-
-
-#  shared_preferences:
-#  geocoder:
+  audioplayers: ^0.20.1
+  path_provider: ^2.0.9
+  record_mp3: ^3.0.0
+  flutter_sound: ^9.2.2
+  voice_message_package:
+  audio_video_progress_bar: ^1.0.0
 
 dev_dependencies:
   flutter_test:

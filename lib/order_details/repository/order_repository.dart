@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:injectable/injectable.dart';
 import 'package:untitled1/auth/service/auth_service.dart';
 import 'package:untitled1/order_details/request/order_request.dart';
@@ -50,9 +52,7 @@ class OrderDetailRepository {
     return response;
   }
 
-
-  Future<WebServiceResponse?> rateOrder(
-      RateRequest request) async {
+  Future<WebServiceResponse?> rateOrder(RateRequest request) async {
     var token = _authService.getToken();
     WebServiceResponse? response = await _apiClient.put(
       Urls.RATE_ORDER,
@@ -63,18 +63,27 @@ class OrderDetailRepository {
     return response;
   }
 
-
-  Future<WebServiceResponse?> sendMessage(
-      SendMessageRequest request) async {
+  Future<WebServiceResponse?> sendMessage(SendMessageRequest request) async {
     var token = _authService.getToken();
+
+    // Get the size of the audio file
+    int? contentLength;
+    if (request.audiofile != null) {
+      contentLength = await request.audiofile!.length;
+    }
+
     WebServiceResponse? response = await _apiClient.post(
       Urls.chat,
       request.toJson(),
-      headers: {'Authorization': 'Bearer ' '$token'},
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'multipart/form-data',
+        'Content-Length': contentLength?.toString() ?? '',
+      },
     );
     if (response == null) return null;
+
     return response;
   }
-
 
 }
