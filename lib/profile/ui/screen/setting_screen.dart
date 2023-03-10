@@ -13,6 +13,7 @@ import 'package:untitled1/profile/profile_module_route.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
 import 'package:untitled1/utils/components/custom_alert_dialog.dart';
 import 'package:untitled1/utils/images/images.dart';
+import '../../../custom/model/OrderModel.dart';
 import '../../../utils/custom_alert_dialog/CustomDeleteDialog.dart';
 import '../../state_manager/profile.dart';
 
@@ -275,6 +276,8 @@ class ProfilePageState extends State<SettingProfilePage> {
                                         .then((value) {
                                       Navigator.pushNamedAndRemoveUntil(context,
                                           NavRoutes.nav_rout, (route) => false);
+                                      orderModelList.clear();
+
 
                                     });
                                   },

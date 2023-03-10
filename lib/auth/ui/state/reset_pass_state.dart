@@ -204,7 +204,7 @@ class ResetPasswordState extends States {
                                   confirmPass.text.isEmpty) {
                                 _formKeyResetPass.currentState!.validate();
                               }else if(password.text != confirmPass.text){
-                                Fluttertoast.showToast(msg: "Password and confirm password don't match");
+                                Fluttertoast.showToast(msg: "Passwords don't match");
 
                               }else{
                                 screenState.resetPassword(ResetPasswordRequest(
