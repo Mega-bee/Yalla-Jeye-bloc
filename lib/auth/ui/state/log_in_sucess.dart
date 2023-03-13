@@ -1,8 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:untitled1/utils/Colors/colors.dart';
 import '../../../abstracts/states/state.dart';
@@ -23,35 +21,35 @@ class LoginInitState extends States{
   final _formKeyLogIn = GlobalKey<FormState>();
   final phone = TextEditingController();
   final password = TextEditingController();
-  Future<bool> signInWithGoogle() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-
-    try {
-      final googleUser = await googleSignIn.signIn();
-      final googleAuth = await googleUser!.authentication;
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      await FirebaseAuth.instance.signInWithCredential(credential);
-      final String? googleToken = googleAuth.accessToken;
-      print("Access token: $googleToken");
-
-      // Send tokens to API
-      _screenState.GoogleloginRequest(GoogleLogInRequest(
-        AccessToken: googleToken,
-      ));
-      print("Access token: $googleToken");
-
-      // Return true to indicate success
-      return true;
-    } catch (error) {
-      print(error);
-      // Return false to indicate failure
-      return false;
-    }
-  }
+  // Future<bool> signInWithGoogle() async {
+  //   // final GoogleSignIn googleSignIn = GoogleSignIn();
+  //
+  //   try {
+  //     final googleUser = await googleSignIn.signIn();
+  //     final googleAuth = await googleUser!.authentication;
+  //     final credential = GoogleAuthProvider.credential(
+  //       accessToken: googleAuth.accessToken,
+  //       idToken: googleAuth.idToken,
+  //     );
+  //
+  //     await FirebaseAuth.instance.signInWithCredential(credential);
+  //     final String? googleToken = googleAuth.accessToken;
+  //     print("Access token: $googleToken");
+  //
+  //     // Send tokens to API
+  //     _screenState.GoogleloginRequest(GoogleLogInRequest(
+  //       AccessToken: googleToken,
+  //     ));
+  //     print("Access token: $googleToken");
+  //
+  //     // Return true to indicate success
+  //     return true;
+  //   } catch (error) {
+  //     print(error);
+  //     // Return false to indicate failure
+  //     return false;
+  //   }
+  // }
 
   @override
   Widget getUI(BuildContext context) {
