@@ -10,6 +10,8 @@
     CustomOrder? customOrder;
     bool  requiresRating = false;
     num? rating;
+    String? lat;
+    String? long;
 
 
     OrderDetailsResponse({
@@ -22,7 +24,9 @@
       this.totalDistance,
       this.customOrder,
       this.rating,
-     required this.requiresRating
+     required this.requiresRating,
+      required this.lat,
+      required this.long,
     });
 
     OrderDetailsResponse.fromJson(Map<String, dynamic> json) {
@@ -34,6 +38,8 @@
       isCustom = json['isCustom'];
       totalDistance = json['totalDistance'];
       totalPrice = json['totalPrice'];
+      lat = json['AddressLatitude'];
+      long = json['AddressLongitude'];
       if (json['orderPlaces'] != null) {
         orderPlaces = <PlacesDetails>[];
         json['orderPlaces'].forEach((v) {

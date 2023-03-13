@@ -10,7 +10,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record_mp3/record_mp3.dart';
 import 'package:voice_message_package/voice_message_package.dart';
-
 import '../../../utils/Colors/colors.dart';
 import '../../request/sens-message-request.dart';
 import '../../response/order_response.dart';
@@ -41,7 +40,6 @@ class _ChatScreenState extends State<ChatScreen>
 
   int? chat = 1;
   int? voice = 2;
-
   AudioPlayer audioPlayer = AudioPlayer();
   bool playing = false;
   Duration duration = Duration.zero;
