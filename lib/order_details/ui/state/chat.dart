@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -34,6 +35,7 @@ class _ChatScreenState extends State<ChatScreen>
   final _textController = TextEditingController();
   final StreamController<List<Messages>> _chatMessageStreamController =
       StreamController<List<Messages>>.broadcast();
+  final _focusNode = FocusNode();
 
   @override
   bool get wantKeepAlive => true;
@@ -58,6 +60,8 @@ class _ChatScreenState extends State<ChatScreen>
     audioPlayer.stop();
     audioPlayer.dispose();
     _chatMessageStreamController.close();
+    _focusNode.dispose();
+
     super.dispose();
   }
 
@@ -191,17 +195,16 @@ class _ChatScreenState extends State<ChatScreen>
                       : Padding(
                           padding: const EdgeInsets.only(bottom: 0),
                           child: TextField(
+                            focusNode: _focusNode,
                             controller: _textController,
                             decoration: const InputDecoration(
-                                contentPadding: EdgeInsets.all(20),
-                                hintText: 'Type your message here...',
-                                border: InputBorder.none,
-                                // prefixIcon: Icon(Icons.send)
+                              contentPadding: EdgeInsets.all(20),
+                              hintText: 'Type your message here...',
+                              border: InputBorder.none,
+                              // prefixIcon: Icon(Icons.send)
                             ),
-                            onChanged: (text){
-                              setState(() {
-
-                              });
+                            onChanged: (text) {
+                              setState(() {});
                             },
                             onSubmitted: (text) {
                               widget.screenState.sendMessage(SendMessageRequest(
@@ -227,8 +230,7 @@ class _ChatScreenState extends State<ChatScreen>
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child:
-                  _textController.text.isEmpty
+                  child: _textController.text.isEmpty
                       ? GestureDetector(
                           child: Container(
                             width: 50,
@@ -244,14 +246,17 @@ class _ChatScreenState extends State<ChatScreen>
                             ),
                           ),
                           onLongPress: () async {
+
                             AudioPlayer.players.forEach((key, value) {
                               value.stop();
                             });
+
                             setState(() {
                               isRecording = true;
                             });
                             path = await getFilePath();
                             // final status = await Permission.microphone.request();
+                            SystemChannels.textInput.invokeMethod('TextInput.show');
 
                             if (await Permission.microphone.isGranted) {
                               RecordMp3.instance.start(path, (type) {

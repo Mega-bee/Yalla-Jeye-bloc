@@ -38,8 +38,8 @@
       isCustom = json['isCustom'];
       totalDistance = json['totalDistance'];
       totalPrice = json['totalPrice'];
-      lat = json['AddressLatitude'];
-      long = json['AddressLongitude'];
+      lat = json['addressLatitude'];
+      long = json['addressLongitude'];
       if (json['orderPlaces'] != null) {
         orderPlaces = <PlacesDetails>[];
         json['orderPlaces'].forEach((v) {

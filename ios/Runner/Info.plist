@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>NSMicrophoneUsageDescription</key>
-    <string>xxxxxx</string>
+    <string>Your message explaining the reason why you need access to the microphone</string>
+    <key>NSAudioRecordingUsageDescription</key>
+    <string>Your message explaining the reason why you need access to audio recording</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>

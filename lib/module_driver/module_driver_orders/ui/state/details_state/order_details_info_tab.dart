@@ -11,15 +11,16 @@ class DriverOrderDetailsInfo extends StatelessWidget {
   DriverOrderDetailsInfo(
       {required this.orderDetailsResponse, required this.screenState});
 
-  void launchMaps(String lat, String lng) async {
+  void launchGoogleMaps(String latitude, String longitude) async {
     final String googleMapsUrl =
-        "https://www.google.com/maps/search/?api=1&query=$lat,$lng";
+        "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
     if (await canLaunch(googleMapsUrl)) {
       await launch(googleMapsUrl);
     } else {
-      throw 'Could not open the map.';
+      throw 'Could not launch $googleMapsUrl';
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -111,14 +112,18 @@ class DriverOrderDetailsInfo extends StatelessWidget {
                     shrinkWrap: true,
                   ),
             SizedBox(height: 50,),
+            SizedBox(
+              height: 40,
+            ),
             ElevatedButton(
               onPressed: () {
-                launchMaps(orderDetailsResponse.lat.toString(),orderDetailsResponse.long.toString());
-                print("orderDetailsResponse.lat:${orderDetailsResponse.lat}");
-                print("orderDetailsResponse.long:${orderDetailsResponse.long}");
+                launchGoogleMaps(
+                  orderDetailsResponse.lat ?? "null",
+                  orderDetailsResponse.long ?? "null",
+                ); // Replace with the latitude and longitude values from your API
               },
-              child: Text("Open in google maps"),
-            ),
+              child: Text('Open in Google Maps'),
+            )
           ],
         ),
       ),
