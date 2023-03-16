@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
@@ -31,14 +32,39 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen>
-    with AutomaticKeepAliveClientMixin<ChatScreen> {
+    {
   final _textController = TextEditingController();
   final StreamController<List<Messages>> _chatMessageStreamController =
       StreamController<List<Messages>>.broadcast();
-  final _focusNode = FocusNode();
+  // final _focusNode = FocusNode();
 
+  // @override
+  // bool get wantKeepAlive => true;
+
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+String _message = '';
   @override
-  bool get wantKeepAlive => true;
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // Initialize Firebase Messaging
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      // Handle the received message here
+      String msg = message.notification?.body ?? '';
+      setState(() {
+        _message = msg;
+        final messages = Messages(
+            isFromUser: false,
+            createdDate: DateTime.now(),
+            message: _message,
+            messageTypeId: 1);
+        widget.chatMessage!.add(messages);
+        _textController.clear();
+      });
+    });
+  }
+
+
 
   int? chat = 1;
   int? voice = 2;
@@ -60,7 +86,7 @@ class _ChatScreenState extends State<ChatScreen>
     audioPlayer.stop();
     audioPlayer.dispose();
     _chatMessageStreamController.close();
-    _focusNode.dispose();
+    // _focusNode.dispose();
 
     super.dispose();
   }
@@ -110,9 +136,11 @@ class _ChatScreenState extends State<ChatScreen>
     ));
   }
 
+
+
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+    // super.build(context);
     return Scaffold(
       body: Column(
         children: [
@@ -140,6 +168,7 @@ class _ChatScreenState extends State<ChatScreen>
                     ),
                   ),
                 ),
+
               ),
             ),
             itemBuilder: (context, Messages message) => Align(
@@ -153,13 +182,13 @@ class _ChatScreenState extends State<ChatScreen>
                   child: message.messageTypeId == 1
                       ? Text(message.message ?? "")
                       : Container(
-                          width: 220,
+                          // width: 220,
                           child: Stack(
                             children: [
                               VoiceMessage(
                                 contactPlayIconColor: Colors.black,
                                 contactFgColor: Colors.red,
-                                noiseCount: 20,
+                                // noiseCount: 20,
                                 audioSrc: message.message ?? "",
                                 played: true,
                                 me: false,
@@ -195,7 +224,7 @@ class _ChatScreenState extends State<ChatScreen>
                       : Padding(
                           padding: const EdgeInsets.only(bottom: 0),
                           child: TextField(
-                            focusNode: _focusNode,
+                            // focusNode: _focusNode,
                             controller: _textController,
                             decoration: const InputDecoration(
                               contentPadding: EdgeInsets.all(20),
