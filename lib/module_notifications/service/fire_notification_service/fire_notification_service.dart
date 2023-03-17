@@ -81,14 +81,13 @@ class FireNotificationService {
           print("NotificationTypeId: ${notificationModel.notificationTypeId}");
           SchedulerBinding.instance.addPostFrameCallback(
             (_) {
-
-                  Navigator.pushNamed(GlobalVariable.navState.currentContext!,
-                      OrderDetailsRoutes.ordersDetails, arguments: {
-                      'orderId': notificationModel.orderId.toString(),
-                      'isTrack': notificationModel.notificationTypeId!="1",
-                      'isChat': notificationModel.notificationTypeId=="1"
-                    });
-
+              Navigator.pushNamed(GlobalVariable.navState.currentContext!,
+                  OrderDetailsRoutes.ordersDetails,
+                  arguments: {
+                    'orderId': notificationModel.orderId.toString(),
+                    'isTrack': notificationModel.notificationTypeId != "1",
+                    'isChat': notificationModel.notificationTypeId == "1"
+                  });
             },
           );
         });

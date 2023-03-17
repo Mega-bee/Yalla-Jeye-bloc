@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
@@ -31,14 +32,39 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen>
-    with AutomaticKeepAliveClientMixin<ChatScreen> {
+    {
   final _textController = TextEditingController();
   final StreamController<List<Messages>> _chatMessageStreamController =
       StreamController<List<Messages>>.broadcast();
-  final _focusNode = FocusNode();
+  // final _focusNode = FocusNode();
 
+  // @override
+  // bool get wantKeepAlive => true;
+
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+String _message = '';
   @override
-  bool get wantKeepAlive => true;
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // Initialize Firebase Messaging
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      // Handle the received message here
+      String msg = message.notification?.body ?? '';
+      setState(() {
+        _message = msg;
+        final messages = Messages(
+            isFromUser: false,
+            createdDate: DateTime.now(),
+            message: _message,
+            messageTypeId: 1);
+        widget.chatMessage!.add(messages);
+        _textController.clear();
+      });
+    });
+  }
+
+
 
   int? chat = 1;
   int? voice = 2;
@@ -60,26 +86,9 @@ class _ChatScreenState extends State<ChatScreen>
     audioPlayer.stop();
     audioPlayer.dispose();
     _chatMessageStreamController.close();
-    _focusNode.dispose();
+    // _focusNode.dispose();
 
     super.dispose();
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    audioPlayer.onDurationChanged.listen((Duration dur) {
-      setState(() {
-        duration = dur;
-      });
-    });
-
-    audioPlayer.onAudioPositionChanged.listen((Duration pos) {
-      setState(() {
-        position = pos;
-      });
-    });
   }
 
   // Future<String> getFilePath() async {
@@ -93,19 +102,6 @@ class _ChatScreenState extends State<ChatScreen>
   //   return sdPath + "audio_${count}.mp3";
   // }
 
-  AudioPlayer audioPlayerr = AudioPlayer();
-  bool playingg = false;
-  Duration durationn = Duration.zero;
-  Duration positionn = Duration.zero;
-
-  void _playAudio(String path) async {
-    await audioPlayer.play(path);
-  }
-
-  void _stopAudio() async {
-    await audioPlayer.stop();
-  }
-
   Future<String> getFilePath() async {
     int count = 0;
     Directory? storageDirectory;
@@ -114,7 +110,6 @@ class _ChatScreenState extends State<ChatScreen>
     } else if (Platform.isIOS) {
       storageDirectory = await getApplicationSupportDirectory();
     } else {
-      print("unununun");
       throw Exception("Unsupported platform");
     }
     String sdPath = storageDirectory!.path + "/record/";
@@ -141,9 +136,11 @@ class _ChatScreenState extends State<ChatScreen>
     ));
   }
 
+
+
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+    // super.build(context);
     return Scaffold(
       body: Column(
         children: [
@@ -171,6 +168,7 @@ class _ChatScreenState extends State<ChatScreen>
                     ),
                   ),
                 ),
+
               ),
             ),
             itemBuilder: (context, Messages message) => Align(
@@ -178,28 +176,26 @@ class _ChatScreenState extends State<ChatScreen>
                   ? Alignment.centerRight
                   : Alignment.centerLeft,
               child: Card(
-                elevation: 0,
-                // color: Colors.transparent,
+                elevation: 8,
                 child: Padding(
                   padding: const EdgeInsets.all(12),
                   child: message.messageTypeId == 1
                       ? Text(message.message ?? "")
                       : Container(
-                          width: 300,
+                          // width: 220,
                           child: Stack(
                             children: [
                               VoiceMessage(
-                                      contactPlayIconColor: Colors.black,
-                                      contactFgColor: Colors.red,
-                                      noiseCount: 20,
-                                      audioSrc: message.message ?? "",
-                                      played: true,
-                                      me: false,
-                                      onPlay: () {
-                                        // Do something when voice played
-                                      },
-                                    ),
-
+                                contactPlayIconColor: Colors.black,
+                                contactFgColor: Colors.red,
+                                // noiseCount: 20,
+                                audioSrc: message.message ?? "",
+                                played: true,
+                                me: false,
+                                onPlay: () {
+                                  // Do something when voice played
+                                },
+                              ),
                               if (isSending) // Show the loading indicator if sending
                                 Positioned.fill(
                                   child: Center(
@@ -228,7 +224,7 @@ class _ChatScreenState extends State<ChatScreen>
                       : Padding(
                           padding: const EdgeInsets.only(bottom: 0),
                           child: TextField(
-                            focusNode: _focusNode,
+                            // focusNode: _focusNode,
                             controller: _textController,
                             decoration: const InputDecoration(
                               contentPadding: EdgeInsets.all(20),
@@ -279,6 +275,7 @@ class _ChatScreenState extends State<ChatScreen>
                             ),
                           ),
                           onLongPress: () async {
+
                             AudioPlayer.players.forEach((key, value) {
                               value.stop();
                             });
@@ -288,8 +285,7 @@ class _ChatScreenState extends State<ChatScreen>
                             });
                             path = await getFilePath();
                             // final status = await Permission.microphone.request();
-                            SystemChannels.textInput
-                                .invokeMethod('TextInput.show');
+                            SystemChannels.textInput.invokeMethod('TextInput.show');
 
                             if (await Permission.microphone.isGranted) {
                               RecordMp3.instance.start(path, (type) {
@@ -302,6 +298,7 @@ class _ChatScreenState extends State<ChatScreen>
                             // record.startRecord(path);
                           },
                           onLongPressEnd: (val) async {
+                            // isSending = true;
                             print("isSending : $isSending:");
                             final message = Messages(
                                 isFromUser: true,
@@ -316,7 +313,7 @@ class _ChatScreenState extends State<ChatScreen>
                             RecordMp3.instance.stop();
                             await uploadAudioFile(path);
                             // isSending = false;
-                            print("path stop : $path:");
+                            print("isSending : $isSending:");
                           },
                           onTap: () {},
                         )
@@ -335,6 +332,8 @@ class _ChatScreenState extends State<ChatScreen>
                                 messageTypeId: 1);
                             setState(() {
                               widget.chatMessage!.add(message);
+                              // widget.chatMessage!.insert(0, message); // add at the beginning of the list
+
                               _textController.clear();
                             });
                           },
