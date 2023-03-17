@@ -65,6 +65,23 @@ class _ChatScreenState extends State<ChatScreen>
     super.dispose();
   }
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    audioPlayer.onDurationChanged.listen((Duration dur) {
+      setState(() {
+        duration = dur;
+      });
+    });
+
+    audioPlayer.onAudioPositionChanged.listen((Duration pos) {
+      setState(() {
+        position = pos;
+      });
+    });
+  }
+
   // Future<String> getFilePath() async {
   //   count++;
   //   Directory storageDirectory = await getTemporaryDirectory();
@@ -76,6 +93,19 @@ class _ChatScreenState extends State<ChatScreen>
   //   return sdPath + "audio_${count}.mp3";
   // }
 
+  AudioPlayer audioPlayerr = AudioPlayer();
+  bool playingg = false;
+  Duration durationn = Duration.zero;
+  Duration positionn = Duration.zero;
+
+  void _playAudio(String path) async {
+    await audioPlayer.play(path);
+  }
+
+  void _stopAudio() async {
+    await audioPlayer.stop();
+  }
+
   Future<String> getFilePath() async {
     int count = 0;
     Directory? storageDirectory;
@@ -84,6 +114,7 @@ class _ChatScreenState extends State<ChatScreen>
     } else if (Platform.isIOS) {
       storageDirectory = await getApplicationSupportDirectory();
     } else {
+      print("unununun");
       throw Exception("Unsupported platform");
     }
     String sdPath = storageDirectory!.path + "/record/";
@@ -147,26 +178,28 @@ class _ChatScreenState extends State<ChatScreen>
                   ? Alignment.centerRight
                   : Alignment.centerLeft,
               child: Card(
-                elevation: 8,
+                elevation: 0,
+                // color: Colors.transparent,
                 child: Padding(
                   padding: const EdgeInsets.all(12),
                   child: message.messageTypeId == 1
                       ? Text(message.message ?? "")
                       : Container(
-                          width: 220,
+                          width: 300,
                           child: Stack(
                             children: [
                               VoiceMessage(
-                                contactPlayIconColor: Colors.black,
-                                contactFgColor: Colors.red,
-                                noiseCount: 20,
-                                audioSrc: message.message ?? "",
-                                played: true,
-                                me: false,
-                                onPlay: () {
-                                  // Do something when voice played
-                                },
-                              ),
+                                      contactPlayIconColor: Colors.black,
+                                      contactFgColor: Colors.red,
+                                      noiseCount: 20,
+                                      audioSrc: message.message ?? "",
+                                      played: true,
+                                      me: false,
+                                      onPlay: () {
+                                        // Do something when voice played
+                                      },
+                                    ),
+
                               if (isSending) // Show the loading indicator if sending
                                 Positioned.fill(
                                   child: Center(
@@ -246,7 +279,6 @@ class _ChatScreenState extends State<ChatScreen>
                             ),
                           ),
                           onLongPress: () async {
-
                             AudioPlayer.players.forEach((key, value) {
                               value.stop();
                             });
@@ -256,7 +288,8 @@ class _ChatScreenState extends State<ChatScreen>
                             });
                             path = await getFilePath();
                             // final status = await Permission.microphone.request();
-                            SystemChannels.textInput.invokeMethod('TextInput.show');
+                            SystemChannels.textInput
+                                .invokeMethod('TextInput.show');
 
                             if (await Permission.microphone.isGranted) {
                               RecordMp3.instance.start(path, (type) {
@@ -269,7 +302,6 @@ class _ChatScreenState extends State<ChatScreen>
                             // record.startRecord(path);
                           },
                           onLongPressEnd: (val) async {
-                            // isSending = true;
                             print("isSending : $isSending:");
                             final message = Messages(
                                 isFromUser: true,
@@ -284,7 +316,7 @@ class _ChatScreenState extends State<ChatScreen>
                             RecordMp3.instance.stop();
                             await uploadAudioFile(path);
                             // isSending = false;
-                            print("isSending : $isSending:");
+                            print("path stop : $path:");
                           },
                           onTap: () {},
                         )
@@ -303,8 +335,6 @@ class _ChatScreenState extends State<ChatScreen>
                                 messageTypeId: 1);
                             setState(() {
                               widget.chatMessage!.add(message);
-                              // widget.chatMessage!.insert(0, message); // add at the beginning of the list
-
                               _textController.clear();
                             });
                           },

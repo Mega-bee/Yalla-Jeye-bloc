@@ -26,7 +26,8 @@ class OrderDetailsSuccess extends States {
             preferredSize: Size.fromHeight(kToolbarHeight),
             child: SizedBox(
               height: 50,
-              child:               ordersuccess.statusId != 5?
+              child:
+              ordersuccess.statusId!= 5?
               TabBar(tabs: [
                 Tab(
                   child: Text(
@@ -40,13 +41,13 @@ class OrderDetailsSuccess extends States {
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
-                Tab(
+               Tab(
                   child: Text(
                     "Chat",
                     style: TextStyle(color: Colors.black),
                   ),
-                ),
-              ]):TabBar(tabs: [
+                )
+              ]): TabBar(tabs: [
                 Tab(
                   child: Text(
                     "Details",
@@ -59,17 +60,13 @@ class OrderDetailsSuccess extends States {
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
-                // Tab(
-                //   child: Text(
-                //     "Chat",
-                //     style: TextStyle(color: Colors.black),
-                //   ),
-                // ),
+
               ])
+
             ),
           ),
           body: TabBarView(
-            children: <Widget>[
+            children: [
               OrderDetailsInfo(
                 orderDetailsResponse: ordersuccess,
                 screenState:  screenState,
@@ -78,12 +75,12 @@ class OrderDetailsSuccess extends States {
                 orderDetailsResponse: ordersuccess,
                 screenState:  screenState,
               ),
-              ordersuccess.statusId != 5?
+              ordersuccess.statusId!= 5?
               ChatScreen(
                 orderDetailsResponse: ordersuccess,
                 screenState: screenState,
                 chatMessage: ordersuccess.chatList??[],
-              ):Container(),
+              ):Container()
             ]
           ),
         ));

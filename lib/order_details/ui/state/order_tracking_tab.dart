@@ -21,7 +21,8 @@ class OrderTracking extends StatelessWidget {
           SizedBox(height: 10,),
           orderDetailsResponse.statusId == 5?
           RatingBarIndicator(
-            rating: double.parse(orderDetailsResponse.toString()),
+            rating: double.parse(orderDetailsResponse.rating.toString()),
+            // rating: orderDetailsResponse,
             itemBuilder: (context, index) => Icon(
               Icons.star,
               color: Colors.amber,
