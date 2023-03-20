@@ -31,18 +31,19 @@ class ChatScreen extends StatefulWidget {
   _ChatScreenState createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen>
-    {
+class _ChatScreenState extends State<ChatScreen> {
   final _textController = TextEditingController();
   final StreamController<List<Messages>> _chatMessageStreamController =
       StreamController<List<Messages>>.broadcast();
+
   // final _focusNode = FocusNode();
 
   // @override
   // bool get wantKeepAlive => true;
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
-String _message = '';
+  String _message = '';
+
   @override
   void initState() {
     // TODO: implement initState
@@ -63,8 +64,6 @@ String _message = '';
       });
     });
   }
-
-
 
   int? chat = 1;
   int? voice = 2;
@@ -108,16 +107,21 @@ String _message = '';
     if (Platform.isAndroid) {
       storageDirectory = await getExternalStorageDirectory();
     } else if (Platform.isIOS) {
-      storageDirectory = await getApplicationSupportDirectory();
+      final appDirectory = await getApplicationSupportDirectory();
+      final audioDirectory = Directory('${appDirectory.path}/audio');
+      await audioDirectory.create(recursive: true);
+      return '${audioDirectory.path}/audio_${count}.mp3';
     } else {
       throw Exception("Unsupported platform");
     }
     String sdPath = storageDirectory!.path + "/record/";
+    print("sdPath: $sdPath");
     var d = Directory(sdPath);
+    print("D: $d");
     if (!d.existsSync()) {
       d.createSync(recursive: true);
     }
-    print("Path: $path");
+    print("Pathhhh: $path");
 
     count = d.listSync().length;
     return sdPath + "audio_${count}.mp3";
@@ -126,7 +130,6 @@ String _message = '';
   Future uploadAudioFile(String path) async {
     final file = File(path);
     final audioBytes = await file.readAsBytes();
-
     widget.screenState.sendMessage(SendMessageRequest(
       audiofile: MultipartFile.fromBytes(audioBytes, filename: 'audio.mp3'),
       Message: '',
@@ -135,8 +138,6 @@ String _message = '';
       OrderId: widget.orderDetailsResponse.id,
     ));
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +169,6 @@ String _message = '';
                     ),
                   ),
                 ),
-
               ),
             ),
             itemBuilder: (context, Messages message) => Align(
@@ -184,26 +184,26 @@ String _message = '';
                       : Container(
                           // width: 220,
                           child: Stack(
-                            children: [
-                              VoiceMessage(
-                                contactPlayIconColor: Colors.black,
-                                contactFgColor: Colors.red,
-                                // noiseCount: 20,
-                                audioSrc: message.message ?? "",
-                                played: true,
-                                me: false,
-                                onPlay: () {
-                                  // Do something when voice played
-                                },
-                              ),
-                              if (isSending) // Show the loading indicator if sending
-                                Positioned.fill(
-                                  child: Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
+                          children: [
+                            VoiceMessage(
+                              contactPlayIconColor: Colors.black,
+                              contactFgColor: Colors.red,
+                              // noiseCount: 20,
+                              audioSrc: message.message!,
+                              played: true,
+                              me: false,
+                              onPlay: () {
+                                // Do something when voice played
+                              },
+                            ),
+                            if (isSending) // Show the loading indicator if sending
+                              Positioned.fill(
+                                child: Center(
+                                  child: CircularProgressIndicator(),
                                 ),
-                            ],
-                          )),
+                              ),
+                          ],
+                        )),
                 ),
               ),
             ),
@@ -275,7 +275,6 @@ String _message = '';
                             ),
                           ),
                           onLongPress: () async {
-
                             AudioPlayer.players.forEach((key, value) {
                               value.stop();
                             });
@@ -285,7 +284,8 @@ String _message = '';
                             });
                             path = await getFilePath();
                             // final status = await Permission.microphone.request();
-                            SystemChannels.textInput.invokeMethod('TextInput.show');
+                            SystemChannels.textInput
+                                .invokeMethod('TextInput.show');
 
                             if (await Permission.microphone.isGranted) {
                               RecordMp3.instance.start(path, (type) {
@@ -301,10 +301,11 @@ String _message = '';
                             // isSending = true;
                             print("isSending : $isSending:");
                             final message = Messages(
-                                isFromUser: true,
-                                createdDate: DateTime.now(),
-                                message: path,
-                                messageTypeId: 2);
+                              isFromUser: true,
+                              createdDate: DateTime.now(),
+                              message: path,
+                              messageTypeId: 2,
+                            );
                             setState(() {
                               widget.chatMessage!.add(message);
                               isRecording = false;
@@ -326,10 +327,11 @@ String _message = '';
                               IsFromAdmin: false,
                             ));
                             final message = Messages(
-                                isFromUser: true,
-                                createdDate: DateTime.now(),
-                                message: _textController.text,
-                                messageTypeId: 1);
+                              isFromUser: true,
+                              createdDate: DateTime.now(),
+                              message: _textController.text,
+                              messageTypeId: 1,
+                            );
                             setState(() {
                               widget.chatMessage!.add(message);
                               // widget.chatMessage!.insert(0, message); // add at the beginning of the list
