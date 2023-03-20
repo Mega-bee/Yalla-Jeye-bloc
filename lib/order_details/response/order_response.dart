@@ -149,6 +149,8 @@
     String? fromUserId;
     // Null? toUserId;
     String? message;
+    List<String>? reactions; // New field to store reactions
+
 
     Messages(
         {this.id,
@@ -163,7 +165,9 @@
           this.orderId,
           this.fromUserId,
           // this.toUserId,
-          this.message});
+          this.message,
+        this.reactions,
+        });
 
     Messages.fromJson(Map<String, dynamic> json) {
       id = json['id'];

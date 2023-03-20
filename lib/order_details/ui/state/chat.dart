@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +13,7 @@ import 'package:record_mp3/record_mp3.dart';
 import 'package:voice_message_package/voice_message_package.dart';
 import '../../../utils/Colors/colors.dart';
 import '../../request/sens-message-request.dart';
+import '../../response/messageResponse.dart';
 import '../../response/order_response.dart';
 import '../screens/order_details_screen.dart';
 
@@ -36,10 +36,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final StreamController<List<Messages>> _chatMessageStreamController =
       StreamController<List<Messages>>.broadcast();
 
-  // final _focusNode = FocusNode();
 
-  // @override
-  // bool get wantKeepAlive => true;
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   String _message = '';
@@ -75,7 +72,7 @@ class _ChatScreenState extends State<ChatScreen> {
   bool paused = false;
   bool isRecording = false;
   String audioUrl = "";
-  bool isSending = false; // Set this to true when sending the audio file
+  bool isSending = false;
 
   int count = 0;
 
@@ -90,16 +87,9 @@ class _ChatScreenState extends State<ChatScreen> {
     super.dispose();
   }
 
-  // Future<String> getFilePath() async {
-  //   count++;
-  //   Directory storageDirectory = await getTemporaryDirectory();
-  //   String sdPath = storageDirectory.path + "/record/";
-  //   var d = Directory(sdPath);
-  //   if (!d.existsSync()) {
-  //     d.createSync(recursive: true);
-  //   }
-  //   return sdPath + "audio_${count}.mp3";
-  // }
+  List<MessageResponse> messageList = [];
+
+
 
   Future<String> getFilePath() async {
     int count = 0;
@@ -107,36 +97,42 @@ class _ChatScreenState extends State<ChatScreen> {
     if (Platform.isAndroid) {
       storageDirectory = await getExternalStorageDirectory();
     } else if (Platform.isIOS) {
-      final appDirectory = await getApplicationSupportDirectory();
-      final audioDirectory = Directory('${appDirectory.path}/audio');
-      await audioDirectory.create(recursive: true);
-      return '${audioDirectory.path}/audio_${count}.mp3';
+      storageDirectory = await getApplicationSupportDirectory();
     } else {
       throw Exception("Unsupported platform");
     }
     String sdPath = storageDirectory!.path + "/record/";
-    print("sdPath: $sdPath");
     var d = Directory(sdPath);
-    print("D: $d");
     if (!d.existsSync()) {
       d.createSync(recursive: true);
     }
-    print("Pathhhh: $path");
+    print("Path: $path");
 
     count = d.listSync().length;
     return sdPath + "audio_${count}.mp3";
   }
 
+
   Future uploadAudioFile(String path) async {
     final file = File(path);
     final audioBytes = await file.readAsBytes();
-    widget.screenState.sendMessage(SendMessageRequest(
-      audiofile: MultipartFile.fromBytes(audioBytes, filename: 'audio.mp3'),
-      Message: '',
-      IsFromAdmin: false,
-      MessageTypeId: voice,
-      OrderId: widget.orderDetailsResponse.id,
-    ));
+
+    final response = await widget.screenState.sendMessage(
+      SendMessageRequest(
+        audiofile: MultipartFile.fromBytes(audioBytes, filename: 'audio.mp3'),
+        Message: '',
+        IsFromAdmin: false,
+        MessageTypeId: voice,
+        OrderId: widget.orderDetailsResponse.id,
+      ),
+    );
+
+    if (response != null) {
+      final messageResponse = MessageResponse.fromJson(response.data);
+      messageList.add(messageResponse);
+    }
+
+    return response;
   }
 
   @override
@@ -189,7 +185,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               contactPlayIconColor: Colors.black,
                               contactFgColor: Colors.red,
                               // noiseCount: 20,
-                              audioSrc: message.message!,
+                              audioSrc: message.message ?? "",
                               played: true,
                               me: false,
                               onPlay: () {
@@ -298,23 +294,8 @@ class _ChatScreenState extends State<ChatScreen> {
                             // record.startRecord(path);
                           },
                           onLongPressEnd: (val) async {
-                            // isSending = true;
-                            print("isSending : $isSending:");
-                            final message = Messages(
-                              isFromUser: true,
-                              createdDate: DateTime.now(),
-                              message: path,
-                              messageTypeId: 2,
-                            );
-                            setState(() {
-                              widget.chatMessage!.add(message);
-                              isRecording = false;
-                              print("Path:${path}");
-                            });
                             RecordMp3.instance.stop();
                             await uploadAudioFile(path);
-                            // isSending = false;
-                            print("isSending : $isSending:");
                           },
                           onTap: () {},
                         )
@@ -327,11 +308,10 @@ class _ChatScreenState extends State<ChatScreen> {
                               IsFromAdmin: false,
                             ));
                             final message = Messages(
-                              isFromUser: true,
-                              createdDate: DateTime.now(),
-                              message: _textController.text,
-                              messageTypeId: 1,
-                            );
+                                isFromUser: true,
+                                createdDate: DateTime.now(),
+                                message: _textController.text,
+                                messageTypeId: 1);
                             setState(() {
                               widget.chatMessage!.add(message);
                               // widget.chatMessage!.insert(0, message); // add at the beginning of the list
