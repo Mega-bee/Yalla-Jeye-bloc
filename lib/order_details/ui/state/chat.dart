@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -31,18 +30,19 @@ class ChatScreen extends StatefulWidget {
   _ChatScreenState createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen>
-    {
+class _ChatScreenState extends State<ChatScreen> {
   final _textController = TextEditingController();
   final StreamController<List<Messages>> _chatMessageStreamController =
       StreamController<List<Messages>>.broadcast();
+
   // final _focusNode = FocusNode();
 
   // @override
   // bool get wantKeepAlive => true;
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
-String _message = '';
+  String _message = '';
+
   @override
   void initState() {
     // TODO: implement initState
@@ -63,8 +63,6 @@ String _message = '';
       });
     });
   }
-
-
 
   int? chat = 1;
   int? voice = 2;
@@ -127,16 +125,18 @@ String _message = '';
     final file = File(path);
     final audioBytes = await file.readAsBytes();
 
-    widget.screenState.sendMessage(SendMessageRequest(
-      audiofile: MultipartFile.fromBytes(audioBytes, filename: 'audio.mp3'),
-      Message: '',
-      IsFromAdmin: false,
-      MessageTypeId: voice,
-      OrderId: widget.orderDetailsResponse.id,
-    ));
+    return await widget.screenState.sendMessage(
+      SendMessageRequest(
+        audiofile: MultipartFile.fromBytes(audioBytes, filename: 'audio.mp3'),
+        Message: '',
+        IsFromAdmin: false,
+        MessageTypeId: voice,
+        OrderId: widget.orderDetailsResponse.id,
+      ),
+
+    );
+
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +168,6 @@ String _message = '';
                     ),
                   ),
                 ),
-
               ),
             ),
             itemBuilder: (context, Messages message) => Align(
@@ -184,26 +183,26 @@ String _message = '';
                       : Container(
                           // width: 220,
                           child: Stack(
-                            children: [
-                              VoiceMessage(
-                                contactPlayIconColor: Colors.black,
-                                contactFgColor: Colors.red,
-                                // noiseCount: 20,
-                                audioSrc: message.message ?? "",
-                                played: true,
-                                me: false,
-                                onPlay: () {
-                                  // Do something when voice played
-                                },
-                              ),
-                              if (isSending) // Show the loading indicator if sending
-                                Positioned.fill(
-                                  child: Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
+                          children: [
+                            VoiceMessage(
+                              contactPlayIconColor: Colors.black,
+                              contactFgColor: Colors.red,
+                              // noiseCount: 20,
+                              audioSrc: message.message ?? "",
+                              played: true,
+                              me: false,
+                              onPlay: () {
+                                // Do something when voice played
+                              },
+                            ),
+                            if (isSending) // Show the loading indicator if sending
+                              Positioned.fill(
+                                child: Center(
+                                  child: CircularProgressIndicator(),
                                 ),
-                            ],
-                          )),
+                              ),
+                          ],
+                        )),
                 ),
               ),
             ),
@@ -275,7 +274,6 @@ String _message = '';
                             ),
                           ),
                           onLongPress: () async {
-
                             AudioPlayer.players.forEach((key, value) {
                               value.stop();
                             });
@@ -285,7 +283,8 @@ String _message = '';
                             });
                             path = await getFilePath();
                             // final status = await Permission.microphone.request();
-                            SystemChannels.textInput.invokeMethod('TextInput.show');
+                            SystemChannels.textInput
+                                .invokeMethod('TextInput.show');
 
                             if (await Permission.microphone.isGranted) {
                               RecordMp3.instance.start(path, (type) {
@@ -300,16 +299,7 @@ String _message = '';
                           onLongPressEnd: (val) async {
                             // isSending = true;
                             print("isSending : $isSending:");
-                            final message = Messages(
-                                isFromUser: true,
-                                createdDate: DateTime.now(),
-                                message: path,
-                                messageTypeId: 2);
-                            setState(() {
-                              widget.chatMessage!.add(message);
-                              isRecording = false;
-                              print("Path:${path}");
-                            });
+
                             RecordMp3.instance.stop();
                             await uploadAudioFile(path);
                             // isSending = false;
