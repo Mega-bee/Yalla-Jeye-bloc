@@ -13,6 +13,7 @@ import 'package:record_mp3/record_mp3.dart';
 import 'package:voice_message_package/voice_message_package.dart';
 import '../../../utils/Colors/colors.dart';
 import '../../request/sens-message-request.dart';
+import '../../response/messageResponse.dart';
 import '../../response/order_response.dart';
 import '../screens/order_details_screen.dart';
 
@@ -35,10 +36,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final StreamController<List<Messages>> _chatMessageStreamController =
       StreamController<List<Messages>>.broadcast();
 
-  // final _focusNode = FocusNode();
 
-  // @override
-  // bool get wantKeepAlive => true;
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   String _message = '';
@@ -74,7 +72,7 @@ class _ChatScreenState extends State<ChatScreen> {
   bool paused = false;
   bool isRecording = false;
   String audioUrl = "";
-  bool isSending = false; // Set this to true when sending the audio file
+  bool isSending = false;
 
   int count = 0;
 
@@ -89,16 +87,9 @@ class _ChatScreenState extends State<ChatScreen> {
     super.dispose();
   }
 
-  // Future<String> getFilePath() async {
-  //   count++;
-  //   Directory storageDirectory = await getTemporaryDirectory();
-  //   String sdPath = storageDirectory.path + "/record/";
-  //   var d = Directory(sdPath);
-  //   if (!d.existsSync()) {
-  //     d.createSync(recursive: true);
-  //   }
-  //   return sdPath + "audio_${count}.mp3";
-  // }
+  List<MessageResponse> messageList = [];
+
+
 
   Future<String> getFilePath() async {
     int count = 0;
@@ -121,11 +112,12 @@ class _ChatScreenState extends State<ChatScreen> {
     return sdPath + "audio_${count}.mp3";
   }
 
+
   Future uploadAudioFile(String path) async {
     final file = File(path);
     final audioBytes = await file.readAsBytes();
 
-    return await widget.screenState.sendMessage(
+    final response = await widget.screenState.sendMessage(
       SendMessageRequest(
         audiofile: MultipartFile.fromBytes(audioBytes, filename: 'audio.mp3'),
         Message: '',
@@ -133,9 +125,14 @@ class _ChatScreenState extends State<ChatScreen> {
         MessageTypeId: voice,
         OrderId: widget.orderDetailsResponse.id,
       ),
-
     );
 
+    if (response != null) {
+      final messageResponse = MessageResponse.fromJson(response.data);
+      messageList.add(messageResponse);
+    }
+
+    return response;
   }
 
   @override
@@ -297,13 +294,8 @@ class _ChatScreenState extends State<ChatScreen> {
                             // record.startRecord(path);
                           },
                           onLongPressEnd: (val) async {
-                            // isSending = true;
-                            print("isSending : $isSending:");
-
                             RecordMp3.instance.stop();
                             await uploadAudioFile(path);
-                            // isSending = false;
-                            print("isSending : $isSending:");
                           },
                           onTap: () {},
                         )
