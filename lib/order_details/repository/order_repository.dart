@@ -10,6 +10,7 @@ import '../../abstracts/model/WebServiceResponse.dart';
 import '../../module_network/http_client/http_client.dart';
 import '../../orders/request/Reorder.dart';
 import '../request/sens-message-request.dart';
+import '../response/order_response.dart';
 
 @injectable
 class OrderDetailRepository {
@@ -81,8 +82,21 @@ class OrderDetailRepository {
         'Content-Length': contentLength?.toString() ?? '',
       },
     );
+
     if (response == null) return null;
 
+
+
+    return response;
+  }
+
+  Future<WebServiceResponse?> GetMessages(String id) async {
+    var token = _authService.getToken();
+    WebServiceResponse? response = await _apiClient.get(
+      Urls.GetChat+ id,
+      headers: {'Authorization': 'Bearer ' '$token'},
+    );
+    if (response == null) return null;
     return response;
   }
 

@@ -11,6 +11,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record_mp3/record_mp3.dart';
 import 'package:voice_message_package/voice_message_package.dart';
+import '../../../abstracts/model/WebServiceResponse.dart';
 import '../../../utils/Colors/colors.dart';
 import '../../request/sens-message-request.dart';
 import '../../response/messageResponse.dart';
@@ -113,11 +114,13 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
 
-  Future uploadAudioFile(String path) async {
+
+
+  Future<WebServiceResponse?> uploadAudioFile(String path) async {
     final file = File(path);
     final audioBytes = await file.readAsBytes();
 
-    final response = await widget.screenState.sendMessage(
+    WebServiceResponse? response = await widget.screenState.sendMessage(
       SendMessageRequest(
         audiofile: MultipartFile.fromBytes(audioBytes, filename: 'audio.mp3'),
         Message: '',
@@ -128,11 +131,14 @@ class _ChatScreenState extends State<ChatScreen> {
     );
 
     if (response != null) {
-      final messageResponse = MessageResponse.fromJson(response.data);
-      messageList.add(messageResponse);
+      final messageResponse = Messages.fromJson(response.data.insideData);
+      setState(() {
+        widget.chatMessage!.add(messageResponse);
+        isRecording = false;
+        print("Path: $path");
+      });
     }
 
-    return response;
   }
 
   @override
@@ -294,6 +300,23 @@ class _ChatScreenState extends State<ChatScreen> {
                             // record.startRecord(path);
                           },
                           onLongPressEnd: (val) async {
+                            final message =
+                            Platform.isIOS?Messages(
+                               isFromUser: true,
+                              createdDate: DateTime.now(),
+                              message: "file://$path",
+                              messageTypeId: 2,
+                            ):Messages(
+                              isFromUser: true,
+                              createdDate: DateTime.now(),
+                              message: path,
+                              messageTypeId: 2,
+                            );
+                            setState(() {
+                              widget.chatMessage!.add(message);
+                              isRecording = false;
+                              print("Path: $path");
+                            });
                             RecordMp3.instance.stop();
                             await uploadAudioFile(path);
                           },

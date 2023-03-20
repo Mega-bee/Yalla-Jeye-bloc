@@ -40,7 +40,6 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   sendMessage(SendMessageRequest Request) {
     widget.cubit.sendMessage(this,Request);
-
   }
 
   confirmPrice() {

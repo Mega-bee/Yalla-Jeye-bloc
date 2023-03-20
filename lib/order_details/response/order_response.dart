@@ -139,7 +139,6 @@
   class Messages {
     int? id;
     String? fromUserName;
-    // Null? toUserName;
     bool isFromUser =false;
     DateTime createdDate = DateTime.now();
     String? audioFile;
@@ -147,7 +146,6 @@
     bool? isFromAdmin;
     int? orderId;
     String? fromUserId;
-    // Null? toUserId;
     String? message;
     List<String>? reactions; // New field to store reactions
 

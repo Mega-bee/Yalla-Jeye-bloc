@@ -70,6 +70,7 @@ class Urls {
   static const String  HUBS = 'http://kamalfrenn-002-site5.gtempurl.com/hubs/notification';
 
   static const String chat = "http://kamalfrenn-002-site5.gtempurl.com/api/Chats/SendMessage";
+  static const String GetChat = "http://kamalfrenn-002-site5.gtempurl.com/api/Chats/GetLatestChatMessage";
 
 }
 
