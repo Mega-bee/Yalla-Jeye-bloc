@@ -74,11 +74,11 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
       child: StatefulBuilder(
         builder: (ctx, setState) {
           return DraggableScrollableSheet(
-            initialChildSize: 1,
+            initialChildSize: 0.8,
             //set this as you want
             maxChildSize: 1,
             //set this as you want
-            minChildSize: 1,
+            minChildSize: 0.8,
             //set this as you want
             expand: true,
             // snap: true,

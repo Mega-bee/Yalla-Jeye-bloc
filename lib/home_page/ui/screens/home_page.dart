@@ -128,7 +128,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   // String dropdownValue = 'One';
-  // GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  GlobalKey<FormState> _scaffoldKey = GlobalKey<FormState>();
 
   late AnimationController controller;
 
@@ -188,6 +188,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: orderModelList.isNotEmpty
           ? CustomActionButton(
+        formKeyCustom: _scaffoldKey,
               model: null,
               isLoginUser: widget._authService.isLoggedIn,
               claPrice: (request) {

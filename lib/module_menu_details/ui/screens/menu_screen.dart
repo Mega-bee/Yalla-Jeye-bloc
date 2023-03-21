@@ -41,6 +41,8 @@ class MenuDetailsScreenState extends State<MenuDetailsScreen> {
       setState(() {});
     }
   }
+  // var descr = TextEditingController();
+  final _formKeyScreen = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -201,6 +203,7 @@ class MenuDetailsScreenState extends State<MenuDetailsScreen> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: CustomActionButton(
+          formKeyCustom: _formKeyScreen,
             model: menuDetailsModel,
             isLoginUser: widget._authService.isLoggedIn,
             claPrice: (request) {

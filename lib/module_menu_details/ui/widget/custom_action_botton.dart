@@ -7,11 +7,15 @@ import 'package:untitled1/module_menu_details/ui/widget/custom_bottom_sheet.dart
 import 'package:untitled1/utils/Colors/colors.dart';
 import 'package:untitled1/utils/components/custom_alert_dialog.dart';
 
+import '../../response/calculate_response.dart';
+
 class CustomActionButton extends StatefulWidget {
   final MenuDetailsModel? model;
   final bool isLoginUser;
   final Function(CalculatePriceRequest)  claPrice;
-  const CustomActionButton({this.model, required this.isLoginUser, required this.claPrice});
+  GlobalKey<FormState> formKeyCustom = GlobalKey<FormState>();
+
+  CustomActionButton({this.model, required this.isLoginUser, required this.claPrice,required this.formKeyCustom});
 
   @override
   State<CustomActionButton> createState() => _CustomActionButtonState();
@@ -60,7 +64,11 @@ class _CustomActionButtonState extends State<CustomActionButton>
                 builder: (BuildContext context) {
                   return Stack(
                     children: [
-                      CustomBottomSheet(placesOrders: orderModelList,
+                      CustomBottomSheet
+                        (
+
+                          placesOrders: orderModelList,
+                        formKey:widget.formKeyCustom,
                         calculatePrice: (req) {
                         widget.claPrice(req);
                       },model: widget.model),

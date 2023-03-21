@@ -37,8 +37,6 @@ class _ChatScreenState extends State<ChatScreen> {
   final StreamController<List<Messages>> _chatMessageStreamController =
       StreamController<List<Messages>>.broadcast();
 
-
-
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   String _message = '';
 
@@ -90,8 +88,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   List<MessageResponse> messageList = [];
 
-
-
   Future<String> getFilePath() async {
     int count = 0;
     Directory? storageDirectory;
@@ -112,9 +108,6 @@ class _ChatScreenState extends State<ChatScreen> {
     count = d.listSync().length;
     return sdPath + "audio_${count}.mp3";
   }
-
-
-
 
   Future<WebServiceResponse?> uploadAudioFile(String path) async {
     final file = File(path);
@@ -138,7 +131,6 @@ class _ChatScreenState extends State<ChatScreen> {
         print("Path: $path");
       });
     }
-
   }
 
   @override
@@ -224,7 +216,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                         )
                       : Padding(
-                          padding: const EdgeInsets.only(bottom: 0),
+                          padding: const EdgeInsets.only(bottom: 30),
                           child: TextField(
                             // focusNode: _focusNode,
                             controller: _textController,
@@ -237,30 +229,30 @@ class _ChatScreenState extends State<ChatScreen> {
                             onChanged: (text) {
                               setState(() {});
                             },
-                            onSubmitted: (text) {
-                              widget.screenState.sendMessage(SendMessageRequest(
-                                OrderId: widget.orderDetailsResponse.id,
-                                MessageTypeId: chat,
-                                Message: _textController.text,
-                                IsFromAdmin: false,
-                              ));
-                              final message = Messages(
-                                  isFromUser: true,
-                                  createdDate: DateTime.now(),
-                                  message: _textController.text,
-                                  messageTypeId: 1);
-                              setState(() {
-                                widget.chatMessage!.add(message);
-                                // widget.chatMessage!.insert(0, message); // add at the beginning of the list
-
-                                _textController.clear();
-                              });
-                            },
+                            // onSubmitted: (text) {
+                            //   widget.screenState.sendMessage(SendMessageRequest(
+                            //     OrderId: widget.orderDetailsResponse.id,
+                            //     MessageTypeId: chat,
+                            //     Message: _textController.text,
+                            //     IsFromAdmin: false,
+                            //   ));
+                            //   final message = Messages(
+                            //       isFromUser: true,
+                            //       createdDate: DateTime.now(),
+                            //       message: _textController.text,
+                            //       messageTypeId: 1);
+                            //   setState(() {
+                            //     widget.chatMessage!.add(message);
+                            //     // widget.chatMessage!.insert(0, message); // add at the beginning of the list
+                            //
+                            //     _textController.clear();
+                            //   });
+                            // },
                           ),
                         ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
+                  padding: const EdgeInsets.only(right: 8.0, bottom: 30),
                   child: _textController.text.isEmpty
                       ? GestureDetector(
                           child: Container(
@@ -300,18 +292,19 @@ class _ChatScreenState extends State<ChatScreen> {
                             // record.startRecord(path);
                           },
                           onLongPressEnd: (val) async {
-                            final message =
-                            Platform.isIOS?Messages(
-                               isFromUser: true,
-                              createdDate: DateTime.now(),
-                              message: "file://$path",
-                              messageTypeId: 2,
-                            ):Messages(
-                              isFromUser: true,
-                              createdDate: DateTime.now(),
-                              message: path,
-                              messageTypeId: 2,
-                            );
+                            final message = Platform.isIOS
+                                ? Messages(
+                                    isFromUser: true,
+                                    createdDate: DateTime.now(),
+                                    message: "file://$path",
+                                    messageTypeId: 2,
+                                  )
+                                : Messages(
+                                    isFromUser: true,
+                                    createdDate: DateTime.now(),
+                                    message: path,
+                                    messageTypeId: 2,
+                                  );
                             setState(() {
                               widget.chatMessage!.add(message);
                               isRecording = false;
@@ -323,25 +316,28 @@ class _ChatScreenState extends State<ChatScreen> {
                           onTap: () {},
                         )
                       : IconButton(
-                          onPressed: () {
-                            widget.screenState.sendMessage(SendMessageRequest(
-                              OrderId: widget.orderDetailsResponse.id,
-                              MessageTypeId: chat,
-                              Message: _textController.text,
-                              IsFromAdmin: false,
-                            ));
-                            final message = Messages(
-                                isFromUser: true,
-                                createdDate: DateTime.now(),
-                                message: _textController.text,
-                                messageTypeId: 1);
-                            setState(() {
-                              widget.chatMessage!.add(message);
-                              // widget.chatMessage!.insert(0, message); // add at the beginning of the list
+                          onPressed: _textController.text.trim().isEmpty
+                              ? null
+                              : () {
+                                  widget.screenState
+                                      .sendMessage(SendMessageRequest(
+                                    OrderId: widget.orderDetailsResponse.id,
+                                    MessageTypeId: chat,
+                                    Message: _textController.text,
+                                    IsFromAdmin: false,
+                                  ));
+                                  final message = Messages(
+                                      isFromUser: true,
+                                      createdDate: DateTime.now(),
+                                      message: _textController.text,
+                                      messageTypeId: 1);
+                                  setState(() {
+                                    widget.chatMessage!.add(message);
+                                    // widget.chatMessage!.insert(0, message); // add at the beginning of the list
 
-                              _textController.clear();
-                            });
-                          },
+                                    _textController.clear();
+                                  });
+                                },
                           icon: Icon(Icons.send),
                         ),
                 ),

@@ -13,8 +13,8 @@ class OrderCardWidget extends StatefulWidget {
     required this.orderModel,
     required this.onDelete,
     required this.isCurrentItem,
-    required this.formKeyone
-  }) ;
+    required this.formKeyone,
+  });
 
   @override
   State<OrderCardWidget> createState() => OrderCardWidgetState();

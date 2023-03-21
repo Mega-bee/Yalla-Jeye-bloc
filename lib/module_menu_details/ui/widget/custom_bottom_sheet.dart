@@ -15,17 +15,22 @@ import 'package:untitled1/utils/Colors/colors.dart';
 import 'package:untitled1/utils/global/global_state_manager.dart';
 import 'package:untitled1/utils/images/images.dart';
 
+import '../../response/calculate_response.dart';
 import 'order_card_widget_two.dart';
 
 class CustomBottomSheet extends StatefulWidget {
   final List<CartOrderModel> placesOrders;
   final MenuDetailsModel? model;
   final Function(CalculatePriceRequest) calculatePrice;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  const CustomBottomSheet(
+
+  CustomBottomSheet(
       {required this.placesOrders,
       required this.calculatePrice,
-      required this.model});
+      required this.model,
+        required this.formKey,
+      });
 
   @override
   State<CustomBottomSheet> createState() => _CustomBottomSheetState();
@@ -33,7 +38,7 @@ class CustomBottomSheet extends StatefulWidget {
 
 class _CustomBottomSheetState extends State<CustomBottomSheet> {
   late CartOrderModel currentCartModel;
-  var _descriptionController = TextEditingController();
+  // var _descriptionController = TextEditingController();
 
   final _formKey1 = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();
@@ -194,7 +199,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                               orderModel: currentCartModel,
                               onDelete: () {},
                               isCurrentItem: true,
-                              formKeyone: _formKey1,
+                              formKeyone: widget.formKey,
                             ),
                       ListView.builder(
                           shrinkWrap: true,
@@ -251,8 +256,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                 MaterialButton(
                                   onPressed: () {
                                     if (
-                                        _formKey1.currentState != null &&
-                                        _formKey1.currentState!.validate()){
+                                   widget.formKey.currentState != null && widget.formKey.currentState!.validate()){
                                       if (widget.model != null) {
                                         var existingPlace =
                                         orderModelList.firstWhere(
@@ -287,7 +291,11 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                         getIt<GlobalStateManager>().update();
                                       }
                                       Navigator.pop(context);
+
                                     }
+                                    // else{
+                                    //   Fluttertoast.showToast(msg: 'please enter your order');
+                                    // }
 
                                   },
                                   color: Colors.white,

@@ -40,3 +40,7 @@ class Pricing {
     price = json['price'];
   }
 }
+
+
+final staticFormKey = GlobalKey<FormState>();
+
