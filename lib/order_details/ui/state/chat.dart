@@ -46,6 +46,7 @@ class _ChatScreenState extends State<ChatScreen> {
     super.initState();
     // Initialize Firebase Messaging
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+
       // Handle the received message here
       String msg = message.notification?.body ?? '';
       setState(() {

@@ -2,18 +2,17 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../../../custom/model/OrderModel.dart';
 import '../../../utils/Colors/colors.dart';
+var descriptionController = TextEditingController();
 
 class OrderCardWidget extends StatefulWidget {
   final Function onDelete;
   final CartOrderModel orderModel;
   final bool isCurrentItem;
-  final GlobalKey<FormState> formKeyone;
 
   OrderCardWidget({
     required this.orderModel,
     required this.onDelete,
     required this.isCurrentItem,
-    required this.formKeyone,
   });
 
   @override
@@ -21,7 +20,7 @@ class OrderCardWidget extends StatefulWidget {
 }
 
 class OrderCardWidgetState extends State<OrderCardWidget> {
-  var descriptionController = TextEditingController();
+  final formKey1 = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,6 @@ class OrderCardWidgetState extends State<OrderCardWidget> {
         padding: const EdgeInsets.all(18.0),
         child: Column(
           children: [
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -69,61 +67,57 @@ class OrderCardWidgetState extends State<OrderCardWidget> {
               height: 10,
             ),
             Form(
-              key: widget.formKeyone,
-              child: StatefulBuilder(
-    builder: (context, setState) {
-      return TextFormField(
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Please enter a description';
-          }
-          return null;
-        },
-        controller: descriptionController,
-        maxLines: 12,
-        textAlign: TextAlign.start,
-        decoration: InputDecoration(
-          hintText: 'What do you want to order',
-          hintStyle: TextStyle(
-            color: Color.fromRGBO(204, 204, 204, 0.5),
-          ),
-          contentPadding:
-          EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-                color: Color.fromRGBO(204, 204, 204, 0.5), width: 2.0),
-            borderRadius: BorderRadius.all(
-              Radius.circular(5.0),
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(5.0),
-            ),
-          ),
-        ),
-        onChanged: (value) {
-          descriptionController.selection =
-              TextSelection.fromPosition(TextPosition(offset: value.length));
-          setState(() {});
-          widget.orderModel.description = value;
-          widget.orderModel.description = value;
-
-
-        },
-      );
-    }
-
-              ),
+              key: formKey1,
+              child: StatefulBuilder(builder: (context, setState) {
+                return TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter a description';
+                    }
+                    return null;
+                  },
+                  controller: descriptionController,
+                  maxLines: 12,
+                  textAlign: TextAlign.start,
+                  decoration: InputDecoration(
+                    hintText: 'What do you want to order',
+                    hintStyle: TextStyle(
+                      color: Color.fromRGBO(204, 204, 204, 0.5),
+                    ),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: Color.fromRGBO(204, 204, 204, 0.5),
+                          width: 2.0),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5.0),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5.0),
+                      ),
+                    ),
+                  ),
+                  onChanged: (value) {
+                    descriptionController.selection =
+                        TextSelection.fromPosition(
+                            TextPosition(offset: value.length));
+                    setState(() {});
+                    widget.orderModel.description = value;
+                    widget.orderModel.description = value;
+                  },
+                );
+              }),
             ),
             SizedBox(
               height: 20,
             ),
-
           ],
         ),
       ),

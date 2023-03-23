@@ -15,22 +15,17 @@ import 'package:untitled1/utils/Colors/colors.dart';
 import 'package:untitled1/utils/global/global_state_manager.dart';
 import 'package:untitled1/utils/images/images.dart';
 
-import '../../response/calculate_response.dart';
 import 'order_card_widget_two.dart';
 
 class CustomBottomSheet extends StatefulWidget {
   final List<CartOrderModel> placesOrders;
   final MenuDetailsModel? model;
   final Function(CalculatePriceRequest) calculatePrice;
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-
-  CustomBottomSheet(
+  const CustomBottomSheet(
       {required this.placesOrders,
       required this.calculatePrice,
-      required this.model,
-        required this.formKey,
-      });
+      required this.model});
 
   @override
   State<CustomBottomSheet> createState() => _CustomBottomSheetState();
@@ -38,10 +33,9 @@ class CustomBottomSheet extends StatefulWidget {
 
 class _CustomBottomSheetState extends State<CustomBottomSheet> {
   late CartOrderModel currentCartModel;
-  // var _descriptionController = TextEditingController();
 
-  final _formKey1 = GlobalKey<FormState>();
-  final _formKey2 = GlobalKey<FormState>();
+  // final _formKey1 = GlobalKey<FormState>();
+  // final _formKey2 = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -199,7 +193,6 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                               orderModel: currentCartModel,
                               onDelete: () {},
                               isCurrentItem: true,
-                              formKeyone: widget.formKey,
                             ),
                       ListView.builder(
                           shrinkWrap: true,
@@ -255,23 +248,21 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                 const Spacer(),
                                 MaterialButton(
                                   onPressed: () {
-                                    if (
-                                   widget.formKey.currentState != null && widget.formKey.currentState!.validate()){
                                       if (widget.model != null) {
                                         var existingPlace =
-                                        orderModelList.firstWhere(
+                                            orderModelList.firstWhere(
                                                 (element) =>
-                                            (element.placeId ==
-                                                widget
-                                                    .model!.placeId &&
-                                                widget.model!.placeId !=
-                                                    0) ||
-                                                (element.placeTypeId ==
-                                                    widget.model!
-                                                        .placeTypeId &&
-                                                    widget.model!.placeId ==
-                                                        0),
-                                            orElse: () => CartOrderModel());
+                                                    (element.placeId ==
+                                                            widget.model!
+                                                                .placeId &&
+                                                        widget.model!.placeId !=
+                                                            0) ||
+                                                    (element.placeTypeId ==
+                                                            widget.model!
+                                                                .placeTypeId &&
+                                                        widget.model!.placeId ==
+                                                            0),
+                                                orElse: () => CartOrderModel());
 
                                         if (existingPlace != null) {
                                           int index = orderModelList
@@ -290,13 +281,9 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                         print('seend event');
                                         getIt<GlobalStateManager>().update();
                                       }
-                                      Navigator.pop(context);
 
-                                    }
-                                    // else{
-                                    //   Fluttertoast.showToast(msg: 'please enter your order');
-                                    // }
 
+                                    Navigator.pop(context);
                                   },
                                   color: Colors.white,
                                   elevation: 0,
@@ -318,11 +305,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                 ),
                                 MaterialButton(
                                   onPressed: () {
-                                    print(
-                                        "first key: ${_formKey1} scnd key: ${_formKey2}");
-                                    if (
-                                        _formKey1.currentState != null &&
-                                        _formKey1.currentState!.validate()) {
+                                    if (descriptionController.text.isNotEmpty) {
                                       if (selectedAddressModel == null) {
                                         Fluttertoast.showToast(
                                             msg: 'Select Address Please');
@@ -386,6 +369,9 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                           }
                                         }
                                       }
+                                    } else {
+                                      Fluttertoast.showToast(
+                                          msg: "Please enter a description");
                                     }
                                   },
                                   color: redColor,

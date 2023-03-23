@@ -35,7 +35,7 @@ class _OrderCardWidgetTwoState extends State<OrderCardWidgetTwo> {
         borderRadius: BorderRadius.circular(25),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(18.0),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
             Row(
