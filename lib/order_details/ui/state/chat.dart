@@ -39,6 +39,18 @@ class _ChatScreenState extends State<ChatScreen> {
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   String _message = '';
+  final List<String> bannedWords = [
+    "🖕",
+  ]; // list of banned words
+
+  bool containsBannedWord(String text) {
+    for (String word in bannedWords) {
+      if (text.toLowerCase().contains(word)) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   @override
   void initState() {
@@ -206,11 +218,11 @@ class _ChatScreenState extends State<ChatScreen> {
                                       // Do something when voice played
                                     },
                                   ),
-
                                 ],
                               ),
                               Text(
-                                DateFormat('hh:mm a').format(message.createdDate),
+                                DateFormat('hh:mm a')
+                                    .format(message.createdDate),
                                 style: TextStyle(
                                   fontSize: 10,
                                   color: Colors.grey,
@@ -338,24 +350,47 @@ class _ChatScreenState extends State<ChatScreen> {
                           onPressed: _textController.text.trim().isEmpty
                               ? null
                               : () {
-                                  widget.screenState
-                                      .sendMessage(SendMessageRequest(
-                                    OrderId: widget.orderDetailsResponse.id,
-                                    MessageTypeId: chat,
-                                    Message: _textController.text,
-                                    IsFromAdmin: false,
-                                  ));
-                                  final message = Messages(
-                                      isFromUser: true,
-                                      createdDate: DateTime.now(),
-                                      message: _textController.text,
-                                      messageTypeId: 1);
-                                  setState(() {
-                                    widget.chatMessage!.add(message);
-                                    // widget.chatMessage!.insert(0, message); // add at the beginning of the list
+                                  if (containsBannedWord(
+                                      _textController.text)) {
+                                    // check if the input contains a banned word
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text('Error'),
+                                          content: Text(
+                                              'Your message contains a banned word.'),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('OK'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    widget.screenState
+                                        .sendMessage(SendMessageRequest(
+                                      OrderId: widget.orderDetailsResponse.id,
+                                      MessageTypeId: chat,
+                                      Message: _textController.text,
+                                      IsFromAdmin: false,
+                                    ));
+                                    final message = Messages(
+                                        isFromUser: true,
+                                        createdDate: DateTime.now(),
+                                        message: _textController.text,
+                                        messageTypeId: 1);
+                                    setState(() {
+                                      widget.chatMessage!.add(message);
+                                      // widget.chatMessage!.insert(0, message); // add at the beginning of the list
 
-                                    _textController.clear();
-                                  });
+                                      _textController.clear();
+                                    });
+                                  }
                                 },
                           icon: Icon(Icons.send),
                         ),
