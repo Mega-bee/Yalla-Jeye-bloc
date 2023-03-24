@@ -65,16 +65,10 @@ class _ChatScreenState extends State<ChatScreen> {
   int? chat = 1;
   int? voice = 2;
   AudioPlayer audioPlayer = AudioPlayer();
-  bool playing = false;
-  Duration duration = Duration.zero;
-  Duration position = Duration.zero;
   String path = "";
-  bool paused = false;
   bool isRecording = false;
-  String audioUrl = "";
   bool isSending = false;
 
-  int count = 0;
 
   @override
   void dispose() {
@@ -82,12 +76,9 @@ class _ChatScreenState extends State<ChatScreen> {
     audioPlayer.stop();
     audioPlayer.dispose();
     _chatMessageStreamController.close();
-    // _focusNode.dispose();
-
     super.dispose();
   }
 
-  List<MessageResponse> messageList = [];
 
   Future<String> getFilePath() async {
     int count = 0;

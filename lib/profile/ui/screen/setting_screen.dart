@@ -13,6 +13,7 @@ import 'package:untitled1/profile/profile_module_route.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
 import 'package:untitled1/utils/components/custom_alert_dialog.dart';
 import 'package:untitled1/utils/images/images.dart';
+import '../../../custom/model/OrderModel.dart';
 import '../../../utils/custom_alert_dialog/CustomDeleteDialog.dart';
 import '../../state_manager/profile.dart';
 
@@ -101,7 +102,7 @@ class ProfilePageState extends State<SettingProfilePage> {
                               children: [
                                 SvgPicture.asset(
                                   ImageAsset.new_profle,
-                                  height: 17,
+                                   height: 17,
                                 ),
                                 SizedBox(
                                   height: 40,
@@ -268,6 +269,7 @@ class ProfilePageState extends State<SettingProfilePage> {
                                   title: 'Sign out',
                                   content: 'Are you sure you want to sign out?',
                                   yesBtn: () {
+                                    orderModelList.clear();
                                     SelectedDateHive().clearDate();
                                     AcceptSmoke().clearSmoke();
                                     getIt<AuthPrefsHelper>()
@@ -275,19 +277,16 @@ class ProfilePageState extends State<SettingProfilePage> {
                                         .then((value) {
                                       Navigator.pushNamedAndRemoveUntil(context,
                                           NavRoutes.nav_rout, (route) => false);
-
                                     });
                                   },
                                   noBtn: () {
                                     Navigator.pop(context);
                                   },
                                 ))
-                        :
-
-                    Navigator.pushNamed(
-                      context,
-                      AuthRoutes.login,
-                    );
+                        : Navigator.pushNamed(
+                            context,
+                            AuthRoutes.login,
+                          );
                   },
                   child: Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -305,7 +304,11 @@ class ProfilePageState extends State<SettingProfilePage> {
                               ? Text(
                                   "Sign out",
                                 )
-                              : InkWell(child: Text("Sign in",),),
+                              : InkWell(
+                                  child: Text(
+                                    "Sign in",
+                                  ),
+                                ),
                         ],
                       )),
                 ),
