@@ -46,7 +46,6 @@ class _ChatScreenState extends State<ChatScreen> {
     super.initState();
     // Initialize Firebase Messaging
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-
       // Handle the received message here
       String msg = message.notification?.body ?? '';
       setState(() {
@@ -69,7 +68,6 @@ class _ChatScreenState extends State<ChatScreen> {
   bool isRecording = false;
   bool isSending = false;
 
-
   @override
   void dispose() {
     // Stop any playing audio before disposing of the AudioPlayer instance
@@ -78,7 +76,6 @@ class _ChatScreenState extends State<ChatScreen> {
     _chatMessageStreamController.close();
     super.dispose();
   }
-
 
   Future<String> getFilePath() async {
     int count = 0;
@@ -162,35 +159,65 @@ class _ChatScreenState extends State<ChatScreen> {
                   ? Alignment.centerRight
                   : Alignment.centerLeft,
               child: Card(
-                elevation: 8,
                 child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: message.messageTypeId == 1
-                      ? Text(message.message ?? "")
-                      : Container(
-                          // width: 220,
-                          child: Stack(
-                          children: [
-                            VoiceMessage(
-                              contactPlayIconColor: Colors.black,
-                              contactFgColor: Colors.red,
-                              // noiseCount: 20,
-                              audioSrc: message.message ?? "",
-                              played: true,
-                              me: false,
-                              onPlay: () {
-                                // Do something when voice played
-                              },
-                            ),
-                            if (isSending) // Show the loading indicator if sending
-                              Positioned.fill(
-                                child: Center(
-                                  child: CircularProgressIndicator(),
+                    padding: const EdgeInsets.all(12),
+                    child: message.messageTypeId == 1
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                "${message.message}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
                                 ),
                               ),
-                          ],
-                        )),
-                ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    DateFormat('hh:mm a')
+                                        .format(message.createdDate),
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  VoiceMessage(
+                                    contactPlayIconColor: Colors.black,
+                                    contactFgColor: Colors.red,
+                                    audioSrc: message.message ?? "",
+                                    played: true,
+                                    me: false,
+                                    onPlay: () {
+                                      // Do something when voice played
+                                    },
+                                  ),
+
+                                ],
+                              ),
+                              Text(
+                                DateFormat('hh:mm a').format(message.createdDate),
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          )),
               ),
             ),
           )),
