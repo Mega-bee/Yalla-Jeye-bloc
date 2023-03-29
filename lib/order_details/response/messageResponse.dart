@@ -6,19 +6,17 @@ class MessageResponse {
   int? orderId;
   String? message;
 
-  MessageResponse(
-      {this.id,
-
-        this.isFromUser,
-        this.createdDate,
-        this.messageTypeId,
-        this.orderId,
-        this.message,
-      });
+  MessageResponse({
+    this.id,
+    this.isFromUser,
+    this.createdDate,
+    this.messageTypeId,
+    this.orderId,
+    this.message,
+  });
 
   MessageResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-
     isFromUser = json['isFromUser'];
     createdDate = json['createdDate'];
     messageTypeId = json['messageTypeId'];

@@ -19,7 +19,6 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
     target: LatLng(-33.852, 151.211),
     zoom: 15.0,
   );
-
   CameraPosition _position = _kInitialPosition;
   bool _isMapCreated = false;
   final bool _isMoving = false;

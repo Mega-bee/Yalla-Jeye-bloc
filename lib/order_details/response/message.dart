@@ -1,7 +1,7 @@
 class GetMessagesResponse {
   int? id;
   String? fromUserName;
-  bool isFromUser =false;
+  bool isFromUser = false;
   DateTime createdDate = DateTime.now();
   String? audioFile;
   int? messageTypeId;
@@ -11,30 +11,28 @@ class GetMessagesResponse {
   String? message;
   List<String>? reactions; // New field to store reactions
 
-
-  GetMessagesResponse(
-      {this.id,
-        this.fromUserName,
-        // this.toUserName,
-        required this.isFromUser,
-
-        required this.createdDate,
-        this.audioFile,
-        this.messageTypeId,
-        this.isFromAdmin,
-        this.orderId,
-        this.fromUserId,
-        // this.toUserId,
-        this.message,
-        this.reactions,
-      });
+  GetMessagesResponse({
+    this.id,
+    this.fromUserName,
+    // this.toUserName,
+    required this.isFromUser,
+    required this.createdDate,
+    this.audioFile,
+    this.messageTypeId,
+    this.isFromAdmin,
+    this.orderId,
+    this.fromUserId,
+    // this.toUserId,
+    this.message,
+    this.reactions,
+  });
 
   GetMessagesResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     fromUserName = json['fromUserName'];
     // toUserName = json['toUserName'];
     isFromUser = json['isFromUser'];
-    createdDate  = DateTime.parse(json['createdDate']);
+    createdDate = DateTime.parse(json['createdDate']);
     audioFile = json['audioFile'];
     messageTypeId = json['messageTypeId'];
     isFromAdmin = json['isFromAdmin'];
