@@ -74,11 +74,11 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
       child: StatefulBuilder(
         builder: (ctx, setState) {
           return DraggableScrollableSheet(
-            initialChildSize: 0.8,
+            initialChildSize: 0.9,
             //set this as you want
             maxChildSize: 1,
             //set this as you want
-            minChildSize: 0.8,
+            minChildSize: 0.9,
             //set this as you want
             expand: true,
             // snap: true,
@@ -89,7 +89,7 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                   borderRadius: BorderRadius.circular(15)),
               child: Padding(
                 padding: const EdgeInsetsDirectional.only(
-                    start: 20, end: 20, top: 30),
+                    start: 20, end: 20, top: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -389,7 +389,7 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                               : Container(),
 
                           SizedBox(
-                            height: 20,
+                            height: 0,
                           ),
                           CustomButton(
                             buttonTab: () {

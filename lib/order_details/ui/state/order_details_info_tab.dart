@@ -96,13 +96,18 @@ class OrderDetailsInfo extends StatelessWidget {
                     ),
                   )
                 : ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) => OrderPlaceCard(
-                        placesDetails:
-                            orderDetailsResponse.orderPlaces![index]),
-                    itemCount: orderDetailsResponse.orderPlaces?.length,
-                    shrinkWrap: true,
-                  )
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) => Expanded(
+                child: Card(
+                  child: OrderPlaceCard(
+                    placesDetails: orderDetailsResponse.orderPlaces![index],
+                  ),
+                ),
+              ),
+              itemCount: orderDetailsResponse.orderPlaces?.length,
+              shrinkWrap: true,
+            ),
+
           ],
         ),
       ),
