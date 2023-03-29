@@ -38,66 +38,12 @@ class OrderPlaceCard extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          TextField(
-            controller: _descriptionController,
-            // maxLines: 17,
-            readOnly: true,
-            decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  width: 1,
-                  color: Colors.white,
-                ),
-                borderRadius: BorderRadius.circular(23),
-              ),
-              hintText: 'What do you want to order',
-              hintStyle: TextStyle(
-                color: Color.fromRGBO(204, 204, 204, 0.5),
-              ),
-              border: InputBorder.none,
-            ),
-            onChanged: (value) {},
-          ),
+         Text(_descriptionController.text.toString()),
 
           SizedBox(
             height: 20,
           ),
 
-          // Column(
-          //   crossAxisAlignment: CrossAxisAlignment.start,
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     Text("Before picking your order, driver will :"),
-          //     Column(
-          //       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //       children: [
-          //         Row(
-          //           children: [
-          //             Switch(
-          //                 dragStartBehavior: DragStartBehavior.down,
-          //                 activeColor: redColor,
-          //                 value: placesDetails.makeOrder ?? false,
-          //                onChanged: (_){},
-          //                 ),
-          //             Text(
-          //                 "Call ${placesDetails.placeName} and make order"),
-          //           ],
-          //         ),
-          //         Row(
-          //           children: [
-          //             Switch(
-          //                 dragStartBehavior: DragStartBehavior.down,
-          //                 activeColor: redColor,
-          //                 value: placesDetails.payOrder ?? false,
-          //                 onChanged: (value) => {}
-          //                 ),
-          //             Text("Pay ${placesDetails.placeName} bill"),
-          //           ],
-          //         ),
-          //       ],
-          //     )
-          //   ],
-          // )
         ],
       ),
     );
