@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:signalr_netcore/hub_connection_builder.dart';
 import 'package:untitled1/auth/service/auth_service.dart';
 import 'package:untitled1/custom/model/OrderModel.dart';
@@ -50,6 +51,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
     widget.cubit.getHomePage(this);
     controller = BottomSheet.createAnimationController(this);
     controller.duration = const Duration(milliseconds: 500);

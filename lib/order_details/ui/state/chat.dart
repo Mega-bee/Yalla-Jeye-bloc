@@ -52,10 +52,18 @@ class _ChatScreenState extends State<ChatScreen> {
     return false;
   }
 
+  bool _showSendIcon = false;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final status = await Permission.microphone.status;
+      if (!status.isGranted) {
+        await Permission.microphone.request();
+      }
+    });
     // Initialize Firebase Messaging
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       // Handle the received message here
@@ -71,7 +79,17 @@ class _ChatScreenState extends State<ChatScreen> {
         _textController.clear();
       });
     });
+
+    _textController.addListener(_onTextChanged);
   }
+
+  void _onTextChanged() {
+    setState(() {
+      _showSendIcon = _textController.text.isNotEmpty;
+    });
+  }
+  final FocusNode _focusNode = FocusNode();
+
 
   int? chat = 1;
   int? voice = 2;
@@ -240,113 +258,89 @@ class _ChatScreenState extends State<ChatScreen> {
                 Expanded(
                   child: isRecording
                       ? Padding(
-                          padding: const EdgeInsets.only(left: 12.0),
-                          child: Text(
-                            "Recording...",
-                            style: TextStyle(color: redColor),
+                          padding: const EdgeInsets.only(left: 10, bottom: 20),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              children: <Widget>[
+                                // SizedBox(width: 10),
+                                // Icon(Icons.insert_emoticon, color: Colors.grey),
+                                SizedBox(width: 10),
+                                Expanded(
+                                  child: TextField(
+                                    readOnly: true,
+                                    decoration: InputDecoration(
+                                      hintText: 'Recording...',
+                                      hintStyle: TextStyle(color: redColor),
+                                      border: InputBorder.none,
+                                      isCollapsed: true,
+                                      contentPadding:
+                                          EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         )
                       : Padding(
-                          padding: const EdgeInsets.only(bottom: 30),
-                          child: TextField(
-                            // focusNode: _focusNode,
-                            controller: _textController,
-                            decoration: const InputDecoration(
-                              contentPadding: EdgeInsets.all(20),
-                              hintText: 'Type your message here...',
-                              border: InputBorder.none,
-                              // prefixIcon: Icon(Icons.send)
+                          padding:
+                              const EdgeInsets.only(left: 10.0, bottom: 20),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  // spreadRadius: 2,
+                                  // blurRadius: 2,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
                             ),
-                            onChanged: (text) {
-                              setState(() {});
-                            },
-                            // onSubmitted: (text) {
-                            //   widget.screenState.sendMessage(SendMessageRequest(
-                            //     OrderId: widget.orderDetailsResponse.id,
-                            //     MessageTypeId: chat,
-                            //     Message: _textController.text,
-                            //     IsFromAdmin: false,
-                            //   ));
-                            //   final message = Messages(
-                            //       isFromUser: true,
-                            //       createdDate: DateTime.now(),
-                            //       message: _textController.text,
-                            //       messageTypeId: 1);
-                            //   setState(() {
-                            //     widget.chatMessage!.add(message);
-                            //     // widget.chatMessage!.insert(0, message); // add at the beginning of the list
-                            //
-                            //     _textController.clear();
-                            //   });
-                            // },
+                            child: Row(
+                              children: [
+                                // SizedBox(width: 10),
+                                // Icon(Icons.insert_emoticon, color: Colors.grey),
+                                SizedBox(width: 10),
+                                Expanded(
+                                  child: TextField(
+                                    controller: _textController,
+                                    decoration: InputDecoration(
+                                      hintText: 'Message',
+                                      border: InputBorder.none,
+                                      isCollapsed: true,
+                                      contentPadding:
+                                          EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                                    ),
+                                    maxLines: null,
+                                  ),
+                                ),
+                                // Icon(Icons.attach_file, color: Colors.grey),
+                                // SizedBox(width: 10),
+                                // Icon(Icons.camera_alt, color: Colors.grey),
+                                // SizedBox(width: 10),
+                              ],
+                            ),
                           ),
                         ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 8.0, bottom: 30),
-                  child: _textController.text.isEmpty
-                      ? GestureDetector(
-                          child: Container(
-                            width: 50,
-                            height: 50,
-                            child: Card(
-                              color: redColor,
-                              shape: const CircleBorder(),
-                              child: Icon(
-                                Icons.mic,
-                                color:
-                                    !isRecording ? Colors.white : Colors.yellow,
-                              ),
-                            ),
-                          ),
-                          onLongPress: () async {
-                            AudioPlayer.players.forEach((key, value) {
-                              value.stop();
-                            });
-
-                            setState(() {
-                              isRecording = true;
-                            });
-                            path = await getFilePath();
-                            // final status = await Permission.microphone.request();
-                            SystemChannels.textInput
-                                .invokeMethod('TextInput.show');
-
-                            if (await Permission.microphone.isGranted) {
-                              RecordMp3.instance.start(path, (type) {
-                                return setState(() {});
-                              });
-                            } else {
-                              await Permission.microphone.request();
-                            }
-
-                            // record.startRecord(path);
-                          },
-                          onLongPressEnd: (val) async {
-                            final message = Platform.isIOS
-                                ? Messages(
-                                    isFromUser: true,
-                                    createdDate: DateTime.now(),
-                                    message: "file://$path",
-                                    messageTypeId: 2,
-                                  )
-                                : Messages(
-                                    isFromUser: true,
-                                    createdDate: DateTime.now(),
-                                    message: path,
-                                    messageTypeId: 2,
-                                  );
-                            setState(() {
-                              widget.chatMessage!.add(message);
-                              isRecording = false;
-                              print("Path: $path");
-                            });
-                            RecordMp3.instance.stop();
-                            await uploadAudioFile(path);
-                          },
-                          onTap: () {},
-                        )
-                      : IconButton(
+                  padding: const EdgeInsets.only(left: 10, bottom: 20),
+                  child: _showSendIcon
+                      ? IconButton(
                           onPressed: _textController.text.trim().isEmpty
                               ? null
                               : () {
@@ -392,9 +386,73 @@ class _ChatScreenState extends State<ChatScreen> {
                                     });
                                   }
                                 },
-                          icon: Icon(Icons.send),
+                          icon: Icon(Icons.send,color: redColor,),
+                        )
+                      : GestureDetector(
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      child: Card(
+                        color: redColor,
+                        shape: const CircleBorder(),
+                        child: Icon(
+                          Icons.mic,
+                          color: !isRecording ? Colors.white : Colors.yellow,
                         ),
-                ),
+                      ),
+                    ),
+                    onLongPress: () async {
+                      AudioPlayer.players.forEach((key, value) {
+                        value.stop();
+                      });
+
+                      setState(() {
+                        isRecording = true;
+                      });
+                      path = await getFilePath();
+
+                      if (!await Permission.microphone.isGranted) {
+                        // Ask for microphone permission if it's not already granted
+                        final status = await Permission.microphone.request();
+                        if (status != PermissionStatus.granted) {
+                          // Permission not granted, exit the function
+                          setState(() {
+                            isRecording = false;
+                          });
+                          return;
+                        }
+                      }
+
+                                            RecordMp3.instance.start(path, (type) {
+                        return setState(() {});
+                      });
+                    },
+                    onLongPressEnd: (val) async {
+                      final message = Platform.isIOS
+                          ? Messages(
+                        isFromUser: true,
+                        createdDate: DateTime.now(),
+                        message: "file://$path",
+                        messageTypeId: 2,
+                      )
+                          : Messages(
+                        isFromUser: true,
+                        createdDate: DateTime.now(),
+                        message: path,
+                        messageTypeId: 2,
+                      );
+                      setState(() {
+                        widget.chatMessage!.add(message);
+                        isRecording = false;
+                        print("Path: $path");
+                      });
+                      RecordMp3.instance.stop();
+                      await uploadAudioFile(path);
+                    },
+                    onTap: () {},
+                  )
+
+                )
               ],
             ),
           ),

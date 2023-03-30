@@ -9,6 +9,7 @@ import 'package:flutter/src/foundation/assertions.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:injectable/injectable.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:untitled1/module_addresses/address_module.dart';
 import 'package:untitled1/module_driver/module_driver_orders/driver_order_module.dart';
 import 'package:untitled1/module_menu_details/menu_module.dart';
@@ -145,6 +146,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+
     // FirebaseCrashlytics.instance.crash();
     widget._fireNotificationService.init();
     widget._localNotificationService.init();
