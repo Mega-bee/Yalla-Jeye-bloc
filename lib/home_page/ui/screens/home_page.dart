@@ -71,7 +71,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   _getCurrentLocation() async {
     final position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+        desiredAccuracy: LocationAccuracy.low);
     setState(() {
       _currentPosition = position;
     });

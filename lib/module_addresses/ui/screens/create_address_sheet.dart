@@ -17,8 +17,12 @@ class CreateAddressSheet extends StatefulWidget {
   final AddressResponse? response;
   final bool isUpdated;
   final RegionsCubit cubit;
+
   const CreateAddressSheet(
-      {required this.createAddress, this.response, required this.isUpdated, required this.cubit});
+      {required this.createAddress,
+      this.response,
+      required this.isUpdated,
+      required this.cubit});
 
   @override
   State<CreateAddressSheet> createState() => CreateAddressSheetState();
@@ -33,7 +37,7 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
   var streetController = TextEditingController();
 
   LatLng? addressLoca;
-   CameraPosition ca = CameraPosition(target: LatLng(0, 0));
+  CameraPosition ca = CameraPosition(target: LatLng(0, 0));
   final GlobalKey<FormState> _addAddressKey = GlobalKey<FormState>();
   GoogleMapController? mapController;
   RegionsResponse? selectedRegion;
@@ -48,7 +52,8 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
       floorController.text = widget.response?.floorNumber.toString() ?? '';
       desController.text = widget.response?.description ?? '';
       streetController.text = widget.response?.street ?? '';
-      selectedRegion = RegionsResponse(id:widget.response?.cityId , location: widget.response?.city);
+      selectedRegion = RegionsResponse(
+          id: widget.response?.cityId, location: widget.response?.city);
       if (widget.response!.latitude!.isEmpty ||
           widget.response!.longitude!.isEmpty) {
       } else {
@@ -59,14 +64,12 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
     }
   }
 
-
-  void refresh(){
-    if(mounted) {
-      setState(() {
-
-    });
+  void refresh() {
+    if (mounted) {
+      setState(() {});
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -97,8 +100,8 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
 
                     Text(
                       "Nickname",
-                      style: TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: 10,
@@ -119,21 +122,18 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                         contentPadding: EdgeInsets.symmetric(
                             vertical: 15.0, horizontal: 9.0),
                         border: OutlineInputBorder(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(5.0)),
+                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
                               color: Color.fromRGBO(204, 204, 204, 0.5),
                               width: 2.0),
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(5.0)),
+                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                          BorderSide(color: Colors.grey, width: 2.0),
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(5.0)),
+                              BorderSide(color: Colors.grey, width: 2.0),
+                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
                         ),
                       ),
                     ),
@@ -142,8 +142,8 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                     ),
                     Text(
                       "Address details",
-                      style: TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: 10,
@@ -176,20 +176,20 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                                   vertical: 15.0, horizontal: 9.0),
                               border: OutlineInputBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
+                                    BorderRadius.all(Radius.circular(5.0)),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
                                     color: Color.fromRGBO(204, 204, 204, 0.5),
                                     width: 2.0),
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
+                                    BorderRadius.all(Radius.circular(5.0)),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.grey, width: 2.0),
+                                borderSide:
+                                    BorderSide(color: Colors.grey, width: 2.0),
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
+                                    BorderRadius.all(Radius.circular(5.0)),
                               ),
                             ),
                           ),
@@ -210,20 +210,20 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                                   vertical: 15.0, horizontal: 9.0),
                               border: OutlineInputBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
+                                    BorderRadius.all(Radius.circular(5.0)),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
                                     color: Color.fromRGBO(204, 204, 204, 0.5),
                                     width: 2.0),
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
+                                    BorderRadius.all(Radius.circular(5.0)),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.grey, width: 2.0),
+                                borderSide:
+                                    BorderSide(color: Colors.grey, width: 2.0),
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
+                                    BorderRadius.all(Radius.circular(5.0)),
                               ),
                             ),
                           ),
@@ -248,20 +248,20 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                                   vertical: 15.0, horizontal: 9.0),
                               border: OutlineInputBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
+                                    BorderRadius.all(Radius.circular(5.0)),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
                                     color: Color.fromRGBO(204, 204, 204, 0.5),
                                     width: 2.0),
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
+                                    BorderRadius.all(Radius.circular(5.0)),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.grey, width: 2.0),
+                                borderSide:
+                                    BorderSide(color: Colors.grey, width: 2.0),
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
+                                    BorderRadius.all(Radius.circular(5.0)),
                               ),
                             ),
                           ),
@@ -283,20 +283,20 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                                   vertical: 15.0, horizontal: 9.0),
                               border: OutlineInputBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
+                                    BorderRadius.all(Radius.circular(5.0)),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
                                     color: Color.fromRGBO(204, 204, 204, 0.5),
                                     width: 2.0),
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
+                                    BorderRadius.all(Radius.circular(5.0)),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.grey, width: 2.0),
+                                borderSide:
+                                    BorderSide(color: Colors.grey, width: 2.0),
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
+                                    BorderRadius.all(Radius.circular(5.0)),
                               ),
                             ),
                           ),
@@ -308,84 +308,83 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                           Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
-                                color:
-                                Theme.of(context).secondaryHeaderColor),
+                                color: Theme.of(context).secondaryHeaderColor),
                             child: widget.isUpdated
                                 ? TextButton.icon(
-                              icon: Icon(Icons.location_on),
-                              label: Text(
-                                'Update location',
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ChooseLocationWidget(
-                                              previousLocation:
-                                              addressLoca,
-                                            ))).then((value) {
-                                  if (value != null) {
-                                    addressLoca = value as LatLng;
-                                    ca = CameraPosition(
-                                        target: addressLoca!, zoom: 15);
-                                    mapController?.animateCamera(
-                                        CameraUpdate.newCameraPosition(
-                                            ca));
-                                    setState(() {});
-                                  }
-                                });
-                              },
-                            )
+                                    icon: Icon(Icons.location_on),
+                                    label: Text(
+                                      'Update location',
+                                    ),
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ChooseLocationWidget(
+                                                    previousLocation:
+                                                        addressLoca,
+                                                  ))).then((value) {
+                                        if (value != null) {
+                                          addressLoca = value as LatLng;
+                                          ca = CameraPosition(
+                                              target: addressLoca!, zoom: 15);
+                                          mapController?.animateCamera(
+                                              CameraUpdate.newCameraPosition(
+                                                  ca));
+                                          setState(() {});
+                                        }
+                                      });
+                                    },
+                                  )
                                 : TextButton.icon(
-                              icon: Icon(Icons.location_on),
-                              label: Text(
-                                'Pin location',
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ChooseLocationWidget(
-                                              previousLocation:
-                                              addressLoca,
-                                            ))).then((value) {
-                                  if (value != null) {
-                                    addressLoca = value as LatLng;
-                                    ca = CameraPosition(
-                                        target: addressLoca!, zoom: 15);
-                                    mapController?.animateCamera(
-                                        CameraUpdate.newCameraPosition(
-                                            ca));
-                                    setState(() {});
-                                  }
-                                });
-                              },
-                            ),
+                                    icon: Icon(Icons.location_on),
+                                    label: Text(
+                                      'Pin location',
+                                    ),
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ChooseLocationWidget(
+                                                    previousLocation:
+                                                        addressLoca,
+                                                  ))).then((value) {
+                                        if (value != null) {
+                                          addressLoca = value as LatLng;
+                                          ca = CameraPosition(
+                                              target: addressLoca!, zoom: 15);
+                                          mapController?.animateCamera(
+                                              CameraUpdate.newCameraPosition(
+                                                  ca));
+                                          setState(() {});
+                                        }
+                                      });
+                                    },
+                                  ),
                           ),
                           addressLoca != null
                               ? Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              height: 150,
-                              child: GoogleMap(
-                                onMapCreated: (controller) {
-                                  setState(() {
-                                    mapController = controller;
-                                  });
-                                },
-                                markers: {
-                                  Marker(
-                                      markerId: MarkerId(Random()
-                                          .nextInt(100)
-                                          .toString()),
-                                      position: addressLoca!)
-                                },
-                                initialCameraPosition: ca,
-                              ),
-                            ),
-                          )
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                    height: 150,
+                                    child: GoogleMap(
+                                      onMapCreated: (controller) {
+                                        setState(() {
+                                          mapController = controller;
+                                        });
+                                      },
+                                      markers: {
+                                        Marker(
+                                            markerId: MarkerId(Random()
+                                                .nextInt(100)
+                                                .toString()),
+                                            position: addressLoca!)
+                                      },
+                                      initialCameraPosition: ca,
+                                    ),
+                                  ),
+                                )
                               : Container(),
 
                           SizedBox(
@@ -394,21 +393,21 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
                           CustomButton(
                             buttonTab: () {
                               if (_addAddressKey.currentState!.validate() &&
-                                  addressLoca != null&&selectedRegion!=null) {
+                                  addressLoca != null &&
+                                  selectedRegion != null) {
                                 widget.createAddress(CreateAddressRequest(
                                   buildingName: buldingNameController.text,
                                   city: selectedRegion?.id,
                                   description: desController.text,
-                                  floorNumber:
-                                  int.parse(floorController.text),
+                                  floorNumber: int.parse(floorController.text),
                                   street: streetController.text,
                                   title: titleController.text,
                                   latitude: addressLoca?.latitude.toString(),
-                                  longitude:
-                                  addressLoca?.longitude.toString(),
+                                  longitude: addressLoca?.longitude.toString(),
                                 ));
                               } else {
-                                Fluttertoast.showToast(msg: 'Please fill all fields');
+                                Fluttertoast.showToast(
+                                    msg: 'Please fill all fields');
                               }
                               // buldingNameController.clear();
                               // desController.clear();
@@ -432,6 +431,5 @@ class CreateAddressSheetState extends State<CreateAddressSheet> {
         },
       ),
     );
-
   }
 }
