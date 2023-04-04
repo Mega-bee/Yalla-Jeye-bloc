@@ -88,8 +88,8 @@ class _ChatScreenState extends State<ChatScreen> {
       _showSendIcon = _textController.text.isNotEmpty;
     });
   }
-  final FocusNode _focusNode = FocusNode();
 
+  final FocusNode _focusNode = FocusNode();
 
   int? chat = 1;
   int? voice = 2;
@@ -145,19 +145,21 @@ class _ChatScreenState extends State<ChatScreen> {
     if (response != null) {
       final messageResponse = Messages.fromJson(response.data.insideData);
       setState(() {
-        widget.chatMessage!.add(messageResponse);
         isRecording = false;
         print("Path: $path");
+        // widget.chatMessage = widget
+        //     .chatMessage!.reversed
+        //     .toList();
+        widget.chatMessage!.add(
+            messageResponse); // Append the new message to the end of the list
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    // super.build(context);
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-
       child: Scaffold(
         body: Column(
           children: [
@@ -261,7 +263,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   Expanded(
                     child: isRecording
                         ? Padding(
-                            padding: const EdgeInsets.only(left: 10, bottom: 20),
+                            padding:
+                                const EdgeInsets.only(left: 10, bottom: 20),
                             child: Container(
                               decoration: BoxDecoration(
                                 color: Colors.white,
@@ -288,8 +291,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                         hintStyle: TextStyle(color: redColor),
                                         border: InputBorder.none,
                                         isCollapsed: true,
-                                        contentPadding:
-                                            EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 10, horizontal: 10),
                                       ),
                                     ),
                                   ),
@@ -325,8 +328,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                         hintText: 'Message',
                                         border: InputBorder.none,
                                         isCollapsed: true,
-                                        contentPadding:
-                                            EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 10, horizontal: 10),
                                       ),
                                       maxLines: null,
                                     ),
@@ -341,121 +344,129 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 10, bottom: 20),
-                    child: _showSendIcon
-                        ? IconButton(
-                            onPressed: _textController.text.trim().isEmpty
-                                ? null
-                                : () {
-                                    if (containsBannedWord(
-                                        _textController.text)) {
-                                      // check if the input contains a banned word
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: Text('Error'),
-                                            content: Text(
-                                                'Your message contains a banned word.'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: Text('OK'),
-                                              ),
-                                            ],
-                                          );
-                                        },
+                      padding: const EdgeInsets.only(left: 10, bottom: 20),
+                      child: _showSendIcon
+                          ? IconButton(
+                              onPressed: _textController.text.trim().isEmpty
+                                  ? null
+                                  : () {
+                                      if (containsBannedWord(
+                                          _textController.text)) {
+                                        // check if the input contains a banned word
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text('Error'),
+                                              content: Text(
+                                                  'Your message contains a banned word.'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text('OK'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        widget.screenState
+                                            .sendMessage(SendMessageRequest(
+                                          OrderId:
+                                              widget.orderDetailsResponse.id,
+                                          MessageTypeId: chat,
+                                          Message: _textController.text,
+                                          IsFromAdmin: false,
+                                        ));
+                                        final message = Messages(
+                                            isFromUser: true,
+                                            createdDate: DateTime.now(),
+                                            message: _textController.text,
+                                            messageTypeId: 1);
+                                        setState(() {
+                                          widget.chatMessage!.add(message);
+                                          // widget.chatMessage!.insert(0, message); // add at the beginning of the list
+
+                                          _textController.clear();
+                                        });
+                                      }
+                                    },
+                              icon: Icon(
+                                Icons.send,
+                                color: redColor,
+                              ),
+                            )
+                          : GestureDetector(
+                              child: Container(
+                                width: 50,
+                                height: 50,
+                                child: Card(
+                                  color: redColor,
+                                  shape: const CircleBorder(),
+                                  child: Icon(
+                                    Icons.mic,
+                                    color: !isRecording
+                                        ? Colors.white
+                                        : Colors.yellow,
+                                  ),
+                                ),
+                              ),
+                              onLongPress: () async {
+                                AudioPlayer.players.forEach((key, value) {
+                                  value.stop();
+                                });
+
+                                setState(() {
+                                  isRecording = true;
+                                });
+                                path = await getFilePath();
+
+                                if (!await Permission.microphone.isGranted) {
+                                  // Ask for microphone permission if it's not already granted
+                                  final status =
+                                      await Permission.microphone.request();
+                                  if (status != PermissionStatus.granted) {
+                                    // Permission not granted, exit the function
+                                    setState(() {
+                                      isRecording = false;
+                                    });
+                                    return;
+                                  }
+                                }
+
+                                RecordMp3.instance.start(path, (type) {
+                                  return setState(() {});
+                                });
+                              },
+                              onLongPressEnd: (val) async {
+                                final message = Platform.isIOS
+                                    ? Messages(
+                                        isFromUser: true,
+                                        createdDate: DateTime.now(),
+                                        message: "file://$path",
+                                        messageTypeId: 2,
+                                      )
+                                    : Messages(
+                                        isFromUser: true,
+                                        createdDate: DateTime.now(),
+                                        message: path,
+                                        messageTypeId: 2,
                                       );
-                                    } else {
-                                      widget.screenState
-                                          .sendMessage(SendMessageRequest(
-                                        OrderId: widget.orderDetailsResponse.id,
-                                        MessageTypeId: chat,
-                                        Message: _textController.text,
-                                        IsFromAdmin: false,
-                                      ));
-                                      final message = Messages(
-                                          isFromUser: true,
-                                          createdDate: DateTime.now(),
-                                          message: _textController.text,
-                                          messageTypeId: 1);
-                                      setState(() {
-                                        widget.chatMessage!.add(message);
-                                        // widget.chatMessage!.insert(0, message); // add at the beginning of the list
-
-                                        _textController.clear();
-                                      });
-                                    }
-                                  },
-                            icon: Icon(Icons.send,color: redColor,),
-                          )
-                        : GestureDetector(
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        child: Card(
-                          color: redColor,
-                          shape: const CircleBorder(),
-                          child: Icon(
-                            Icons.mic,
-                            color: !isRecording ? Colors.white : Colors.yellow,
-                          ),
-                        ),
-                      ),
-                      onLongPress: () async {
-                        AudioPlayer.players.forEach((key, value) {
-                          value.stop();
-                        });
-
-                        setState(() {
-                          isRecording = true;
-                        });
-                        path = await getFilePath();
-
-                        if (!await Permission.microphone.isGranted) {
-                          // Ask for microphone permission if it's not already granted
-                          final status = await Permission.microphone.request();
-                          if (status != PermissionStatus.granted) {
-                            // Permission not granted, exit the function
-                            setState(() {
-                              isRecording = false;
-                            });
-                            return;
-                          }
-                        }
-
-                                              RecordMp3.instance.start(path, (type) {
-                          return setState(() {});
-                        });
-                      },
-                      onLongPressEnd: (val) async {
-                        final message = Platform.isIOS
-                            ? Messages(
-                          isFromUser: true,
-                          createdDate: DateTime.now(),
-                          message: "file://$path",
-                          messageTypeId: 2,
-                        )
-                            : Messages(
-                          isFromUser: true,
-                          createdDate: DateTime.now(),
-                          message: path,
-                          messageTypeId: 2,
-                        );
-                        setState(() {
-                          widget.chatMessage!.add(message);
-                          isRecording = false;
-                          print("Path: $path");
-                        });
-                        RecordMp3.instance.stop();
-                        await uploadAudioFile(path);
-                      },
-                      onTap: () {},
-                    )
-
-                  )
+                                setState(() {
+                                  widget.chatMessage!.add(message);
+                                  isRecording = false;
+                                  print("Path: $path");
+                                  // widget.chatMessage = widget
+                                  //     .chatMessage!.reversed
+                                  //     .toList(); // reverse the order of chat messages
+                                });
+                                RecordMp3.instance.stop();
+                                await uploadAudioFile(path);
+                              },
+                              onTap: () {},
+                            ))
                 ],
               ),
             ),

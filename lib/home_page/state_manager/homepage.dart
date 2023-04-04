@@ -25,8 +25,6 @@ import '../ui/screens/home_page.dart';
 import '../ui/state/homepage_sucess.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../ui/state/search_place_sucess.dart';
-
 @injectable
 class HomePageCubit extends Cubit<HomeStates> {
   final HomePageRepository _homePageRepository;
@@ -35,9 +33,7 @@ class HomePageCubit extends Cubit<HomeStates> {
   HomePageCubit(this._homePageRepository, this._checkOutRepository)
       : super(LoadingHomePage());
 
-
   late HubConnection signalRSearch;
-
 
   final PublishSubject<String> _cartSubject = PublishSubject<String>();
 
@@ -63,8 +59,6 @@ class HomePageCubit extends Cubit<HomeStates> {
     });
   }
 
-
-
   calculateTotalPrice(
       CalculatePriceRequest request, HomePageState screenState) {
     TipDialogHelper.loading("Loading");
@@ -83,14 +77,14 @@ class HomePageCubit extends Cubit<HomeStates> {
       }
     });
   }
+
   FireBase(HomePageState screenState, NotificationRequest request) {
-    _homePageRepository.FBT(request).then((value) {
-    });}
+    _homePageRepository.FBT(request).then((value) {});
+  }
 
   refreshHome() {
     _cartSubject.add('updateCart');
   }
-
 
   initConnectFirstTime() async {
     print('iniiit Connect');
@@ -109,20 +103,15 @@ class HomePageCubit extends Cubit<HomeStates> {
     //  signalRSearch.on('UpdateCurrenciesList', _handleNewMessage);
   }
 
-
-
-
-  // _handleNewMessage(List<Object?>? dd) {
-  //
-  //   print('after listen result ${dd?.first}');
-  //   print('affter encodd34d ${jsonEncode(dd![0])}');
-  //   Map<String, dynamic> valueMap = dd[0] as Map<String, dynamic>;
-  //   print('sal: ${valueMap}');
-  //   // SearchResponse vv = SearchResponse.fromJson(valueMap);
-  //   // _stateSubjects.add(vv);
-  //   // _stateSubject.stream;
-  //   // print(_stateSubject.stream);
-  // }
-
-
+// _handleNewMessage(List<Object?>? dd) {
+//
+//   print('after listen result ${dd?.first}');
+//   print('affter encodd34d ${jsonEncode(dd![0])}');
+//   Map<String, dynamic> valueMap = dd[0] as Map<String, dynamic>;
+//   print('sal: ${valueMap}');
+//   // SearchResponse vv = SearchResponse.fromJson(valueMap);
+//   // _stateSubjects.add(vv);
+//   // _stateSubject.stream;
+//   // print(_stateSubject.stream);
+// }
 }
