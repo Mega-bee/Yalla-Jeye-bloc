@@ -198,64 +198,64 @@ class ProfilePageState extends State<SettingProfilePage> {
               SizedBox(
                 height: 30,
               ),
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(13),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Text(
-                          "Support system",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            ImageAsset.new_customer_support,
-                            height: 17,
-                          ),
-                          SizedBox(
-                            height: 40,
-                            width: 8,
-                          ),
-                          Text("Customer support"),
-                        ],
-                      ),
-                      Divider(
-                        thickness: 1,
-                      ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            ImageAsset.new_emergency_number,
-                            height: 24,
-                          ),
-                          SizedBox(
-                            height: 40,
-                            width: 8,
-                          ),
-                          Text("Emergency number"),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
+              // Card(
+              //   shape: RoundedRectangleBorder(
+              //     borderRadius: BorderRadius.circular(13),
+              //   ),
+              //   child: Padding(
+              //     padding: const EdgeInsets.all(10.0),
+              //     child: Column(
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         Padding(
+              //           padding: const EdgeInsets.only(left: 8.0),
+              //           child: Text(
+              //             "Support system",
+              //             style: TextStyle(
+              //               fontWeight: FontWeight.bold,
+              //               fontSize: 15,
+              //             ),
+              //           ),
+              //         ),
+              //         SizedBox(
+              //           height: 10,
+              //         ),
+              //         Row(
+              //           children: [
+              //             SvgPicture.asset(
+              //               ImageAsset.new_customer_support,
+              //               height: 17,
+              //             ),
+              //             SizedBox(
+              //               height: 40,
+              //               width: 8,
+              //             ),
+              //             Text("Customer support"),
+              //           ],
+              //         ),
+              //         Divider(
+              //           thickness: 1,
+              //         ),
+              //         Row(
+              //           children: [
+              //             SvgPicture.asset(
+              //               ImageAsset.new_emergency_number,
+              //               height: 24,
+              //             ),
+              //             SizedBox(
+              //               height: 40,
+              //               width: 8,
+              //             ),
+              //             Text("Emergency number"),
+              //           ],
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 30,
+              // ),
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(13),
