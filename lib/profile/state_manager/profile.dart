@@ -19,7 +19,9 @@ class ProfileCubit extends Cubit<States> {
   ProfileCubit(this._profileRepository) : super(LoadingState());
 
   final _loadingStateSubject = PublishSubject<AsyncSnapshot>();
+
   Stream<AsyncSnapshot> get loadingStream => _loadingStateSubject.stream;
+
   updateProf(
       {required UpdateProfileRequest request,
       required GetProfilePageState screenState}) {
@@ -53,6 +55,21 @@ class ProfileCubit extends Cubit<States> {
         emit(
           GetProfilePageSuccess(model: getProfileModel, screenState: state),
         );
+      }
+    });
+  }
+
+  deleteAccount({required String id}
+      ) {
+    _loadingStateSubject.add(AsyncSnapshot.waiting());
+    _profileRepository.DeletetAccount(id).then((value) {
+      if (value == null) {
+        _loadingStateSubject.add(AsyncSnapshot.nothing());
+        Fluttertoast.showToast(
+            msg: 'something went wrong', backgroundColor: Colors.red);
+      } else if (value.code == 200) {
+        // Navigator.pop(screenState.context);
+        Fluttertoast.showToast(msg: 'Account deleted', backgroundColor: Colors.red);
       }
     });
   }

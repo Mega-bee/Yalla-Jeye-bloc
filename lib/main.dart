@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -126,6 +127,7 @@ class _MyAppState extends State<MyApp> {
     Map<String, WidgetBuilder> fullRoutesList,
   ) {
     return MaterialApp(
+      // useInheritedMediaQuery: true,
       theme: ThemeData(
         primaryColor: redColor,
         primarySwatch: redColor,

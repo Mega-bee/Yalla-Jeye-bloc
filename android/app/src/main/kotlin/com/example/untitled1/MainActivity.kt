@@ -1,4 +1,4 @@
-package com.megabee.yallajeye
+package com.yalla.yallajeye
 
 import io.flutter.embedding.android.FlutterActivity
 

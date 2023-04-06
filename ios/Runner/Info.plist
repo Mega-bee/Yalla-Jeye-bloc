@@ -56,13 +56,13 @@
 	<key>NSContactsUsageDescription</key>
 	<string>photos</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Always and when in use!</string>
+	<string>We need access to your location to provide you with seamless and uninterrupted location-based services. Our app requires your location always, even when it's running in the background, to offer you features such as real-time navigation, geofencing, and location-based notifications. This allows us to deliver a smooth and uninterrupted experience, ensuring that you receive timely and relevant information based on your location, even when the app is not actively in use.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Can I have location always?</string>
+	<string>In order to offer you seamless navigation and location-based features, we require constant access to your location even when the app is in the background. This enables us to provide real-time updates on your location and send you notifications about nearby points of interest or events.</string>
 	<key>NSLocationUsageDescription</key>
-	<string>Older devices need location.</string>
+	<string>We need access to your location to provide you with personalized experiences based on your current location, such as finding nearby points of interest, events, and services. This allows us to offer you relevant and timely information tailored to your location, enhancing your overall experience with our app.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Need location when in use</string>
+	<string>We need access to your location while the app is in use to provide you with accurate mapping and navigation services. This allows us to show you your current location on the map, calculate routes, and provide directions to your desired destinations.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>photos</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

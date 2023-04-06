@@ -58,6 +58,7 @@ class Urls {
   static const String FORGET_PASSWORD = AUTH + 'ForgotPassword';
   static const String FCM_TOKEN = AUTH + 'RefreshFcmToken';
   static const String RESET_PASSWORD = AUTH + 'ResetPassword';
+  static const String DELETE_ACCOUNT = AUTH + 'DeleteAccount';
 
   /*-----------------------NOTIFICATION----------------------------------*/
   static const String NOTIFICATION = '${BASE_NOTIFICATION}GetAllNotifications';

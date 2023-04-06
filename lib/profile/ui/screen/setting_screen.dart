@@ -43,6 +43,11 @@ class ProfilePageState extends State<SettingProfilePage> {
     super.initState();
   }
 
+  deleteAccount(String id) {
+    widget.cubit.deleteAccount( id: id,);
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -313,13 +318,60 @@ class ProfilePageState extends State<SettingProfilePage> {
                       )),
                 ),
               ),
-              // ElevatedButton(
-              //   onPressed: () {
-              //     SelectedDateHive().clearDate();
-              //     AcceptSmoke().clearSmoke();
-              //   },
-              //   child: Text("Clear hive"),
-              // ),
+              SizedBox(height: 30,),
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(13),
+                ),
+                child: InkWell(
+                  onTap: () {
+                    widget._authService.isLoggedIn
+                        ? showDialog(
+                        context: context,
+                        builder: (context) => CustomDeleteDialog(
+                          title: 'Delete Account',
+                          content: 'Are you sure you want to delete your account?',
+                          yesBtn: () {
+                            deleteAccount('');
+                            orderModelList.clear();
+                            SelectedDateHive().clearDate();
+                            AcceptSmoke().clearSmoke();
+                            getIt<AuthPrefsHelper>()
+                                .clearToken()
+                                .then((value) {
+                              Navigator.pushNamedAndRemoveUntil(context,
+                                  NavRoutes.nav_rout, (route) => false);
+                            });
+                          },
+                          noBtn: () {
+                            Navigator.pop(context);
+                          },
+                        ))
+                        : Navigator.pushNamed(
+                      context,
+                      AuthRoutes.login,
+                    );
+                  },
+                  child:  getIt<AuthPrefsHelper>().isSignedIn()?Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        children: [
+                         Icon(Icons.delete,color: redColor,),
+                          SizedBox(
+                            height: 40,
+                            width: 8,
+                          ),
+                          getIt<AuthPrefsHelper>().isSignedIn()
+                              ? Text(
+                            "Delete Account",
+                          )
+                              : Container()
+                        ],
+                      )):Container()
+                ),
+              ),
+
+
             ],
           ),
         ),

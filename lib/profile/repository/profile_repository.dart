@@ -36,4 +36,16 @@ class ProfileRepository {
     return response;
   }
 
+
+  Future<WebServiceResponse?> DeletetAccount(String id) async {
+    var token =   _authService.getToken();
+    WebServiceResponse? response = await _apiClient.put(
+      Urls.DELETE_ACCOUNT + '${id}',
+      {},
+      headers: {'Authorization': 'Bearer ' '$token'},
+    );
+    if (response == null) return null;
+    return response;
+  }
+
 }
