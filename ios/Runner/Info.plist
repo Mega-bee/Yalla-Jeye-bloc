@@ -19,9 +19,9 @@
     <string>remote-notification</string>
     </array>
     <key>NSMicrophoneUsageDescription</key>
-    <string>Your message explaining the reason why you need access to the microphone</string>
+    <string>We need access to your device's microphone to enable audio recording and provide voice-based features such as voice calls and voice messaging.</string>
     <key>NSAudioRecordingUsageDescription</key>
-    <string>Your message explaining the reason why you need access to audio recording</string>
+    <string>We need access to your device's audio recording capabilities to enable recording and playback of audio content, such as voice messages and audio notes, within the app.</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
