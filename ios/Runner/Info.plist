@@ -12,6 +12,7 @@
     <key>NSAllowsArbitraryLoads</key>
     <true/>
     </dict>
+    <string>Our app allows you to record and listen to voice notes within the chat. To enable this feature, we need to request permission to use the 'audio' background mode.</string>
     <key>UIBackgroundModes</key>
     <array>
     <string>audio</string>
