@@ -22,6 +22,7 @@ class LogInRepository {
 
   Future<WebServiceResponse?> loginRequest(LogInRequest request) async {
     var token = _authService.getToken();
+
     WebServiceResponse? response = await _apiClient.post(
       Urls.LOG_IN,
       request.toJson(),
