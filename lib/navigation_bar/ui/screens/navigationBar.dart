@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:injectable/injectable.dart';
@@ -6,7 +5,7 @@ import 'package:untitled1/di/di_config.dart';
 import 'package:untitled1/home_page/state_manager/homepage.dart';
 import 'package:untitled1/orders/ui/screens/order_page_list.dart';
 import 'package:untitled1/utils/images/images.dart';
-
+import '../../../auth/service/auth_service.dart';
 import '../../../custom/ui/screens/custom_list.dart';
 import '../../../home_page/ui/screens/home_page.dart';
 import '../../../profile/ui/screen/setting_screen.dart';
@@ -15,8 +14,10 @@ import '../../../utils/Colors/colors.dart';
 @injectable
 class Navigationbar extends StatefulWidget {
   final HomePageCubit cubit;
+  final AuthService _authService;
 
-  Navigationbar(this.cubit);
+
+  Navigationbar(this.cubit,this._authService);
 
   @override
   State<Navigationbar> createState() => NavigationbarrState();
@@ -24,8 +25,9 @@ class Navigationbar extends StatefulWidget {
 
 class NavigationbarrState extends State<Navigationbar> {
     int currentIndex = 0;
+    int orderCount = 0;
 
-  late List<Widget> _pages;
+    late List<Widget> _pages;
 
   @override
   void initState() {
@@ -80,7 +82,6 @@ class NavigationbarrState extends State<Navigationbar> {
               child: SvgPicture.asset(
                 ImageAsset.scooterr,height: 28,
                 color: currentIndex == 0 ? redColor: Colors.black,
-
               ),
             ),
             label: 'Menu',
@@ -96,15 +97,30 @@ class NavigationbarrState extends State<Navigationbar> {
             label: 'Pick up',
           ),
           BottomNavigationBarItem(
-            icon: Container(
-              height:35,
+            icon: widget._authService.isLoggedIn?Badge(
+              label: Text(
+                orderCount.toString(),
+                style: TextStyle(color: Colors.white),
+              ),
+              child: Container(
+                height: 35,
+                child: SvgPicture.asset(
+                  ImageAsset.orders,
+                  height: 15,
+                  color: currentIndex == 2 ? redColor : Colors.black,
+                ),
+              ),
+            ):Container(
+              height: 35,
               child: SvgPicture.asset(
-                ImageAsset.orders,height: 15,
+                ImageAsset.orders,
+                height: 15,
                 color: currentIndex == 2 ? redColor : Colors.black,
               ),
             ),
             label: 'Orders',
           ),
+
           BottomNavigationBarItem(
             icon: Container(
               height: 35,

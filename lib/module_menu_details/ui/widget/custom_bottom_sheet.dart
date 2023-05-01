@@ -104,7 +104,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                             children: [
                               Row(
                                 children: [
-                                  Icon(Icons.calendar_month),
+                                  Icon(Icons.shopping_cart_outlined),
                                   SizedBox(width: 15),
                                   Padding(
                                     padding: const EdgeInsets.only(
@@ -122,10 +122,10 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                         SizedBox(
                                           height: 4,
                                         ),
-                                        Text(
-                                          "What do you want to order?",
-                                          style: TextStyle(fontSize: 10),
-                                        )
+                                        // Text(
+                                        //   "What do you want to order?",
+                                        //   style: TextStyle(fontSize: 10),
+                                        // )
                                       ],
                                     ),
                                   ),
@@ -139,54 +139,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Row(
-                                  children: [
-                                    const Text('Deliver To:   '),
-                                    Text(
-                                      selectedAddressModel?.title ?? '',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                                OutlinedButton(
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                            context, AddressRoutes.VIEW_ADDRESS,
-                                            arguments: true)
-                                        .then((value) {
-                                      if (value != null &&
-                                          value is AddressResponse) {
-                                        selectedAddressModel = value;
-                                        setState(() {});
-                                      }
-                                    });
-                                  },
-                                  style: OutlinedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  ),
-                                  child: Text('Select'),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 0,
-                      ),
+
                       checkIfDesOrPlaceExist()
                           ? Container()
                           : OrderCardWidget(
@@ -212,11 +165,60 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                 ));
                           }),
                       const SizedBox(
-                        height: 200,
+                        height: 0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Row(
+                                  children: [
+                                    const Text('Deliver To:   '),
+                                    Text(
+                                      selectedAddressModel?.title ?? '',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                OutlinedButton(
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                        context, AddressRoutes.VIEW_ADDRESS,
+                                        arguments: true)
+                                        .then((value) {
+                                      if (value != null &&
+                                          value is AddressResponse) {
+                                        selectedAddressModel = value;
+                                        setState(() {});
+                                      }
+                                    });
+                                  },
+                                  style: OutlinedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                  child: Text('Select'),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 100,
                       ),
                     ],
                   ),
                 ),
+
                 Align(
                   alignment: AlignmentDirectional.bottomEnd,
                   child: Container(
@@ -236,6 +238,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                         ),
                       ],
                     ),
+
                     height: 80,
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -248,40 +251,39 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                 const Spacer(),
                                 MaterialButton(
                                   onPressed: () {
-                                      if (widget.model != null) {
-                                        var existingPlace =
-                                            orderModelList.firstWhere(
+                                    if (widget.model != null) {
+                                      String newPlaceName = descriptionController.text;
+                                      if (newPlaceName.isNotEmpty) {
+                                        var existingPlace = orderModelList.firstWhere(
                                                 (element) =>
-                                                    (element.placeId ==
-                                                            widget.model!
-                                                                .placeId &&
-                                                        widget.model!.placeId !=
-                                                            0) ||
-                                                    (element.placeTypeId ==
-                                                            widget.model!
-                                                                .placeTypeId &&
-                                                        widget.model!.placeId ==
-                                                            0),
-                                                orElse: () => CartOrderModel());
+                                            (element.placeId == widget.model!.placeId &&
+                                                widget.model!.placeId != 0) ||
+                                                (element.placeTypeId == widget.model!.placeTypeId &&
+                                                    widget.model!.placeId == 0),
+                                            orElse: () => CartOrderModel());
 
                                         if (existingPlace != null) {
-                                          int index = orderModelList
-                                              .indexOf(existingPlace);
+                                          int index = orderModelList.indexOf(existingPlace);
                                           if (index != -1) {
-                                            orderModelList[index] =
-                                                currentCartModel;
+                                            orderModelList[index] = currentCartModel;
                                           } else {
-                                            orderModelList.insert(
-                                                0, currentCartModel);
+                                            orderModelList.insert(0, currentCartModel);
                                           }
                                         } else {
-                                          orderModelList.insert(
-                                              0, currentCartModel);
+                                          orderModelList.insert(0, currentCartModel);
                                         }
-                                        print('seend event');
+                                        print('seen event');
                                         getIt<GlobalStateManager>().update();
+                                      } else {
+                                        // Show an error message to the user indicating that they need to enter a place name
+                                        // ScaffoldMessenger.of(context).showSnackBar(
+                                        //   SnackBar(
+                                        //     content: Text('Please enter a place name.'),
+                                        //     backgroundColor: Colors.red,
+                                        //   ),
+                                        // );
                                       }
-
+                                    }
 
                                     Navigator.pop(context);
                                   },

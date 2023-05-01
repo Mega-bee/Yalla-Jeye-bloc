@@ -2,13 +2,10 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:untitled1/module_notifications/model/notification_model.dart';
-import 'package:untitled1/order_details/order_route.dart';
-import 'package:untitled1/utils/global/global_state_manager.dart';
+
 
 @injectable
 class LocalNotificationService {

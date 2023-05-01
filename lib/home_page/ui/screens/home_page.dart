@@ -146,7 +146,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
-          ImageAsset.new_app_logo,
+          ImageAsset.RedAndYellowLogo,
           height: 43,
         ),
         leadingWidth: 150,

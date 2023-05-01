@@ -87,7 +87,7 @@ class _CustomActionButtonState extends State<CustomActionButton>
             }},
           label: Row(
             children: [
-              Icon(Icons.calendar_month),
+              Icon(Icons.shopping_cart_outlined),
               SizedBox(width: 15),
               Padding(
                 padding: const EdgeInsets.only(
@@ -105,10 +105,10 @@ class _CustomActionButtonState extends State<CustomActionButton>
                     SizedBox(
                       height: 4,
                     ),
-                    Text(
-                      "What do you want to order?",
-                      style: TextStyle(fontSize: 10),
-                    )
+                    // Text(
+                    //   "What do you want to order?",
+                    //   style: TextStyle(fontSize: 10),
+                    // )
                   ],
                 ),
               ),

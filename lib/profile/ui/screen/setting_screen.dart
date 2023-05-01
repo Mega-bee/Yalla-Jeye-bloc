@@ -16,6 +16,7 @@ import 'package:untitled1/utils/images/images.dart';
 import '../../../custom/model/OrderModel.dart';
 import '../../../utils/custom_alert_dialog/CustomDeleteDialog.dart';
 import '../../state_manager/profile.dart';
+import '../widget/test_bar.dart';
 
 @injectable
 class SettingProfilePage extends StatefulWidget {
@@ -44,9 +45,10 @@ class ProfilePageState extends State<SettingProfilePage> {
   }
 
   deleteAccount(String id) {
-    widget.cubit.deleteAccount( id: id,);
+    widget.cubit.deleteAccount(
+      id: id,
+    );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +109,7 @@ class ProfilePageState extends State<SettingProfilePage> {
                               children: [
                                 SvgPicture.asset(
                                   ImageAsset.new_profle,
-                                   height: 17,
+                                  height: 17,
                                 ),
                                 SizedBox(
                                   height: 40,
@@ -269,29 +271,42 @@ class ProfilePageState extends State<SettingProfilePage> {
                   onTap: () {
                     widget._authService.isLoggedIn
                         ? showDialog(
-                            context: context,
-                            builder: (context) => CustomDeleteDialog(
-                                  title: 'Sign out',
-                                  content: 'Are you sure you want to sign out?',
-                                  yesBtn: () {
-                                    orderModelList.clear();
-                                    SelectedDateHive().clearDate();
-                                    AcceptSmoke().clearSmoke();
-                                    getIt<AuthPrefsHelper>()
-                                        .clearToken()
-                                        .then((value) {
-                                      Navigator.pushNamedAndRemoveUntil(context,
-                                          NavRoutes.nav_rout, (route) => false);
-                                    });
-                                  },
-                                  noBtn: () {
-                                    Navigator.pop(context);
-                                  },
-                                ))
-                        : Navigator.pushNamed(
-                            context,
-                            AuthRoutes.login,
-                          );
+                      context: context,
+                      builder: (context) => CustomDeleteDialog(
+                        title: 'Log out',
+                        content: 'Are you sure you want to log out?',
+                        yesBtn: () {
+                          orderModelList.clear();
+                          SelectedDateHive().clearDate();
+                          AcceptSmoke().clearSmoke();
+                          getIt<AuthPrefsHelper>().clearToken().then((value) {
+                            Navigator.pushNamedAndRemoveUntil(context, NavRoutes.nav_rout, (route) => false);
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Center(child: Text('Yalla Jeye')),
+                                content: Text('Hope to see you again.'),
+                                actions: [
+                                  TextButton(
+                                    child: Text('OK'),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          });
+                        },
+                        noBtn: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ) : Navigator.pushNamed(
+                      context,
+                      AuthRoutes.login,
+                    );
+
                   },
                   child: Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -318,60 +333,80 @@ class ProfilePageState extends State<SettingProfilePage> {
                       )),
                 ),
               ),
-              SizedBox(height: 30,),
+              SizedBox(
+                height: 30,
+              ),
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(13),
                 ),
                 child: InkWell(
-                  onTap: () {
-                    widget._authService.isLoggedIn
-                        ? showDialog(
-                        context: context,
-                        builder: (context) => CustomDeleteDialog(
-                          title: 'Delete Account',
-                          content: 'Are you sure you want to delete your account?',
-                          yesBtn: () {
-                            deleteAccount('');
-                            orderModelList.clear();
-                            SelectedDateHive().clearDate();
-                            AcceptSmoke().clearSmoke();
-                            getIt<AuthPrefsHelper>()
-                                .clearToken()
-                                .then((value) {
-                              Navigator.pushNamedAndRemoveUntil(context,
-                                  NavRoutes.nav_rout, (route) => false);
-                            });
-                          },
-                          noBtn: () {
-                            Navigator.pop(context);
-                          },
-                        ))
-                        : Navigator.pushNamed(
-                      context,
-                      AuthRoutes.login,
-                    );
-                  },
-                  child:  getIt<AuthPrefsHelper>().isSignedIn()?Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        children: [
-                         Icon(Icons.delete,color: redColor,),
-                          SizedBox(
-                            height: 40,
-                            width: 8,
-                          ),
-                          getIt<AuthPrefsHelper>().isSignedIn()
-                              ? Text(
-                            "Delete Account",
-                          )
-                              : Container()
-                        ],
-                      )):Container()
-                ),
+                    onTap: () {
+                      widget._authService.isLoggedIn
+                          ? showDialog(
+                              context: context,
+                              builder: (context) => CustomDeleteDialog(
+                                    title: 'Delete Account',
+                                    content:
+                                        'Are you sure you want to delete your account?',
+                                    yesBtn: () {
+                                      deleteAccount('');
+                                      orderModelList.clear();
+                                      SelectedDateHive().clearDate();
+                                      AcceptSmoke().clearSmoke();
+                                      getIt<AuthPrefsHelper>()
+                                          .clearToken()
+                                          .then((value) {
+                                        Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            NavRoutes.nav_rout,
+                                            (route) => false);
+                                      });
+                                    },
+                                    noBtn: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ))
+                          : Navigator.pushNamed(
+                              context,
+                              AuthRoutes.login,
+                            );
+                    },
+                    child: getIt<AuthPrefsHelper>().isSignedIn()
+                        ? Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.delete,
+                                  color: redColor,
+                                ),
+                                SizedBox(
+                                  height: 40,
+                                  width: 8,
+                                ),
+                                getIt<AuthPrefsHelper>().isSignedIn()
+                                    ? Text(
+                                        "Delete Account",
+                                      )
+                                    : Container()
+                              ],
+                            ))
+                        : Container()),
               ),
 
-
+              // ElevatedButton(
+              //   onPressed: () {
+              //     Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (context) => DonationProgressWidget(
+              //                   donationAmount: 80.0,
+              //                   goalAmount: 100.0,
+              //                 )));
+              //   },
+              //   child: Text("Test bar"),
+              // ),
             ],
           ),
         ),

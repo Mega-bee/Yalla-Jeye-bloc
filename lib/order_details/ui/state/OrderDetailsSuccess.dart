@@ -9,80 +9,74 @@ import 'order_tracking_tab.dart';
 class OrderDetailsSuccess extends States {
   final OrderDetailsResponse ordersuccess;
   final int firstIndex;
- final OrderDetailsScreenState screenState;
+  final OrderDetailsScreenState screenState;
 
-  OrderDetailsSuccess(this.firstIndex, {required this.ordersuccess, required this.screenState});
-
-
-
+  OrderDetailsSuccess(this.firstIndex,
+      {required this.ordersuccess, required this.screenState});
 
   @override
   Widget getUI(BuildContext context) {
     return DefaultTabController(
         length: 3,
-        initialIndex:firstIndex ,
+        initialIndex: firstIndex,
         child: Scaffold(
-          appBar:  PreferredSize(
+          appBar: PreferredSize(
             preferredSize: Size.fromHeight(kToolbarHeight),
             child: SizedBox(
-              height: 50,
-              child:
-              ordersuccess.statusId!= 5?
-              TabBar(tabs: [
-                Tab(
-                  child: Text(
-                    "Details",
-                    style: TextStyle(color: Colors.black),
+                height: 50,
+                child: ordersuccess.statusId != 5
+                    ? TabBar(tabs: [
+                  Tab(
+                    child: Text(
+                      "Details",
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
-                ),
-                Tab(
-                  child: Text(
-                    "Tracking",
-                    style: TextStyle(color: Colors.black),
+                  Tab(
+                    child: Text(
+                      "Tracking",
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
-                ),
-               Tab(
-                  child: Text(
-                    "Chat",
-                    style: TextStyle(color: Colors.black),
+                  Tab(
+                    child: Text(
+                      "Chat",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  )
+                ])
+                    : TabBar(tabs: [
+                  Tab(
+                    child: Text(
+                      "Details",
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
-                )
-              ]): TabBar(tabs: [
-                Tab(
-                  child: Text(
-                    "Details",
-                    style: TextStyle(color: Colors.black),
+                  Tab(
+                    child: Text(
+                      "Tracking",
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
-                ),
-                Tab(
-                  child: Text(
-                    "Tracking",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-
-              ])
-
+                ])),
+          ),
+          body: TabBarView(children: [
+            OrderDetailsInfo(
+              orderDetailsResponse: ordersuccess,
+              screenState: screenState,
             ),
-          ),
-          body: TabBarView(
-            children: [
-              OrderDetailsInfo(
-                orderDetailsResponse: ordersuccess,
-                screenState:  screenState,
-              ),
-              OrderTracking(
-                orderDetailsResponse: ordersuccess,
-                screenState:  screenState,
-              ),
-              ordersuccess.statusId!= 5?
-              ChatScreen(
-                orderDetailsResponse: ordersuccess,
-                screenState: screenState,
-                chatMessage: ordersuccess.chatList??[],
-              ):Container()
-            ]
-          ),
+            OrderTracking(
+              orderDetailsResponse: ordersuccess,
+              screenState: screenState,
+            ),
+            ordersuccess.statusId != 5
+                ? ChatScreen(
+              orderDetailsResponse: ordersuccess,
+              screenState: screenState,
+              chatMessage: ordersuccess.chatList ?? [],
+            )
+                : Container(),
+          ]),
         ));
   }
 }

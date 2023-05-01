@@ -8,7 +8,8 @@ import 'package:untitled1/navigation_bar/navigator_routes.dart';
 import 'package:untitled1/navigation_bar/ui/screens/navigationBar.dart';
 
 class SuccessRateAlter extends StatelessWidget {
-  const SuccessRateAlter({Key? key}) : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +58,7 @@ class SuccessRateAlter extends StatelessWidget {
                 NavigationbarrState? stateObject =
                     context.findAncestorStateOfType<NavigationbarrState>();
                 stateObject?.currentIndex = 2;
+
                 stateObject?.setState(() {});
                 orderModelList.clear();
                 // getIt<HomePageCubit>().cartSubject.add('removeCart');

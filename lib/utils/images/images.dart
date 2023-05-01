@@ -30,6 +30,7 @@ class ImageAsset {
   static const new_notification= ROOT + 'new_notification.svg';
   static const new_app_logo='${ROOT}Logo-yalla-jeye-walid.png';
   static const new_app_icon='${ROOT}app_icon.png';
+  static const RedAndYellowLogo='${ROOT}RedAndYelloLogo.png';
 
 
   static const SPLASH_SCREEN = '${ROOT}yala.json';

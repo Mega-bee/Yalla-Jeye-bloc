@@ -83,7 +83,7 @@ class ForgetPasswordState extends States {
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Text(
-                            "Forget password",
+                            "Forgot password",
                             style: TextStyle(
                               fontSize: 26,
                               fontWeight: FontWeight.w600,

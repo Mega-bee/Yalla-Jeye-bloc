@@ -45,7 +45,7 @@ class CustomSuccess extends HomeStates {
                         Text(
                           "You already placed an order? Stay at the comfort of your home and we’ll take care of the rest.",
                           style: TextStyle(
-                            fontSize: 12,
+                            fontSize: 14,
                             color: Colors.grey.shade800,
                           ),
                         ),
@@ -79,7 +79,7 @@ class CustomSuccess extends HomeStates {
                                 color: Color.fromRGBO(204, 204, 204, 0.5),
                               ),
                               contentPadding: EdgeInsets.symmetric(
-                                  vertical: 5.0, horizontal: 13.0),
+                                  vertical: 20.0, horizontal: 13.0),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(5.0),
@@ -111,7 +111,7 @@ class CustomSuccess extends HomeStates {
                         borderRadius: BorderRadius.circular(14),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(13.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 20,),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -188,7 +188,7 @@ class CustomSuccess extends HomeStates {
                         borderRadius: BorderRadius.circular(14),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(13.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 20,),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -289,9 +289,9 @@ class CustomSuccess extends HomeStates {
                     text: 'Checkout',
                     textColor: Colors.white),
               ),
-              const SizedBox(
-                height: 100,
-              ),
+              // const SizedBox(
+              //   height: 100,
+              // ),
               // ElevatedButton(
               //   child: Text("Crash"),
               //   onPressed: () async {

@@ -59,7 +59,7 @@ class SearchPlaceSuccess extends States {
               ),
               filled: true,
               fillColor: Colors.white,
-              hintText: "Restaurant name...",
+              hintText: "what you are looking for",
               labelStyle: const TextStyle(color: Colors.black),
               enabledBorder: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(

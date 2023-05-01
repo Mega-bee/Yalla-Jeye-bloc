@@ -277,7 +277,7 @@ class LoginInitState extends States{
                               child: Align(
                                 alignment: Alignment.bottomRight,
                                 child: Text(
-                                  "Forget pasword",
+                                  "Forgot pasword",
                                   style: TextStyle(
                                     fontSize: 12,
                                     decoration: TextDecoration.underline,

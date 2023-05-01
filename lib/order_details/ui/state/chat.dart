@@ -4,7 +4,6 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/services.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -14,7 +13,6 @@ import 'package:voice_message_package/voice_message_package.dart';
 import '../../../abstracts/model/WebServiceResponse.dart';
 import '../../../utils/Colors/colors.dart';
 import '../../request/sens-message-request.dart';
-import '../../response/messageResponse.dart';
 import '../../response/order_response.dart';
 import '../screens/order_details_screen.dart';
 
@@ -74,7 +72,8 @@ class _ChatScreenState extends State<ChatScreen> {
             isFromUser: false,
             createdDate: DateTime.now(),
             message: _message,
-            messageTypeId: 1);
+            messageTypeId: 1
+        );
         widget.chatMessage!.add(messages);
         _textController.clear();
       });

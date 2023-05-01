@@ -1,9 +1,12 @@
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:untitled1/module_deep_links/service/deep_links_service.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
+import 'package:google_maps_webservice/places.dart';
+import 'package:google_api_headers/google_api_headers.dart';
 
 class ChooseLocationWidget extends StatefulWidget {
   LatLng? previousLocation;
@@ -41,6 +44,12 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
   late CustomInfoWindowController customInfoWindowController;
   bool _nightMode = false;
   final List<Marker> markers = [];
+
+  static const KGoogleApiKey = 'AIzaSyBW7QXx_2fXaX_ROBknRJJVdXBf0_bOZ3c';
+
+  final Mode _mode = Mode.overlay;
+
+  final homeScaffoldKey = GlobalKey<ScaffoldState>();
 
   // Completer<GoogleMapController> _controller = Completer();
   @override
@@ -126,8 +135,19 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
         title: Text('Select location'),
       ),
       body: Stack(
-        alignment: Alignment.center,
-        children: [googleMap],
+        alignment: Alignment.topLeft,
+        children: [
+          googleMap,
+          Padding(
+            padding: const EdgeInsets.only(left: 18.0),
+            child: ElevatedButton(
+              onPressed: _handlePressButton,
+              child: Text(
+                'Search Places',
+              ),
+            ),
+          ),
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton.extended(
@@ -135,9 +155,8 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
           Navigator.pop(context, markers.first.position);
         },
         label: InkWell(
-          onTap: (){
+          onTap: () {
             Navigator.pop(context, markers.first.position);
-
           },
           child: Text(
             "Confirm location",
@@ -153,5 +172,72 @@ class ChooseLocationWidgetState extends State<ChooseLocationWidget> {
       customInfoWindowController.googleMapController = controller;
       // _isMapCreated = true;
     });
+  }
+
+  Future<void> _handlePressButton() async {
+    Prediction? p = await PlacesAutocomplete.show(
+        context: context,
+        apiKey: KGoogleApiKey,
+        onError: onError,
+        mode: _mode,
+        language: 'en',
+        strictbounds: false,
+        types: [''],
+        decoration: InputDecoration(
+          hintText: 'Search',
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide: BorderSide(
+                color: Colors.white,
+              )),
+        ),
+        components: [
+          Component(
+            Component.country,
+            'lebanon',
+          ),
+        ]);
+
+    displayPrediction(p!, homeScaffoldKey.currentState);
+  }
+
+  void onError(PlacesAutocompleteResponse response) {
+    print("errorPlace:${response.errorMessage!}");
+    Fluttertoast.showToast(
+        msg: response.errorMessage!, backgroundColor: redColor);
+  }
+
+  Future<void> displayPrediction(
+      Prediction p, ScaffoldState? currentState) async {
+    GoogleMapsPlaces places = GoogleMapsPlaces(
+        apiKey: KGoogleApiKey,
+        apiHeaders: await const GoogleApiHeaders().getHeaders());
+
+    PlacesDetailsResponse details =
+        await places.getDetailsByPlaceId(p.placeId!);
+    final lat = details.result.geometry!.location.lat;
+    final long = details.result.geometry!.location.lng;
+
+    markers.clear();
+    markers.add(
+      Marker(
+        markerId: const MarkerId(
+          '0',
+        ),
+        position: LatLng(
+          lat,
+          long,
+        ),
+        infoWindow: InfoWindow(title: details.result.name),
+      ),
+    );
+    setState(() {});
+
+    customInfoWindowController.googleMapController?.animateCamera(
+      CameraUpdate.newLatLngZoom(
+        LatLng(lat, long),
+        14.0,
+      ),
+    );
   }
 }
