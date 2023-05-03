@@ -33,8 +33,13 @@ class _PlacesListScreenState extends State<PlacesListScreen> {
 
   void _filterPlacesList(String query) {
     List<Places> filteredList = [];
-    filteredList.addAll(widget.placesList.where((place) =>
-        place.title!.toLowerCase().contains(query.toLowerCase())));
+    filteredList.addAll(
+      widget.placesList.where(
+        (place) => place.title!.toLowerCase().contains(
+              query.toLowerCase(),
+            ),
+      ),
+    );
     setState(() {
       _filteredPlacesList = filteredList;
     });

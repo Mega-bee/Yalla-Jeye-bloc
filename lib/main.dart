@@ -1,16 +1,13 @@
 import 'dart:async';
-import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/assertions.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:injectable/injectable.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:untitled1/module_addresses/address_module.dart';
 import 'package:untitled1/module_driver/module_driver_orders/driver_order_module.dart';
 import 'package:untitled1/module_menu_details/menu_module.dart';
@@ -22,7 +19,6 @@ import 'package:untitled1/module_splash/splash_routes.dart';
 import 'package:untitled1/my_notification/Notification_module.dart';
 import 'package:untitled1/orders/order_module.dart';
 import 'package:untitled1/profile/profile_module.dart';
-import 'package:untitled1/profile/profile_module_route.dart';
 import 'package:untitled1/utils/Colors/colors.dart';
 import 'package:untitled1/utils/global/global_state_manager.dart';
 import 'package:untitled1/utils/logger/logger.dart';
@@ -33,7 +29,6 @@ import 'di/di_config.dart';
 import 'hive/hive.dart';
 import 'home_page/homepage_module.dart';
 import 'navigation_bar/navigator_module.dart';
-import 'navigation_bar/navigator_routes.dart';
 import 'order_details/order_module.dart';
 import 'order_details/order_route.dart';
 
@@ -161,7 +156,6 @@ class _MyAppState extends State<MyApp> {
       print("NotificationTypeId: ${notificationModel.notificationTypeId}");
 
       SchedulerBinding.instance.addPostFrameCallback(
-
         (_) {
           Navigator.pushNamed(
             GlobalVariable.navState.currentContext!,

@@ -30,7 +30,10 @@ class AuthService {
   }
 
 
+
+
   Future<void> clearToken() async {
+
     await _prefsHelper.clearToken();
   }
 }
