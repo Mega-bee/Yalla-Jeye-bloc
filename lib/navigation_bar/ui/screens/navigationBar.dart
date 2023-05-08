@@ -16,19 +16,17 @@ class Navigationbar extends StatefulWidget {
   final HomePageCubit cubit;
   final AuthService _authService;
 
-
-  Navigationbar(this.cubit,this._authService);
+  Navigationbar(this.cubit, this._authService);
 
   @override
   State<Navigationbar> createState() => NavigationbarrState();
 }
 
 class NavigationbarrState extends State<Navigationbar> {
-    int currentIndex = 0;
-    int orderCount = 0;
+  int currentIndex = 0;
+  int orderCount = 0;
 
-
-    late List<Widget> _pages;
+  late List<Widget> _pages;
 
   @override
   void initState() {
@@ -42,13 +40,9 @@ class NavigationbarrState extends State<Navigationbar> {
     ];
     widget.cubit.cartStream.listen((event) {
       print('refreeshhhhhh');
-      setState(() {
-
-      });
+      setState(() {});
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +59,6 @@ class NavigationbarrState extends State<Navigationbar> {
         selectedItemColor: redColor,
         selectedLabelStyle: TextStyle(
           color: redColor,
-
         ),
         unselectedLabelStyle: TextStyle(
           color: Colors.black,
@@ -81,8 +74,9 @@ class NavigationbarrState extends State<Navigationbar> {
             icon: Container(
               height: 35,
               child: SvgPicture.asset(
-                ImageAsset.scooterr,height: 28,
-                color: currentIndex == 0 ? redColor: Colors.black,
+                ImageAsset.scooterr,
+                height: 28,
+                color: currentIndex == 0 ? redColor : Colors.black,
               ),
             ),
             label: 'Menu',
@@ -91,42 +85,45 @@ class NavigationbarrState extends State<Navigationbar> {
             icon: Container(
               height: 35,
               child: SvgPicture.asset(
-                ImageAsset.custom,height: 30,
+                ImageAsset.custom,
+                height: 30,
                 color: currentIndex == 1 ? redColor : Colors.black,
               ),
             ),
             label: 'Pick up',
           ),
           BottomNavigationBarItem(
-            icon: widget._authService.isLoggedIn?Badge(
-              label: Text(
-                orderCount.toString(),
-                style: TextStyle(color: Colors.white),
-              ),
-              child: Container(
-                height: 35,
-                child: SvgPicture.asset(
-                  ImageAsset.orders,
-                  height: 15,
-                  color: currentIndex == 2 ? redColor : Colors.black,
-                ),
-              ),
-            ):Container(
-              height: 35,
-              child: SvgPicture.asset(
-                ImageAsset.orders,
-                height: 15,
-                color: currentIndex == 2 ? redColor : Colors.black,
-              ),
-            ),
+            icon: widget._authService.isLoggedIn
+                ? Badge(
+                    label: Text(
+                      orderCount.toString(),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    child: Container(
+                      height: 35,
+                      child: SvgPicture.asset(
+                        ImageAsset.orders,
+                        height: 15,
+                        color: currentIndex == 2 ? redColor : Colors.black,
+                      ),
+                    ),
+                  )
+                : Container(
+                    height: 35,
+                    child: SvgPicture.asset(
+                      ImageAsset.orders,
+                      height: 15,
+                      color: currentIndex == 2 ? redColor : Colors.black,
+                    ),
+                  ),
             label: 'Orders',
           ),
-
           BottomNavigationBarItem(
             icon: Container(
               height: 35,
               child: SvgPicture.asset(
-                ImageAsset.profile,height: 15,
+                ImageAsset.profile,
+                height: 15,
                 color: currentIndex == 3 ? redColor : Colors.black,
               ),
             ),

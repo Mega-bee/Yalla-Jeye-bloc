@@ -322,11 +322,11 @@ class ProfilePageState extends State<SettingProfilePage> {
                           ),
                           getIt<AuthPrefsHelper>().isSignedIn()
                               ? Text(
-                                  "Sign out",
+                                  "Log out",
                                 )
                               : InkWell(
                                   child: Text(
-                                    "Sign in",
+                                    "Log in",
                                   ),
                                 ),
                         ],

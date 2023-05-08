@@ -114,6 +114,7 @@ dependencies:
   flutter_google_places: ^0.3.0
 
   search_map_place_updated: ^0.0.4
+  dart_code_metrics: ^4.19.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
