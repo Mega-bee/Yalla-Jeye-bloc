@@ -182,7 +182,8 @@ class ProfilePageState extends State<SettingProfilePage> {
                             showDialog(
                               context: context,
                               builder: (context) => const CustomDialogBox(
-                                  title: 'Login in first'),
+                                title: 'Login in first',
+                              ),
                             );
                           },
                           child: Center(
@@ -271,42 +272,45 @@ class ProfilePageState extends State<SettingProfilePage> {
                   onTap: () {
                     widget._authService.isLoggedIn
                         ? showDialog(
-                      context: context,
-                      builder: (context) => CustomDeleteDialog(
-                        title: 'Log out',
-                        content: 'Are you sure you want to log out?',
-                        yesBtn: () {
-                          orderModelList.clear();
-                          SelectedDateHive().clearDate();
-                          AcceptSmoke().clearSmoke();
-                          getIt<AuthPrefsHelper>().clearToken().then((value) {
-                            Navigator.pushNamedAndRemoveUntil(context, NavRoutes.nav_rout, (route) => false);
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: Center(child: Text('Yalla Jeye')),
-                                content: Text('Hope to see you again.'),
-                                actions: [
-                                  TextButton(
-                                    child: Text('OK'),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ],
-                              ),
-                            );
-                          });
-                        },
-                        noBtn: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ) : Navigator.pushNamed(
-                      context,
-                      AuthRoutes.login,
-                    );
-
+                            context: context,
+                            builder: (context) => CustomDeleteDialog(
+                              title: 'Log out',
+                              content: 'Are you sure you want to log out?',
+                              yesBtn: () {
+                                orderModelList.clear();
+                                SelectedDateHive().clearDate();
+                                AcceptSmoke().clearSmoke();
+                                getIt<AuthPrefsHelper>()
+                                    .clearToken()
+                                    .then((value) {
+                                  Navigator.pushNamedAndRemoveUntil(context,
+                                      NavRoutes.nav_rout, (route) => false);
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: Center(child: Text('Yalla Jeye')),
+                                      content: Text('Hope to see you again.'),
+                                      actions: [
+                                        TextButton(
+                                          child: Text('OK'),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                });
+                              },
+                              noBtn: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          )
+                        : Navigator.pushNamed(
+                            context,
+                            AuthRoutes.login,
+                          );
                   },
                   child: Padding(
                       padding: const EdgeInsets.all(10.0),

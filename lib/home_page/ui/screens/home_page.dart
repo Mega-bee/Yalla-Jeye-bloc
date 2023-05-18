@@ -17,6 +17,7 @@ import 'package:untitled1/module_notifications/service/fire_notification_service
 import 'package:untitled1/utils/Colors/colors.dart';
 import 'package:untitled1/utils/global/global_state_manager.dart';
 import '../../../hive/hive.dart';
+import '../../../navigation_bar/ui/screens/navigationBar.dart';
 import '../../../utils/images/images.dart';
 import '../../homepage_route.dart';
 import '../../state_manager/homepage.dart';
@@ -51,7 +52,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-
+    orderCount;
     widget.cubit.getHomePage(this);
     controller = BottomSheet.createAnimationController(this);
     controller.duration = const Duration(milliseconds: 500);

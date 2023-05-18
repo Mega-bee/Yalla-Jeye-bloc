@@ -6,6 +6,7 @@ class HomePageModel {
   List<Destinations>? destinations;
   List<DestinationWithPlaces>? destinationWithPlaces;
   int? notificationCount;
+  int? pendingOrdersCount;
 
   HomePageModel({
     this.events,
@@ -13,6 +14,7 @@ class HomePageModel {
     this.destinations,
     this.destinationWithPlaces,
     this.notificationCount,
+    this.pendingOrdersCount
   });
 
   HomePageModel.fromJson(Map<String, dynamic> json) {
@@ -36,6 +38,7 @@ class HomePageModel {
       });
     }
     notificationCount = json['notificationCount'];
+    pendingOrdersCount = json['pendingOrdersCount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -54,6 +57,7 @@ class HomePageModel {
           this.destinationWithPlaces!.map((v) => v.toJson()).toList();
     }
     data['notificationCount'] = this.notificationCount;
+    data['pendingOrdersCount'] = this.pendingOrdersCount;
     return data;
   }
 }

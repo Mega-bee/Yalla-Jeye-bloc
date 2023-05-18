@@ -19,6 +19,7 @@ import '../../abstracts/states/error_state.dart';
 import '../../abstracts/states/loading_state.dart';
 import '../../abstracts/states/state.dart';
 import '../../module_notifications/request/notification_request.dart';
+import '../../navigation_bar/ui/screens/navigationBar.dart';
 import '../repository/homepage_repository.dart';
 import '../response/homepage_response.dart';
 import '../ui/screens/home_page.dart';
@@ -51,7 +52,9 @@ class HomePageCubit extends Cubit<HomeStates> {
       } else if (value.code == 200) {
         HomePageModel homePageModel =
             HomePageModel.fromJson(value.data.insideData);
-
+        orderCount = homePageModel.pendingOrdersCount!;
+        orderCount;
+        state.refresh();
         emit(
           HomePageSuccess(homepage: homePageModel, homepageState: state),
         );
@@ -72,7 +75,9 @@ class HomePageCubit extends Cubit<HomeStates> {
             arguments: {'model': response, "custom": false});
       } else {
         TipDialogHelper.fail("Something Wrong");
-        await Future.delayed(const Duration(seconds: 5));
+        await Future.delayed(
+          const Duration(seconds: 5),
+        );
         TipDialogHelper.dismiss();
       }
     });

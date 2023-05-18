@@ -6,6 +6,7 @@ import 'package:untitled1/home_page/ui/widget/destination_card.dart';
 import 'package:untitled1/home_page/ui/widget/destination_place_card.dart';
 import 'package:untitled1/home_page/ui/widget/title_home.dart';
 import '../../../abstracts/states/state.dart';
+import '../../../navigation_bar/ui/screens/navigationBar.dart';
 import '../../../utils/Colors/colors.dart';
 import '../../response/homepage_response.dart';
 import '../screens/home_page.dart';
@@ -38,6 +39,7 @@ class HomePageSuccess extends HomeStates {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  // ElevatedButton(onPressed: ()=>print('ordercount: ${homepage.pendingOrdersCount}'), child: Text('test')),
                   CarouselSlider.builder(
                     options: CarouselOptions(
                       viewportFraction: 1,

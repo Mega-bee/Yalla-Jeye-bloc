@@ -7,9 +7,13 @@ import 'package:untitled1/orders/ui/screens/order_page_list.dart';
 import 'package:untitled1/utils/images/images.dart';
 import '../../../auth/service/auth_service.dart';
 import '../../../custom/ui/screens/custom_list.dart';
+import '../../../home_page/response/homepage_response.dart';
 import '../../../home_page/ui/screens/home_page.dart';
 import '../../../profile/ui/screen/setting_screen.dart';
 import '../../../utils/Colors/colors.dart';
+
+
+int orderCount = 0;
 
 @injectable
 class Navigationbar extends StatefulWidget {
@@ -24,7 +28,6 @@ class Navigationbar extends StatefulWidget {
 
 class NavigationbarrState extends State<Navigationbar> {
   int currentIndex = 0;
-  int orderCount = 0;
 
   late List<Widget> _pages;
 
