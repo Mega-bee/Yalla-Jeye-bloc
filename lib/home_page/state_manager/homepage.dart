@@ -16,8 +16,6 @@ import 'package:untitled1/module_menu_details/request/calculate_price_request.da
 import 'package:untitled1/module_menu_details/response/calculate_response.dart';
 import '../../abstracts/WebUrl.dart';
 import '../../abstracts/states/error_state.dart';
-import '../../abstracts/states/loading_state.dart';
-import '../../abstracts/states/state.dart';
 import '../../module_notifications/request/notification_request.dart';
 import '../../navigation_bar/ui/screens/navigationBar.dart';
 import '../repository/homepage_repository.dart';
@@ -44,7 +42,7 @@ class HomePageCubit extends Cubit<HomeStates> {
     emit(LoadingHomePage());
     _homePageRepository.getHomePage().then((value) {
       if (value == null) {
-        emit(ErrorHomeState(
+            emit(ErrorHomeState(
             errorMessage: 'Connection error',
             retry: () {
               getHomePage(state);
